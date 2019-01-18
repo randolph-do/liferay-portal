@@ -43,7 +43,7 @@ public class Base64 {
 			block += getValue(base64.charAt(i + 2)) << 6;
 			block += getValue(base64.charAt(i + 3));
 
-			for (int j = 0; j < 3 && rawindex + j < raw.length; j++) {
+			for (int j = 0; (j < 3) && ((rawindex + j) < raw.length); j++) {
 				raw[rawindex + j] = (byte)(block >> 8 * (2 - j) & 0xff);
 			}
 

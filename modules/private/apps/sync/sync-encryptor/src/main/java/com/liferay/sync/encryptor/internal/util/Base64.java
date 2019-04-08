@@ -75,7 +75,7 @@ public class Base64 {
 
 		int slack = lastIndex - offset - 1;
 
-		int end = slack < 2 ? slack : 2;
+		int end = (slack < 2) ? slack : 2;
 
 		for (int i = 0; i <= end; i++) {
 			byte b = raw[offset + i];

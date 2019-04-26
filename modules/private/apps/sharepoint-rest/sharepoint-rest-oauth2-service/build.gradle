@@ -8,6 +8,6 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "4.0.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.0.0"
 	compileOnly project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api")
 }

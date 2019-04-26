@@ -2,6 +2,10 @@ apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype.api", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "4.0.0"
@@ -18,10 +22,6 @@ dependencies {
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
-	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype.api", version: "2.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "3.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
 	compileOnly project(":private:apps:portal-workflow:portal-workflow-kaleo-designer-web")
 	compileOnly project(":private:apps:portal-workflow:portal-workflow-kaleo-forms-api")
 	compileOnly project(":private:apps:portal-workflow:portal-workflow-kaleo-forms-service")

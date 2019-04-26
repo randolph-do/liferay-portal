@@ -7,6 +7,9 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.2"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype.api", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.0.0"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"
@@ -16,8 +19,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
 	compileOnly project(":apps:document-library:document-library-repository-authorization-api")
 	compileOnly project(":apps:document-library:document-library-repository-external-api")
-	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype.api", version: "2.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
 	compileOnly project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api")
 }

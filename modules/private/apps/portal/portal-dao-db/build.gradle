@@ -14,7 +14,7 @@ else {
 }
 
 dependencies {
-	compileOnly project(":core:petra:petra-string")
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.1"
 
 	testCompile project(":core:petra:petra-lang")
 }

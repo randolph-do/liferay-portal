@@ -4,7 +4,7 @@ copyLibs {
 
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	compileOnly project(":apps:petra:petra-xml")
+	compileOnly group: "com.liferay", name: "com.liferay.petra.xml", version: "3.0.1"
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.15"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

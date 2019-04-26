@@ -9,9 +9,9 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
-	compileOnly project(":apps:static:osgi:osgi-util")
-	compileOnly project(":core:petra:petra-lang")
-	compileOnly project(":core:petra:petra-string")
+	compileOnly group: "com.liferay", name: "com.liferay.osgi.util", version: "5.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
 	compileOnly project(":private:apps:saml:saml-api")
 	compileOnly project(":private:apps:saml:saml-persistence-api")
 }

@@ -1,0 +1,120 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.osb.koroneiki.taproot.internal.permission;
+
+import com.liferay.osb.koroneiki.taproot.model.ContactRole;
+import com.liferay.osb.koroneiki.taproot.permission.ContactRolePermission;
+import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Bischof
+ */
+@Component(immediate = true, service = ContactRolePermission.class)
+public class ContactRolePermissionImpl implements ContactRolePermission {
+
+	@Override
+	public void check(
+			PermissionChecker permissionChecker, ContactRole contactRole,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, contactRole, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ContactRole.class.getName(),
+				contactRole.getContactRoleId(), actionId);
+		}
+	}
+
+	@Override
+	public void check(
+			PermissionChecker permissionChecker, long contactRoleId,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, contactRoleId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ContactRole.class.getName(), contactRoleId,
+				actionId);
+		}
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, ContactRole contactRole,
+			String actionId)
+		throws PortalException {
+
+		if (actionId.equals(ActionKeys.DELETE)) {
+			if (contactRole.isSystem()) {
+				return false;
+			}
+		}
+
+		if (permissionChecker.isOmniadmin()) {
+			return true;
+		}
+
+		return permissionChecker.hasPermission(
+			0, ContactRole.class.getName(), contactRole.getContactRoleId(),
+			actionId);
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, long contactRoleId,
+			String actionId)
+		throws PortalException {
+
+		ContactRole contactRole = _contactRoleLocalService.getContactRole(
+			contactRoleId);
+
+		if (contains(permissionChecker, contactRole, actionId)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, long[] contactRoleIds,
+			String actionId)
+		throws PortalException {
+
+		if (ArrayUtil.isEmpty(contactRoleIds)) {
+			return false;
+		}
+
+		for (long contactRoleId : contactRoleIds) {
+			if (!contains(permissionChecker, contactRoleId, actionId)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	@Reference
+	private ContactRoleLocalService _contactRoleLocalService;
+
+}

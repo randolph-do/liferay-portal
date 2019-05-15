@@ -1,0 +1,17 @@
+buildService {
+	apiDir = "../osb-koroneiki-taproot-api/src/main/java"
+	databaseNameMaxLength = 64
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql.api", version: "2.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.instances.api", version: "3.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly project(":private:apps:osb-koroneiki:osb-koroneiki-taproot:osb-koroneiki-taproot-api")
+}

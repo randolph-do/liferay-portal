@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder package-path="com.liferay.osb.koroneiki.trunk">
+	<namespace>Koroneiki</namespace>
+	<entity local-service="true" name="ProductConsumption" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="productConsumptionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="accountId" type="long" />
+		<column name="projectId" type="long" />
+		<column name="productEntryId" type="long" />
+	</entity>
+	<entity local-service="true" name="ProductEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="productEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+	</entity>
+	<entity local-service="true" name="ProductField" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="productFieldId" primary="true" type="long" />
+
+		<!-- Audit Fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="productPurchaseId" type="long" />
+		<column name="name" type="String" />
+		<column name="value" type="String" />
+	</entity>
+	<entity local-service="true" name="ProductPurchase" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="productPurchaseId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="accountId" type="long" />
+		<column name="projectId" type="long" />
+		<column name="productEntryId" type="long" />
+		<column name="startDate" type="Date" />
+		<column name="endDate" type="Date" />
+		<column name="quantity" type="int" />
+	</entity>
+</service-builder>

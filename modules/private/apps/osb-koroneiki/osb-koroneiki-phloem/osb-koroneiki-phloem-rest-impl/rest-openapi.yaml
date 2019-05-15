@@ -1,0 +1,682 @@
+components:
+    schemas:
+        Account:
+            description: Represents an account.
+            properties:
+                dateCreated:
+                    description: The account's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description: The most recent time that any of the account's fields changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    description: The description of the account.
+                    type: string
+                id:
+                    description: The account's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description: The name of the account.
+                    type: string
+            required:
+                - name
+            type: object
+        Contact:
+            description: Represents an contact.
+            properties:
+                dateCreated:
+                    description: The contact's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description: The most recent time that any of the contact's fields changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                emailAddress:
+                    description: The email address of the contact.
+                    type: string
+                firstName:
+                    description: The first name of the contact.
+                    type: string
+                id:
+                    description: The contact's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                languageId:
+                    description: The language ID of the contact.
+                    type: string
+                lastName:
+                    description: The last name of the contact.
+                    type: string
+                middleName:
+                    description: The middle name of the contact.
+                    type: string
+            required:
+                - emailAddress
+                - firstName
+                - lastName
+            type: object
+        Project:
+            description: Represents a project.
+            properties:
+                accountId:
+                    description: The project's account's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                code:
+                    description: The code of the project.
+                    type: string
+                dateCreated:
+                    description: The project's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description: The most recent time that any of the project's fields changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    description: The project's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                industry:
+                    description: The industry of the project.
+                    type: string
+                name:
+                    description: The name of the project.
+                    type: string
+                notes:
+                    description: The notes of the project.
+                    type: string
+                status:
+                    description: The status of the project.
+                    type: string
+                tier:
+                    description: The tier of the project.
+                    type: string
+            required:
+                - name
+                - status
+            type: object
+info:
+    description: ""
+    title: "Koroneiki"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/accounts":
+        post:
+            operationId: postAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description: ""
+            tags: ["Account"]
+    "/accounts/{accountId}":
+        delete:
+            operationId: deleteAccount
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Account"]
+        get:
+            description: Retrieves the account.
+            operationId: getAccount
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description: ""
+            tags: ["Account"]
+        put:
+            operationId: putAccount
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description: ""
+            tags: ["Account"]
+    "/accounts/{accountId}/contacts":
+        delete:
+            description: Unassigns contacts from the account.
+            operationId: deleteAccountContact
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Account"]
+        get:
+            description: Retrieves the account's contacts.
+            operationId: getAccountContactsPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Contact"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Contact"
+                                type: array
+                    description: ""
+            tags: ["Account"]
+        put:
+            description: Assigns contacts to the account.
+            operationId: putAccountContact
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Account"]
+    "/accounts/{accountId}/contacts/{contactId}/roles":
+        delete:
+            description: Unassigns roles from the contact for the account.
+            operationId: deleteAccountContactRole
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactRoleIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Account"]
+        put:
+            description: Assigns roles to the contact for the account.
+            operationId: putAccountContactRole
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactRoleIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Account"]
+    "/accounts/{accountId}/projects":
+        get:
+            description: Retrieves the account's projects.
+            operationId: getAccountProjectsPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Project"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Project"
+                                type: array
+                    description: ""
+            tags: ["Account"]
+        post:
+            operationId: postAccountProject
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Project"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Project"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Project"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Project"
+                    description: ""
+            tags: ["Project"]
+    "/contacts":
+        post:
+            operationId: postContact
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Contact"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Contact"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Contact"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Contact"
+                    description: ""
+            tags: ["Contact"]
+    "/contacts/{contactId}":
+        delete:
+            operationId: deleteContact
+            parameters:
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Contact"]
+        get:
+            description: Retrieves the contact.
+            operationId: getContact
+            parameters:
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Contact"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Contact"
+                    description: ""
+            tags: ["Contact"]
+    "/projects/{projectId}":
+        delete:
+            operationId: deleteProject
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Project"]
+        get:
+            description: Retrieves the project.
+            operationId: getProject
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Project"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Project"
+                    description: ""
+            tags: ["Project"]
+        put:
+            operationId: putProject
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Project"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Project"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Project"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Project"
+                    description: ""
+            tags: ["Project"]
+    "/projects/{projectId}/contacts":
+        delete:
+            description: Unassigns contacts from the project.
+            operationId: deleteProjectContact
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Project"]
+        get:
+            description: Retrieves the project's contacts.
+            operationId: getProjectContactsPage
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Contact"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Contact"
+                                type: array
+                    description: ""
+            tags: ["Project"]
+        put:
+            description: Assigns contacts to the project.
+            operationId: putProjectContact
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Project"]
+    "/projects/{projectId}/contacts/{contactId}/roles":
+        delete:
+            description: Unassigns roles from the contact for the project.
+            operationId: deleteProjectContactRole
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactRoleIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Project"]
+        put:
+            description: Assigns roles to the contact for the project.
+            operationId: putProjectContactRole
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contactRoleIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Project"]

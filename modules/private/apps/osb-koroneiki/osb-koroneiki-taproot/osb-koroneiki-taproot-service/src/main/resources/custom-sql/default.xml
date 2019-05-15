@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactFinder.countByFN_MN_LN_E">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT Koroneiki_Contact.contactId) AS COUNT_VALUE
+			FROM
+				Koroneiki_Contact
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(Koroneiki_Contact.firstName LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Contact.middleName LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Contact.lastName LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Contact.emailAddress LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactFinder.findByFN_MN_LN_E">
+		<![CDATA[
+			SELECT
+				DISTINCT {Koroneiki_Contact.*}
+			FROM
+				Koroneiki_Contact
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(Koroneiki_Contact.firstName LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Contact.middleName LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Contact.lastName LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Contact.emailAddress LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactFinder.joinByAccount">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_ContactAccountRole ON
+					Koroneiki_ContactAccountRole.contactId = Koroneiki_Contact.contactId
+			WHERE
+				Koroneiki_ContactAccountRole.accountId = ?
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactFinder.joinByProject">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_ContactProjectRole ON
+					Koroneiki_ContactProjectRole.contactId = Koroneiki_Contact.contactId
+			WHERE
+				Koroneiki_ContactProjectRole.projectId = ?
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactRoleFinder.countByName">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT Koroneiki_ContactRole.contactRoleId) AS COUNT_VALUE
+			FROM
+				Koroneiki_ContactRole
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(
+					(Koroneiki_ContactRole.name LIKE ?) OR
+					(? IS NULL)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactRoleFinder.findByName">
+		<![CDATA[
+			SELECT
+				{Koroneiki_ContactRole.*}
+			FROM
+				Koroneiki_ContactRole
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(
+					(Koroneiki_ContactRole.name LIKE ?) OR
+					(? IS NULL)
+				)
+			ORDER BY
+				Koroneiki_ContactRole.name
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactRoleFinder.joinByAccountContact">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_ContactAccountRole ON
+					Koroneiki_ContactAccountRole.contactRoleId = Koroneiki_ContactRole.contactRoleId
+			WHERE
+				(Koroneiki_ContactAccountRole.accountId = ?) AND
+				(Koroneiki_ContactAccountRole.contactId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactRoleFinder.joinByProjectContact">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_ContactProjectRole ON
+					Koroneiki_ContactProjectRole.contactRoleId = Koroneiki_ContactRole.contactRoleId
+			WHERE
+				(Koroneiki_ContactProjectRole.projectId = ?) AND
+				(Koroneiki_ContactProjectRole.contactId = ?)
+		]]>
+	</sql>
+</custom-sql>

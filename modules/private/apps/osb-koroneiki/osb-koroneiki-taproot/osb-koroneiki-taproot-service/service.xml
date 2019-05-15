@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder package-path="com.liferay.osb.koroneiki.taproot">
+	<namespace>Koroneiki</namespace>
+	<entity local-service="true" name="Account" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="accountId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="logoId" type="long" />
+		<column name="addressId" type="long" />
+		<column name="contactEmailAddress" type="String" />
+		<column name="profileEmailAddress" type="String" />
+		<column name="phoneNumber" type="String" />
+		<column name="faxNumber" type="String" />
+		<column name="website" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		<column name="statusMessage" type="String" />
+	</entity>
+	<entity local-service="true" name="Contact" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="contactId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="firstName" type="String" />
+		<column name="middleName" type="String" />
+		<column name="lastName" type="String" />
+		<column name="emailAddress" type="String" />
+		<column name="languageId" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="EmailAddress" return-type="Contact">
+			<finder-column name="emailAddress" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="ContactAccountRole" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="contactId" primary="true" type="long" />
+		<column name="accountId" primary="true" type="long" />
+		<column name="contactRoleId" primary="true" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="contactId" />
+			<finder-column name="accountId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="ContactProjectRole" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="contactId" primary="true" type="long" />
+		<column name="projectId" primary="true" type="long" />
+		<column name="contactRoleId" primary="true" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_P" return-type="Collection">
+			<finder-column name="contactId" />
+			<finder-column name="projectId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="ContactRole" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="contactRoleId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column accessor="true" name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="type" type="int" />
+		<column name="system" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
+		</finder>
+		<finder name="N_T_S" return-type="ContactRole">
+			<finder-column name="name" />
+			<finder-column name="type" />
+			<finder-column name="system" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="ContactTeamRole" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="contactId" primary="true" type="long" />
+		<column name="teamId" primary="true" type="long" />
+		<column name="contactRoleId" primary="true" type="long" />
+	</entity>
+	<entity local-service="true" name="Project" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="projectId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="accountId" type="long" />
+		<column name="supportRegionId" type="long" />
+		<column name="name" type="String" />
+		<column name="code" type="String" />
+		<column name="industry" type="int" />
+		<column name="tier" type="int" />
+		<column name="notes" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		<column name="statusMessage" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="AccountId" return-type="Collection">
+			<finder-column name="accountId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="Team" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="teamId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="accountId" type="long" />
+		<column name="name" type="String" />
+		<column name="type" type="int" />
+	</entity>
+	<entity local-service="true" name="TeamProject" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="teamId" primary="true" type="long" />
+		<column name="projectId" primary="true" type="long" />
+	</entity>
+	<exceptions>
+		<exception>AccountName</exception>
+		<exception>ContactEmailAddress</exception>
+		<exception>ContactRoleName</exception>
+		<exception>ContactRoleType</exception>
+		<exception>ProjectName</exception>
+	</exceptions>
+</service-builder>

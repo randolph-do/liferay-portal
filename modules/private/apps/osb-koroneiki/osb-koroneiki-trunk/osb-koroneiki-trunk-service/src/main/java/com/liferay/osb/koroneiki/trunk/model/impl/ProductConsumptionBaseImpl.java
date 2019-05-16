@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.trunk.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.service.ProductConsumptionLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ProductConsumption service. Represents a row in the &quot;Koroneiki_ProductConsumption&quot; database table, with each column mapped to a property of this class.

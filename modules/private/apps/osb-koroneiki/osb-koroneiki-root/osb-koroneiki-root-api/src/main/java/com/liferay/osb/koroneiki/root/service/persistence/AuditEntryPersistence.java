@@ -14,11 +14,11 @@
 
 package com.liferay.osb.koroneiki.root.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.root.exception.NoSuchAuditEntryException;
 import com.liferay.osb.koroneiki.root.model.AuditEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the audit entry service.

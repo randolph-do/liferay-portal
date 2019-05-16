@@ -14,8 +14,6 @@
 
 package com.liferay.osb.koroneiki.taproot.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.model.ContactProjectRole;
 import com.liferay.osb.koroneiki.taproot.model.ContactProjectRoleModel;
 import com.liferay.osb.koroneiki.taproot.model.ContactProjectRoleSoap;
@@ -40,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the ContactProjectRole service. Represents a row in the &quot;Koroneiki_ContactProjectRole&quot; database table, with each column mapped to a property of this class.

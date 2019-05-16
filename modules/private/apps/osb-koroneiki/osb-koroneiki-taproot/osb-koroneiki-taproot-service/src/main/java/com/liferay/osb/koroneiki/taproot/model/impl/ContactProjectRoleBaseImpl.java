@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.taproot.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.model.ContactProjectRole;
 import com.liferay.osb.koroneiki.taproot.service.ContactProjectRoleLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ContactProjectRole service. Represents a row in the &quot;Koroneiki_ContactProjectRole&quot; database table, with each column mapped to a property of this class.

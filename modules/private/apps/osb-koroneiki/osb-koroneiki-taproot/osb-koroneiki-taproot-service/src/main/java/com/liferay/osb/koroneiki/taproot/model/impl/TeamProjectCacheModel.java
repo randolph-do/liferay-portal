@@ -14,8 +14,6 @@
 
 package com.liferay.osb.koroneiki.taproot.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.model.TeamProject;
 import com.liferay.osb.koroneiki.taproot.service.persistence.TeamProjectPK;
 import com.liferay.petra.lang.HashUtil;
@@ -26,6 +24,8 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing TeamProject in entity cache.

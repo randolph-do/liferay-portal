@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.root.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.root.model.ExternalIdMapper;
 import com.liferay.osb.koroneiki.root.service.ExternalIdMapperLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ExternalIdMapper service. Represents a row in the &quot;Koroneiki_ExternalIdMapper&quot; database table, with each column mapped to a property of this class.

@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.trunk.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.osb.koroneiki.trunk.service.ProductPurchaseLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ProductPurchase service. Represents a row in the &quot;Koroneiki_ProductPurchase&quot; database table, with each column mapped to a property of this class.

@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.trunk.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ProductField service. Represents a row in the &quot;Koroneiki_ProductField&quot; database table, with each column mapped to a property of this class.

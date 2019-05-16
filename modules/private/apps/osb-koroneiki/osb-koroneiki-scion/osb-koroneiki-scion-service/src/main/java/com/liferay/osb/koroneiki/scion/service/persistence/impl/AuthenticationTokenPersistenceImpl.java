@@ -14,8 +14,6 @@
 
 package com.liferay.osb.koroneiki.scion.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.scion.exception.NoSuchAuthenticationTokenException;
 import com.liferay.osb.koroneiki.scion.model.AuthenticationToken;
 import com.liferay.osb.koroneiki.scion.model.impl.AuthenticationTokenImpl;
@@ -56,6 +54,7 @@ import java.util.Objects;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

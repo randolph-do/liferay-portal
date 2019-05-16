@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.taproot.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.service.persistence.TeamProjectPK;
 import com.liferay.portal.kernel.model.BaseModel;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the TeamProject service. Represents a row in the &quot;Koroneiki_TeamProject&quot; database table, with each column mapped to a property of this class.

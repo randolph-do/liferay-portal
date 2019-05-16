@@ -14,14 +14,14 @@
 
 package com.liferay.osb.koroneiki.taproot.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.service.persistence.ContactProjectRolePK;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.osb.koroneiki.taproot.service.http.ContactProjectRoleServiceSoap}.

@@ -14,13 +14,13 @@
 
 package com.liferay.osb.koroneiki.taproot.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamProjectException;
 import com.liferay.osb.koroneiki.taproot.model.TeamProject;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the team project service.

@@ -14,11 +14,11 @@
 
 package com.liferay.osb.koroneiki.root.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.root.exception.NoSuchExternalIdMapperException;
 import com.liferay.osb.koroneiki.root.model.ExternalIdMapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the external ID mapper service.

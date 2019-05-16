@@ -14,11 +14,11 @@
 
 package com.liferay.osb.koroneiki.taproot.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.exception.NoSuchContactRoleException;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the contact role service.

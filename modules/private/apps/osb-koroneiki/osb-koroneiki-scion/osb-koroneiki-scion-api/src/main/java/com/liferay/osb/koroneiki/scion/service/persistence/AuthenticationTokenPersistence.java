@@ -14,11 +14,11 @@
 
 package com.liferay.osb.koroneiki.scion.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.scion.exception.NoSuchAuthenticationTokenException;
 import com.liferay.osb.koroneiki.scion.model.AuthenticationToken;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the authentication token service.

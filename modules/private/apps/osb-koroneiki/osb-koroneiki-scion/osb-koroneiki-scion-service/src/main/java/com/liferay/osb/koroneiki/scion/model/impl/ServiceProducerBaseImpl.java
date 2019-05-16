@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.scion.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.scion.model.ServiceProducer;
 import com.liferay.osb.koroneiki.scion.service.ServiceProducerLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ServiceProducer service. Represents a row in the &quot;Koroneiki_ServiceProducer&quot; database table, with each column mapped to a property of this class.

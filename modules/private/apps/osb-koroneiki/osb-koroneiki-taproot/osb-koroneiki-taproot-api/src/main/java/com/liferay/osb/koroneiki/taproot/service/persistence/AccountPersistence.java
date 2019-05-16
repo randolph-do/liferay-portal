@@ -14,11 +14,11 @@
 
 package com.liferay.osb.koroneiki.taproot.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.koroneiki.taproot.exception.NoSuchAccountException;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the account service.

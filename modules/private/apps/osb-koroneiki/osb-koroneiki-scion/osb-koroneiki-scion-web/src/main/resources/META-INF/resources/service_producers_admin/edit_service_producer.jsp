@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "details");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 ServiceProducer serviceProducer = (ServiceProducer)request.getAttribute(ScionWebKeys.SERVICE_PRODUCER);

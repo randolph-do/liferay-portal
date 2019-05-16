@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "details");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 Account koroneikiAccount = (Account)request.getAttribute(TaprootWebKeys.ACCOUNT);

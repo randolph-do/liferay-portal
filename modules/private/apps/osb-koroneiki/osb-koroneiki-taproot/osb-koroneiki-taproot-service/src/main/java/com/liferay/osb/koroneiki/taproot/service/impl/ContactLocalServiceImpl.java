@@ -156,10 +156,9 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 				throw new ContactEmailAddressException.MustNotBeDuplicate(
 					contactId, emailAddress);
 			}
-			else {
-				throw new ContactEmailAddressException.MustNotBeDuplicate(
-					emailAddress);
-			}
+
+			throw new ContactEmailAddressException.MustNotBeDuplicate(
+				emailAddress);
 		}
 	}
 

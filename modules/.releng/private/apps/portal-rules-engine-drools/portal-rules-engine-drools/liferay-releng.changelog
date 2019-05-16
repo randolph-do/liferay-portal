@@ -2,3 +2,8 @@
 # Bundle Version 3.0.0
 #
 d106e46e7afb393a85c11533416d3080e487daff..568a5d380a14e08cb7536cbebba71fbe9cff3caa=LPS-77425 LRQA-47460
+
+#
+# Bundle Version 3.0.1
+#
+568a5d380a14e08cb7536cbebba71fbe9cff3caa^..c585f4956929adc49f47d3552d6bbdbb1b882e55=LPS-95555

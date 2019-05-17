@@ -14,9 +14,7 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ContactUtil;
 import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ProjectUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
@@ -69,22 +67,22 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 	}
 
 	@Override
-	public Project getProject(Long projectId) throws Exception {
-		return ProjectUtil.toProject(_projectService.getProject(projectId));
-	}
-
-	@Override
-	public Page<Contact> getProjectContactsPage(
-			Long projectId, Pagination pagination)
+	public Page<Project> getAccountProjectsPage(
+			Long accountId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
-				_contactService.getProjectContacts(
-					projectId, pagination.getStartPosition(),
+				_projectService.getProjects(
+					accountId, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				ContactUtil::toContact),
-			pagination, _contactService.getProjectContactsCount(projectId));
+				ProjectUtil::toProject),
+			pagination, _projectService.getProjectsCount(accountId));
+	}
+
+	@Override
+	public Project getProject(Long projectId) throws Exception {
+		return ProjectUtil.toProject(_projectService.getProject(projectId));
 	}
 
 	@Override

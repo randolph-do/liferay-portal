@@ -18,6 +18,8 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ContactUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,8 +40,36 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 	}
 
 	@Override
+	public Page<Contact> getAccountContactsPage(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_contactService.getAccountContacts(
+					accountId, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				ContactUtil::toContact),
+			pagination, _contactService.getAccountContactsCount(accountId));
+	}
+
+	@Override
 	public Contact getContact(Long contactId) throws Exception {
 		return ContactUtil.toContact(_contactService.getContact(contactId));
+	}
+
+	@Override
+	public Page<Contact> getProjectContactsPage(
+			Long projectId, Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_contactService.getProjectContacts(
+					projectId, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				ContactUtil::toContact),
+			pagination, _contactService.getProjectContactsCount(projectId));
 	}
 
 	@Override

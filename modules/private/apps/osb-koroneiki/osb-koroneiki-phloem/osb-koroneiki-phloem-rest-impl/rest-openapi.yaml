@@ -262,7 +262,7 @@ paths:
                                     $ref: "#/components/schemas/Contact"
                                 type: array
                     description: ""
-            tags: ["Account"]
+            tags: ["Contact"]
         put:
             description: Assigns contacts to the account.
             operationId: putAccountContact
@@ -381,7 +381,7 @@ paths:
                                     $ref: "#/components/schemas/Project"
                                 type: array
                     description: ""
-            tags: ["Account"]
+            tags: ["Project"]
         post:
             operationId: postAccountProject
             parameters:
@@ -594,7 +594,7 @@ paths:
                                     $ref: "#/components/schemas/Contact"
                                 type: array
                     description: ""
-            tags: ["Project"]
+            tags: ["Contact"]
         put:
             description: Assigns contacts to the project.
             operationId: putProjectContact

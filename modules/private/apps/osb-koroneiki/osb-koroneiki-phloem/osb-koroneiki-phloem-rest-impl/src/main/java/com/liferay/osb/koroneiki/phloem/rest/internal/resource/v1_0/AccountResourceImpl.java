@@ -15,11 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.AccountUtil;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ContactUtil;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ProjectUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
@@ -30,8 +26,6 @@ import com.liferay.osb.koroneiki.taproot.service.ContactService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectService;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,34 +69,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	@Override
 	public Account getAccount(Long accountId) throws Exception {
 		return AccountUtil.toAccount(_accountService.getAccount(accountId));
-	}
-
-	@Override
-	public Page<Contact> getAccountContactsPage(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		return Page.of(
-			transform(
-				_contactService.getAccountContacts(
-					accountId, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				ContactUtil::toContact),
-			pagination, _contactService.getAccountContactsCount(accountId));
-	}
-
-	@Override
-	public Page<Project> getAccountProjectsPage(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		return Page.of(
-			transform(
-				_projectService.getProjects(
-					accountId, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				ProjectUtil::toProject),
-			pagination, _projectService.getProjectsCount(accountId));
 	}
 
 	@Override

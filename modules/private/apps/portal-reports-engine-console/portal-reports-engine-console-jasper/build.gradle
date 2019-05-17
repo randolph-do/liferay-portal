@@ -1,4 +1,4 @@
-ependencies {
+dependencies {
 	compileInclude group: "antlr", name: "antlr", version: "2.7.5"
 	compileInclude group: "com.github.virtuald", name: "curvesapi", version: "1.06"
 	compileInclude group: "com.lowagie", name: "itext", version: "2.1.7"

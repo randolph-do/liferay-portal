@@ -16,6 +16,8 @@ package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -30,11 +32,19 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ContactResource {
 
+	public Page<Contact> getAccountContactsPage(
+			Long accountId, Pagination pagination)
+		throws Exception;
+
 	public Contact postContact(Contact contact) throws Exception;
 
 	public void deleteContact(Long contactId) throws Exception;
 
 	public Contact getContact(Long contactId) throws Exception;
+
+	public Page<Contact> getProjectContactsPage(
+			Long projectId, Pagination pagination)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

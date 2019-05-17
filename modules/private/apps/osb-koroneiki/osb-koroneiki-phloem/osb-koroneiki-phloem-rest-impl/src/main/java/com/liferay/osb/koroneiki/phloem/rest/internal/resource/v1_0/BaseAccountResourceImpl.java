@@ -15,14 +15,10 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +29,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -134,28 +129,6 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	}
 
 	@Override
-	@GET
-	@Operation(description = "Retrieves the account's contacts.")
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/accounts/{accountId}/contacts")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Account")})
-	public Page<Contact> getAccountContactsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
 	@Operation(description = "Assigns contacts to the account.")
 	@PUT
 	@Parameters(
@@ -221,28 +194,6 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleIds")
 				Long[] contactRoleIds)
 		throws Exception {
-	}
-
-	@Override
-	@GET
-	@Operation(description = "Retrieves the account's projects.")
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/accounts/{accountId}/projects")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Account")})
-	public Page<Project> getAccountProjectsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

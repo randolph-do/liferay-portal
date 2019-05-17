@@ -18,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
@@ -44,6 +42,7 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -52,6 +51,8 @@ import java.net.URL;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -118,14 +119,6 @@ public abstract class BaseContactResourceTestCase {
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -146,14 +139,6 @@ public abstract class BaseContactResourceTestCase {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -166,6 +151,147 @@ public abstract class BaseContactResourceTestCase {
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	@Test
+	public void testGetAccountContactsPage() throws Exception {
+		Long accountId = testGetAccountContactsPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountContactsPage_getIrrelevantAccountId();
+
+		if ((irrelevantAccountId != null)) {
+			Contact irrelevantContact = testGetAccountContactsPage_addContact(
+				irrelevantAccountId, randomIrrelevantContact());
+
+			Page<Contact> page = invokeGetAccountContactsPage(
+				irrelevantAccountId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantContact),
+				(List<Contact>)page.getItems());
+			assertValid(page);
+		}
+
+		Contact contact1 = testGetAccountContactsPage_addContact(
+			accountId, randomContact());
+
+		Contact contact2 = testGetAccountContactsPage_addContact(
+			accountId, randomContact());
+
+		Page<Contact> page = invokeGetAccountContactsPage(
+			accountId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contact1, contact2), (List<Contact>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAccountContactsPageWithPagination() throws Exception {
+		Long accountId = testGetAccountContactsPage_getAccountId();
+
+		Contact contact1 = testGetAccountContactsPage_addContact(
+			accountId, randomContact());
+
+		Contact contact2 = testGetAccountContactsPage_addContact(
+			accountId, randomContact());
+
+		Contact contact3 = testGetAccountContactsPage_addContact(
+			accountId, randomContact());
+
+		Page<Contact> page1 = invokeGetAccountContactsPage(
+			accountId, Pagination.of(1, 2));
+
+		List<Contact> contacts1 = (List<Contact>)page1.getItems();
+
+		Assert.assertEquals(contacts1.toString(), 2, contacts1.size());
+
+		Page<Contact> page2 = invokeGetAccountContactsPage(
+			accountId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Contact> contacts2 = (List<Contact>)page2.getItems();
+
+		Assert.assertEquals(contacts2.toString(), 1, contacts2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contact1, contact2, contact3),
+			new ArrayList<Contact>() {
+				{
+					addAll(contacts1);
+					addAll(contacts2);
+				}
+			});
+	}
+
+	protected Contact testGetAccountContactsPage_addContact(
+			Long accountId, Contact contact)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountContactsPage_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountContactsPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Contact> invokeGetAccountContactsPage(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return Page.of(string, ContactSerDes::toDTO);
+	}
+
+	protected Http.Response invokeGetAccountContactsPageResponse(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -239,6 +365,8 @@ public abstract class BaseContactResourceTestCase {
 		assertResponseCode(204, invokeDeleteContactResponse(contact.getId()));
 
 		assertResponseCode(404, invokeGetContactResponse(contact.getId()));
+
+		assertResponseCode(404, invokeGetContactResponse(0L));
 	}
 
 	protected Contact testDeleteContact_addContact() throws Exception {
@@ -328,6 +456,147 @@ public abstract class BaseContactResourceTestCase {
 
 		String location =
 			_resourceURL + _toPath("/contacts/{contactId}", contactId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetProjectContactsPage() throws Exception {
+		Long projectId = testGetProjectContactsPage_getProjectId();
+		Long irrelevantProjectId =
+			testGetProjectContactsPage_getIrrelevantProjectId();
+
+		if ((irrelevantProjectId != null)) {
+			Contact irrelevantContact = testGetProjectContactsPage_addContact(
+				irrelevantProjectId, randomIrrelevantContact());
+
+			Page<Contact> page = invokeGetProjectContactsPage(
+				irrelevantProjectId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantContact),
+				(List<Contact>)page.getItems());
+			assertValid(page);
+		}
+
+		Contact contact1 = testGetProjectContactsPage_addContact(
+			projectId, randomContact());
+
+		Contact contact2 = testGetProjectContactsPage_addContact(
+			projectId, randomContact());
+
+		Page<Contact> page = invokeGetProjectContactsPage(
+			projectId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contact1, contact2), (List<Contact>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetProjectContactsPageWithPagination() throws Exception {
+		Long projectId = testGetProjectContactsPage_getProjectId();
+
+		Contact contact1 = testGetProjectContactsPage_addContact(
+			projectId, randomContact());
+
+		Contact contact2 = testGetProjectContactsPage_addContact(
+			projectId, randomContact());
+
+		Contact contact3 = testGetProjectContactsPage_addContact(
+			projectId, randomContact());
+
+		Page<Contact> page1 = invokeGetProjectContactsPage(
+			projectId, Pagination.of(1, 2));
+
+		List<Contact> contacts1 = (List<Contact>)page1.getItems();
+
+		Assert.assertEquals(contacts1.toString(), 2, contacts1.size());
+
+		Page<Contact> page2 = invokeGetProjectContactsPage(
+			projectId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Contact> contacts2 = (List<Contact>)page2.getItems();
+
+		Assert.assertEquals(contacts2.toString(), 1, contacts2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contact1, contact2, contact3),
+			new ArrayList<Contact>() {
+				{
+					addAll(contacts1);
+					addAll(contacts2);
+				}
+			});
+	}
+
+	protected Contact testGetProjectContactsPage_addContact(
+			Long projectId, Contact contact)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProjectContactsPage_getProjectId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProjectContactsPage_getIrrelevantProjectId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Contact> invokeGetProjectContactsPage(
+			Long projectId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return Page.of(string, ContactSerDes::toDTO);
+	}
+
+	protected Http.Response invokeGetProjectContactsPageResponse(
+			Long projectId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -722,7 +991,7 @@ public abstract class BaseContactResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Contact randomContact() {
+	protected Contact randomContact() throws Exception {
 		return new Contact() {
 			{
 				dateCreated = RandomTestUtil.nextDate();
@@ -737,13 +1006,13 @@ public abstract class BaseContactResourceTestCase {
 		};
 	}
 
-	protected Contact randomIrrelevantContact() {
+	protected Contact randomIrrelevantContact() throws Exception {
 		Contact randomIrrelevantContact = randomContact();
 
 		return randomIrrelevantContact;
 	}
 
-	protected Contact randomPatchContact() {
+	protected Contact randomPatchContact() throws Exception {
 		return randomContact();
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -58,6 +57,28 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProjectResourceImpl implements ProjectResource {
+
+	@Override
+	@GET
+	@Operation(description = "Retrieves the account's projects.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/accounts/{accountId}/projects")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Project")})
+	public Page<Project> getAccountProjectsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -136,28 +157,6 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 			@NotNull @Parameter(hidden = true) @QueryParam("contactIds") Long[]
 				contactIds)
 		throws Exception {
-	}
-
-	@Override
-	@GET
-	@Operation(description = "Retrieves the project's contacts.")
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/projects/{projectId}/contacts")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Project")})
-	public Page<Contact> getProjectContactsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
 	}
 
 	@Override

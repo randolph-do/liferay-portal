@@ -19,6 +19,8 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +31,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -52,6 +55,28 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseContactResourceImpl implements ContactResource {
+
+	@Override
+	@GET
+	@Operation(description = "Retrieves the account's contacts.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/accounts/{accountId}/contacts")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Contact")})
+	public Page<Contact> getAccountContactsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -88,6 +113,28 @@ public abstract class BaseContactResourceImpl implements ContactResource {
 		throws Exception {
 
 		return new Contact();
+	}
+
+	@Override
+	@GET
+	@Operation(description = "Retrieves the project's contacts.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/projects/{projectId}/contacts")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Contact")})
+	public Page<Contact> getProjectContactsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
+				projectId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

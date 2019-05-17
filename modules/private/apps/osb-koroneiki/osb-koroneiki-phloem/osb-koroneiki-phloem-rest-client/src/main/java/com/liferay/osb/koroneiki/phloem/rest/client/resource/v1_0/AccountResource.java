@@ -16,8 +16,6 @@ package com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
-import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
-import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AccountSerDes;
 
 import java.util.logging.Level;
@@ -177,36 +175,6 @@ public class AccountResource {
 		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
-	public Page<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact>
-			getAccountContactsPage(Long accountId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-		httpInvoker.parameter(
-			"pageSize", String.valueOf(pagination.getPageSize()));
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, AccountSerDes::toDTO);
-	}
-
 	public void putAccountContact(Long accountId, Long[] contactIds)
 		throws Exception {
 
@@ -276,36 +244,6 @@ public class AccountResource {
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
 		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-	}
-
-	public Page<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Project>
-			getAccountProjectsPage(Long accountId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-		httpInvoker.parameter(
-			"pageSize", String.valueOf(pagination.getPageSize()));
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, AccountSerDes::toDTO);
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -15,11 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -45,10 +41,6 @@ public interface AccountResource {
 	public void deleteAccountContact(Long accountId, Long[] contactIds)
 		throws Exception;
 
-	public Page<Contact> getAccountContactsPage(
-			Long accountId, Pagination pagination)
-		throws Exception;
-
 	public void putAccountContact(Long accountId, Long[] contactIds)
 		throws Exception;
 
@@ -58,10 +50,6 @@ public interface AccountResource {
 
 	public void putAccountContactRole(
 			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception;
-
-	public Page<Project> getAccountProjectsPage(
-			Long accountId, Pagination pagination)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

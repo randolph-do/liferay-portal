@@ -18,13 +18,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AccountSerDes;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
@@ -46,7 +42,6 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -55,8 +50,6 @@ import java.net.URL;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -123,14 +116,6 @@ public abstract class BaseAccountResourceTestCase {
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -151,14 +136,6 @@ public abstract class BaseAccountResourceTestCase {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -244,6 +221,8 @@ public abstract class BaseAccountResourceTestCase {
 		assertResponseCode(204, invokeDeleteAccountResponse(account.getId()));
 
 		assertResponseCode(404, invokeGetAccountResponse(account.getId()));
+
+		assertResponseCode(404, invokeGetAccountResponse(0L));
 	}
 
 	protected Account testDeleteAccount_addAccount() throws Exception {
@@ -429,6 +408,8 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertResponseCode(
 			404, invokeGetAccountContactResponse(account.getId()));
+
+		assertResponseCode(404, invokeGetAccountContactResponse(0L));
 	}
 
 	protected Account testDeleteAccountContact_addAccount() throws Exception {
@@ -445,6 +426,8 @@ public abstract class BaseAccountResourceTestCase {
 
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
+
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
 
 		options.setLocation(location);
 
@@ -466,146 +449,7 @@ public abstract class BaseAccountResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
 
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetAccountContactsPage() throws Exception {
-		Long accountId = testGetAccountContactsPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountContactsPage_getIrrelevantAccountId();
-
-		if ((irrelevantAccountId != null)) {
-			Account irrelevantAccount = testGetAccountContactsPage_addAccount(
-				irrelevantAccountId, randomIrrelevantAccount());
-
-			Page<Account> page = invokeGetAccountContactsPage(
-				irrelevantAccountId, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantAccount),
-				(List<Account>)page.getItems());
-			assertValid(page);
-		}
-
-		Account account1 = testGetAccountContactsPage_addAccount(
-			accountId, randomAccount());
-
-		Account account2 = testGetAccountContactsPage_addAccount(
-			accountId, randomAccount());
-
-		Page<Account> page = invokeGetAccountContactsPage(
-			accountId, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(account1, account2), (List<Account>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetAccountContactsPageWithPagination() throws Exception {
-		Long accountId = testGetAccountContactsPage_getAccountId();
-
-		Account account1 = testGetAccountContactsPage_addAccount(
-			accountId, randomAccount());
-
-		Account account2 = testGetAccountContactsPage_addAccount(
-			accountId, randomAccount());
-
-		Account account3 = testGetAccountContactsPage_addAccount(
-			accountId, randomAccount());
-
-		Page<Account> page1 = invokeGetAccountContactsPage(
-			accountId, Pagination.of(1, 2));
-
-		List<Account> accounts1 = (List<Account>)page1.getItems();
-
-		Assert.assertEquals(accounts1.toString(), 2, accounts1.size());
-
-		Page<Account> page2 = invokeGetAccountContactsPage(
-			accountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Account> accounts2 = (List<Account>)page2.getItems();
-
-		Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(account1, account2, account3),
-			new ArrayList<Account>() {
-				{
-					addAll(accounts1);
-					addAll(accounts2);
-				}
-			});
-	}
-
-	protected Account testGetAccountContactsPage_addAccount(
-			Long accountId, Account account)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountContactsPage_getAccountId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountContactsPage_getIrrelevantAccountId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Page<Contact> invokeGetAccountContactsPage(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AccountSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetAccountContactsPageResponse(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
 
 		options.setLocation(location);
 
@@ -627,6 +471,8 @@ public abstract class BaseAccountResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
 
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+
 		options.setLocation(location);
 
 		options.setPut(true);
@@ -647,6 +493,8 @@ public abstract class BaseAccountResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
 
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+
 		options.setLocation(location);
 
 		options.setPut(true);
@@ -665,6 +513,8 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertResponseCode(
 			404, invokeGetAccountContactRoleResponse(account.getId()));
+
+		assertResponseCode(404, invokeGetAccountContactRoleResponse(0L));
 	}
 
 	protected Account testDeleteAccountContactRole_addAccount()
@@ -688,6 +538,9 @@ public abstract class BaseAccountResourceTestCase {
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
 
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
+
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
@@ -710,6 +563,9 @@ public abstract class BaseAccountResourceTestCase {
 				_toPath(
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
+
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
 
 		options.setLocation(location);
 
@@ -735,6 +591,9 @@ public abstract class BaseAccountResourceTestCase {
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
 
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
+
 		options.setLocation(location);
 
 		options.setPut(true);
@@ -758,150 +617,12 @@ public abstract class BaseAccountResourceTestCase {
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
 
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
+
 		options.setLocation(location);
 
 		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetAccountProjectsPage() throws Exception {
-		Long accountId = testGetAccountProjectsPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountProjectsPage_getIrrelevantAccountId();
-
-		if ((irrelevantAccountId != null)) {
-			Account irrelevantAccount = testGetAccountProjectsPage_addAccount(
-				irrelevantAccountId, randomIrrelevantAccount());
-
-			Page<Account> page = invokeGetAccountProjectsPage(
-				irrelevantAccountId, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantAccount),
-				(List<Account>)page.getItems());
-			assertValid(page);
-		}
-
-		Account account1 = testGetAccountProjectsPage_addAccount(
-			accountId, randomAccount());
-
-		Account account2 = testGetAccountProjectsPage_addAccount(
-			accountId, randomAccount());
-
-		Page<Account> page = invokeGetAccountProjectsPage(
-			accountId, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(account1, account2), (List<Account>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetAccountProjectsPageWithPagination() throws Exception {
-		Long accountId = testGetAccountProjectsPage_getAccountId();
-
-		Account account1 = testGetAccountProjectsPage_addAccount(
-			accountId, randomAccount());
-
-		Account account2 = testGetAccountProjectsPage_addAccount(
-			accountId, randomAccount());
-
-		Account account3 = testGetAccountProjectsPage_addAccount(
-			accountId, randomAccount());
-
-		Page<Account> page1 = invokeGetAccountProjectsPage(
-			accountId, Pagination.of(1, 2));
-
-		List<Account> accounts1 = (List<Account>)page1.getItems();
-
-		Assert.assertEquals(accounts1.toString(), 2, accounts1.size());
-
-		Page<Account> page2 = invokeGetAccountProjectsPage(
-			accountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Account> accounts2 = (List<Account>)page2.getItems();
-
-		Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(account1, account2, account3),
-			new ArrayList<Account>() {
-				{
-					addAll(accounts1);
-					addAll(accounts2);
-				}
-			});
-	}
-
-	protected Account testGetAccountProjectsPage_addAccount(
-			Long accountId, Account account)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountProjectsPage_getAccountId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountProjectsPage_getIrrelevantAccountId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Page<Project> invokeGetAccountProjectsPage(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/projects", accountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AccountSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetAccountProjectsPageResponse(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/projects", accountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
 
 		HttpUtil.URLtoByteArray(options);
 
@@ -1215,7 +936,7 @@ public abstract class BaseAccountResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Account randomAccount() {
+	protected Account randomAccount() throws Exception {
 		return new Account() {
 			{
 				dateCreated = RandomTestUtil.nextDate();
@@ -1227,13 +948,13 @@ public abstract class BaseAccountResourceTestCase {
 		};
 	}
 
-	protected Account randomIrrelevantAccount() {
+	protected Account randomIrrelevantAccount() throws Exception {
 		Account randomIrrelevantAccount = randomAccount();
 
 		return randomIrrelevantAccount;
 	}
 
-	protected Account randomPatchAccount() {
+	protected Account randomPatchAccount() throws Exception {
 		return randomAccount();
 	}
 

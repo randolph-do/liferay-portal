@@ -32,6 +32,36 @@ import javax.annotation.Generated;
 @Generated("")
 public class ProjectResource {
 
+	public Page<Project> getAccountProjectsPage(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+		httpInvoker.parameter(
+			"pageSize", String.valueOf(pagination.getPageSize()));
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
+			accountId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		return Page.of(content, ProjectSerDes::toDTO);
+	}
+
 	public Project postAccountProject(Long accountId, Project project)
 		throws Exception {
 
@@ -178,36 +208,6 @@ public class ProjectResource {
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
 		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-	}
-
-	public Page<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact>
-			getProjectContactsPage(Long projectId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-		httpInvoker.parameter(
-			"pageSize", String.valueOf(pagination.getPageSize()));
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ProjectSerDes::toDTO);
 	}
 
 	public void putProjectContact(Long projectId, Long[] contactIds)

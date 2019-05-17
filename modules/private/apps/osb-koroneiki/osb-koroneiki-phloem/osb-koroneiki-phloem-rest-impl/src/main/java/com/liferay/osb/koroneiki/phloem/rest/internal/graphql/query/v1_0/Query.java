@@ -88,29 +88,10 @@ public class Query {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_accountResourceComponentServiceObjects,
+			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource -> {
-				Page paginationPage = accountResource.getAccountContactsPage(
-					accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Project> getAccountProjectsPage(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountResource -> {
-				Page paginationPage = accountResource.getAccountProjectsPage(
+			contactResource -> {
+				Page paginationPage = contactResource.getAccountContactsPage(
 					accountId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -130,19 +111,27 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Project getProject(@GraphQLName("projectId") Long projectId)
+	public Collection<Contact> getProjectContactsPage(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_projectResourceComponentServiceObjects,
+			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.getProject(projectId));
+			contactResource -> {
+				Page paginationPage = contactResource.getProjectContactsPage(
+					projectId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Contact> getProjectContactsPage(
-			@GraphQLName("projectId") Long projectId,
+	public Collection<Project> getAccountProjectsPage(
+			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -151,11 +140,22 @@ public class Query {
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			projectResource -> {
-				Page paginationPage = projectResource.getProjectContactsPage(
-					projectId, Pagination.of(pageSize, page));
+				Page paginationPage = projectResource.getAccountProjectsPage(
+					accountId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Project getProject(@GraphQLName("projectId") Long projectId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_projectResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			projectResource -> projectResource.getProject(projectId));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

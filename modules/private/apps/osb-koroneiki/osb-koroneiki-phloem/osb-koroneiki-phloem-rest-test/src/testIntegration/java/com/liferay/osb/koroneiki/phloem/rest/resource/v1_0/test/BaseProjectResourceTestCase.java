@@ -18,11 +18,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ProjectSerDes;
@@ -122,14 +119,6 @@ public abstract class BaseProjectResourceTestCase {
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -150,14 +139,6 @@ public abstract class BaseProjectResourceTestCase {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -170,6 +151,146 @@ public abstract class BaseProjectResourceTestCase {
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	@Test
+	public void testGetAccountProjectsPage() throws Exception {
+		Long accountId = testGetAccountProjectsPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountProjectsPage_getIrrelevantAccountId();
+
+		if ((irrelevantAccountId != null)) {
+			Project irrelevantProject = testGetAccountProjectsPage_addProject(
+				irrelevantAccountId, randomIrrelevantProject());
+
+			Page<Project> page = invokeGetAccountProjectsPage(
+				irrelevantAccountId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantProject),
+				(List<Project>)page.getItems());
+			assertValid(page);
+		}
+
+		Project project1 = testGetAccountProjectsPage_addProject(
+			accountId, randomProject());
+
+		Project project2 = testGetAccountProjectsPage_addProject(
+			accountId, randomProject());
+
+		Page<Project> page = invokeGetAccountProjectsPage(
+			accountId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(project1, project2), (List<Project>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAccountProjectsPageWithPagination() throws Exception {
+		Long accountId = testGetAccountProjectsPage_getAccountId();
+
+		Project project1 = testGetAccountProjectsPage_addProject(
+			accountId, randomProject());
+
+		Project project2 = testGetAccountProjectsPage_addProject(
+			accountId, randomProject());
+
+		Project project3 = testGetAccountProjectsPage_addProject(
+			accountId, randomProject());
+
+		Page<Project> page1 = invokeGetAccountProjectsPage(
+			accountId, Pagination.of(1, 2));
+
+		List<Project> projects1 = (List<Project>)page1.getItems();
+
+		Assert.assertEquals(projects1.toString(), 2, projects1.size());
+
+		Page<Project> page2 = invokeGetAccountProjectsPage(
+			accountId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Project> projects2 = (List<Project>)page2.getItems();
+
+		Assert.assertEquals(projects2.toString(), 1, projects2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(project1, project2, project3),
+			new ArrayList<Project>() {
+				{
+					addAll(projects1);
+					addAll(projects2);
+				}
+			});
+	}
+
+	protected Project testGetAccountProjectsPage_addProject(
+			Long accountId, Project project)
+		throws Exception {
+
+		return invokePostAccountProject(accountId, project);
+	}
+
+	protected Long testGetAccountProjectsPage_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountProjectsPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<Project> invokeGetAccountProjectsPage(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/accounts/{accountId}/projects", accountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return Page.of(string, ProjectSerDes::toDTO);
+	}
+
+	protected Http.Response invokeGetAccountProjectsPageResponse(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/accounts/{accountId}/projects", accountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -252,6 +373,8 @@ public abstract class BaseProjectResourceTestCase {
 		assertResponseCode(204, invokeDeleteProjectResponse(project.getId()));
 
 		assertResponseCode(404, invokeGetProjectResponse(project.getId()));
+
+		assertResponseCode(404, invokeGetProjectResponse(0L));
 	}
 
 	protected Project testDeleteProject_addProject() throws Exception {
@@ -437,6 +560,8 @@ public abstract class BaseProjectResourceTestCase {
 
 		assertResponseCode(
 			404, invokeGetProjectContactResponse(project.getId()));
+
+		assertResponseCode(404, invokeGetProjectContactResponse(0L));
 	}
 
 	protected Project testDeleteProjectContact_addProject() throws Exception {
@@ -453,6 +578,8 @@ public abstract class BaseProjectResourceTestCase {
 
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
+
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
 
 		options.setLocation(location);
 
@@ -474,146 +601,7 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
 
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetProjectContactsPage() throws Exception {
-		Long projectId = testGetProjectContactsPage_getProjectId();
-		Long irrelevantProjectId =
-			testGetProjectContactsPage_getIrrelevantProjectId();
-
-		if ((irrelevantProjectId != null)) {
-			Project irrelevantProject = testGetProjectContactsPage_addProject(
-				irrelevantProjectId, randomIrrelevantProject());
-
-			Page<Project> page = invokeGetProjectContactsPage(
-				irrelevantProjectId, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantProject),
-				(List<Project>)page.getItems());
-			assertValid(page);
-		}
-
-		Project project1 = testGetProjectContactsPage_addProject(
-			projectId, randomProject());
-
-		Project project2 = testGetProjectContactsPage_addProject(
-			projectId, randomProject());
-
-		Page<Project> page = invokeGetProjectContactsPage(
-			projectId, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(project1, project2), (List<Project>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetProjectContactsPageWithPagination() throws Exception {
-		Long projectId = testGetProjectContactsPage_getProjectId();
-
-		Project project1 = testGetProjectContactsPage_addProject(
-			projectId, randomProject());
-
-		Project project2 = testGetProjectContactsPage_addProject(
-			projectId, randomProject());
-
-		Project project3 = testGetProjectContactsPage_addProject(
-			projectId, randomProject());
-
-		Page<Project> page1 = invokeGetProjectContactsPage(
-			projectId, Pagination.of(1, 2));
-
-		List<Project> projects1 = (List<Project>)page1.getItems();
-
-		Assert.assertEquals(projects1.toString(), 2, projects1.size());
-
-		Page<Project> page2 = invokeGetProjectContactsPage(
-			projectId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Project> projects2 = (List<Project>)page2.getItems();
-
-		Assert.assertEquals(projects2.toString(), 1, projects2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(project1, project2, project3),
-			new ArrayList<Project>() {
-				{
-					addAll(projects1);
-					addAll(projects2);
-				}
-			});
-	}
-
-	protected Project testGetProjectContactsPage_addProject(
-			Long projectId, Project project)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetProjectContactsPage_getProjectId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetProjectContactsPage_getIrrelevantProjectId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Page<Contact> invokeGetProjectContactsPage(
-			Long projectId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, ProjectSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetProjectContactsPageResponse(
-			Long projectId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
 
 		options.setLocation(location);
 
@@ -635,6 +623,8 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
 
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+
 		options.setLocation(location);
 
 		options.setPut(true);
@@ -655,6 +645,8 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
 
+		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+
 		options.setLocation(location);
 
 		options.setPut(true);
@@ -673,6 +665,8 @@ public abstract class BaseProjectResourceTestCase {
 
 		assertResponseCode(
 			404, invokeGetProjectContactRoleResponse(project.getId()));
+
+		assertResponseCode(404, invokeGetProjectContactRoleResponse(0L));
 	}
 
 	protected Project testDeleteProjectContactRole_addProject()
@@ -696,6 +690,9 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
 
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
+
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
@@ -718,6 +715,9 @@ public abstract class BaseProjectResourceTestCase {
 				_toPath(
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
+
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
 
 		options.setLocation(location);
 
@@ -743,6 +743,9 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
 
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
+
 		options.setLocation(location);
 
 		options.setPut(true);
@@ -765,6 +768,9 @@ public abstract class BaseProjectResourceTestCase {
 				_toPath(
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
+
+		location = HttpUtil.addParameter(
+			location, "contactRoleIds", contactRoleIds);
 
 		options.setLocation(location);
 
@@ -1209,7 +1215,7 @@ public abstract class BaseProjectResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Project randomProject() {
+	protected Project randomProject() throws Exception {
 		return new Project() {
 			{
 				accountId = RandomTestUtil.randomLong();
@@ -1226,13 +1232,13 @@ public abstract class BaseProjectResourceTestCase {
 		};
 	}
 
-	protected Project randomIrrelevantProject() {
+	protected Project randomIrrelevantProject() throws Exception {
 		Project randomIrrelevantProject = randomProject();
 
 		return randomIrrelevantProject;
 	}
 
-	protected Project randomPatchProject() {
+	protected Project randomPatchProject() throws Exception {
 		return randomProject();
 	}
 

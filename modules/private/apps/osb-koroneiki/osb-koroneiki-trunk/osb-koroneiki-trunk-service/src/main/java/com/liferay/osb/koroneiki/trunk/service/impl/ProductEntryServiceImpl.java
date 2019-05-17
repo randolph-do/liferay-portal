@@ -15,14 +15,12 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
+import com.liferay.osb.koroneiki.trunk.internal.permission.ProductEntryPermissionUtil;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,8 +37,8 @@ import org.osgi.service.component.annotations.Component;
 public class ProductEntryServiceImpl extends ProductEntryServiceBaseImpl {
 
 	public ProductEntry addProductEntry(String name) throws PortalException {
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TrunkActionKeys.ADD_PRODUCT_ENTRY);
+		ProductEntryPermissionUtil.check(
+			getPermissionChecker(), 0, TrunkActionKeys.ADD_PRODUCT_ENTRY);
 
 		return productEntryLocalService.addProductEntry(getUserId(), name);
 	}
@@ -49,7 +47,7 @@ public class ProductEntryServiceImpl extends ProductEntryServiceBaseImpl {
 	public ProductEntry deleteProductEntry(long productEntryId)
 		throws PortalException {
 
-		_productEntryModelResourcePermission.check(
+		ProductEntryPermissionUtil.check(
 			getPermissionChecker(), productEntryId, ActionKeys.DELETE);
 
 		return productEntryLocalService.deleteProductEntry(productEntryId);
@@ -58,17 +56,11 @@ public class ProductEntryServiceImpl extends ProductEntryServiceBaseImpl {
 	public ProductEntry updateProductEntry(long productEntryId, String name)
 		throws PortalException {
 
-		_productEntryModelResourcePermission.check(
+		ProductEntryPermissionUtil.check(
 			getPermissionChecker(), productEntryId, ActionKeys.UPDATE);
 
 		return productEntryLocalService.updateProductEntry(
 			productEntryId, name);
 	}
-
-	private static volatile ModelResourcePermission<ProductEntry>
-		_productEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ProductEntryServiceImpl.class,
-				"_productEntryModelResourcePermission", ProductEntry.class);
 
 }

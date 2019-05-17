@@ -16,14 +16,12 @@ package com.liferay.osb.koroneiki.trunk.internal.permission;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.osb.koroneiki.trunk.permission.ProductPurchasePermission;
-import com.liferay.osb.koroneiki.trunk.service.ProductPurchaseLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -105,8 +103,5 @@ public class ProductPurchasePermissionImpl
 
 		return false;
 	}
-
-	@Reference
-	private ProductPurchaseLocalService _productPurchaseLocalService;
 
 }

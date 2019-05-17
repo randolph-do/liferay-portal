@@ -12,14 +12,12 @@
  *
  */
 
-package com.liferay.osb.koroneiki.taproot.internal.security.permission.resource;
+package com.liferay.osb.koroneiki.taproot.internal.permission;
 
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,62 +25,52 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.osb.koroneiki.taproot.model.Project",
-	service = ModelResourcePermission.class
-)
-public class ProjectModelResourcePermission
-	implements ModelResourcePermission<Project> {
+@Component(immediate = true, service = {})
+public class ProjectPermissionUtil {
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, long projectId,
 			String actionId)
 		throws PortalException {
 
-		projectPermission.check(permissionChecker, projectId, actionId);
+		getProjectPermission().check(permissionChecker, projectId, actionId);
 	}
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, Project project,
 			String actionId)
 		throws PortalException {
 
-		projectPermission.check(permissionChecker, project, actionId);
+		getProjectPermission().check(permissionChecker, project, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, long projectId,
 			String actionId)
 		throws PortalException {
 
-		return projectPermission.contains(
+		return getProjectPermission().contains(
 			permissionChecker, projectId, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, Project project,
 			String actionId)
 		throws PortalException {
 
-		return projectPermission.contains(permissionChecker, project, actionId);
+		return getProjectPermission().contains(
+			permissionChecker, project, actionId);
 	}
 
-	@Override
-	public String getModelName() {
-		return Project.class.getName();
+	public static ProjectPermission getProjectPermission() {
+		return _projectPermission;
 	}
 
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+	@Reference(unbind = "-")
+	public void setProjectPermission(ProjectPermission projectPermission) {
+		_projectPermission = projectPermission;
 	}
 
-	@Reference
-	protected ProjectPermission projectPermission;
+	private static ProjectPermission _projectPermission;
 
 }

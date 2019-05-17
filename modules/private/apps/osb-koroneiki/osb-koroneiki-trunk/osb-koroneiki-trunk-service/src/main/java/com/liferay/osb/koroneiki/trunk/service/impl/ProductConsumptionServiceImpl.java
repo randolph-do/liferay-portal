@@ -15,14 +15,12 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
+import com.liferay.osb.koroneiki.trunk.internal.permission.ProductConsumptionPermissionUtil;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductConsumptionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,8 +41,8 @@ public class ProductConsumptionServiceImpl
 			long accountId, long projectId, long productEntryId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TrunkActionKeys.ADD_PRODUCT_CONSUMPTION);
+		ProductConsumptionPermissionUtil.check(
+			getPermissionChecker(), 0, TrunkActionKeys.ADD_PRODUCT_CONSUMPTION);
 
 		return productConsumptionLocalService.addProductConsumption(
 			getUserId(), accountId, projectId, productEntryId);
@@ -54,18 +52,11 @@ public class ProductConsumptionServiceImpl
 			long productConsumptionId)
 		throws PortalException {
 
-		_productConsumptionModelResourcePermission.check(
+		ProductConsumptionPermissionUtil.check(
 			getPermissionChecker(), productConsumptionId, ActionKeys.DELETE);
 
 		return productConsumptionLocalService.deleteProductConsumption(
 			productConsumptionId);
 	}
-
-	private static volatile ModelResourcePermission<ProductConsumption>
-		_productConsumptionModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ProductConsumptionServiceImpl.class,
-				"_productConsumptionModelResourcePermission",
-				ProductConsumption.class);
 
 }

@@ -12,14 +12,12 @@
  *
  */
 
-package com.liferay.osb.koroneiki.taproot.internal.security.permission.resource;
+package com.liferay.osb.koroneiki.taproot.internal.permission;
 
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,62 +25,52 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.osb.koroneiki.taproot.model.Account",
-	service = ModelResourcePermission.class
-)
-public class AccountModelResourcePermission
-	implements ModelResourcePermission<Account> {
+@Component(immediate = true, service = {})
+public class AccountPermissionUtil {
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
 		throws PortalException {
 
-		accountPermission.check(permissionChecker, account, actionId);
+		getAccountPermission().check(permissionChecker, account, actionId);
 	}
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, long accountId,
 			String actionId)
 		throws PortalException {
 
-		accountPermission.check(permissionChecker, accountId, actionId);
+		getAccountPermission().check(permissionChecker, accountId, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
 		throws PortalException {
 
-		return accountPermission.contains(permissionChecker, account, actionId);
+		return getAccountPermission().contains(
+			permissionChecker, account, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, long accountId,
 			String actionId)
 		throws PortalException {
 
-		return accountPermission.contains(
+		return getAccountPermission().contains(
 			permissionChecker, accountId, actionId);
 	}
 
-	@Override
-	public String getModelName() {
-		return Account.class.getName();
+	public static AccountPermission getAccountPermission() {
+		return _accountPermission;
 	}
 
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+	@Reference(unbind = "-")
+	public void setAccocuntPermission(AccountPermission accountPermission) {
+		_accountPermission = accountPermission;
 	}
 
-	@Reference
-	protected AccountPermission accountPermission;
+	private static AccountPermission _accountPermission;
 
 }

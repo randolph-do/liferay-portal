@@ -15,14 +15,12 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
+import com.liferay.osb.koroneiki.trunk.internal.permission.ProductPurchasePermissionUtil;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductPurchaseServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.Date;
 
@@ -45,8 +43,8 @@ public class ProductPurchaseServiceImpl extends ProductPurchaseServiceBaseImpl {
 			Date endDate, int quantity)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TrunkActionKeys.ADD_PRODUCT_PURCHASE);
+		ProductPurchasePermissionUtil.check(
+			getPermissionChecker(), 0, TrunkActionKeys.ADD_PRODUCT_PURCHASE);
 
 		return productPurchaseLocalService.addProductPurchase(
 			getUserId(), accountId, projectId, productEntryId, startDate,
@@ -56,7 +54,7 @@ public class ProductPurchaseServiceImpl extends ProductPurchaseServiceBaseImpl {
 	public ProductPurchase deleteProductPurchase(long productPurchaseId)
 		throws PortalException {
 
-		_productPurchaseModelResourcePermission.check(
+		ProductPurchasePermissionUtil.check(
 			getPermissionChecker(), productPurchaseId, ActionKeys.DELETE);
 
 		return productPurchaseLocalService.deleteProductPurchase(
@@ -67,18 +65,11 @@ public class ProductPurchaseServiceImpl extends ProductPurchaseServiceBaseImpl {
 			long productPurchaseId, Date startDate, Date endDate, int quantity)
 		throws PortalException {
 
-		_productPurchaseModelResourcePermission.check(
+		ProductPurchasePermissionUtil.check(
 			getPermissionChecker(), productPurchaseId, ActionKeys.UPDATE);
 
 		return productPurchaseLocalService.updateProductPurchase(
 			productPurchaseId, startDate, endDate, quantity);
 	}
-
-	private static volatile ModelResourcePermission<ProductPurchase>
-		_productPurchaseModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ProductPurchaseServiceImpl.class,
-				"_productPurchaseModelResourcePermission",
-				ProductPurchase.class);
 
 }

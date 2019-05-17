@@ -15,16 +15,14 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
-import com.liferay.osb.koroneiki.taproot.model.Account;
+import com.liferay.osb.koroneiki.taproot.internal.permission.AccountPermissionUtil;
+import com.liferay.osb.koroneiki.taproot.internal.permission.ContactPermissionUtil;
+import com.liferay.osb.koroneiki.taproot.internal.permission.ProjectPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
-import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.List;
 
@@ -47,8 +45,8 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 			String emailAddress, String languageId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TaprootActionKeys.ADD_CONTACT);
+		ContactPermissionUtil.check(
+			getPermissionChecker(), 0, TaprootActionKeys.ADD_CONTACT);
 
 		return contactLocalService.addContact(
 			getUserId(), firstName, middleName, lastName, emailAddress,
@@ -56,7 +54,7 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	}
 
 	public Contact deleteContact(long contactId) throws PortalException {
-		_contactModelResourcePermission.check(
+		ContactPermissionUtil.check(
 			getPermissionChecker(), contactId, ActionKeys.DELETE);
 
 		return contactLocalService.deleteContact(contactId);
@@ -65,21 +63,21 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	public List<Contact> getAccountContacts(long accountId, int start, int end)
 		throws PortalException {
 
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return contactLocalService.getAccountContacts(accountId, start, end);
 	}
 
 	public int getAccountContactsCount(long accountId) throws PortalException {
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return contactLocalService.getAccountContactsCount(accountId);
 	}
 
 	public Contact getContact(long contactId) throws PortalException {
-		_contactModelResourcePermission.check(
+		ContactPermissionUtil.check(
 			getPermissionChecker(), contactId, ActionKeys.VIEW);
 
 		return contactLocalService.getContact(contactId);
@@ -88,14 +86,14 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	public List<Contact> getProjectContacts(long projectId, int start, int end)
 		throws PortalException {
 
-		_projectModelResourcePermission.check(
+		ProjectPermissionUtil.check(
 			getPermissionChecker(), projectId, ActionKeys.VIEW);
 
 		return contactLocalService.getProjectContacts(projectId, start, end);
 	}
 
 	public int getProjectContactsCount(long projectId) throws PortalException {
-		_projectModelResourcePermission.check(
+		ProjectPermissionUtil.check(
 			getPermissionChecker(), projectId, ActionKeys.VIEW);
 
 		return contactLocalService.getProjectContactsCount(projectId);
@@ -106,28 +104,12 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 			String lastName, String emailAddress, String languageId)
 		throws PortalException {
 
-		_contactModelResourcePermission.check(
+		ContactPermissionUtil.check(
 			getPermissionChecker(), contactId, ActionKeys.UPDATE);
 
 		return contactLocalService.updateContact(
 			contactId, firstName, middleName, lastName, emailAddress,
 			languageId);
 	}
-
-	private static volatile ModelResourcePermission<Account>
-		_accountModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ContactServiceImpl.class, "_accountModelResourcePermission",
-				Account.class);
-	private static volatile ModelResourcePermission<Contact>
-		_contactModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ContactServiceImpl.class, "_contactModelResourcePermission",
-				Contact.class);
-	private static volatile ModelResourcePermission<Project>
-		_projectModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ContactServiceImpl.class, "_projectModelResourcePermission",
-				Project.class);
 
 }

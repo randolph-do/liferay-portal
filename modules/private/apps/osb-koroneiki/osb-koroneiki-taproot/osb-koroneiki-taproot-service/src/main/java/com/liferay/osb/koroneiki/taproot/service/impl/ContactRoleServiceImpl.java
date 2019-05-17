@@ -15,14 +15,12 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
+import com.liferay.osb.koroneiki.taproot.internal.permission.ContactRolePermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,8 +40,8 @@ public class ContactRoleServiceImpl extends ContactRoleServiceBaseImpl {
 	public ContactRole addContactRole(String name, String description, int type)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TaprootActionKeys.ADD_CONTACT_ROLE);
+		ContactRolePermissionUtil.check(
+			getPermissionChecker(), 0, TaprootActionKeys.ADD_CONTACT_ROLE);
 
 		return contactRoleLocalService.addContactRole(
 			getUserId(), name, description, type);
@@ -52,7 +50,7 @@ public class ContactRoleServiceImpl extends ContactRoleServiceBaseImpl {
 	public ContactRole deleteContactRole(long contactRoleId)
 		throws PortalException {
 
-		_contactRoleModelResourcePermission.check(
+		ContactRolePermissionUtil.check(
 			getPermissionChecker(), contactRoleId, ActionKeys.DELETE);
 
 		return contactRoleLocalService.deleteContactRole(contactRoleId);
@@ -62,17 +60,11 @@ public class ContactRoleServiceImpl extends ContactRoleServiceBaseImpl {
 			long contactRoleId, String name, String description)
 		throws PortalException {
 
-		_contactRoleModelResourcePermission.check(
+		ContactRolePermissionUtil.check(
 			getPermissionChecker(), contactRoleId, ActionKeys.UPDATE);
 
 		return contactRoleLocalService.updateContactRole(
 			contactRoleId, name, description);
 	}
-
-	private static volatile ModelResourcePermission<ContactRole>
-		_contactRoleModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ContactRoleServiceImpl.class,
-				"_contactRoleModelResourcePermission", ContactRole.class);
 
 }

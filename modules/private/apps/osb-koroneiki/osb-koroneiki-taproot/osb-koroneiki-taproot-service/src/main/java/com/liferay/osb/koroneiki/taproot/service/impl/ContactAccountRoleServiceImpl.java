@@ -15,16 +15,14 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
-import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.osb.koroneiki.taproot.internal.permission.AccountPermissionUtil;
+import com.liferay.osb.koroneiki.taproot.internal.permission.ContactPermissionUtil;
+import com.liferay.osb.koroneiki.taproot.internal.permission.ContactRolePermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.ContactAccountRole;
-import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactAccountRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 
 import java.util.List;
 
@@ -48,14 +46,14 @@ public class ContactAccountRoleServiceImpl
 			long contactId, long accountId, long contactRoleId)
 		throws PortalException {
 
-		_contactModelResourcePermission.check(
+		ContactPermissionUtil.check(
 			getPermissionChecker(), contactId, ActionKeys.VIEW);
 
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId,
 			TaprootActionKeys.ASSIGN_CONTACT);
 
-		_contactRoleModelResourcePermission.check(
+		ContactRolePermissionUtil.check(
 			getPermissionChecker(), contactRoleId,
 			TaprootActionKeys.ASSIGN_CONTACT);
 
@@ -67,14 +65,14 @@ public class ContactAccountRoleServiceImpl
 			long contactId, long accountId, long contactRoleId)
 		throws PortalException {
 
-		_contactModelResourcePermission.check(
+		ContactPermissionUtil.check(
 			getPermissionChecker(), contactId, ActionKeys.VIEW);
 
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId,
 			TaprootActionKeys.ASSIGN_CONTACT);
 
-		_contactRoleModelResourcePermission.check(
+		ContactRolePermissionUtil.check(
 			getPermissionChecker(), contactRoleId,
 			TaprootActionKeys.ASSIGN_CONTACT);
 
@@ -85,10 +83,10 @@ public class ContactAccountRoleServiceImpl
 	public void deleteContactAccountRoles(long contactId, long accountId)
 		throws PortalException {
 
-		_contactModelResourcePermission.check(
+		ContactPermissionUtil.check(
 			getPermissionChecker(), contactId, ActionKeys.VIEW);
 
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId,
 			TaprootActionKeys.ASSIGN_CONTACT);
 
@@ -96,7 +94,7 @@ public class ContactAccountRoleServiceImpl
 			contactAccountRolePersistence.findByC_A(contactId, accountId);
 
 		for (ContactAccountRole contactAccountRole : contactAccountRoles) {
-			_contactRoleModelResourcePermission.check(
+			ContactRolePermissionUtil.check(
 				getPermissionChecker(), contactAccountRole.getContactRoleId(),
 				TaprootActionKeys.ASSIGN_CONTACT);
 		}
@@ -104,21 +102,5 @@ public class ContactAccountRoleServiceImpl
 		contactAccountRoleLocalService.deleteContactAccountRoles(
 			contactId, accountId);
 	}
-
-	private static volatile ModelResourcePermission<Account>
-		_accountModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ContactAccountRoleServiceImpl.class,
-				"_accountModelResourcePermission", Account.class);
-	private static volatile ModelResourcePermission<Contact>
-		_contactModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ContactAccountRoleServiceImpl.class,
-				"_contactModelResourcePermission", Contact.class);
-	private static volatile ModelResourcePermission<ContactRole>
-		_contactRoleModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ContactAccountRoleServiceImpl.class,
-				"_contactRoleModelResourcePermission", ContactRole.class);
 
 }

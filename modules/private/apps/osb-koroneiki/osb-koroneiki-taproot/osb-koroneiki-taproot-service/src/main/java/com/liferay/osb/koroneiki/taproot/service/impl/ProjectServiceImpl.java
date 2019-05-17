@@ -15,15 +15,13 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
-import com.liferay.osb.koroneiki.taproot.model.Account;
+import com.liferay.osb.koroneiki.taproot.internal.permission.AccountPermissionUtil;
+import com.liferay.osb.koroneiki.taproot.internal.permission.ProjectPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.base.ProjectServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.List;
 
@@ -46,8 +44,8 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 			int industry, int tier, String notes, int status)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TaprootActionKeys.ADD_PROJECT);
+		ProjectPermissionUtil.check(
+			getPermissionChecker(), 0, TaprootActionKeys.ADD_PROJECT);
 
 		return projectLocalService.addProject(
 			getUserId(), accountId, supportRegionId, name, code, industry, tier,
@@ -55,14 +53,14 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	}
 
 	public Project deleteProject(long projectId) throws PortalException {
-		_projectModelResourcePermission.check(
+		ProjectPermissionUtil.check(
 			getPermissionChecker(), projectId, ActionKeys.DELETE);
 
 		return projectLocalService.deleteProject(projectId);
 	}
 
 	public Project getProject(long projectId) throws PortalException {
-		_projectModelResourcePermission.check(
+		ProjectPermissionUtil.check(
 			getPermissionChecker(), projectId, ActionKeys.VIEW);
 
 		return projectLocalService.getProject(projectId);
@@ -71,14 +69,14 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	public List<Project> getProjects(long accountId, int start, int end)
 		throws PortalException {
 
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return projectLocalService.getProjects(accountId, start, end);
 	}
 
 	public int getProjectsCount(long accountId) throws PortalException {
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return projectLocalService.getProjectsCount(accountId);
@@ -89,23 +87,12 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 			int industry, int tier, String notes, int status)
 		throws PortalException {
 
-		_projectModelResourcePermission.check(
+		ProjectPermissionUtil.check(
 			getPermissionChecker(), projectId, ActionKeys.UPDATE);
 
 		return projectLocalService.updateProject(
 			projectId, supportRegionId, name, code, industry, tier, notes,
 			status);
 	}
-
-	private static volatile ModelResourcePermission<Account>
-		_accountModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ProjectServiceImpl.class, "_accountModelResourcePermission",
-				Account.class);
-	private static volatile ModelResourcePermission<Project>
-		_projectModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ProjectServiceImpl.class, "_projectModelResourcePermission",
-				Project.class);
 
 }

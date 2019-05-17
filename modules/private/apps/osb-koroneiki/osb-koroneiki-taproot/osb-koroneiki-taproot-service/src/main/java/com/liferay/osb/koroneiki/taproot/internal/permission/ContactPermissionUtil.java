@@ -12,14 +12,12 @@
  *
  */
 
-package com.liferay.osb.koroneiki.taproot.internal.security.permission.resource;
+package com.liferay.osb.koroneiki.taproot.internal.permission;
 
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.permission.ContactPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,62 +25,52 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.osb.koroneiki.taproot.model.Contact",
-	service = ModelResourcePermission.class
-)
-public class ContactModelResourcePermission
-	implements ModelResourcePermission<Contact> {
+@Component(immediate = true, service = {})
+public class ContactPermissionUtil {
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, Contact contact,
 			String actionId)
 		throws PortalException {
 
-		contactPermission.check(permissionChecker, contact, actionId);
+		getContactPermission().check(permissionChecker, contact, actionId);
 	}
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, long contactId,
 			String actionId)
 		throws PortalException {
 
-		contactPermission.check(permissionChecker, contactId, actionId);
+		getContactPermission().check(permissionChecker, contactId, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, Contact contact,
 			String actionId)
 		throws PortalException {
 
-		return contactPermission.contains(permissionChecker, contact, actionId);
+		return getContactPermission().contains(
+			permissionChecker, contact, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, long contactId,
 			String actionId)
 		throws PortalException {
 
-		return contactPermission.contains(
+		return getContactPermission().contains(
 			permissionChecker, contactId, actionId);
 	}
 
-	@Override
-	public String getModelName() {
-		return Contact.class.getName();
+	public static ContactPermission getContactPermission() {
+		return _contactPermission;
 	}
 
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+	@Reference(unbind = "-")
+	public void setContactPermission(ContactPermission contactPermission) {
+		_contactPermission = contactPermission;
 	}
 
-	@Reference
-	protected ContactPermission contactPermission;
+	private static ContactPermission _contactPermission;
 
 }

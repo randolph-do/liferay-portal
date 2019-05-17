@@ -16,14 +16,12 @@ package com.liferay.osb.koroneiki.trunk.internal.permission;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.permission.ProductConsumptionPermission;
-import com.liferay.osb.koroneiki.trunk.service.ProductConsumptionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -105,8 +103,5 @@ public class ProductConsumptionPermissionImpl
 
 		return false;
 	}
-
-	@Reference
-	private ProductConsumptionLocalService _productConsumptionLocalService;
 
 }

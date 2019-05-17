@@ -12,14 +12,11 @@
  *
  */
 
-package com.liferay.osb.koroneiki.trunk.internal.security.permission.resource;
+package com.liferay.osb.koroneiki.trunk.internal.permission;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
-import com.liferay.osb.koroneiki.trunk.permission.ProductPurchasePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,65 +24,56 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.osb.koroneiki.trunk.model.ProductPurchase",
-	service = ModelResourcePermission.class
-)
-public class ProductPurchaseModelResourcePermission
-	implements ModelResourcePermission<ProductPurchase> {
+@Component(immediate = true, service = {})
+public class ProductPurchasePermissionUtil {
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, long productPurchaseId,
 			String actionId)
 		throws PortalException {
 
-		productPurchasePermission.check(
+		getProductPurchasePermission().check(
 			permissionChecker, productPurchaseId, actionId);
 	}
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker,
 			ProductPurchase productPurchase, String actionId)
 		throws PortalException {
 
-		productPurchasePermission.check(
+		getProductPurchasePermission().check(
 			permissionChecker, productPurchase, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, long productPurchaseId,
 			String actionId)
 		throws PortalException {
 
-		return productPurchasePermission.contains(
+		return getProductPurchasePermission().contains(
 			permissionChecker, productPurchaseId, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker,
 			ProductPurchase productPurchase, String actionId)
 		throws PortalException {
 
-		return productPurchasePermission.contains(
+		return getProductPurchasePermission().contains(
 			permissionChecker, productPurchase, actionId);
 	}
 
-	@Override
-	public String getModelName() {
-		return ProductPurchase.class.getName();
+	public static ProductPurchasePermission getProductPurchasePermission() {
+		return _productPurchasePermission;
 	}
 
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+	@Reference(unbind = "-")
+	public void setProductPurchasePermission(
+		ProductPurchasePermission productPurchasePermission) {
+
+		_productPurchasePermission = productPurchasePermission;
 	}
 
-	@Reference
-	protected ProductPurchasePermission productPurchasePermission;
+	private static ProductPurchasePermission _productPurchasePermission;
 
 }

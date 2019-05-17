@@ -12,14 +12,11 @@
  *
  */
 
-package com.liferay.osb.koroneiki.trunk.internal.security.permission.resource;
+package com.liferay.osb.koroneiki.trunk.internal.permission;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductField;
-import com.liferay.osb.koroneiki.trunk.permission.ProductFieldPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,64 +24,56 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.osb.koroneiki.trunk.model.ProductField",
-	service = ModelResourcePermission.class
-)
-public class ProductFieldModelResourcePermission
-	implements ModelResourcePermission<ProductField> {
+@Component(immediate = true, service = {})
+public class ProductFieldPermissionUtil {
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, long productFieldId,
 			String actionId)
 		throws PortalException {
 
-		productFieldPermission.check(
+		getProductFieldPermission().check(
 			permissionChecker, productFieldId, actionId);
 	}
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, ProductField productField,
 			String actionId)
 		throws PortalException {
 
-		productFieldPermission.check(permissionChecker, productField, actionId);
-	}
-
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, long productFieldId,
-			String actionId)
-		throws PortalException {
-
-		return productFieldPermission.contains(
-			permissionChecker, productFieldId, actionId);
-	}
-
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, ProductField productField,
-			String actionId)
-		throws PortalException {
-
-		return productFieldPermission.contains(
+		getProductFieldPermission().check(
 			permissionChecker, productField, actionId);
 	}
 
-	@Override
-	public String getModelName() {
-		return ProductField.class.getName();
+	public static boolean contains(
+			PermissionChecker permissionChecker, long productFieldId,
+			String actionId)
+		throws PortalException {
+
+		return getProductFieldPermission().contains(
+			permissionChecker, productFieldId, actionId);
 	}
 
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+	public static boolean contains(
+			PermissionChecker permissionChecker, ProductField productField,
+			String actionId)
+		throws PortalException {
+
+		return getProductFieldPermission().contains(
+			permissionChecker, productField, actionId);
 	}
 
-	@Reference
-	protected ProductFieldPermission productFieldPermission;
+	public static ProductFieldPermission getProductFieldPermission() {
+		return _productFieldPermission;
+	}
+
+	@Reference(unbind = "-")
+	public void setProductFieldPermission(
+		ProductFieldPermission productFieldPermission) {
+
+		_productFieldPermission = productFieldPermission;
+	}
+
+	private static ProductFieldPermission _productFieldPermission;
 
 }

@@ -85,14 +85,12 @@ public class ContactRolePermissionImpl implements ContactRolePermission {
 			String actionId)
 		throws PortalException {
 
-		ContactRole contactRole = _contactRoleLocalService.getContactRole(
-			contactRoleId);
-
-		if (contains(permissionChecker, contactRole, actionId)) {
+		if (permissionChecker.isOmniadmin()) {
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			0, ContactRole.class.getName(), contactRoleId, actionId);
 	}
 
 	@Override

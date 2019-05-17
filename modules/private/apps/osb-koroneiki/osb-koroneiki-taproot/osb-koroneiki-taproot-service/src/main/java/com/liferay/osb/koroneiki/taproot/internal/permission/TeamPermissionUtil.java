@@ -12,14 +12,12 @@
  *
  */
 
-package com.liferay.osb.koroneiki.taproot.internal.security.permission.resource;
+package com.liferay.osb.koroneiki.taproot.internal.permission;
 
 import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.permission.TeamPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,57 +25,47 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.osb.koroneiki.taproot.model.Team",
-	service = ModelResourcePermission.class
-)
-public class TeamModelResourcePermission
-	implements ModelResourcePermission<Team> {
+@Component(immediate = true, service = {})
+public class TeamPermissionUtil {
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException {
 
-		teamPermission.check(permissionChecker, teamId, actionId);
+		getTeamPermission().check(permissionChecker, teamId, actionId);
 	}
 
-	@Override
-	public void check(
+	public static void check(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException {
 
-		teamPermission.check(permissionChecker, team, actionId);
+		getTeamPermission().check(permissionChecker, team, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException {
 
-		return teamPermission.contains(permissionChecker, teamId, actionId);
+		return getTeamPermission().contains(
+			permissionChecker, teamId, actionId);
 	}
 
-	@Override
-	public boolean contains(
+	public static boolean contains(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException {
 
-		return teamPermission.contains(permissionChecker, team, actionId);
+		return getTeamPermission().contains(permissionChecker, team, actionId);
 	}
 
-	@Override
-	public String getModelName() {
-		return Team.class.getName();
+	public static TeamPermission getTeamPermission() {
+		return _teamPermission;
 	}
 
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+	@Reference(unbind = "-")
+	public void setTeamPermission(TeamPermission teamPermission) {
+		_teamPermission = teamPermission;
 	}
 
-	@Reference
-	protected TeamPermission teamPermission;
+	private static TeamPermission _teamPermission;
 
 }

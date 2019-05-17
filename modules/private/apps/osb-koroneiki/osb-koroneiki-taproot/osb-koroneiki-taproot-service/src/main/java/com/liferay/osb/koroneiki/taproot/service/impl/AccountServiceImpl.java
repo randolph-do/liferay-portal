@@ -15,14 +15,12 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
+import com.liferay.osb.koroneiki.taproot.internal.permission.AccountPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.base.AccountServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,8 +42,8 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TaprootActionKeys.ADD_ACCOUNT);
+		AccountPermissionUtil.check(
+			getPermissionChecker(), 0, TaprootActionKeys.ADD_ACCOUNT);
 
 		return accountLocalService.addAccount(
 			getUserId(), name, description, logoId, addressId,
@@ -54,14 +52,14 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 	}
 
 	public Account deleteAccount(long accountId) throws PortalException {
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId, ActionKeys.DELETE);
 
 		return accountLocalService.deleteAccount(accountId);
 	}
 
 	public Account getAccount(long accountId) throws PortalException {
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return accountLocalService.getAccount(accountId);
@@ -74,7 +72,7 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 			String website, int status)
 		throws PortalException {
 
-		_accountModelResourcePermission.check(
+		AccountPermissionUtil.check(
 			getPermissionChecker(), accountId, ActionKeys.UPDATE);
 
 		return accountLocalService.updateAccount(
@@ -82,11 +80,5 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
 			website, status);
 	}
-
-	private static volatile ModelResourcePermission<Account>
-		_accountModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				AccountServiceImpl.class, "_accountModelResourcePermission",
-				Account.class);
 
 }

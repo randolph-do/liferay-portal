@@ -16,14 +16,12 @@ package com.liferay.osb.koroneiki.trunk.internal.permission;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.permission.ProductEntryPermission;
-import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -104,8 +102,5 @@ public class ProductEntryPermissionImpl implements ProductEntryPermission {
 
 		return false;
 	}
-
-	@Reference
-	private ProductEntryLocalService _productEntryLocalService;
 
 }

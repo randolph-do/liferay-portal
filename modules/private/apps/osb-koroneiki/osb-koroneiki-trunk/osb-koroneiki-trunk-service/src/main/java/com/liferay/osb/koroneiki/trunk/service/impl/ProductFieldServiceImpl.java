@@ -15,14 +15,12 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
+import com.liferay.osb.koroneiki.trunk.internal.permission.ProductFieldPermissionUtil;
 import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductFieldServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,8 +40,8 @@ public class ProductFieldServiceImpl extends ProductFieldServiceBaseImpl {
 			long productPurchaseId, String name, String value)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), TrunkActionKeys.ADD_PRODUCT_FIELD);
+		ProductFieldPermissionUtil.check(
+			getPermissionChecker(), 0, TrunkActionKeys.ADD_PRODUCT_FIELD);
 
 		return productFieldLocalService.addProductField(
 			getUserId(), productPurchaseId, name, value);
@@ -52,7 +50,7 @@ public class ProductFieldServiceImpl extends ProductFieldServiceBaseImpl {
 	public ProductField deleteProductField(long productFieldId)
 		throws PortalException {
 
-		_productFieldModelResourcePermission.check(
+		ProductFieldPermissionUtil.check(
 			getPermissionChecker(), productFieldId, ActionKeys.DELETE);
 
 		return productFieldLocalService.deleteProductField(productFieldId);
@@ -61,17 +59,11 @@ public class ProductFieldServiceImpl extends ProductFieldServiceBaseImpl {
 	public ProductField updateProductField(long productFieldId, String value)
 		throws PortalException {
 
-		_productFieldModelResourcePermission.check(
+		ProductFieldPermissionUtil.check(
 			getPermissionChecker(), productFieldId, ActionKeys.UPDATE);
 
 		return productFieldLocalService.updateProductField(
 			productFieldId, value);
 	}
-
-	private static volatile ModelResourcePermission<ProductField>
-		_productFieldModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				ProductFieldServiceImpl.class,
-				"_productFieldModelResourcePermission", ProductField.class);
 
 }

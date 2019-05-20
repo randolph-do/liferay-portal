@@ -56,11 +56,4 @@ public class KoroneikiPanelCategory extends BasePanelCategory {
 			resourceBundle, "category.control_panel.koroneiki");
 	}
 
-	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		return permissionChecker.isOmniadmin();
-	}
-
 }

@@ -3,40 +3,63 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.osb.koroneiki</model-name>
+		<model-name>com.liferay.osb.koroneiki.taproot.accounts</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_AccountsAdminPortlet</portlet-name>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_ContactRolesAdminPortlet</portlet-name>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_ContactsAdminPortlet</portlet-name>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_ProjectsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_AccountsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_ACCOUNT</action-key>
-				<action-key>ADD_CONTACT</action-key>
-				<action-key>ADD_CONTACT_ROLE</action-key>
-				<action-key>ADD_PROJECT</action-key>
-				<action-key>ADD_TEAM</action-key>
-				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_ACCOUNT</action-key>
-				<action-key>ADD_CONTACT</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.osb.koroneiki.taproot.contact.roles</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_ContactRolesAdminPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>2</weight>
+		<permissions>
+			<supports>
 				<action-key>ADD_CONTACT_ROLE</action-key>
-				<action-key>ADD_PROJECT</action-key>
-				<action-key>ADD_TEAM</action-key>
-				<action-key>PERMISSIONS</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_CONTACT_ROLE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.osb.koroneiki.taproot.contacts</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_ContactsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_CONTACT</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_CONTACT</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.taproot.model.Account</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_AccountsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_AccountsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -59,7 +82,7 @@
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.taproot.model.Contact</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_ContactsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_ContactsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -80,7 +103,7 @@
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.taproot.model.ContactRole</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_ContactRolesAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_ContactRolesAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -102,7 +125,7 @@
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.taproot.model.Project</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_ProjectsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_ProjectsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -125,7 +148,7 @@
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.taproot.model.Team</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_internal_portlet_TeamsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_TeamsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -142,6 +165,24 @@
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.osb.koroneiki.taproot.projects</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_ProjectsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_PROJECT</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_PROJECT</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

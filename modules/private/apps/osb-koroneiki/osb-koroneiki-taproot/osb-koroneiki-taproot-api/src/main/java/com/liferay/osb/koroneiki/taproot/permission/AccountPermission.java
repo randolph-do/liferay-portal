@@ -33,6 +33,9 @@ public interface AccountPermission {
 			String actionId)
 		throws PortalException;
 
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException;
+
 	public boolean contains(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
@@ -46,6 +49,10 @@ public interface AccountPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long[] accountIds,
 			String actionId)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
 		throws PortalException;
 
 }

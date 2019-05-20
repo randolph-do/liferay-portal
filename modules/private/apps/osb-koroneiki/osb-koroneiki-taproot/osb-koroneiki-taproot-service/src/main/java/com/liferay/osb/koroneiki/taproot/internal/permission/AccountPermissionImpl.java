@@ -16,18 +16,23 @@ package com.liferay.osb.koroneiki.taproot.internal.permission;
 
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
  */
 @Component(immediate = true, service = AccountPermission.class)
 public class AccountPermissionImpl implements AccountPermission {
+
+	public static final String RESOURCE_NAME_ACCOUNTS =
+		"com.liferay.osb.koroneiki.taproot.accounts";
 
 	@Override
 	public void check(
@@ -56,16 +61,30 @@ public class AccountPermissionImpl implements AccountPermission {
 	}
 
 	@Override
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME_ACCOUNTS, 0, actionId);
+		}
+	}
+
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
 		throws PortalException {
 
-		if (contains(permissionChecker, account.getAccountId(), actionId)) {
+		if (permissionChecker.hasOwnerPermission(
+				account.getCompanyId(), Account.class.getName(),
+				account.getAccountId(), account.getUserId(), actionId)) {
+
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			0, Account.class.getName(), account.getAccountId(), actionId);
 	}
 
 	@Override
@@ -74,12 +93,13 @@ public class AccountPermissionImpl implements AccountPermission {
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isOmniadmin()) {
+		Account account = _accountLocalService.getAccount(accountId);
+
+		if (contains(permissionChecker, account, actionId)) {
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			0, Account.class.getName(), accountId, actionId);
+		return false;
 	}
 
 	@Override
@@ -100,5 +120,17 @@ public class AccountPermissionImpl implements AccountPermission {
 
 		return true;
 	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		return permissionChecker.hasPermission(
+			0, RESOURCE_NAME_ACCOUNTS, RESOURCE_NAME_ACCOUNTS, actionId);
+	}
+
+	@Reference
+	private AccountLocalService _accountLocalService;
 
 }

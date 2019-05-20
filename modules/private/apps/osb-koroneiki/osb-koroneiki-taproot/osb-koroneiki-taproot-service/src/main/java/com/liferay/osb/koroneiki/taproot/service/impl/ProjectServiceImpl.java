@@ -15,9 +15,9 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
-import com.liferay.osb.koroneiki.taproot.internal.permission.AccountPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.internal.permission.ProjectPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
 import com.liferay.osb.koroneiki.taproot.service.base.ProjectServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -69,14 +70,14 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	public List<Project> getProjects(long accountId, int start, int end)
 		throws PortalException {
 
-		AccountPermissionUtil.check(
+		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return projectLocalService.getProjects(accountId, start, end);
 	}
 
 	public int getProjectsCount(long accountId) throws PortalException {
-		AccountPermissionUtil.check(
+		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return projectLocalService.getProjectsCount(accountId);
@@ -94,5 +95,8 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 			projectId, supportRegionId, name, code, industry, tier, notes,
 			status);
 	}
+
+	@Reference
+	private AccountPermission _accountPermission;
 
 }

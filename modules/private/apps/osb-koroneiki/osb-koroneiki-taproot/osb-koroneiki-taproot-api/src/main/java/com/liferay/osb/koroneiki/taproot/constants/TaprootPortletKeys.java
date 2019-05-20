@@ -20,15 +20,16 @@ package com.liferay.osb.koroneiki.taproot.constants;
 public class TaprootPortletKeys {
 
 	public static final String ACCOUNTS_ADMIN =
-		"com_liferay_osb_koroneiki_taproot_web_AccountsAdminPortlet";
+		"com_liferay_osb_koroneiki_taproot_web_portlet_AccountsAdminPortlet";
 
 	public static final String CONTACT_ROLES_ADMIN =
-		"com_liferay_osb_koroneiki_taproot_web_ContactRolesAdminPortlet";
+		"com_liferay_osb_koroneiki_taproot_web_portlet_" +
+			"ContactRolesAdminPortlet";
 
 	public static final String CONTACTS_ADMIN =
-		"com_liferay_osb_koroneiki_taproot_web_ContactsAdminPortlet";
+		"com_liferay_osb_koroneiki_taproot_web_portlet_ContactsAdminPortlet";
 
 	public static final String PROJECTS_ADMIN =
-		"com_liferay_osb_koroneiki_taproot_web_ProjectsAdminPortlet";
+		"com_liferay_osb_koroneiki_taproot_web_portlet_ProjectsAdminPortlet";
 
 }

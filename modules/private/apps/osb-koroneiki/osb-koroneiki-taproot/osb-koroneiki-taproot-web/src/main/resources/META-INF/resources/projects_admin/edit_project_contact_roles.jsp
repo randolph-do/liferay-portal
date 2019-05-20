@@ -44,7 +44,7 @@ renderResponse.setTitle(project.getName());
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-contacts-were-found"
-		headerNames="first-name,last-name,email-address"
+		headerNames="full-name,email-address"
 		total="<%= ContactLocalServiceUtil.getProjectContactsCount(project.getProjectId()) %>"
 	>
 		<liferay-ui:search-container-results
@@ -64,7 +64,7 @@ renderResponse.setTitle(project.getName());
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
-				name="first-name"
+				name="full-name"
 				value="<%= koroneikiContact.getFullName() %>"
 			/>
 

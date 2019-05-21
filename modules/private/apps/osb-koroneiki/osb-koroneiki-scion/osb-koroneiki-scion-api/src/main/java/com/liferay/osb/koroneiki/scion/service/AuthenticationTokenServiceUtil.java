@@ -39,6 +39,21 @@ public class AuthenticationTokenServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.scion.service.impl.AuthenticationTokenServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			addAuthenticationToken(
+				long serviceProducerId, String name, String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAuthenticationToken(
+			serviceProducerId, name, token);
+	}
+
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			deleteAuthenticationToken(long authenticationTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteAuthenticationToken(authenticationTokenId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -47,6 +62,21 @@ public class AuthenticationTokenServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			updateAuthenticationToken(long authenticationTokenId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateAuthenticationToken(
+			authenticationTokenId, name);
+	}
+
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			updateStatus(long authenticationTokenId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStatus(authenticationTokenId, status);
 	}
 
 	public static AuthenticationTokenService getService() {

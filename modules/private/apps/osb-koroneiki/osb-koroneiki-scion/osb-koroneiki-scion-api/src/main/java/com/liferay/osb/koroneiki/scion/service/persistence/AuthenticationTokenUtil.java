@@ -290,6 +290,79 @@ public class AuthenticationTokenUtil {
 	}
 
 	/**
+	 * Returns all the authentication tokens that the user has permission to view where serviceProducerId = &#63;.
+	 *
+	 * @param serviceProducerId the service producer ID
+	 * @return the matching authentication tokens that the user has permission to view
+	 */
+	public static List<AuthenticationToken> filterFindByServiceProducerId(
+		long serviceProducerId) {
+
+		return getPersistence().filterFindByServiceProducerId(
+			serviceProducerId);
+	}
+
+	/**
+	 * Returns a range of all the authentication tokens that the user has permission to view where serviceProducerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AuthenticationTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param serviceProducerId the service producer ID
+	 * @param start the lower bound of the range of authentication tokens
+	 * @param end the upper bound of the range of authentication tokens (not inclusive)
+	 * @return the range of matching authentication tokens that the user has permission to view
+	 */
+	public static List<AuthenticationToken> filterFindByServiceProducerId(
+		long serviceProducerId, int start, int end) {
+
+		return getPersistence().filterFindByServiceProducerId(
+			serviceProducerId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the authentication tokens that the user has permissions to view where serviceProducerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AuthenticationTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param serviceProducerId the service producer ID
+	 * @param start the lower bound of the range of authentication tokens
+	 * @param end the upper bound of the range of authentication tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching authentication tokens that the user has permission to view
+	 */
+	public static List<AuthenticationToken> filterFindByServiceProducerId(
+		long serviceProducerId, int start, int end,
+		OrderByComparator<AuthenticationToken> orderByComparator) {
+
+		return getPersistence().filterFindByServiceProducerId(
+			serviceProducerId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the authentication tokens before and after the current authentication token in the ordered set of authentication tokens that the user has permission to view where serviceProducerId = &#63;.
+	 *
+	 * @param authenticationTokenId the primary key of the current authentication token
+	 * @param serviceProducerId the service producer ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next authentication token
+	 * @throws NoSuchAuthenticationTokenException if a authentication token with the primary key could not be found
+	 */
+	public static AuthenticationToken[]
+			filterFindByServiceProducerId_PrevAndNext(
+				long authenticationTokenId, long serviceProducerId,
+				OrderByComparator<AuthenticationToken> orderByComparator)
+		throws com.liferay.osb.koroneiki.scion.exception.
+			NoSuchAuthenticationTokenException {
+
+		return getPersistence().filterFindByServiceProducerId_PrevAndNext(
+			authenticationTokenId, serviceProducerId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the authentication tokens where serviceProducerId = &#63; from the database.
 	 *
 	 * @param serviceProducerId the service producer ID
@@ -306,6 +379,17 @@ public class AuthenticationTokenUtil {
 	 */
 	public static int countByServiceProducerId(long serviceProducerId) {
 		return getPersistence().countByServiceProducerId(serviceProducerId);
+	}
+
+	/**
+	 * Returns the number of authentication tokens that the user has permission to view where serviceProducerId = &#63;.
+	 *
+	 * @param serviceProducerId the service producer ID
+	 * @return the number of matching authentication tokens that the user has permission to view
+	 */
+	public static int filterCountByServiceProducerId(long serviceProducerId) {
+		return getPersistence().filterCountByServiceProducerId(
+			serviceProducerId);
 	}
 
 	/**

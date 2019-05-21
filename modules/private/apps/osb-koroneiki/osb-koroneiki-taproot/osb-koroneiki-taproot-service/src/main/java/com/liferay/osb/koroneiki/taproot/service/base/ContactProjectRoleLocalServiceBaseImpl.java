@@ -27,7 +27,6 @@ import com.liferay.osb.koroneiki.taproot.service.persistence.ContactRolePersiste
 import com.liferay.osb.koroneiki.taproot.service.persistence.ContactTeamRolePersistence;
 import com.liferay.osb.koroneiki.taproot.service.persistence.ProjectPersistence;
 import com.liferay.osb.koroneiki.taproot.service.persistence.TeamPersistence;
-import com.liferay.osb.koroneiki.taproot.service.persistence.TeamProjectPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -447,9 +446,6 @@ public abstract class ContactProjectRoleLocalServiceBaseImpl
 
 	@Reference
 	protected TeamPersistence teamPersistence;
-
-	@Reference
-	protected TeamProjectPersistence teamProjectPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

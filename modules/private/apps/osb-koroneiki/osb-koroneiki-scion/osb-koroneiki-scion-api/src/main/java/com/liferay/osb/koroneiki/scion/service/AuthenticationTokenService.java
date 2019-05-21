@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.scion.service;
 
+import com.liferay.osb.koroneiki.scion.model.AuthenticationToken;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -47,6 +48,13 @@ public interface AuthenticationTokenService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AuthenticationTokenServiceUtil} to access the authentication token remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.scion.service.impl.AuthenticationTokenServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public AuthenticationToken addAuthenticationToken(
+			long serviceProducerId, String name, String token)
+		throws PortalException;
+
+	public AuthenticationToken deleteAuthenticationToken(
+			long authenticationTokenId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +62,13 @@ public interface AuthenticationTokenService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public AuthenticationToken updateAuthenticationToken(
+			long authenticationTokenId, String name)
+		throws PortalException;
+
+	public AuthenticationToken updateStatus(
+			long authenticationTokenId, int status)
+		throws PortalException;
 
 }

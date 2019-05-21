@@ -36,6 +36,25 @@ public class AuthenticationTokenServiceWrapper
 		_authenticationTokenService = authenticationTokenService;
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			addAuthenticationToken(
+				long serviceProducerId, String name, String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _authenticationTokenService.addAuthenticationToken(
+			serviceProducerId, name, token);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			deleteAuthenticationToken(long authenticationTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _authenticationTokenService.deleteAuthenticationToken(
+			authenticationTokenId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -44,6 +63,24 @@ public class AuthenticationTokenServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _authenticationTokenService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			updateAuthenticationToken(long authenticationTokenId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _authenticationTokenService.updateAuthenticationToken(
+			authenticationTokenId, name);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+			updateStatus(long authenticationTokenId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _authenticationTokenService.updateStatus(
+			authenticationTokenId, status);
 	}
 
 	@Override

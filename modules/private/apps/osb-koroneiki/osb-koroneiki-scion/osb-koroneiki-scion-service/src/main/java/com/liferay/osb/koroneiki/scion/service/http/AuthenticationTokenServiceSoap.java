@@ -14,11 +14,17 @@
 
 package com.liferay.osb.koroneiki.scion.service.http;
 
+import com.liferay.osb.koroneiki.scion.service.AuthenticationTokenServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.osb.koroneiki.scion.service.AuthenticationTokenServiceUtil</code> service
+ * <code>AuthenticationTokenServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,88 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class AuthenticationTokenServiceSoap {
+
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationTokenSoap
+			addAuthenticationToken(
+				long serviceProducerId, String name, String token)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+				returnValue =
+					AuthenticationTokenServiceUtil.addAuthenticationToken(
+						serviceProducerId, name, token);
+
+			return com.liferay.osb.koroneiki.scion.model.
+				AuthenticationTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationTokenSoap
+			deleteAuthenticationToken(long authenticationTokenId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+				returnValue =
+					AuthenticationTokenServiceUtil.deleteAuthenticationToken(
+						authenticationTokenId);
+
+			return com.liferay.osb.koroneiki.scion.model.
+				AuthenticationTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationTokenSoap
+			updateAuthenticationToken(long authenticationTokenId, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+				returnValue =
+					AuthenticationTokenServiceUtil.updateAuthenticationToken(
+						authenticationTokenId, name);
+
+			return com.liferay.osb.koroneiki.scion.model.
+				AuthenticationTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.scion.model.AuthenticationTokenSoap
+			updateStatus(long authenticationTokenId, int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.scion.model.AuthenticationToken
+				returnValue = AuthenticationTokenServiceUtil.updateStatus(
+					authenticationTokenId, status);
+
+			return com.liferay.osb.koroneiki.scion.model.
+				AuthenticationTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AuthenticationTokenServiceSoap.class);
+
 }

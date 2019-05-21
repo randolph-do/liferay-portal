@@ -19,7 +19,6 @@ import com.liferay.osb.koroneiki.taproot.permission.ContactRolePermission;
 import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -31,6 +30,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ContactRolePermission.class)
 public class ContactRolePermissionImpl implements ContactRolePermission {
+
+	public static final String RESOURCE_NAME_CONTACT_ROLES =
+		"com.liferay.osb.koroneiki.taproot.contact.roles";
 
 	@Override
 	public void check(
@@ -59,18 +61,26 @@ public class ContactRolePermissionImpl implements ContactRolePermission {
 	}
 
 	@Override
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME_CONTACT_ROLES, 0, actionId);
+		}
+	}
+
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, ContactRole contactRole,
 			String actionId)
 		throws PortalException {
 
-		if (actionId.equals(ActionKeys.DELETE)) {
-			if (contactRole.isSystem()) {
-				return false;
-			}
-		}
+		if (permissionChecker.hasOwnerPermission(
+				contactRole.getCompanyId(), ContactRole.class.getName(),
+				contactRole.getContactRoleId(), contactRole.getUserId(),
+				actionId)) {
 
-		if (permissionChecker.isOmniadmin()) {
 			return true;
 		}
 
@@ -85,12 +95,14 @@ public class ContactRolePermissionImpl implements ContactRolePermission {
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isOmniadmin()) {
+		ContactRole contactRole = _contactRoleLocalService.getContactRole(
+			contactRoleId);
+
+		if (contains(permissionChecker, contactRole, actionId)) {
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			0, ContactRole.class.getName(), contactRoleId, actionId);
+		return false;
 	}
 
 	@Override
@@ -110,6 +122,16 @@ public class ContactRolePermissionImpl implements ContactRolePermission {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		return permissionChecker.hasPermission(
+			0, RESOURCE_NAME_CONTACT_ROLES, RESOURCE_NAME_CONTACT_ROLES,
+			actionId);
 	}
 
 	@Reference

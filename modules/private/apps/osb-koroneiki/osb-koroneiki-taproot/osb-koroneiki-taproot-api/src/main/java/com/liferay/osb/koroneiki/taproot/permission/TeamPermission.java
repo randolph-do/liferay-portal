@@ -27,6 +27,9 @@ public interface TeamPermission {
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException;
 
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException;
+
 	public void check(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException;
@@ -38,6 +41,10 @@ public interface TeamPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long[] teamIds,
 			String actionId)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
 		throws PortalException;
 
 	public boolean contains(

@@ -31,6 +31,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ProjectPermission.class)
 public class ProjectPermissionImpl implements ProjectPermission {
 
+	public static final String RESOURCE_NAME_PROJECTS =
+		"com.liferay.osb.koroneiki.taproot.projects";
+
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, long projectId,
@@ -58,17 +61,28 @@ public class ProjectPermissionImpl implements ProjectPermission {
 	}
 
 	@Override
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME_PROJECTS, 0, actionId);
+		}
+	}
+
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long projectId,
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isOmniadmin()) {
+		Project project = _projectLocalService.getProject(projectId);
+
+		if (contains(permissionChecker, project, actionId)) {
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			0, Project.class.getName(), projectId, actionId);
+		return false;
 	}
 
 	@Override
@@ -96,11 +110,24 @@ public class ProjectPermissionImpl implements ProjectPermission {
 			String actionId)
 		throws PortalException {
 
-		if (contains(permissionChecker, project.getProjectId(), actionId)) {
+		if (permissionChecker.hasOwnerPermission(
+				project.getCompanyId(), Project.class.getName(),
+				project.getProjectId(), project.getUserId(), actionId)) {
+
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			0, Project.class.getName(), project.getProjectId(), actionId);
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		return permissionChecker.hasPermission(
+			0, RESOURCE_NAME_PROJECTS, RESOURCE_NAME_PROJECTS, actionId);
 	}
 
 	@Reference

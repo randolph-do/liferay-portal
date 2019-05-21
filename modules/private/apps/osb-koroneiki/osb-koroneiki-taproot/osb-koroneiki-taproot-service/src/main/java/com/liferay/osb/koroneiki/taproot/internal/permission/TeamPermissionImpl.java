@@ -31,6 +31,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = TeamPermission.class)
 public class TeamPermissionImpl implements TeamPermission {
 
+	public static final String RESOURCE_NAME_TEAMS =
+		"com.liferay.osb.koroneiki.taproot.teams";
+
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, long teamId, String actionId)
@@ -39,6 +42,16 @@ public class TeamPermissionImpl implements TeamPermission {
 		if (!contains(permissionChecker, teamId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, Team.class.getName(), teamId, actionId);
+		}
+	}
+
+	@Override
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME_TEAMS, 0, actionId);
 		}
 	}
 
@@ -59,12 +72,13 @@ public class TeamPermissionImpl implements TeamPermission {
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isOmniadmin()) {
+		Team team = _teamLocalService.getTeam(teamId);
+
+		if (contains(permissionChecker, team, actionId)) {
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			0, Team.class.getName(), teamId, actionId);
+		return false;
 	}
 
 	@Override
@@ -88,14 +102,27 @@ public class TeamPermissionImpl implements TeamPermission {
 
 	@Override
 	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		return permissionChecker.hasPermission(
+			0, RESOURCE_NAME_TEAMS, RESOURCE_NAME_TEAMS, actionId);
+	}
+
+	@Override
+	public boolean contains(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException {
 
-		if (contains(permissionChecker, team.getTeamId(), actionId)) {
+		if (permissionChecker.hasOwnerPermission(
+				team.getCompanyId(), Team.class.getName(), team.getTeamId(),
+				team.getUserId(), actionId)) {
+
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			0, Team.class.getName(), team.getTeamId(), actionId);
 	}
 
 	@Reference

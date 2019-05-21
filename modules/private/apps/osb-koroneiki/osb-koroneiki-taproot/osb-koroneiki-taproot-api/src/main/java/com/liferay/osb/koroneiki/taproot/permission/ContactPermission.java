@@ -33,6 +33,9 @@ public interface ContactPermission {
 			String actionId)
 		throws PortalException;
 
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException;
+
 	public boolean contains(
 			PermissionChecker permissionChecker, Contact contact,
 			String actionId)
@@ -46,6 +49,10 @@ public interface ContactPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long[] contactIds,
 			String actionId)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
 		throws PortalException;
 
 }

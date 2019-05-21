@@ -18,10 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.osb.koroneiki.application.list.constants.KoroneikiPanelCategoryKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,13 +39,6 @@ public class ContactRolesAdminPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return TaprootPortletKeys.CONTACT_ROLES_ADMIN;
-	}
-
-	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		return permissionChecker.isOmniadmin();
 	}
 
 	@Override

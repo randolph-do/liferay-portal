@@ -15,10 +15,10 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
-import com.liferay.osb.koroneiki.taproot.internal.permission.AccountPermissionUtil;
-import com.liferay.osb.koroneiki.taproot.internal.permission.ContactPermissionUtil;
-import com.liferay.osb.koroneiki.taproot.internal.permission.ProjectPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
+import com.liferay.osb.koroneiki.taproot.permission.ContactPermission;
+import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -45,8 +46,8 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 			String emailAddress, String languageId)
 		throws PortalException {
 
-		ContactPermissionUtil.check(
-			getPermissionChecker(), 0, TaprootActionKeys.ADD_CONTACT);
+		_contactPermission.check(
+			getPermissionChecker(), TaprootActionKeys.ADD_CONTACT);
 
 		return contactLocalService.addContact(
 			getUserId(), firstName, middleName, lastName, emailAddress,
@@ -54,7 +55,7 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	}
 
 	public Contact deleteContact(long contactId) throws PortalException {
-		ContactPermissionUtil.check(
+		_contactPermission.check(
 			getPermissionChecker(), contactId, ActionKeys.DELETE);
 
 		return contactLocalService.deleteContact(contactId);
@@ -63,21 +64,21 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	public List<Contact> getAccountContacts(long accountId, int start, int end)
 		throws PortalException {
 
-		AccountPermissionUtil.check(
+		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return contactLocalService.getAccountContacts(accountId, start, end);
 	}
 
 	public int getAccountContactsCount(long accountId) throws PortalException {
-		AccountPermissionUtil.check(
+		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return contactLocalService.getAccountContactsCount(accountId);
 	}
 
 	public Contact getContact(long contactId) throws PortalException {
-		ContactPermissionUtil.check(
+		_contactPermission.check(
 			getPermissionChecker(), contactId, ActionKeys.VIEW);
 
 		return contactLocalService.getContact(contactId);
@@ -86,14 +87,14 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	public List<Contact> getProjectContacts(long projectId, int start, int end)
 		throws PortalException {
 
-		ProjectPermissionUtil.check(
+		_projectPermission.check(
 			getPermissionChecker(), projectId, ActionKeys.VIEW);
 
 		return contactLocalService.getProjectContacts(projectId, start, end);
 	}
 
 	public int getProjectContactsCount(long projectId) throws PortalException {
-		ProjectPermissionUtil.check(
+		_projectPermission.check(
 			getPermissionChecker(), projectId, ActionKeys.VIEW);
 
 		return contactLocalService.getProjectContactsCount(projectId);
@@ -104,12 +105,21 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 			String lastName, String emailAddress, String languageId)
 		throws PortalException {
 
-		ContactPermissionUtil.check(
+		_contactPermission.check(
 			getPermissionChecker(), contactId, ActionKeys.UPDATE);
 
 		return contactLocalService.updateContact(
 			contactId, firstName, middleName, lastName, emailAddress,
 			languageId);
 	}
+
+	@Reference
+	private AccountPermission _accountPermission;
+
+	@Reference
+	private ContactPermission _contactPermission;
+
+	@Reference
+	private ProjectPermission _projectPermission;
 
 }

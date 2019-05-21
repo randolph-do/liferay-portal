@@ -33,6 +33,9 @@ public interface ProjectPermission {
 			String actionId)
 		throws PortalException;
 
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException;
+
 	public boolean contains(
 			PermissionChecker permissionChecker, long projectId,
 			String actionId)
@@ -46,6 +49,10 @@ public interface ProjectPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, Project project,
 			String actionId)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
 		throws PortalException;
 
 }

@@ -15,9 +15,9 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
-import com.liferay.osb.koroneiki.taproot.internal.permission.ProjectPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
+import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.osb.koroneiki.taproot.service.base.ProjectServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,8 +45,8 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 			int industry, int tier, String notes, int status)
 		throws PortalException {
 
-		ProjectPermissionUtil.check(
-			getPermissionChecker(), 0, TaprootActionKeys.ADD_PROJECT);
+		_projectPermission.check(
+			getPermissionChecker(), TaprootActionKeys.ADD_PROJECT);
 
 		return projectLocalService.addProject(
 			getUserId(), accountId, supportRegionId, name, code, industry, tier,
@@ -54,14 +54,14 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	}
 
 	public Project deleteProject(long projectId) throws PortalException {
-		ProjectPermissionUtil.check(
+		_projectPermission.check(
 			getPermissionChecker(), projectId, ActionKeys.DELETE);
 
 		return projectLocalService.deleteProject(projectId);
 	}
 
 	public Project getProject(long projectId) throws PortalException {
-		ProjectPermissionUtil.check(
+		_projectPermission.check(
 			getPermissionChecker(), projectId, ActionKeys.VIEW);
 
 		return projectLocalService.getProject(projectId);
@@ -88,7 +88,7 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 			int industry, int tier, String notes, int status)
 		throws PortalException {
 
-		ProjectPermissionUtil.check(
+		_projectPermission.check(
 			getPermissionChecker(), projectId, ActionKeys.UPDATE);
 
 		return projectLocalService.updateProject(
@@ -98,5 +98,8 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 
 	@Reference
 	private AccountPermission _accountPermission;
+
+	@Reference
+	private ProjectPermission _projectPermission;
 
 }

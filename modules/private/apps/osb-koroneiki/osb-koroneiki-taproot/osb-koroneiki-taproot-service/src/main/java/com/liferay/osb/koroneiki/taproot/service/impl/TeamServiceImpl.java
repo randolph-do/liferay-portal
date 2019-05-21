@@ -15,14 +15,15 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
-import com.liferay.osb.koroneiki.taproot.internal.permission.TeamPermissionUtil;
 import com.liferay.osb.koroneiki.taproot.model.Team;
+import com.liferay.osb.koroneiki.taproot.permission.TeamPermission;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -39,14 +40,14 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 	public Team addTeam(long accountId, String name, int type)
 		throws PortalException {
 
-		TeamPermissionUtil.check(
-			getPermissionChecker(), 0, TaprootActionKeys.ADD_TEAM);
+		_teamPermission.check(
+			getPermissionChecker(), TaprootActionKeys.ADD_TEAM);
 
 		return teamLocalService.addTeam(getUserId(), accountId, name, type);
 	}
 
 	public Team deleteTeam(long teamId) throws PortalException {
-		TeamPermissionUtil.check(
+		_teamPermission.check(
 			getPermissionChecker(), teamId, ActionKeys.DELETE);
 
 		return teamLocalService.deleteTeam(teamId);
@@ -55,10 +56,13 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 	public Team updateTeam(long teamId, String name, int type)
 		throws PortalException {
 
-		TeamPermissionUtil.check(
+		_teamPermission.check(
 			getPermissionChecker(), teamId, ActionKeys.UPDATE);
 
 		return teamLocalService.updateTeam(teamId, name, type);
 	}
+
+	@Reference
+	private TeamPermission _teamPermission;
 
 }

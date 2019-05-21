@@ -126,6 +126,186 @@ public class ProductFieldUtil {
 	}
 
 	/**
+	 * Returns all the product fields where productPurchaseId = &#63;.
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @return the matching product fields
+	 */
+	public static List<ProductField> findByProductPurchaseId(
+		long productPurchaseId) {
+
+		return getPersistence().findByProductPurchaseId(productPurchaseId);
+	}
+
+	/**
+	 * Returns a range of all the product fields where productPurchaseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductFieldModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @param start the lower bound of the range of product fields
+	 * @param end the upper bound of the range of product fields (not inclusive)
+	 * @return the range of matching product fields
+	 */
+	public static List<ProductField> findByProductPurchaseId(
+		long productPurchaseId, int start, int end) {
+
+		return getPersistence().findByProductPurchaseId(
+			productPurchaseId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the product fields where productPurchaseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductFieldModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @param start the lower bound of the range of product fields
+	 * @param end the upper bound of the range of product fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching product fields
+	 */
+	public static List<ProductField> findByProductPurchaseId(
+		long productPurchaseId, int start, int end,
+		OrderByComparator<ProductField> orderByComparator) {
+
+		return getPersistence().findByProductPurchaseId(
+			productPurchaseId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the product fields where productPurchaseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductFieldModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @param start the lower bound of the range of product fields
+	 * @param end the upper bound of the range of product fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching product fields
+	 */
+	public static List<ProductField> findByProductPurchaseId(
+		long productPurchaseId, int start, int end,
+		OrderByComparator<ProductField> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByProductPurchaseId(
+			productPurchaseId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first product field in the ordered set where productPurchaseId = &#63;.
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product field
+	 * @throws NoSuchProductFieldException if a matching product field could not be found
+	 */
+	public static ProductField findByProductPurchaseId_First(
+			long productPurchaseId,
+			OrderByComparator<ProductField> orderByComparator)
+		throws com.liferay.osb.koroneiki.trunk.exception.
+			NoSuchProductFieldException {
+
+		return getPersistence().findByProductPurchaseId_First(
+			productPurchaseId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first product field in the ordered set where productPurchaseId = &#63;.
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product field, or <code>null</code> if a matching product field could not be found
+	 */
+	public static ProductField fetchByProductPurchaseId_First(
+		long productPurchaseId,
+		OrderByComparator<ProductField> orderByComparator) {
+
+		return getPersistence().fetchByProductPurchaseId_First(
+			productPurchaseId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last product field in the ordered set where productPurchaseId = &#63;.
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product field
+	 * @throws NoSuchProductFieldException if a matching product field could not be found
+	 */
+	public static ProductField findByProductPurchaseId_Last(
+			long productPurchaseId,
+			OrderByComparator<ProductField> orderByComparator)
+		throws com.liferay.osb.koroneiki.trunk.exception.
+			NoSuchProductFieldException {
+
+		return getPersistence().findByProductPurchaseId_Last(
+			productPurchaseId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last product field in the ordered set where productPurchaseId = &#63;.
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product field, or <code>null</code> if a matching product field could not be found
+	 */
+	public static ProductField fetchByProductPurchaseId_Last(
+		long productPurchaseId,
+		OrderByComparator<ProductField> orderByComparator) {
+
+		return getPersistence().fetchByProductPurchaseId_Last(
+			productPurchaseId, orderByComparator);
+	}
+
+	/**
+	 * Returns the product fields before and after the current product field in the ordered set where productPurchaseId = &#63;.
+	 *
+	 * @param productFieldId the primary key of the current product field
+	 * @param productPurchaseId the product purchase ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next product field
+	 * @throws NoSuchProductFieldException if a product field with the primary key could not be found
+	 */
+	public static ProductField[] findByProductPurchaseId_PrevAndNext(
+			long productFieldId, long productPurchaseId,
+			OrderByComparator<ProductField> orderByComparator)
+		throws com.liferay.osb.koroneiki.trunk.exception.
+			NoSuchProductFieldException {
+
+		return getPersistence().findByProductPurchaseId_PrevAndNext(
+			productFieldId, productPurchaseId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the product fields where productPurchaseId = &#63; from the database.
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 */
+	public static void removeByProductPurchaseId(long productPurchaseId) {
+		getPersistence().removeByProductPurchaseId(productPurchaseId);
+	}
+
+	/**
+	 * Returns the number of product fields where productPurchaseId = &#63;.
+	 *
+	 * @param productPurchaseId the product purchase ID
+	 * @return the number of matching product fields
+	 */
+	public static int countByProductPurchaseId(long productPurchaseId) {
+		return getPersistence().countByProductPurchaseId(productPurchaseId);
+	}
+
+	/**
 	 * Caches the product field in the entity cache if it is enabled.
 	 *
 	 * @param productField the product field

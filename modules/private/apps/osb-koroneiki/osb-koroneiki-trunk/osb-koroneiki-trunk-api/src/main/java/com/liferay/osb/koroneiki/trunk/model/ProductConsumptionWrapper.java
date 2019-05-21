@@ -117,6 +117,13 @@ public class ProductConsumptionWrapper
 		}
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAccount();
+	}
+
 	/**
 	 * Returns the account ID of this product consumption.
 	 *
@@ -177,6 +184,13 @@ public class ProductConsumptionWrapper
 		return model.getProductConsumptionId();
 	}
 
+	@Override
+	public ProductEntry getProductEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getProductEntry();
+	}
+
 	/**
 	 * Returns the product entry ID of this product consumption.
 	 *
@@ -185,6 +199,11 @@ public class ProductConsumptionWrapper
 	@Override
 	public long getProductEntryId() {
 		return model.getProductEntryId();
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project getProject() {
+		return model.getProject();
 	}
 
 	/**

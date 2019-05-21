@@ -137,6 +137,13 @@ public class ProductPurchaseWrapper
 		}
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAccount();
+	}
+
 	/**
 	 * Returns the account ID of this product purchase.
 	 *
@@ -197,6 +204,13 @@ public class ProductPurchaseWrapper
 		return model.getPrimaryKey();
 	}
 
+	@Override
+	public ProductEntry getProductEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getProductEntry();
+	}
+
 	/**
 	 * Returns the product entry ID of this product purchase.
 	 *
@@ -207,6 +221,11 @@ public class ProductPurchaseWrapper
 		return model.getProductEntryId();
 	}
 
+	@Override
+	public java.util.List<ProductField> getProductFields() {
+		return model.getProductFields();
+	}
+
 	/**
 	 * Returns the product purchase ID of this product purchase.
 	 *
@@ -215,6 +234,11 @@ public class ProductPurchaseWrapper
 	@Override
 	public long getProductPurchaseId() {
 		return model.getProductPurchaseId();
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project getProject() {
+		return model.getProject();
 	}
 
 	/**

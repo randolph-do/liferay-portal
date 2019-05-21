@@ -60,4 +60,12 @@ public interface ProductConsumption
 
 			};
 
+	public com.liferay.osb.koroneiki.taproot.model.Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public ProductEntry getProductEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.osb.koroneiki.taproot.model.Project getProject();
+
 }

@@ -55,6 +55,16 @@ public class ProductConsumptionServiceWrapper
 			productConsumptionId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			deleteProductConsumption(
+				long accountId, long projectId, long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionService.deleteProductConsumption(
+			accountId, projectId, productEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

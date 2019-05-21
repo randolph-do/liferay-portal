@@ -100,6 +100,16 @@ public class ProductConsumptionLocalServiceUtil {
 		return getService().deleteProductConsumption(productConsumptionId);
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			deleteProductConsumption(
+				long userId, long accountId, long projectId,
+				long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteProductConsumption(
+			userId, accountId, projectId, productEntryId);
+	}
+
 	/**
 	 * Deletes the product consumption from the database. Also notifies the appropriate model listeners.
 	 *
@@ -302,6 +312,17 @@ public class ProductConsumptionLocalServiceUtil {
 			getProductConsumptions(int start, int end) {
 
 		return getService().getProductConsumptions(start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+				getProductConsumptions(
+					long userId, long accountId, long projectId,
+					long productEntryId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductConsumptions(
+			userId, accountId, projectId, productEntryId);
 	}
 
 	/**

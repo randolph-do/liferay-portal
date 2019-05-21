@@ -135,6 +135,47 @@ public class ProductConsumptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			deleteProductConsumption(
+				HttpPrincipal httpPrincipal, long accountId, long projectId,
+				long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductConsumptionServiceUtil.class, "deleteProductConsumption",
+				_deleteProductConsumptionParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountId, projectId, productEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.trunk.model.ProductConsumption)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ProductConsumptionServiceHttp.class);
 
@@ -142,5 +183,7 @@ public class ProductConsumptionServiceHttp {
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _deleteProductConsumptionParameterTypes1 =
 		new Class[] {long.class};
+	private static final Class<?>[] _deleteProductConsumptionParameterTypes2 =
+		new Class[] {long.class, long.class, long.class};
 
 }

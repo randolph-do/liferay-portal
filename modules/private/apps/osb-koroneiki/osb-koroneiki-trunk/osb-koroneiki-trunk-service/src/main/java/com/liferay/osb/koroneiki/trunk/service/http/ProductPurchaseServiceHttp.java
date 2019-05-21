@@ -58,7 +58,10 @@ public class ProductPurchaseServiceHttp {
 			addProductPurchase(
 				HttpPrincipal httpPrincipal, long accountId, long projectId,
 				long productEntryId, java.util.Date startDate,
-				java.util.Date endDate, int quantity)
+				java.util.Date endDate, int quantity,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -68,7 +71,7 @@ public class ProductPurchaseServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountId, projectId, productEntryId, startDate,
-				endDate, quantity);
+				endDate, quantity, productFields);
 
 			Object returnObj = null;
 
@@ -140,7 +143,10 @@ public class ProductPurchaseServiceHttp {
 	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
 			updateProductPurchase(
 				HttpPrincipal httpPrincipal, long productPurchaseId,
-				java.util.Date startDate, java.util.Date endDate, int quantity)
+				java.util.Date startDate, java.util.Date endDate, int quantity,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -149,7 +155,8 @@ public class ProductPurchaseServiceHttp {
 				_updateProductPurchaseParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, productPurchaseId, startDate, endDate, quantity);
+				methodKey, productPurchaseId, startDate, endDate, quantity,
+				productFields);
 
 			Object returnObj = null;
 
@@ -184,13 +191,14 @@ public class ProductPurchaseServiceHttp {
 	private static final Class<?>[] _addProductPurchaseParameterTypes0 =
 		new Class[] {
 			long.class, long.class, long.class, java.util.Date.class,
-			java.util.Date.class, int.class
+			java.util.Date.class, int.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteProductPurchaseParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateProductPurchaseParameterTypes2 =
 		new Class[] {
-			long.class, java.util.Date.class, java.util.Date.class, int.class
+			long.class, java.util.Date.class, java.util.Date.class, int.class,
+			java.util.List.class
 		};
 
 }

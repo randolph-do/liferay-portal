@@ -115,11 +115,19 @@ public class ProductConsumptionModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ACCOUNTID_COLUMN_BITMASK = 1L;
 
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long PRODUCTCONSUMPTIONID_COLUMN_BITMASK = 4L;
+	public static final long PRODUCTENTRYID_COLUMN_BITMASK = 4L;
+
+	public static final long PROJECTID_COLUMN_BITMASK = 8L;
+
+	public static final long USERID_COLUMN_BITMASK = 16L;
+
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	public static final long PRODUCTCONSUMPTIONID_COLUMN_BITMASK = 64L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -408,6 +416,14 @@ public class ProductConsumptionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -425,6 +441,10 @@ public class ProductConsumptionModelImpl
 
 	@Override
 	public void setUserUuid(String userUuid) {
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -463,7 +483,19 @@ public class ProductConsumptionModelImpl
 
 	@Override
 	public void setAccountId(long accountId) {
+		_columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
+
+		if (!_setOriginalAccountId) {
+			_setOriginalAccountId = true;
+
+			_originalAccountId = _accountId;
+		}
+
 		_accountId = accountId;
+	}
+
+	public long getOriginalAccountId() {
+		return _originalAccountId;
 	}
 
 	@JSON
@@ -474,7 +506,19 @@ public class ProductConsumptionModelImpl
 
 	@Override
 	public void setProjectId(long projectId) {
+		_columnBitmask |= PROJECTID_COLUMN_BITMASK;
+
+		if (!_setOriginalProjectId) {
+			_setOriginalProjectId = true;
+
+			_originalProjectId = _projectId;
+		}
+
 		_projectId = projectId;
+	}
+
+	public long getOriginalProjectId() {
+		return _originalProjectId;
 	}
 
 	@JSON
@@ -485,7 +529,19 @@ public class ProductConsumptionModelImpl
 
 	@Override
 	public void setProductEntryId(long productEntryId) {
+		_columnBitmask |= PRODUCTENTRYID_COLUMN_BITMASK;
+
+		if (!_setOriginalProductEntryId) {
+			_setOriginalProductEntryId = true;
+
+			_originalProductEntryId = _productEntryId;
+		}
+
 		_productEntryId = productEntryId;
+	}
+
+	public long getOriginalProductEntryId() {
+		return _originalProductEntryId;
 	}
 
 	@Override
@@ -608,7 +664,27 @@ public class ProductConsumptionModelImpl
 
 		productConsumptionModelImpl._setOriginalCompanyId = false;
 
+		productConsumptionModelImpl._originalUserId =
+			productConsumptionModelImpl._userId;
+
+		productConsumptionModelImpl._setOriginalUserId = false;
+
 		productConsumptionModelImpl._setModifiedDate = false;
+
+		productConsumptionModelImpl._originalAccountId =
+			productConsumptionModelImpl._accountId;
+
+		productConsumptionModelImpl._setOriginalAccountId = false;
+
+		productConsumptionModelImpl._originalProjectId =
+			productConsumptionModelImpl._projectId;
+
+		productConsumptionModelImpl._setOriginalProjectId = false;
+
+		productConsumptionModelImpl._originalProductEntryId =
+			productConsumptionModelImpl._productEntryId;
+
+		productConsumptionModelImpl._setOriginalProductEntryId = false;
 
 		productConsumptionModelImpl._columnBitmask = 0;
 	}
@@ -738,12 +814,20 @@ public class ProductConsumptionModelImpl
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _accountId;
+	private long _originalAccountId;
+	private boolean _setOriginalAccountId;
 	private long _projectId;
+	private long _originalProjectId;
+	private boolean _setOriginalProjectId;
 	private long _productEntryId;
+	private long _originalProductEntryId;
+	private boolean _setOriginalProductEntryId;
 	private long _columnBitmask;
 	private ProductConsumption _escapedModel;
 

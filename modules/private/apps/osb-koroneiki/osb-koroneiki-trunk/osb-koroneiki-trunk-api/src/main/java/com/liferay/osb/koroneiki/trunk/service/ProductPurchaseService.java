@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.trunk.service;
 
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -52,7 +54,7 @@ public interface ProductPurchaseService extends BaseService {
 	 */
 	public ProductPurchase addProductPurchase(
 			long accountId, long projectId, long productEntryId, Date startDate,
-			Date endDate, int quantity)
+			Date endDate, int quantity, List<ProductField> productFields)
 		throws PortalException;
 
 	public ProductPurchase deleteProductPurchase(long productPurchaseId)
@@ -66,7 +68,8 @@ public interface ProductPurchaseService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public ProductPurchase updateProductPurchase(
-			long productPurchaseId, Date startDate, Date endDate, int quantity)
+			long productPurchaseId, Date startDate, Date endDate, int quantity,
+			List<ProductField> productFields)
 		throws PortalException;
 
 }

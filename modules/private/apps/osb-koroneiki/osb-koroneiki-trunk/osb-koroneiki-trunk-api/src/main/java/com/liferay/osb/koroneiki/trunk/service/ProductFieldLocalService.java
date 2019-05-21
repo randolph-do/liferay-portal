@@ -221,6 +221,9 @@ public interface ProductFieldLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ProductField> getProductFields(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductField> getProductFields(long productPurchaseId);
+
 	/**
 	 * Returns the number of product fields.
 	 *

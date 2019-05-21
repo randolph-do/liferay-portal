@@ -2114,6 +2114,1094 @@ public class ProductConsumptionPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"productConsumption.companyId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByU_AI_PI_PEI;
+	private FinderPath _finderPathWithoutPaginationFindByU_AI_PI_PEI;
+	private FinderPath _finderPathCountByU_AI_PI_PEI;
+
+	/**
+	 * Returns all the product consumptions where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @return the matching product consumptions
+	 */
+	@Override
+	public List<ProductConsumption> findByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId) {
+
+		return findByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the product consumptions where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductConsumptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param start the lower bound of the range of product consumptions
+	 * @param end the upper bound of the range of product consumptions (not inclusive)
+	 * @return the range of matching product consumptions
+	 */
+	@Override
+	public List<ProductConsumption> findByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId,
+		int start, int end) {
+
+		return findByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the product consumptions where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductConsumptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param start the lower bound of the range of product consumptions
+	 * @param end the upper bound of the range of product consumptions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching product consumptions
+	 */
+	@Override
+	public List<ProductConsumption> findByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId,
+		int start, int end,
+		OrderByComparator<ProductConsumption> orderByComparator) {
+
+		return findByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the product consumptions where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductConsumptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param start the lower bound of the range of product consumptions
+	 * @param end the upper bound of the range of product consumptions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching product consumptions
+	 */
+	@Override
+	public List<ProductConsumption> findByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId,
+		int start, int end,
+		OrderByComparator<ProductConsumption> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByU_AI_PI_PEI;
+			finderArgs = new Object[] {
+				userId, accountId, projectId, productEntryId
+			};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByU_AI_PI_PEI;
+			finderArgs = new Object[] {
+				userId, accountId, projectId, productEntryId, start, end,
+				orderByComparator
+			};
+		}
+
+		List<ProductConsumption> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ProductConsumption>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ProductConsumption productConsumption : list) {
+					if ((userId != productConsumption.getUserId()) ||
+						(accountId != productConsumption.getAccountId()) ||
+						(projectId != productConsumption.getProjectId()) ||
+						(productEntryId !=
+							productConsumption.getProductEntryId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_PRODUCTCONSUMPTION_WHERE);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_ACCOUNTID_2);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_PROJECTID_2);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_PRODUCTENTRYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(accountId);
+
+				qPos.add(projectId);
+
+				qPos.add(productEntryId);
+
+				if (!pagination) {
+					list = (List<ProductConsumption>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ProductConsumption>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first product consumption in the ordered set where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product consumption
+	 * @throws NoSuchProductConsumptionException if a matching product consumption could not be found
+	 */
+	@Override
+	public ProductConsumption findByU_AI_PI_PEI_First(
+			long userId, long accountId, long projectId, long productEntryId,
+			OrderByComparator<ProductConsumption> orderByComparator)
+		throws NoSuchProductConsumptionException {
+
+		ProductConsumption productConsumption = fetchByU_AI_PI_PEI_First(
+			userId, accountId, projectId, productEntryId, orderByComparator);
+
+		if (productConsumption != null) {
+			return productConsumption;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", accountId=");
+		msg.append(accountId);
+
+		msg.append(", projectId=");
+		msg.append(projectId);
+
+		msg.append(", productEntryId=");
+		msg.append(productEntryId);
+
+		msg.append("}");
+
+		throw new NoSuchProductConsumptionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first product consumption in the ordered set where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product consumption, or <code>null</code> if a matching product consumption could not be found
+	 */
+	@Override
+	public ProductConsumption fetchByU_AI_PI_PEI_First(
+		long userId, long accountId, long projectId, long productEntryId,
+		OrderByComparator<ProductConsumption> orderByComparator) {
+
+		List<ProductConsumption> list = findByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last product consumption in the ordered set where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product consumption
+	 * @throws NoSuchProductConsumptionException if a matching product consumption could not be found
+	 */
+	@Override
+	public ProductConsumption findByU_AI_PI_PEI_Last(
+			long userId, long accountId, long projectId, long productEntryId,
+			OrderByComparator<ProductConsumption> orderByComparator)
+		throws NoSuchProductConsumptionException {
+
+		ProductConsumption productConsumption = fetchByU_AI_PI_PEI_Last(
+			userId, accountId, projectId, productEntryId, orderByComparator);
+
+		if (productConsumption != null) {
+			return productConsumption;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", accountId=");
+		msg.append(accountId);
+
+		msg.append(", projectId=");
+		msg.append(projectId);
+
+		msg.append(", productEntryId=");
+		msg.append(productEntryId);
+
+		msg.append("}");
+
+		throw new NoSuchProductConsumptionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last product consumption in the ordered set where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product consumption, or <code>null</code> if a matching product consumption could not be found
+	 */
+	@Override
+	public ProductConsumption fetchByU_AI_PI_PEI_Last(
+		long userId, long accountId, long projectId, long productEntryId,
+		OrderByComparator<ProductConsumption> orderByComparator) {
+
+		int count = countByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ProductConsumption> list = findByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the product consumptions before and after the current product consumption in the ordered set where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param productConsumptionId the primary key of the current product consumption
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next product consumption
+	 * @throws NoSuchProductConsumptionException if a product consumption with the primary key could not be found
+	 */
+	@Override
+	public ProductConsumption[] findByU_AI_PI_PEI_PrevAndNext(
+			long productConsumptionId, long userId, long accountId,
+			long projectId, long productEntryId,
+			OrderByComparator<ProductConsumption> orderByComparator)
+		throws NoSuchProductConsumptionException {
+
+		ProductConsumption productConsumption = findByPrimaryKey(
+			productConsumptionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ProductConsumption[] array = new ProductConsumptionImpl[3];
+
+			array[0] = getByU_AI_PI_PEI_PrevAndNext(
+				session, productConsumption, userId, accountId, projectId,
+				productEntryId, orderByComparator, true);
+
+			array[1] = productConsumption;
+
+			array[2] = getByU_AI_PI_PEI_PrevAndNext(
+				session, productConsumption, userId, accountId, projectId,
+				productEntryId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ProductConsumption getByU_AI_PI_PEI_PrevAndNext(
+		Session session, ProductConsumption productConsumption, long userId,
+		long accountId, long projectId, long productEntryId,
+		OrderByComparator<ProductConsumption> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_PRODUCTCONSUMPTION_WHERE);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_ACCOUNTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PROJECTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PRODUCTENTRYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		qPos.add(accountId);
+
+		qPos.add(projectId);
+
+		qPos.add(productEntryId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						productConsumption)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ProductConsumption> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the product consumptions that the user has permission to view where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @return the matching product consumptions that the user has permission to view
+	 */
+	@Override
+	public List<ProductConsumption> filterFindByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId) {
+
+		return filterFindByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the product consumptions that the user has permission to view where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductConsumptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param start the lower bound of the range of product consumptions
+	 * @param end the upper bound of the range of product consumptions (not inclusive)
+	 * @return the range of matching product consumptions that the user has permission to view
+	 */
+	@Override
+	public List<ProductConsumption> filterFindByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId,
+		int start, int end) {
+
+		return filterFindByU_AI_PI_PEI(
+			userId, accountId, projectId, productEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the product consumptions that the user has permissions to view where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductConsumptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param start the lower bound of the range of product consumptions
+	 * @param end the upper bound of the range of product consumptions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching product consumptions that the user has permission to view
+	 */
+	@Override
+	public List<ProductConsumption> filterFindByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId,
+		int start, int end,
+		OrderByComparator<ProductConsumption> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByU_AI_PI_PEI(
+				userId, accountId, projectId, productEntryId, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_PRODUCTCONSUMPTION_WHERE);
+		}
+		else {
+			query.append(
+				_FILTER_SQL_SELECT_PRODUCTCONSUMPTION_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_ACCOUNTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PROJECTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PRODUCTENTRYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(
+				_FILTER_SQL_SELECT_PRODUCTCONSUMPTION_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), ProductConsumption.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, ProductConsumptionImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, ProductConsumptionImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			qPos.add(accountId);
+
+			qPos.add(projectId);
+
+			qPos.add(productEntryId);
+
+			return (List<ProductConsumption>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the product consumptions before and after the current product consumption in the ordered set of product consumptions that the user has permission to view where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param productConsumptionId the primary key of the current product consumption
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next product consumption
+	 * @throws NoSuchProductConsumptionException if a product consumption with the primary key could not be found
+	 */
+	@Override
+	public ProductConsumption[] filterFindByU_AI_PI_PEI_PrevAndNext(
+			long productConsumptionId, long userId, long accountId,
+			long projectId, long productEntryId,
+			OrderByComparator<ProductConsumption> orderByComparator)
+		throws NoSuchProductConsumptionException {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByU_AI_PI_PEI_PrevAndNext(
+				productConsumptionId, userId, accountId, projectId,
+				productEntryId, orderByComparator);
+		}
+
+		ProductConsumption productConsumption = findByPrimaryKey(
+			productConsumptionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ProductConsumption[] array = new ProductConsumptionImpl[3];
+
+			array[0] = filterGetByU_AI_PI_PEI_PrevAndNext(
+				session, productConsumption, userId, accountId, projectId,
+				productEntryId, orderByComparator, true);
+
+			array[1] = productConsumption;
+
+			array[2] = filterGetByU_AI_PI_PEI_PrevAndNext(
+				session, productConsumption, userId, accountId, projectId,
+				productEntryId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ProductConsumption filterGetByU_AI_PI_PEI_PrevAndNext(
+		Session session, ProductConsumption productConsumption, long userId,
+		long accountId, long projectId, long productEntryId,
+		OrderByComparator<ProductConsumption> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_PRODUCTCONSUMPTION_WHERE);
+		}
+		else {
+			query.append(
+				_FILTER_SQL_SELECT_PRODUCTCONSUMPTION_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_ACCOUNTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PROJECTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PRODUCTENTRYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(
+				_FILTER_SQL_SELECT_PRODUCTCONSUMPTION_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), ProductConsumption.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, ProductConsumptionImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, ProductConsumptionImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		qPos.add(accountId);
+
+		qPos.add(projectId);
+
+		qPos.add(productEntryId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						productConsumption)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ProductConsumption> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the product consumptions where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 */
+	@Override
+	public void removeByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId) {
+
+		for (ProductConsumption productConsumption :
+				findByU_AI_PI_PEI(
+					userId, accountId, projectId, productEntryId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(productConsumption);
+		}
+	}
+
+	/**
+	 * Returns the number of product consumptions where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @return the number of matching product consumptions
+	 */
+	@Override
+	public int countByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId) {
+
+		FinderPath finderPath = _finderPathCountByU_AI_PI_PEI;
+
+		Object[] finderArgs = new Object[] {
+			userId, accountId, projectId, productEntryId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_PRODUCTCONSUMPTION_WHERE);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_ACCOUNTID_2);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_PROJECTID_2);
+
+			query.append(_FINDER_COLUMN_U_AI_PI_PEI_PRODUCTENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(accountId);
+
+				qPos.add(projectId);
+
+				qPos.add(productEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of product consumptions that the user has permission to view where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param accountId the account ID
+	 * @param projectId the project ID
+	 * @param productEntryId the product entry ID
+	 * @return the number of matching product consumptions that the user has permission to view
+	 */
+	@Override
+	public int filterCountByU_AI_PI_PEI(
+		long userId, long accountId, long projectId, long productEntryId) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByU_AI_PI_PEI(
+				userId, accountId, projectId, productEntryId);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_PRODUCTCONSUMPTION_WHERE);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_ACCOUNTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PROJECTID_2);
+
+		query.append(_FINDER_COLUMN_U_AI_PI_PEI_PRODUCTENTRYID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), ProductConsumption.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			qPos.add(accountId);
+
+			qPos.add(projectId);
+
+			qPos.add(productEntryId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_U_AI_PI_PEI_USERID_2 =
+		"productConsumption.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_AI_PI_PEI_ACCOUNTID_2 =
+		"productConsumption.accountId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_AI_PI_PEI_PROJECTID_2 =
+		"productConsumption.projectId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_AI_PI_PEI_PRODUCTENTRYID_2 =
+		"productConsumption.productEntryId = ?";
+
 	public ProductConsumptionPersistenceImpl() {
 		setModelClass(ProductConsumption.class);
 
@@ -2419,6 +3507,17 @@ public class ProductConsumptionPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByUuid_C, args);
 
+			args = new Object[] {
+				productConsumptionModelImpl.getUserId(),
+				productConsumptionModelImpl.getAccountId(),
+				productConsumptionModelImpl.getProjectId(),
+				productConsumptionModelImpl.getProductEntryId()
+			};
+
+			finderCache.removeResult(_finderPathCountByU_AI_PI_PEI, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByU_AI_PI_PEI, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -2464,6 +3563,33 @@ public class ProductConsumptionPersistenceImpl
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByUuid_C, args);
+			}
+
+			if ((productConsumptionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByU_AI_PI_PEI.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					productConsumptionModelImpl.getOriginalUserId(),
+					productConsumptionModelImpl.getOriginalAccountId(),
+					productConsumptionModelImpl.getOriginalProjectId(),
+					productConsumptionModelImpl.getOriginalProductEntryId()
+				};
+
+				finderCache.removeResult(_finderPathCountByU_AI_PI_PEI, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByU_AI_PI_PEI, args);
+
+				args = new Object[] {
+					productConsumptionModelImpl.getUserId(),
+					productConsumptionModelImpl.getAccountId(),
+					productConsumptionModelImpl.getProjectId(),
+					productConsumptionModelImpl.getProductEntryId()
+				};
+
+				finderCache.removeResult(_finderPathCountByU_AI_PI_PEI, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByU_AI_PI_PEI, args);
 			}
 		}
 
@@ -2814,6 +3940,38 @@ public class ProductConsumptionPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByU_AI_PI_PEI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ProductConsumptionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_AI_PI_PEI",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByU_AI_PI_PEI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ProductConsumptionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_AI_PI_PEI",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			ProductConsumptionModelImpl.USERID_COLUMN_BITMASK |
+			ProductConsumptionModelImpl.ACCOUNTID_COLUMN_BITMASK |
+			ProductConsumptionModelImpl.PROJECTID_COLUMN_BITMASK |
+			ProductConsumptionModelImpl.PRODUCTENTRYID_COLUMN_BITMASK);
+
+		_finderPathCountByU_AI_PI_PEI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_AI_PI_PEI",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			});
 	}
 
 	@Deactivate

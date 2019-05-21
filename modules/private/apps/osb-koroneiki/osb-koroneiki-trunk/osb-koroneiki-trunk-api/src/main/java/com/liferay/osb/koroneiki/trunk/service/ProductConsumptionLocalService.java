@@ -105,6 +105,10 @@ public interface ProductConsumptionLocalService
 			long productConsumptionId)
 		throws PortalException;
 
+	public ProductConsumption deleteProductConsumption(
+			long userId, long accountId, long projectId, long productEntryId)
+		throws PortalException;
+
 	/**
 	 * Deletes the product consumption from the database. Also notifies the appropriate model listeners.
 	 *
@@ -255,6 +259,11 @@ public interface ProductConsumptionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ProductConsumption> getProductConsumptions(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductConsumption> getProductConsumptions(
+			long userId, long accountId, long projectId, long productEntryId)
+		throws PortalException;
 
 	/**
 	 * Returns the number of product consumptions.

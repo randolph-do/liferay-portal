@@ -58,4 +58,14 @@ public interface ProductPurchase extends PersistedModel, ProductPurchaseModel {
 
 		};
 
+	public com.liferay.osb.koroneiki.taproot.model.Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public ProductEntry getProductEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<ProductField> getProductFields();
+
+	public com.liferay.osb.koroneiki.taproot.model.Project getProject();
+
 }

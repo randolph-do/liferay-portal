@@ -56,6 +56,10 @@ public interface ProductConsumptionService extends BaseService {
 			long productConsumptionId)
 		throws PortalException;
 
+	public ProductConsumption deleteProductConsumption(
+			long accountId, long projectId, long productEntryId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

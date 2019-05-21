@@ -263,6 +263,13 @@ public class ProductFieldLocalServiceUtil {
 		return getService().getProductFields(start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductField> getProductFields(
+			long productPurchaseId) {
+
+		return getService().getProductFields(productPurchaseId);
+	}
+
 	/**
 	 * Returns the number of product fields.
 	 *

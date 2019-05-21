@@ -105,6 +105,27 @@ public class ProductConsumptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
+			deleteProductConsumption(
+				long accountId, long projectId, long productEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+				returnValue =
+					ProductConsumptionServiceUtil.deleteProductConsumption(
+						accountId, projectId, productEntryId);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ProductConsumptionServiceSoap.class);
 

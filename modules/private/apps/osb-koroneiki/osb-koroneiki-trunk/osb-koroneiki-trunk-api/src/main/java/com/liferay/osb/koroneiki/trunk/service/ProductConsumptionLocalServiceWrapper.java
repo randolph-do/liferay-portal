@@ -105,6 +105,17 @@ public class ProductConsumptionLocalServiceWrapper
 			productConsumptionId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			deleteProductConsumption(
+				long userId, long accountId, long projectId,
+				long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.deleteProductConsumption(
+			userId, accountId, projectId, productEntryId);
+	}
+
 	/**
 	 * Deletes the product consumption from the database. Also notifies the appropriate model listeners.
 	 *
@@ -329,6 +340,18 @@ public class ProductConsumptionLocalServiceWrapper
 
 		return _productConsumptionLocalService.getProductConsumptions(
 			start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+				getProductConsumptions(
+					long userId, long accountId, long projectId,
+					long productEntryId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.getProductConsumptions(
+			userId, accountId, projectId, productEntryId);
 	}
 
 	/**

@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.trunk.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -65,7 +66,8 @@ public interface ProductPurchaseLocalService
 	 */
 	public ProductPurchase addProductPurchase(
 			long userId, long accountId, long projectId, long productEntryId,
-			Date startDate, Date endDate, int quantity)
+			Date startDate, Date endDate, int quantity,
+			List<ProductField> productFields)
 		throws PortalException;
 
 	/**
@@ -263,7 +265,8 @@ public interface ProductPurchaseLocalService
 	public int getProductPurchasesCount();
 
 	public ProductPurchase updateProductPurchase(
-			long productPurchaseId, Date startDate, Date endDate, int quantity)
+			long userId, long productPurchaseId, Date startDate, Date endDate,
+			int quantity, List<ProductField> productFields)
 		throws PortalException;
 
 	/**

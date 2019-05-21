@@ -105,6 +105,10 @@ public class ProductFieldModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	public static final long PRODUCTPURCHASEID_COLUMN_BITMASK = 1L;
+
+	public static final long PRODUCTFIELDID_COLUMN_BITMASK = 2L;
+
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
 	}
@@ -343,7 +347,19 @@ public class ProductFieldModelImpl
 
 	@Override
 	public void setProductPurchaseId(long productPurchaseId) {
+		_columnBitmask |= PRODUCTPURCHASEID_COLUMN_BITMASK;
+
+		if (!_setOriginalProductPurchaseId) {
+			_setOriginalProductPurchaseId = true;
+
+			_originalProductPurchaseId = _productPurchaseId;
+		}
+
 		_productPurchaseId = productPurchaseId;
+	}
+
+	public long getOriginalProductPurchaseId() {
+		return _originalProductPurchaseId;
 	}
 
 	@JSON
@@ -376,6 +392,10 @@ public class ProductFieldModelImpl
 	@Override
 	public void setValue(String value) {
 		_value = value;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -472,6 +492,14 @@ public class ProductFieldModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		ProductFieldModelImpl productFieldModelImpl = this;
+
+		productFieldModelImpl._originalProductPurchaseId =
+			productFieldModelImpl._productPurchaseId;
+
+		productFieldModelImpl._setOriginalProductPurchaseId = false;
+
+		productFieldModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -581,8 +609,11 @@ public class ProductFieldModelImpl
 	private long _companyId;
 	private long _userId;
 	private long _productPurchaseId;
+	private long _originalProductPurchaseId;
+	private boolean _setOriginalProductPurchaseId;
 	private String _name;
 	private String _value;
+	private long _columnBitmask;
 	private ProductField _escapedModel;
 
 }

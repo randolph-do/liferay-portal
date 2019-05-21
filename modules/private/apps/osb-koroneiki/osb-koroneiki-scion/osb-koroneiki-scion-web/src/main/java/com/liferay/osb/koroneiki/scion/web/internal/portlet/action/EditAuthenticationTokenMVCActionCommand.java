@@ -17,17 +17,15 @@ package com.liferay.osb.koroneiki.scion.web.internal.portlet.action;
 import com.liferay.osb.koroneiki.scion.constants.ScionPortletKeys;
 import com.liferay.osb.koroneiki.scion.constants.ScionWebKeys;
 import com.liferay.osb.koroneiki.scion.model.ServiceProducer;
-import com.liferay.osb.koroneiki.scion.service.AuthenticationTokenLocalService;
+import com.liferay.osb.koroneiki.scion.service.AuthenticationTokenService;
 import com.liferay.osb.koroneiki.scion.service.ServiceProducerLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
@@ -55,7 +53,7 @@ public class EditAuthenticationTokenMVCActionCommand
 		long authenticationTokenId = ParamUtil.getLong(
 			actionRequest, "authenticationTokenId");
 
-		_authenticationTokenLocalService.updateStatus(
+		_authenticationTokenService.updateStatus(
 			authenticationTokenId, WorkflowConstants.STATUS_INACTIVE);
 	}
 
@@ -65,7 +63,7 @@ public class EditAuthenticationTokenMVCActionCommand
 		long authenticationTokenId = ParamUtil.getLong(
 			actionRequest, "authenticationTokenId");
 
-		_authenticationTokenLocalService.deleteAuthenticationToken(
+		_authenticationTokenService.deleteAuthenticationToken(
 			authenticationTokenId);
 	}
 
@@ -105,15 +103,12 @@ public class EditAuthenticationTokenMVCActionCommand
 		long authenticationTokenId = ParamUtil.getLong(
 			actionRequest, "authenticationTokenId");
 
-		_authenticationTokenLocalService.updateStatus(
+		_authenticationTokenService.updateStatus(
 			authenticationTokenId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	protected void updateAuthenticationToken(ActionRequest actionRequest)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		long authenticationTokenId = ParamUtil.getLong(
 			actionRequest, "authenticationTokenId");
@@ -122,7 +117,7 @@ public class EditAuthenticationTokenMVCActionCommand
 		String token = ParamUtil.getString(actionRequest, "token");
 
 		if (authenticationTokenId > 0) {
-			_authenticationTokenLocalService.updateAuthenticationToken(
+			_authenticationTokenService.updateAuthenticationToken(
 				authenticationTokenId, name);
 		}
 		else {
@@ -130,8 +125,7 @@ public class EditAuthenticationTokenMVCActionCommand
 				(ServiceProducer)actionRequest.getAttribute(
 					ScionWebKeys.SERVICE_PRODUCER);
 
-			_authenticationTokenLocalService.addAuthenticationToken(
-				themeDisplay.getUserId(),
+			_authenticationTokenService.addAuthenticationToken(
 				serviceProducer.getServiceProducerId(), name, token);
 		}
 	}
@@ -140,7 +134,7 @@ public class EditAuthenticationTokenMVCActionCommand
 		EditAuthenticationTokenMVCActionCommand.class);
 
 	@Reference
-	private AuthenticationTokenLocalService _authenticationTokenLocalService;
+	private AuthenticationTokenService _authenticationTokenService;
 
 	@Reference
 	private ServiceProducerLocalService _serviceProducerLocalService;

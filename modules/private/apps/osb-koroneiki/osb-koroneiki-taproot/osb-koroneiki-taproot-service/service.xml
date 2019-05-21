@@ -188,13 +188,6 @@
 		<column name="name" type="String" />
 		<column name="type" type="int" />
 	</entity>
-	<entity local-service="true" name="TeamProject" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="teamId" primary="true" type="long" />
-		<column name="projectId" primary="true" type="long" />
-	</entity>
 	<exceptions>
 		<exception>AccountName</exception>
 		<exception>ContactEmailAddress</exception>

@@ -10,7 +10,6 @@
 	<import class="com.liferay.osb.koroneiki.taproot.model.ContactTeamRole" />
 	<import class="com.liferay.osb.koroneiki.taproot.model.Project" />
 	<import class="com.liferay.osb.koroneiki.taproot.model.Team" />
-	<import class="com.liferay.osb.koroneiki.taproot.model.TeamProject" />
 	<class name="com.liferay.osb.koroneiki.taproot.model.impl.AccountImpl" table="Koroneiki_Account">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="accountId" type="long">
 			<generator class="assigned" />
@@ -119,11 +118,5 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="accountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.osb.koroneiki.taproot.model.impl.TeamProjectImpl" table="Koroneiki_TeamProject">
-		<composite-id class="com.liferay.osb.koroneiki.taproot.service.persistence.TeamProjectPK" name="primaryKey">
-			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="teamId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="projectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		</composite-id>
 	</class>
 </hibernate-mapping>

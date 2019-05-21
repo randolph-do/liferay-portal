@@ -101,9 +101,3 @@ create table Koroneiki_Team (
 	name VARCHAR(75) null,
 	type_ INTEGER
 );
-
-create table Koroneiki_TeamProject (
-	teamId LONG not null,
-	projectId LONG not null,
-	primary key (teamId, projectId)
-);

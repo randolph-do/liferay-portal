@@ -98,8 +98,4 @@
 		<field name="name" type="String" />
 		<field name="type" type="int" />
 	</model>
-	<model name="com.liferay.osb.koroneiki.taproot.model.TeamProject">
-		<field name="teamId" type="long" />
-		<field name="projectId" type="long" />
-	</model>
 </model-hints>

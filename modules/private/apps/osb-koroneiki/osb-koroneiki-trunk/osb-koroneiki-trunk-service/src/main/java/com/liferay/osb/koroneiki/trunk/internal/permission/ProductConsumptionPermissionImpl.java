@@ -16,12 +16,14 @@ package com.liferay.osb.koroneiki.trunk.internal.permission;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.permission.ProductConsumptionPermission;
+import com.liferay.osb.koroneiki.trunk.service.ProductConsumptionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -62,7 +64,11 @@ public class ProductConsumptionPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isOmniadmin()) {
+		ProductConsumption productConsumption =
+			_productConsumptionLocalService.getProductConsumption(
+				productConsumptionId);
+
+		if (contains(permissionChecker, productConsumption, actionId)) {
 			return true;
 		}
 
@@ -94,14 +100,21 @@ public class ProductConsumptionPermissionImpl
 			ProductConsumption productConsumption, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, productConsumption.getProductConsumptionId(),
-				actionId)) {
+		if (permissionChecker.hasOwnerPermission(
+				productConsumption.getCompanyId(),
+				ProductConsumption.class.getName(),
+				productConsumption.getProductConsumptionId(),
+				productConsumption.getUserId(), actionId)) {
 
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			0, ProductConsumption.class.getName(),
+			productConsumption.getProductConsumptionId(), actionId);
 	}
+
+	@Reference
+	private ProductConsumptionLocalService _productConsumptionLocalService;
 
 }

@@ -3,46 +3,20 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.osb.koroneiki</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_trunk_web_internal_portlet_AccountsAdminPortlet</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>ADD_PRODUCT_CONSUMPTION</action-key>
-				<action-key>ADD_PRODUCT_ENTRY</action-key>
-				<action-key>ADD_PRODUCT_PURCHASE</action-key>
-				<action-key>PERMISSIONS</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ADD_PRODUCT_CONSUMPTION</action-key>
-				<action-key>ADD_PRODUCT_ENTRY</action-key>
-				<action-key>ADD_PRODUCT_PURCHASE</action-key>
-				<action-key>PERMISSIONS</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.trunk.model.ProductConsumption</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_trunk_web_internal_portlet_ProductsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_trunk_web_portlet_ProductsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
-				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
-				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
@@ -50,11 +24,12 @@
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.trunk.model.ProductEntry</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_trunk_web_internal_portlet_ProductsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_trunk_web_portlet_ProductsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
 			<supports>
+				<action-key>CONSUME</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
@@ -62,27 +37,7 @@
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.osb.koroneiki.trunk.model.ProductField</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_trunk_web_internal_portlet_ProductsAdminPortlet</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
+				<action-key>CONSUME</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
@@ -92,12 +47,11 @@
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.trunk.model.ProductPurchase</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_trunk_web_internal_portlet_ProductsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_trunk_web_portlet_ProductsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
 			<supports>
-				<action-key>CONSUME</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
@@ -105,10 +59,29 @@
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>CONSUME</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.osb.koroneiki.trunk.products</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_osb_koroneiki_trunk_web_portlet_ProductsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_PRODUCT_ENTRY</action-key>
+				<action-key>ADD_PRODUCT_PURCHASE</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_PRODUCT_ENTRY</action-key>
+				<action-key>ADD_PRODUCT_PURCHASE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

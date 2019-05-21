@@ -18,8 +18,9 @@ import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductFieldLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,33 +51,12 @@ public class ProductFieldLocalServiceImpl
 		productField.setName(name);
 		productField.setValue(value);
 
-		productFieldPersistence.update(productField);
-
-		// Resources
-
-		resourceLocalService.addResources(
-			productField.getCompanyId(), 0, userId,
-			ProductField.class.getName(), productField.getProductFieldId(),
-			false, false, false);
-
-		return productField;
+		return productFieldPersistence.update(productField);
 	}
 
-	@Override
-	public ProductField deleteProductField(long productFieldId)
-		throws PortalException {
-
-		ProductField productField = productFieldLocalService.getProductField(
-			productFieldId);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			productField.getCompanyId(), ProductField.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			productField.getProductFieldId());
-
-		return productFieldPersistence.remove(productFieldId);
+	public List<ProductField> getProductFields(long productPurchaseId) {
+		return productFieldPersistence.findByProductPurchaseId(
+			productPurchaseId);
 	}
 
 	public ProductField updateProductField(long productFieldId, String value)

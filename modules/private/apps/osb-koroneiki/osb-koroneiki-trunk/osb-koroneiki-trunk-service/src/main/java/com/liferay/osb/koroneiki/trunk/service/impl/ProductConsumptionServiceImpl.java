@@ -15,14 +15,19 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
-import com.liferay.osb.koroneiki.trunk.internal.permission.ProductConsumptionPermissionUtil;
+import com.liferay.osb.koroneiki.trunk.exception.NoSuchProductConsumptionException;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
+import com.liferay.osb.koroneiki.trunk.permission.ProductConsumptionPermission;
+import com.liferay.osb.koroneiki.trunk.permission.ProductEntryPermission;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductConsumptionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -41,8 +46,8 @@ public class ProductConsumptionServiceImpl
 			long accountId, long projectId, long productEntryId)
 		throws PortalException {
 
-		ProductConsumptionPermissionUtil.check(
-			getPermissionChecker(), 0, TrunkActionKeys.ADD_PRODUCT_CONSUMPTION);
+		_productEntryPermission.check(
+			getPermissionChecker(), productEntryId, TrunkActionKeys.CONSUME);
 
 		return productConsumptionLocalService.addProductConsumption(
 			getUserId(), accountId, projectId, productEntryId);
@@ -52,11 +57,38 @@ public class ProductConsumptionServiceImpl
 			long productConsumptionId)
 		throws PortalException {
 
-		ProductConsumptionPermissionUtil.check(
+		_productConsumptionPermission.check(
 			getPermissionChecker(), productConsumptionId, ActionKeys.DELETE);
 
 		return productConsumptionLocalService.deleteProductConsumption(
 			productConsumptionId);
 	}
+
+	public ProductConsumption deleteProductConsumption(
+			long accountId, long projectId, long productEntryId)
+		throws PortalException {
+
+		List<ProductConsumption> productConsumptions =
+			productConsumptionLocalService.getProductConsumptions(
+				getUserId(), accountId, projectId, productEntryId);
+
+		if (productConsumptions.isEmpty()) {
+			throw new NoSuchProductConsumptionException();
+		}
+
+		ProductConsumption productConsumption = productConsumptions.get(0);
+
+		_productConsumptionPermission.check(
+			getPermissionChecker(), productConsumption, ActionKeys.DELETE);
+
+		return productConsumptionLocalService.deleteProductConsumption(
+			productConsumption.getProductConsumptionId());
+	}
+
+	@Reference
+	private ProductConsumptionPermission _productConsumptionPermission;
+
+	@Reference
+	private ProductEntryPermission _productEntryPermission;
 
 }

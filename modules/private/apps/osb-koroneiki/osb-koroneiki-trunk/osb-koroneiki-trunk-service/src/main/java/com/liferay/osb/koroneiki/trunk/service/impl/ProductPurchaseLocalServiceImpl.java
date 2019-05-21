@@ -14,7 +14,13 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
+import com.liferay.osb.koroneiki.trunk.exception.ProductPurchaseEndDateException;
+import com.liferay.osb.koroneiki.trunk.exception.ProductPurchaseQuantityException;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
+import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalService;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductPurchaseLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,8 +28,12 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -37,10 +47,14 @@ public class ProductPurchaseLocalServiceImpl
 
 	public ProductPurchase addProductPurchase(
 			long userId, long accountId, long projectId, long productEntryId,
-			Date startDate, Date endDate, int quantity)
+			Date startDate, Date endDate, int quantity,
+			List<ProductField> productFields)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
+
+		validate(
+			accountId, projectId, productEntryId, startDate, endDate, quantity);
 
 		long productPurchaseId = counterLocalService.increment();
 
@@ -65,6 +79,14 @@ public class ProductPurchaseLocalServiceImpl
 			ProductPurchase.class.getName(),
 			productPurchase.getProductPurchaseId(), false, false, false);
 
+		// Product fields
+
+		for (ProductField productField : productFields) {
+			_productFieldLocalService.addProductField(
+				userId, productPurchaseId, productField.getName(),
+				productField.getValue());
+		}
+
 		return productPurchase;
 	}
 
@@ -86,8 +108,11 @@ public class ProductPurchaseLocalServiceImpl
 	}
 
 	public ProductPurchase updateProductPurchase(
-			long productPurchaseId, Date startDate, Date endDate, int quantity)
+			long userId, long productPurchaseId, Date startDate, Date endDate,
+			int quantity, List<ProductField> productFields)
 		throws PortalException {
+
+		validate(startDate, endDate, quantity);
 
 		ProductPurchase productPurchase =
 			productPurchasePersistence.findByPrimaryKey(productPurchaseId);
@@ -96,7 +121,89 @@ public class ProductPurchaseLocalServiceImpl
 		productPurchase.setEndDate(endDate);
 		productPurchase.setQuantity(quantity);
 
-		return productPurchasePersistence.update(productPurchase);
+		productPurchasePersistence.update(productPurchase);
+
+		// Product fields
+
+		Map<String, ProductField> productFieldsMap = getProductFieldsMap(
+			productPurchaseId);
+
+		for (ProductField productField : productFields) {
+			ProductField curProductField = productFieldsMap.remove(
+				productField.getName());
+
+			if (curProductField == null) {
+				_productFieldLocalService.addProductField(
+					userId, productPurchaseId, productField.getName(),
+					productField.getValue());
+			}
+			else {
+				_productFieldLocalService.updateProductField(
+					curProductField.getProductFieldId(),
+					productField.getValue());
+			}
+		}
+
+		for (ProductField productField : productFieldsMap.values()) {
+			_productFieldLocalService.deleteProductField(
+				productField.getProductFieldId());
+		}
+
+		return productPurchase;
 	}
+
+	protected Map<String, ProductField> getProductFieldsMap(
+		long productPurchaseId) {
+
+		Map<String, ProductField> productFieldsMap = new HashMap<>();
+
+		List<ProductField> productFields =
+			_productFieldLocalService.getProductFields(productPurchaseId);
+
+		for (ProductField productField : productFields) {
+			productFieldsMap.put(productField.getName(), productField);
+		}
+
+		return productFieldsMap;
+	}
+
+	protected void validate(Date startDate, Date endDate, int quantity)
+		throws PortalException {
+
+		if ((startDate != null) && (endDate != null) &&
+			startDate.after(endDate)) {
+
+			throw new ProductPurchaseEndDateException();
+		}
+
+		if (quantity <= 0) {
+			throw new ProductPurchaseQuantityException();
+		}
+	}
+
+	protected void validate(
+			long accountId, long projectId, long productEntryId, Date startDate,
+			Date endDate, int quantity)
+		throws PortalException {
+
+		_accountLocalService.getAccount(accountId);
+
+		if (projectId > 0) {
+			_projectLocalService.getProject(projectId);
+		}
+
+		productEntryPersistence.findByPrimaryKey(productEntryId);
+
+		validate(startDate, endDate, quantity);
+	}
+
+	@Reference
+	private AccountLocalService _accountLocalService;
+
+	@Reference
+	private ProductFieldLocalService _productFieldLocalService;
+
+	@Reference
+	private ProjectLocalService _projectLocalService;
 
 }

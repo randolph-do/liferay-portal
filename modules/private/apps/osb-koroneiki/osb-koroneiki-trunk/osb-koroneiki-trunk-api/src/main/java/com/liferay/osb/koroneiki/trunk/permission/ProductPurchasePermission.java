@@ -33,6 +33,9 @@ public interface ProductPurchasePermission {
 			ProductPurchase productPurchase, String actionId)
 		throws PortalException;
 
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException;
+
 	public boolean contains(
 			PermissionChecker permissionChecker, long productPurchaseId,
 			String actionId)
@@ -46,6 +49,10 @@ public interface ProductPurchasePermission {
 	public boolean contains(
 			PermissionChecker permissionChecker,
 			ProductPurchase productPurchase, String actionId)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
 		throws PortalException;
 
 }

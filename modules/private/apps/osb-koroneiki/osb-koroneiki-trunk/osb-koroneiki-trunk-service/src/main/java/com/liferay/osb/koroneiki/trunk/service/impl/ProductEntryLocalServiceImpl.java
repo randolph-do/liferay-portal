@@ -14,12 +14,14 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.trunk.exception.ProductEntryNameException;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,6 +39,8 @@ public class ProductEntryLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
+
+		validate(name);
 
 		long productEntryId = counterLocalService.increment();
 
@@ -79,12 +83,20 @@ public class ProductEntryLocalServiceImpl
 	public ProductEntry updateProductEntry(long productEntryId, String name)
 		throws PortalException {
 
+		validate(name);
+
 		ProductEntry productEntry = productEntryPersistence.findByPrimaryKey(
 			productEntryId);
 
 		productEntry.setName(name);
 
 		return productEntryPersistence.update(productEntry);
+	}
+
+	protected void validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new ProductEntryNameException();
+		}
 	}
 
 }

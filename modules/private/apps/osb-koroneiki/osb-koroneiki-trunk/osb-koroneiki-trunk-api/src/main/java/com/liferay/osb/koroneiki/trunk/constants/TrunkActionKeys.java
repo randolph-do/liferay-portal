@@ -19,15 +19,10 @@ package com.liferay.osb.koroneiki.trunk.constants;
  */
 public class TrunkActionKeys {
 
-	public static final String ADD_PRODUCT_CONSUMPTION =
-		"ADD_PRODUCT_CONSUMPTION";
-
 	public static final String ADD_PRODUCT_ENTRY = "ADD_PRODUCT_ENTRY";
-
-	public static final String ADD_PRODUCT_FIELD = "ADD_PRODUCT_FIELD";
 
 	public static final String ADD_PRODUCT_PURCHASE = "ADD_PRODUCT_PURCHASE";
 
-	public static final String CONSUME_PRODUCT = "CONSUME_PRODUCT";
+	public static final String CONSUME = "CONSUME";
 
 }

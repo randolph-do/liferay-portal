@@ -15,16 +15,19 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
-import com.liferay.osb.koroneiki.trunk.internal.permission.ProductPurchasePermissionUtil;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
+import com.liferay.osb.koroneiki.trunk.permission.ProductPurchasePermission;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductPurchaseServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -40,21 +43,21 @@ public class ProductPurchaseServiceImpl extends ProductPurchaseServiceBaseImpl {
 
 	public ProductPurchase addProductPurchase(
 			long accountId, long projectId, long productEntryId, Date startDate,
-			Date endDate, int quantity)
+			Date endDate, int quantity, List<ProductField> productFields)
 		throws PortalException {
 
-		ProductPurchasePermissionUtil.check(
-			getPermissionChecker(), 0, TrunkActionKeys.ADD_PRODUCT_PURCHASE);
+		_productPurchasePermission.check(
+			getPermissionChecker(), TrunkActionKeys.ADD_PRODUCT_PURCHASE);
 
 		return productPurchaseLocalService.addProductPurchase(
 			getUserId(), accountId, projectId, productEntryId, startDate,
-			endDate, quantity);
+			endDate, quantity, productFields);
 	}
 
 	public ProductPurchase deleteProductPurchase(long productPurchaseId)
 		throws PortalException {
 
-		ProductPurchasePermissionUtil.check(
+		_productPurchasePermission.check(
 			getPermissionChecker(), productPurchaseId, ActionKeys.DELETE);
 
 		return productPurchaseLocalService.deleteProductPurchase(
@@ -62,14 +65,19 @@ public class ProductPurchaseServiceImpl extends ProductPurchaseServiceBaseImpl {
 	}
 
 	public ProductPurchase updateProductPurchase(
-			long productPurchaseId, Date startDate, Date endDate, int quantity)
+			long productPurchaseId, Date startDate, Date endDate, int quantity,
+			List<ProductField> productFields)
 		throws PortalException {
 
-		ProductPurchasePermissionUtil.check(
+		_productPurchasePermission.check(
 			getPermissionChecker(), productPurchaseId, ActionKeys.UPDATE);
 
 		return productPurchaseLocalService.updateProductPurchase(
-			productPurchaseId, startDate, endDate, quantity);
+			getUserId(), productPurchaseId, startDate, endDate, quantity,
+			productFields);
 	}
+
+	@Reference
+	private ProductPurchasePermission _productPurchasePermission;
 
 }

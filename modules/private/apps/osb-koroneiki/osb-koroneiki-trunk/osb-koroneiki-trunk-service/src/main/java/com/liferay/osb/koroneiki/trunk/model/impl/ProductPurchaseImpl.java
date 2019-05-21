@@ -16,6 +16,18 @@ package com.liferay.osb.koroneiki.trunk.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.koroneiki.taproot.model.Account;
+import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalServiceUtil;
+import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
+import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalServiceUtil;
+import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * @author Kyle Bischof
  */
@@ -23,6 +35,28 @@ import aQute.bnd.annotation.ProviderType;
 public class ProductPurchaseImpl extends ProductPurchaseBaseImpl {
 
 	public ProductPurchaseImpl() {
+	}
+
+	public Account getAccount() throws PortalException {
+		return AccountLocalServiceUtil.getAccount(getAccountId());
+	}
+
+	public ProductEntry getProductEntry() throws PortalException {
+		return ProductEntryLocalServiceUtil.getProductEntry(
+			getProductEntryId());
+	}
+
+	public List<ProductField> getProductFields() {
+		return ProductFieldLocalServiceUtil.getProductFields(
+			getProductPurchaseId());
+	}
+
+	public Project getProject() {
+		if (getProjectId() > 0) {
+			return ProjectLocalServiceUtil.fetchProject(getProjectId());
+		}
+
+		return null;
 	}
 
 }

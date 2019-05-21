@@ -39,8 +39,12 @@
 		<field name="accountId" type="long" />
 		<field name="projectId" type="long" />
 		<field name="productEntryId" type="long" />
-		<field name="startDate" type="Date" />
-		<field name="endDate" type="Date" />
+		<field name="startDate" type="Date">
+			<hint name="show-time">false</hint>
+		</field>
+		<field name="endDate" type="Date">
+			<hint name="show-time">false</hint>
+		</field>
 		<field name="quantity" type="int" />
 	</model>
 </model-hints>

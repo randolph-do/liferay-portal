@@ -16,12 +16,14 @@ package com.liferay.osb.koroneiki.trunk.internal.permission;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.osb.koroneiki.trunk.permission.ProductPurchasePermission;
+import com.liferay.osb.koroneiki.trunk.service.ProductPurchaseLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -29,6 +31,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ProductPurchasePermission.class)
 public class ProductPurchasePermissionImpl
 	implements ProductPurchasePermission {
+
+	public static final String RESOURCE_NAME_PRODUCTS =
+		"com.liferay.osb.koroneiki.trunk.products";
 
 	@Override
 	public void check(
@@ -57,12 +62,25 @@ public class ProductPurchasePermissionImpl
 	}
 
 	@Override
+	public void check(PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME_PRODUCTS, 0, actionId);
+		}
+	}
+
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long productPurchaseId,
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isOmniadmin()) {
+		ProductPurchase productPurchase =
+			_productPurchaseLocalService.getProductPurchase(productPurchaseId);
+
+		if (contains(permissionChecker, productPurchase, actionId)) {
 			return true;
 		}
 
@@ -94,14 +112,29 @@ public class ProductPurchasePermissionImpl
 			ProductPurchase productPurchase, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, productPurchase.getProductPurchaseId(),
-				actionId)) {
+		if (permissionChecker.hasOwnerPermission(
+				productPurchase.getCompanyId(), ProductPurchase.class.getName(),
+				productPurchase.getProductPurchaseId(),
+				productPurchase.getUserId(), actionId)) {
 
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			0, ProductPurchase.class.getName(),
+			productPurchase.getProductPurchaseId(), actionId);
 	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		return permissionChecker.hasPermission(
+			0, RESOURCE_NAME_PRODUCTS, RESOURCE_NAME_PRODUCTS, actionId);
+	}
+
+	@Reference
+	private ProductPurchaseLocalService _productPurchaseLocalService;
 
 }

@@ -21,6 +21,15 @@
 		<column name="accountId" type="long" />
 		<column name="projectId" type="long" />
 		<column name="productEntryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="U_AI_PI_PEI" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="accountId" />
+			<finder-column name="projectId" />
+			<finder-column name="productEntryId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ProductEntry" remote-service="true" uuid="true">
 
@@ -55,6 +64,12 @@
 		<column name="productPurchaseId" type="long" />
 		<column name="name" type="String" />
 		<column name="value" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ProductPurchaseId" return-type="Collection">
+			<finder-column name="productPurchaseId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ProductPurchase" remote-service="true" uuid="true">
 
@@ -78,4 +93,9 @@
 		<column name="endDate" type="Date" />
 		<column name="quantity" type="int" />
 	</entity>
+	<exceptions>
+		<exception>ProductEntryName</exception>
+		<exception>ProductPurchaseEndDate</exception>
+		<exception>ProductPurchaseQuantity</exception>
+	</exceptions>
 </service-builder>

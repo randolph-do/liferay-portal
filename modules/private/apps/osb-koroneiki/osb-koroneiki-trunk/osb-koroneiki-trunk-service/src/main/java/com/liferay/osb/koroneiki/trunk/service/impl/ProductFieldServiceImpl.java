@@ -14,15 +14,15 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
-import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
-import com.liferay.osb.koroneiki.trunk.internal.permission.ProductFieldPermissionUtil;
 import com.liferay.osb.koroneiki.trunk.model.ProductField;
+import com.liferay.osb.koroneiki.trunk.permission.ProductPurchasePermission;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductFieldServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -40,8 +40,8 @@ public class ProductFieldServiceImpl extends ProductFieldServiceBaseImpl {
 			long productPurchaseId, String name, String value)
 		throws PortalException {
 
-		ProductFieldPermissionUtil.check(
-			getPermissionChecker(), 0, TrunkActionKeys.ADD_PRODUCT_FIELD);
+		_productPurchasePermission.check(
+			getPermissionChecker(), productPurchaseId, ActionKeys.UPDATE);
 
 		return productFieldLocalService.addProductField(
 			getUserId(), productPurchaseId, name, value);
@@ -50,8 +50,12 @@ public class ProductFieldServiceImpl extends ProductFieldServiceBaseImpl {
 	public ProductField deleteProductField(long productFieldId)
 		throws PortalException {
 
-		ProductFieldPermissionUtil.check(
-			getPermissionChecker(), productFieldId, ActionKeys.DELETE);
+		ProductField productField = productFieldLocalService.getProductField(
+			productFieldId);
+
+		_productPurchasePermission.check(
+			getPermissionChecker(), productField.getProductPurchaseId(),
+			ActionKeys.UPDATE);
 
 		return productFieldLocalService.deleteProductField(productFieldId);
 	}
@@ -59,11 +63,18 @@ public class ProductFieldServiceImpl extends ProductFieldServiceBaseImpl {
 	public ProductField updateProductField(long productFieldId, String value)
 		throws PortalException {
 
-		ProductFieldPermissionUtil.check(
-			getPermissionChecker(), productFieldId, ActionKeys.UPDATE);
+		ProductField productField = productFieldLocalService.getProductField(
+			productFieldId);
+
+		_productPurchasePermission.check(
+			getPermissionChecker(), productField.getProductPurchaseId(),
+			ActionKeys.UPDATE);
 
 		return productFieldLocalService.updateProductField(
 			productFieldId, value);
 	}
+
+	@Reference
+	private ProductPurchasePermission _productPurchasePermission;
 
 }

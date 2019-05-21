@@ -57,6 +57,15 @@ public class ContactRoleServiceImpl extends ContactRoleServiceBaseImpl {
 		return contactRoleLocalService.deleteContactRole(contactRoleId);
 	}
 
+	public ContactRole getContactRole(long contactRoleId)
+		throws PortalException {
+
+		_contactRolePermission.check(
+			getPermissionChecker(), contactRoleId, ActionKeys.VIEW);
+
+		return contactRoleLocalService.getContactRole(contactRoleId);
+	}
+
 	public ContactRole updateContactRole(
 			long contactRoleId, String name, String description)
 		throws PortalException {

@@ -14,6 +14,8 @@
 
 package com.liferay.osb.koroneiki.taproot.constants;
 
+import java.util.Objects;
+
 /**
  * @author Amos Fong
  */
@@ -21,21 +23,41 @@ public class ContactRoleType {
 
 	public static final int ACCOUNT = 1;
 
+	public static final String ACCOUNT_LABEL = "account";
+
 	public static final int PROJECT = 2;
+
+	public static final String PROJECT_LABEL = "project";
 
 	public static final int TEAM = 3;
 
+	public static final String TEAM_LABEL = "team";
+
 	public static final int[] VALUES = {ACCOUNT, PROJECT, TEAM};
+
+	public static int fromLabel(String label) {
+		if (Objects.equals(ACCOUNT_LABEL, label)) {
+			return ACCOUNT;
+		}
+		else if (Objects.equals(PROJECT_LABEL, label)) {
+			return PROJECT;
+		}
+		else if (Objects.equals(TEAM_LABEL, label)) {
+			return TEAM;
+		}
+
+		throw new IllegalArgumentException("Invalid label " + label);
+	}
 
 	public static String getLabel(int value) {
 		if (value == ACCOUNT) {
-			return "account";
+			return ACCOUNT_LABEL;
 		}
 		else if (value == PROJECT) {
-			return "project";
+			return PROJECT_LABEL;
 		}
 		else if (value == TEAM) {
-			return "team";
+			return TEAM_LABEL;
 		}
 		else {
 			return null;

@@ -28,7 +28,7 @@ components:
                 - name
             type: object
         Contact:
-            description: Represents an contact.
+            description: Represents a contact.
             properties:
                 dateCreated:
                     description: The contact's creation date.
@@ -64,6 +64,41 @@ components:
                 - emailAddress
                 - firstName
                 - lastName
+            type: object
+        ContactRole:
+            description: Represents a contact role.
+            properties:
+                dateCreated:
+                    description: The contact role's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description: The most recent time that any of the contact role's fields changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    description: The description of the contact role.
+                    type: string
+                id:
+                    description: The contact role's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description: The name of the contact role.
+                    type: string
+                system:
+                    description: A flag that identifies whether this is a system role.
+                    readOnly: true
+                    type: boolean
+                type:
+                    description: The contact role's type.
+                    type: string
+            required:
+                - name
+                - type
             type: object
         Project:
             description: Represents a project.
@@ -411,6 +446,95 @@ paths:
                                 $ref: "#/components/schemas/Project"
                     description: ""
             tags: ["Project"]
+    "/contact-roles":
+        post:
+            operationId: postContactRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ContactRole"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ContactRole"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContactRole"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ContactRole"
+                    description: ""
+            tags: ["ContactRole"]
+    "/contact-roles/{contactRoleId}":
+        delete:
+            operationId: deleteContactRole
+            parameters:
+                - in: path
+                  name: contactRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["ContactRole"]
+        get:
+            description: Retrieves the contact role.
+            operationId: getContactRole
+            parameters:
+                - in: path
+                  name: contactRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContactRole"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ContactRole"
+                    description: ""
+            tags: ["ContactRole"]
+        put:
+            operationId: putContactRole
+            parameters:
+                - in: path
+                  name: contactRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ContactRole"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ContactRole"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContactRole"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ContactRole"
+                    description: ""
+            tags: ["ContactRole"]
     "/contacts":
         post:
             operationId: postContact

@@ -135,6 +135,45 @@ public class ContactRoleServiceHttp {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
+			getContactRole(HttpPrincipal httpPrincipal, long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactRoleServiceUtil.class, "getContactRole",
+				_getContactRoleParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactRoleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.ContactRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
 			updateContactRole(
 				HttpPrincipal httpPrincipal, long contactRoleId, String name,
 				String description)
@@ -143,7 +182,7 @@ public class ContactRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactRoleServiceUtil.class, "updateContactRole",
-				_updateContactRoleParameterTypes2);
+				_updateContactRoleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactRoleId, name, description);
@@ -182,7 +221,9 @@ public class ContactRoleServiceHttp {
 		new Class[] {String.class, String.class, int.class};
 	private static final Class<?>[] _deleteContactRoleParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateContactRoleParameterTypes2 =
+	private static final Class<?>[] _getContactRoleParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateContactRoleParameterTypes3 =
 		new Class[] {long.class, String.class, String.class};
 
 }

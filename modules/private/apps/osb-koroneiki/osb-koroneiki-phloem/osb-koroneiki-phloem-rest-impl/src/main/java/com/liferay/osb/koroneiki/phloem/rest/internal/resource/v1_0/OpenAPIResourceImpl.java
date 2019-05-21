@@ -80,6 +80,8 @@ public class OpenAPIResourceImpl {
 
 			add(ContactResourceImpl.class);
 
+			add(ContactRoleResourceImpl.class);
+
 			add(ProjectResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

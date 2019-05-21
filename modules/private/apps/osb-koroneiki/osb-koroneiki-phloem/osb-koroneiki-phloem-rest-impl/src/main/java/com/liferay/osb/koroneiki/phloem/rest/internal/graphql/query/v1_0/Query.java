@@ -16,9 +16,11 @@ package com.liferay.osb.koroneiki.phloem.rest.internal.graphql.query.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -58,6 +60,14 @@ public class Query {
 
 		_contactResourceComponentServiceObjects =
 			contactResourceComponentServiceObjects;
+	}
+
+	public static void setContactRoleResourceComponentServiceObjects(
+		ComponentServiceObjects<ContactRoleResource>
+			contactRoleResourceComponentServiceObjects) {
+
+		_contactRoleResourceComponentServiceObjects =
+			contactRoleResourceComponentServiceObjects;
 	}
 
 	public static void setProjectResourceComponentServiceObjects(
@@ -130,6 +140,19 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public ContactRole getContactRole(
+			@GraphQLName("contactRoleId") Long contactRoleId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contactRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contactRoleResource -> contactRoleResource.getContactRole(
+				contactRoleId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<Project> getAccountProjectsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -193,6 +216,15 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(
+			ContactRoleResource contactRoleResource)
+		throws Exception {
+
+		contactRoleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(ProjectResource projectResource)
 		throws Exception {
 
@@ -205,6 +237,8 @@ public class Query {
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactResource>
 		_contactResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContactRoleResource>
+		_contactRoleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
 

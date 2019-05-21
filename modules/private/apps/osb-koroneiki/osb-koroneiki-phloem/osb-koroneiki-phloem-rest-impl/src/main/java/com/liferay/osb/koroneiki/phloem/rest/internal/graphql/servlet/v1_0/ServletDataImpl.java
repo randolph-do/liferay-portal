@@ -18,6 +18,7 @@ import com.liferay.osb.koroneiki.phloem.rest.internal.graphql.mutation.v1_0.Muta
 import com.liferay.osb.koroneiki.phloem.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -44,6 +45,8 @@ public class ServletDataImpl implements ServletData {
 			_accountResourceComponentServiceObjects);
 		Mutation.setContactResourceComponentServiceObjects(
 			_contactResourceComponentServiceObjects);
+		Mutation.setContactRoleResourceComponentServiceObjects(
+			_contactRoleResourceComponentServiceObjects);
 		Mutation.setProjectResourceComponentServiceObjects(
 			_projectResourceComponentServiceObjects);
 
@@ -51,6 +54,8 @@ public class ServletDataImpl implements ServletData {
 			_accountResourceComponentServiceObjects);
 		Query.setContactResourceComponentServiceObjects(
 			_contactResourceComponentServiceObjects);
+		Query.setContactRoleResourceComponentServiceObjects(
+			_contactRoleResourceComponentServiceObjects);
 		Query.setProjectResourceComponentServiceObjects(
 			_projectResourceComponentServiceObjects);
 	}
@@ -77,6 +82,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContactResource>
 		_contactResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ContactRoleResource>
+		_contactRoleResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProjectResource>

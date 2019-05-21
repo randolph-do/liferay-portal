@@ -53,6 +53,13 @@ public class ContactRoleServiceUtil {
 		return getService().deleteContactRole(contactRoleId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
+			getContactRole(long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getContactRole(contactRoleId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

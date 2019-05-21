@@ -16,9 +16,11 @@ package com.liferay.osb.koroneiki.phloem.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -54,6 +56,14 @@ public class Mutation {
 
 		_contactResourceComponentServiceObjects =
 			contactResourceComponentServiceObjects;
+	}
+
+	public static void setContactRoleResourceComponentServiceObjects(
+		ComponentServiceObjects<ContactRoleResource>
+			contactRoleResourceComponentServiceObjects) {
+
+		_contactRoleResourceComponentServiceObjects =
+			contactRoleResourceComponentServiceObjects;
 	}
 
 	public static void setProjectResourceComponentServiceObjects(
@@ -170,6 +180,44 @@ public class Mutation {
 			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contactResource -> contactResource.deleteContact(contactId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ContactRole postContactRole(
+			@GraphQLName("contactRole") ContactRole contactRole)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contactRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contactRoleResource -> contactRoleResource.postContactRole(
+				contactRole));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteContactRole(
+			@GraphQLName("contactRoleId") Long contactRoleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_contactRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contactRoleResource -> contactRoleResource.deleteContactRole(
+				contactRoleId));
+	}
+
+	@GraphQLInvokeDetached
+	public ContactRole putContactRole(
+			@GraphQLName("contactRoleId") Long contactRoleId,
+			@GraphQLName("contactRole") ContactRole contactRole)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contactRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contactRoleResource -> contactRoleResource.putContactRole(
+				contactRoleId, contactRole));
 	}
 
 	@GraphQLField
@@ -316,6 +364,15 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(
+			ContactRoleResource contactRoleResource)
+		throws Exception {
+
+		contactRoleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(ProjectResource projectResource)
 		throws Exception {
 
@@ -328,6 +385,8 @@ public class Mutation {
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactResource>
 		_contactResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContactRoleResource>
+		_contactRoleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
 

@@ -49,6 +49,14 @@ public class ContactRoleServiceWrapper
 		return _contactRoleService.deleteContactRole(contactRoleId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.ContactRole getContactRole(
+			long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactRoleService.getContactRole(contactRoleId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

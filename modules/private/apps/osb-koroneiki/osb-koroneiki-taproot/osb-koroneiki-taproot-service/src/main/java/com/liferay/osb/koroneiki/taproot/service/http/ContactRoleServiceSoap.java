@@ -101,6 +101,24 @@ public class ContactRoleServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ContactRoleSoap
+			getContactRole(long contactRoleId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.ContactRole returnValue =
+				ContactRoleServiceUtil.getContactRole(contactRoleId);
+
+			return com.liferay.osb.koroneiki.taproot.model.ContactRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactRoleSoap
 			updateContactRole(
 				long contactRoleId, String name, String description)
 		throws RemoteException {

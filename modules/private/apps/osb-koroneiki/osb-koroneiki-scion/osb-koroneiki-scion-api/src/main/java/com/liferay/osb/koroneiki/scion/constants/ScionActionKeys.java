@@ -19,7 +19,7 @@ package com.liferay.osb.koroneiki.scion.constants;
  */
 public class ScionActionKeys {
 
-	public static final String ADD_AUTHENTICATION_TOKEN = 
+	public static final String ADD_AUTHENTICATION_TOKEN =
 		"ADD_AUTHENTICATION_TOKEN";
-	
+
 }

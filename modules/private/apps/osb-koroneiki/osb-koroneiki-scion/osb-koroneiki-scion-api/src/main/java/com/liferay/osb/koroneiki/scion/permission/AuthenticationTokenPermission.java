@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 public interface AuthenticationTokenPermission {
 
 	public void check(
-			PermissionChecker permissionChecker, AuthenticationToken authenticationToken,
-			String actionId)
+			PermissionChecker permissionChecker,
+			AuthenticationToken authenticationToken, String actionId)
 		throws PortalException;
 
 	public void check(
@@ -37,8 +37,8 @@ public interface AuthenticationTokenPermission {
 		throws PortalException;
 
 	public boolean contains(
-			PermissionChecker permissionChecker, AuthenticationToken authenticationToken,
-			String actionId)
+			PermissionChecker permissionChecker,
+			AuthenticationToken authenticationToken, String actionId)
 		throws PortalException;
 
 	public boolean contains(

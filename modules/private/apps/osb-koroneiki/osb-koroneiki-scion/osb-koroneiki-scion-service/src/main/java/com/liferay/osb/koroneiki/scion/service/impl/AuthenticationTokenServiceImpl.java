@@ -49,14 +49,14 @@ public class AuthenticationTokenServiceImpl
 		return authenticationTokenLocalService.addAuthenticationToken(
 			getUserId(), serviceProducerId, name, token);
 	}
-	
+
 	public AuthenticationToken deleteAuthenticationToken(
 			long authenticationTokenId)
 		throws PortalException {
-		
+
 		_authenticationTokenPermission.check(
-			getPermissionChecker(), ActionKeys.DELETE);
-		
+			getPermissionChecker(), authenticationTokenId, ActionKeys.DELETE);
+
 		return authenticationTokenLocalService.deleteAuthenticationToken(
 			authenticationTokenId);
 	}

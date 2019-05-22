@@ -53,7 +53,6 @@ public class TeamWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("accountId", getAccountId());
 		attributes.put("name", getName());
-		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -107,12 +106,13 @@ public class TeamWrapper
 		if (name != null) {
 			setName(name);
 		}
+	}
 
-		Integer type = (Integer)attributes.get("type");
+	@Override
+	public Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException {
 
-		if (type != null) {
-			setType(type);
-		}
+		return model.getAccount();
 	}
 
 	/**
@@ -183,16 +183,6 @@ public class TeamWrapper
 	@Override
 	public long getTeamId() {
 		return model.getTeamId();
-	}
-
-	/**
-	 * Returns the type of this team.
-	 *
-	 * @return the type of this team
-	 */
-	@Override
-	public int getType() {
-		return model.getType();
 	}
 
 	/**
@@ -298,16 +288,6 @@ public class TeamWrapper
 	@Override
 	public void setTeamId(long teamId) {
 		model.setTeamId(teamId);
-	}
-
-	/**
-	 * Sets the type of this team.
-	 *
-	 * @param type the type of this team
-	 */
-	@Override
-	public void setType(int type) {
-		model.setType(type);
 	}
 
 	/**

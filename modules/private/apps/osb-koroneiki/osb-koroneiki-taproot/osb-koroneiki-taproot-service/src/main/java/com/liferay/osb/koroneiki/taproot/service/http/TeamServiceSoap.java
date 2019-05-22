@@ -65,12 +65,12 @@ import org.osgi.annotation.versioning.ProviderType;
 public class TeamServiceSoap {
 
 	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap addTeam(
-			long accountId, String name, int type)
+			long accountId, String name)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
-				TeamServiceUtil.addTeam(accountId, name, type);
+				TeamServiceUtil.addTeam(accountId, name);
 
 			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
 				returnValue);
@@ -101,12 +101,12 @@ public class TeamServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap updateTeam(
-			long teamId, String name, int type)
+			long teamId, String name)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
-				TeamServiceUtil.updateTeam(teamId, name, type);
+				TeamServiceUtil.updateTeam(teamId, name);
 
 			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
 				returnValue);

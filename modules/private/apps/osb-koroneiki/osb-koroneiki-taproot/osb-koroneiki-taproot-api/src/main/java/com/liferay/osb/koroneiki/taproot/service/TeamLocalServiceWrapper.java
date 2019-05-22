@@ -35,10 +35,10 @@ public class TeamLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Team addTeam(
-			long userId, long accountId, String name, int type)
+			long userId, long accountId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _teamLocalService.addTeam(userId, accountId, name, type);
+		return _teamLocalService.addTeam(userId, accountId, name);
 	}
 
 	/**
@@ -255,6 +255,18 @@ public class TeamLocalServiceWrapper
 		return _teamLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+		getProjectTeams(long projectId, int start, int end) {
+
+		return _teamLocalService.getProjectTeams(projectId, start, end);
+	}
+
+	@Override
+	public int getProjectTeamsCount(long projectId) {
+		return _teamLocalService.getProjectTeamsCount(projectId);
+	}
+
 	/**
 	 * Returns the team with the primary key.
 	 *
@@ -303,6 +315,14 @@ public class TeamLocalServiceWrapper
 		return _teamLocalService.getTeams(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+			getTeams(String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamLocalService.getTeams(name);
+	}
+
 	/**
 	 * Returns the number of teams.
 	 *
@@ -315,10 +335,10 @@ public class TeamLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
-			long teamId, String name, int type)
+			long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _teamLocalService.updateTeam(teamId, name, type);
+		return _teamLocalService.updateTeam(teamId, name);
 	}
 
 	/**

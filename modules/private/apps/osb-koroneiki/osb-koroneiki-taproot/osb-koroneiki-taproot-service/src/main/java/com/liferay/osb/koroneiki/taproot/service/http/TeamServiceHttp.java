@@ -55,7 +55,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public class TeamServiceHttp {
 
 	public static com.liferay.osb.koroneiki.taproot.model.Team addTeam(
-			HttpPrincipal httpPrincipal, long accountId, String name, int type)
+			HttpPrincipal httpPrincipal, long accountId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -63,7 +63,7 @@ public class TeamServiceHttp {
 				TeamServiceUtil.class, "addTeam", _addTeamParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, accountId, name, type);
+				methodKey, accountId, name);
 
 			Object returnObj = null;
 
@@ -129,7 +129,7 @@ public class TeamServiceHttp {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
-			HttpPrincipal httpPrincipal, long teamId, String name, int type)
+			HttpPrincipal httpPrincipal, long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -138,7 +138,7 @@ public class TeamServiceHttp {
 				_updateTeamParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, teamId, name, type);
+				methodKey, teamId, name);
 
 			Object returnObj = null;
 
@@ -169,13 +169,13 @@ public class TeamServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(TeamServiceHttp.class);
 
 	private static final Class<?>[] _addTeamParameterTypes0 = new Class[] {
-		long.class, String.class, int.class
+		long.class, String.class
 	};
 	private static final Class<?>[] _deleteTeamParameterTypes1 = new Class[] {
 		long.class
 	};
 	private static final Class<?>[] _updateTeamParameterTypes2 = new Class[] {
-		long.class, String.class, int.class
+		long.class, String.class
 	};
 
 }

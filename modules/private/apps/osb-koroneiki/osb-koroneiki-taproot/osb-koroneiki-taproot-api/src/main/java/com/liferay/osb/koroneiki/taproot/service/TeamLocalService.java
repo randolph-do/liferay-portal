@@ -62,7 +62,7 @@ public interface TeamLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamLocalServiceUtil} to access the team local service. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.TeamLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Team addTeam(long userId, long accountId, String name, int type)
+	public Team addTeam(long userId, long accountId, String name)
 		throws PortalException;
 
 	/**
@@ -210,6 +210,12 @@ public interface TeamLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Team> getProjectTeams(long projectId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProjectTeamsCount(long projectId);
+
 	/**
 	 * Returns the team with the primary key.
 	 *
@@ -246,6 +252,9 @@ public interface TeamLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getTeams(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Team> getTeams(String name) throws PortalException;
+
 	/**
 	 * Returns the number of teams.
 	 *
@@ -254,8 +263,7 @@ public interface TeamLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTeamsCount();
 
-	public Team updateTeam(long teamId, String name, int type)
-		throws PortalException;
+	public Team updateTeam(long teamId, String name) throws PortalException;
 
 	/**
 	 * Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

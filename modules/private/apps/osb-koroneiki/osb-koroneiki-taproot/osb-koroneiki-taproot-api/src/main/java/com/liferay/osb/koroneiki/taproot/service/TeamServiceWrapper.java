@@ -35,10 +35,10 @@ public class TeamServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Team addTeam(
-			long accountId, String name, int type)
+			long accountId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _teamService.addTeam(accountId, name, type);
+		return _teamService.addTeam(accountId, name);
 	}
 
 	@Override
@@ -60,10 +60,10 @@ public class TeamServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
-			long teamId, String name, int type)
+			long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _teamService.updateTeam(teamId, name, type);
+		return _teamService.updateTeam(teamId, name);
 	}
 
 	@Override

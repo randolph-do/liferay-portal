@@ -48,8 +48,7 @@ public interface TeamService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamServiceUtil} to access the team remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.TeamServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Team addTeam(long accountId, String name, int type)
-		throws PortalException;
+	public Team addTeam(long accountId, String name) throws PortalException;
 
 	public Team deleteTeam(long teamId) throws PortalException;
 
@@ -60,7 +59,6 @@ public interface TeamService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public Team updateTeam(long teamId, String name, int type)
-		throws PortalException;
+	public Team updateTeam(long teamId, String name) throws PortalException;
 
 }

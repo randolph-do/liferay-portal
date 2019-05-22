@@ -76,8 +76,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		{"uuid_", Types.VARCHAR}, {"teamId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"type_", Types.INTEGER}
+		{"accountId", Types.BIGINT}, {"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,11 +91,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_Team (uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,name VARCHAR(75) null,type_ INTEGER)";
+		"create table Koroneiki_Team (uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_Team";
 
@@ -113,9 +111,11 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
 
-	public static final long TEAMID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+
+	public static final long TEAMID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -146,7 +146,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setAccountId(soapModel.getAccountId());
 		model.setName(soapModel.getName());
-		model.setType(soapModel.getType());
 
 		return model;
 	}
@@ -289,9 +288,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		attributeGetterFunctions.put("name", Team::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<Team, String>)Team::setName);
-		attributeGetterFunctions.put("type", Team::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<Team, Integer>)Team::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -438,18 +434,17 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
 	}
 
-	@JSON
-	@Override
-	public int getType() {
-		return _type;
-	}
-
-	@Override
-	public void setType(int type) {
-		_type = type;
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@Override
@@ -498,7 +493,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamImpl.setModifiedDate(getModifiedDate());
 		teamImpl.setAccountId(getAccountId());
 		teamImpl.setName(getName());
-		teamImpl.setType(getType());
 
 		teamImpl.resetOriginalValues();
 
@@ -569,6 +563,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 		teamModelImpl._setModifiedDate = false;
 
+		teamModelImpl._originalName = teamModelImpl._name;
+
 		teamModelImpl._columnBitmask = 0;
 	}
 
@@ -617,8 +613,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		if ((name != null) && (name.length() == 0)) {
 			teamCacheModel.name = null;
 		}
-
-		teamCacheModel.type = getType();
 
 		return teamCacheModel;
 	}
@@ -703,7 +697,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private boolean _setModifiedDate;
 	private long _accountId;
 	private String _name;
-	private int _type;
+	private String _originalName;
 	private long _columnBitmask;
 	private Team _escapedModel;
 

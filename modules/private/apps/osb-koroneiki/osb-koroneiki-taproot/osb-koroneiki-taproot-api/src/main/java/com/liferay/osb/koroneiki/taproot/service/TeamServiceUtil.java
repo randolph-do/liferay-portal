@@ -40,10 +40,10 @@ public class TeamServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.TeamServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Team addTeam(
-			long accountId, String name, int type)
+			long accountId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addTeam(accountId, name, type);
+		return getService().addTeam(accountId, name);
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Team deleteTeam(
@@ -63,10 +63,10 @@ public class TeamServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
-			long teamId, String name, int type)
+			long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateTeam(teamId, name, type);
+		return getService().updateTeam(teamId, name);
 	}
 
 	public static TeamService getService() {

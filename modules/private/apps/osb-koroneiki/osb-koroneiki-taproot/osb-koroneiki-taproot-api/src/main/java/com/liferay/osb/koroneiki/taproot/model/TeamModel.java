@@ -193,18 +193,4 @@ public interface TeamModel extends BaseModel<Team>, ShardedModel, StagedModel {
 	 */
 	public void setName(String name);
 
-	/**
-	 * Returns the type of this team.
-	 *
-	 * @return the type of this team
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this team.
-	 *
-	 * @param type the type of this team
-	 */
-	public void setType(int type);
-
 }

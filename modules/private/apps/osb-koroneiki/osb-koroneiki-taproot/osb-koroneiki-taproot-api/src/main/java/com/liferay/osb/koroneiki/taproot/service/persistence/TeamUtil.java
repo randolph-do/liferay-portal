@@ -621,6 +621,240 @@ public class TeamUtil {
 	}
 
 	/**
+	 * Returns all the teams where name = &#63;.
+	 *
+	 * @param name the name
+	 * @return the matching teams
+	 */
+	public static List<Team> findByName(String name) {
+		return getPersistence().findByName(name);
+	}
+
+	/**
+	 * Returns a range of all the teams where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @return the range of matching teams
+	 */
+	public static List<Team> findByName(String name, int start, int end) {
+		return getPersistence().findByName(name, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the teams where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching teams
+	 */
+	public static List<Team> findByName(
+		String name, int start, int end,
+		OrderByComparator<Team> orderByComparator) {
+
+		return getPersistence().findByName(name, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the teams where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching teams
+	 */
+	public static List<Team> findByName(
+		String name, int start, int end,
+		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+
+		return getPersistence().findByName(
+			name, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first team in the ordered set where name = &#63;.
+	 *
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team
+	 * @throws NoSuchTeamException if a matching team could not be found
+	 */
+	public static Team findByName_First(
+			String name, OrderByComparator<Team> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamException {
+
+		return getPersistence().findByName_First(name, orderByComparator);
+	}
+
+	/**
+	 * Returns the first team in the ordered set where name = &#63;.
+	 *
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public static Team fetchByName_First(
+		String name, OrderByComparator<Team> orderByComparator) {
+
+		return getPersistence().fetchByName_First(name, orderByComparator);
+	}
+
+	/**
+	 * Returns the last team in the ordered set where name = &#63;.
+	 *
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team
+	 * @throws NoSuchTeamException if a matching team could not be found
+	 */
+	public static Team findByName_Last(
+			String name, OrderByComparator<Team> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamException {
+
+		return getPersistence().findByName_Last(name, orderByComparator);
+	}
+
+	/**
+	 * Returns the last team in the ordered set where name = &#63;.
+	 *
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public static Team fetchByName_Last(
+		String name, OrderByComparator<Team> orderByComparator) {
+
+		return getPersistence().fetchByName_Last(name, orderByComparator);
+	}
+
+	/**
+	 * Returns the teams before and after the current team in the ordered set where name = &#63;.
+	 *
+	 * @param teamId the primary key of the current team
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team
+	 * @throws NoSuchTeamException if a team with the primary key could not be found
+	 */
+	public static Team[] findByName_PrevAndNext(
+			long teamId, String name, OrderByComparator<Team> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamException {
+
+		return getPersistence().findByName_PrevAndNext(
+			teamId, name, orderByComparator);
+	}
+
+	/**
+	 * Returns all the teams that the user has permission to view where name = &#63;.
+	 *
+	 * @param name the name
+	 * @return the matching teams that the user has permission to view
+	 */
+	public static List<Team> filterFindByName(String name) {
+		return getPersistence().filterFindByName(name);
+	}
+
+	/**
+	 * Returns a range of all the teams that the user has permission to view where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @return the range of matching teams that the user has permission to view
+	 */
+	public static List<Team> filterFindByName(String name, int start, int end) {
+		return getPersistence().filterFindByName(name, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the teams that the user has permissions to view where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching teams that the user has permission to view
+	 */
+	public static List<Team> filterFindByName(
+		String name, int start, int end,
+		OrderByComparator<Team> orderByComparator) {
+
+		return getPersistence().filterFindByName(
+			name, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the teams before and after the current team in the ordered set of teams that the user has permission to view where name = &#63;.
+	 *
+	 * @param teamId the primary key of the current team
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team
+	 * @throws NoSuchTeamException if a team with the primary key could not be found
+	 */
+	public static Team[] filterFindByName_PrevAndNext(
+			long teamId, String name, OrderByComparator<Team> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamException {
+
+		return getPersistence().filterFindByName_PrevAndNext(
+			teamId, name, orderByComparator);
+	}
+
+	/**
+	 * Removes all the teams where name = &#63; from the database.
+	 *
+	 * @param name the name
+	 */
+	public static void removeByName(String name) {
+		getPersistence().removeByName(name);
+	}
+
+	/**
+	 * Returns the number of teams where name = &#63;.
+	 *
+	 * @param name the name
+	 * @return the number of matching teams
+	 */
+	public static int countByName(String name) {
+		return getPersistence().countByName(name);
+	}
+
+	/**
+	 * Returns the number of teams that the user has permission to view where name = &#63;.
+	 *
+	 * @param name the name
+	 * @return the number of matching teams that the user has permission to view
+	 */
+	public static int filterCountByName(String name) {
+		return getPersistence().filterCountByName(name);
+	}
+
+	/**
 	 * Caches the team in the entity cache if it is enabled.
 	 *
 	 * @param team the team

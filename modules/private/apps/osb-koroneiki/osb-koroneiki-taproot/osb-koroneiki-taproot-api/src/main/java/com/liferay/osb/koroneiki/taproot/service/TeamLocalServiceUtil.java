@@ -40,10 +40,10 @@ public class TeamLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.TeamLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Team addTeam(
-			long userId, long accountId, String name, int type)
+			long userId, long accountId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addTeam(userId, accountId, name, type);
+		return getService().addTeam(userId, accountId, name);
 	}
 
 	/**
@@ -248,6 +248,16 @@ public class TeamLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+		getProjectTeams(long projectId, int start, int end) {
+
+		return getService().getProjectTeams(projectId, start, end);
+	}
+
+	public static int getProjectTeamsCount(long projectId) {
+		return getService().getProjectTeamsCount(projectId);
+	}
+
 	/**
 	 * Returns the team with the primary key.
 	 *
@@ -294,6 +304,13 @@ public class TeamLocalServiceUtil {
 		return getService().getTeams(start, end);
 	}
 
+	public static java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+			getTeams(String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getTeams(name);
+	}
+
 	/**
 	 * Returns the number of teams.
 	 *
@@ -304,10 +321,10 @@ public class TeamLocalServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
-			long teamId, String name, int type)
+			long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateTeam(teamId, name, type);
+		return getService().updateTeam(teamId, name);
 	}
 
 	/**

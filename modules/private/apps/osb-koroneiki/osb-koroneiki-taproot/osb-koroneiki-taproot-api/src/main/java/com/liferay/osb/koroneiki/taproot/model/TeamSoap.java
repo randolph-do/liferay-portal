@@ -42,7 +42,6 @@ public class TeamSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAccountId(model.getAccountId());
 		soapModel.setName(model.getName());
-		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -159,14 +158,6 @@ public class TeamSoap implements Serializable {
 		_name = name;
 	}
 
-	public int getType() {
-		return _type;
-	}
-
-	public void setType(int type) {
-		_type = type;
-	}
-
 	private String _uuid;
 	private long _teamId;
 	private long _companyId;
@@ -175,6 +166,5 @@ public class TeamSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _accountId;
 	private String _name;
-	private int _type;
 
 }

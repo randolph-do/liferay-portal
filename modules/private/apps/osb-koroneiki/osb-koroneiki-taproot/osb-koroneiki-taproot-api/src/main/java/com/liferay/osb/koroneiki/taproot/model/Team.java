@@ -58,4 +58,7 @@ public interface Team extends PersistedModel, TeamModel {
 
 		};
 
+	public Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

@@ -63,7 +63,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -81,8 +81,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		sb.append(accountId);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,8 +124,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 			teamImpl.setName(name);
 		}
 
-		teamImpl.setType(type);
-
 		teamImpl.resetOriginalValues();
 
 		return teamImpl;
@@ -147,8 +143,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 
 		accountId = objectInput.readLong();
 		name = objectInput.readUTF();
-
-		type = objectInput.readInt();
 	}
 
 	@Override
@@ -176,8 +170,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		else {
 			objectOutput.writeUTF(name);
 		}
-
-		objectOutput.writeInt(type);
 	}
 
 	public String uuid;
@@ -188,6 +180,5 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 	public long modifiedDate;
 	public long accountId;
 	public String name;
-	public int type;
 
 }

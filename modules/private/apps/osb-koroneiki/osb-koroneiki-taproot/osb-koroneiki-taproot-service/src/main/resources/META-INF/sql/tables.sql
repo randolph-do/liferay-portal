@@ -98,6 +98,24 @@ create table Koroneiki_Team (
 	createDate DATE null,
 	modifiedDate DATE null,
 	accountId LONG,
+	name VARCHAR(75) null
+);
+
+create table Koroneiki_TeamProjectRole (
+	teamId LONG not null,
+	projectId LONG not null,
+	teamRoleId LONG not null,
+	primary key (teamId, projectId, teamRoleId)
+);
+
+create table Koroneiki_TeamRole (
+	uuid_ VARCHAR(75) null,
+	teamRoleId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
 	name VARCHAR(75) null,
+	description VARCHAR(75) null,
 	type_ INTEGER
 );

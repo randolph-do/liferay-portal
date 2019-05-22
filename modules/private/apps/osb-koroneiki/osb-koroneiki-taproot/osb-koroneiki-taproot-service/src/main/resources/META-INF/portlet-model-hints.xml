@@ -96,6 +96,21 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="accountId" type="long" />
 		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.osb.koroneiki.taproot.model.TeamProjectRole">
+		<field name="teamId" type="long" />
+		<field name="projectId" type="long" />
+		<field name="teamRoleId" type="long" />
+	</model>
+	<model name="com.liferay.osb.koroneiki.taproot.model.TeamRole">
+		<field name="uuid" type="String" />
+		<field name="teamRoleId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
 		<field name="type" type="int" />
 	</model>
 </model-hints>

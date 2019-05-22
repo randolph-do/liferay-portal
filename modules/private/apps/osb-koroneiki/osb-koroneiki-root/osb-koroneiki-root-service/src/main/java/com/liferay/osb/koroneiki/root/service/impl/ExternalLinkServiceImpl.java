@@ -12,17 +12,22 @@
  *
  */
 
-package com.liferay.osb.koroneiki.root.model.impl;
+package com.liferay.osb.koroneiki.root.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.osb.koroneiki.root.service.base.ExternalLinkServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Kyle Bischof
  */
-@ProviderType
-public class ExternalIdMapperImpl extends ExternalIdMapperBaseImpl {
-
-	public ExternalIdMapperImpl() {
-	}
-
+@Component(
+	property = {
+		"json.web.service.context.name=koroneiki",
+		"json.web.service.context.path=ExternalLink"
+	},
+	service = AopService.class
+)
+public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 }

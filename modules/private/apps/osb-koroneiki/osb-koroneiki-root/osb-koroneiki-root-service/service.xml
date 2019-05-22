@@ -32,11 +32,11 @@
 		<column name="newValue" type="String" />
 		<column name="description" type="String" />
 	</entity>
-	<entity local-service="true" name="ExternalIdMapper" remote-service="true">
+	<entity local-service="true" name="ExternalLink" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="externalIdMapperId" primary="true" type="long" />
+		<column name="externalLinkId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -48,7 +48,20 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="externalSource" type="int" />
-		<column name="externalId" type="String" />
+		<column name="domain" type="String" />
+		<column name="entityName" type="String" />
+		<column name="entityId" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="D_EN_EI" return-type="ExternalLink">
+			<finder-column name="domain" />
+			<finder-column name="entityName" />
+			<finder-column name="entityId" />
+		</finder>
 	</entity>
 </service-builder>

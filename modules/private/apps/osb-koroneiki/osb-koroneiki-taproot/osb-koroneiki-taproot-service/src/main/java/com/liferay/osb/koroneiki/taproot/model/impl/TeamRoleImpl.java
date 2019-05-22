@@ -14,23 +14,15 @@
 
 package com.liferay.osb.koroneiki.taproot.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.taproot.service.AccountLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Kyle Bischof
  */
 @ProviderType
-public class TeamImpl extends TeamBaseImpl {
+public class TeamRoleImpl extends TeamRoleBaseImpl {
 
-	public TeamImpl() {
-	}
-
-	public Account getAccount() throws PortalException {
-		return AccountLocalServiceUtil.getAccount(getAccountId());
+	public TeamRoleImpl() {
 	}
 
 }

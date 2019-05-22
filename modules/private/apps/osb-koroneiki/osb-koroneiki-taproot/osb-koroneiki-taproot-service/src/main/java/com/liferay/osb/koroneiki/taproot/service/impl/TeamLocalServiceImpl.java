@@ -14,12 +14,17 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.exception.TeamNameException;
 import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
-	public Team addTeam(long userId, long accountId, String name, int type)
+	public Team addTeam(long userId, long accountId, String name)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -45,7 +50,6 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		team.setUserId(userId);
 		team.setAccountId(accountId);
 		team.setName(name);
-		team.setType(type);
 
 		teamPersistence.update(team);
 
@@ -71,15 +75,38 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		return teamPersistence.remove(teamId);
 	}
 
-	public Team updateTeam(long teamId, String name, int type)
-		throws PortalException {
+	public List<Team> getProjectTeams(long projectId, int start, int end) {
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
+		params.put("project", projectId);
+
+		return teamFinder.findByN_T(null, 0, params, start, end);
+	}
+
+	public int getProjectTeamsCount(long projectId) {
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("project", projectId);
+
+		return teamFinder.countByN_T(null, 0, params);
+	}
+
+	public List<Team> getTeams(String name) throws PortalException {
+		return teamPersistence.findByName(name);
+	}
+
+	public Team updateTeam(long teamId, String name) throws PortalException {
 		Team team = teamPersistence.findByPrimaryKey(teamId);
 
 		team.setName(name);
-		team.setType(type);
 
 		return teamPersistence.update(team);
+	}
+
+	protected void validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new TeamNameException();
+		}
 	}
 
 }

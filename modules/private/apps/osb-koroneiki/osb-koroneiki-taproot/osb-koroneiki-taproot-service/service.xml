@@ -186,7 +186,61 @@
 
 		<column name="accountId" type="long" />
 		<column name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="TeamProjectRole" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="teamId" primary="true" type="long" />
+		<column name="projectId" primary="true" type="long" />
+		<column name="teamRoleId" primary="true" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="T_P" return-type="Collection">
+			<finder-column name="teamId" />
+			<finder-column name="projectId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="TeamRole" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="teamRoleId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="description" type="String" />
+		<column accessor="true" name="name" type="String" />
 		<column name="type" type="int" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>AccountName</exception>
@@ -194,5 +248,8 @@
 		<exception>ContactRoleName</exception>
 		<exception>ContactRoleType</exception>
 		<exception>ProjectName</exception>
+		<exception>TeamName</exception>
+		<exception>TeamRoleName</exception>
+		<exception>TeamRoleType</exception>
 	</exceptions>
 </service-builder>

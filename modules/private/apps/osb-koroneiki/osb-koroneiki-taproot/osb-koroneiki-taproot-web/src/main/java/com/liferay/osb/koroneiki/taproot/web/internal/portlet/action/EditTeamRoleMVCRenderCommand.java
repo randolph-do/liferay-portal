@@ -16,8 +16,8 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Project;
-import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
+import com.liferay.osb.koroneiki.taproot.model.TeamRole;
+import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,16 +30,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Amos Fong
+ * @author Kyle Bischof
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + TaprootPortletKeys.PROJECTS_ADMIN,
-		"mvc.command.name=/projects_admin/edit_project"
+		"javax.portlet.name=" + TaprootPortletKeys.TEAM_ROLES_ADMIN,
+		"mvc.command.name=/team_roles_admin/edit_team_role"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditProjectMVCRenderCommand implements MVCRenderCommand {
+public class EditTeamRoleMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -47,33 +47,25 @@ public class EditProjectMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			long projectId = ParamUtil.getLong(renderRequest, "projectId");
+			long teamRoleId = ParamUtil.getLong(renderRequest, "teamRoleId");
 
-			if (projectId > 0) {
-				Project project = _projectLocalService.getProject(projectId);
+			if (teamRoleId > 0) {
+				TeamRole teamRole = _teamRoleLocalService.getTeamRole(
+					teamRoleId);
 
-				renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
+				renderRequest.setAttribute(TaprootWebKeys.TEAM_ROLE, teamRole);
 			}
 
-			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
-
-			if (tabs1.equals("contact-roles")) {
-				return "/projects_admin/edit_project_contact_roles.jsp";
-			}
-			else if (tabs1.equals("team-roles")) {
-				return "/projects_admin/edit_project_team_roles.jsp";
-			}
-
-			return "/projects_admin/edit_project.jsp";
+			return "/team_roles_admin/edit_team_role.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/projects_admin/error.jsp";
+			return "/team_roles_admin/error.jsp";
 		}
 	}
 
 	@Reference
-	private ProjectLocalService _projectLocalService;
+	private TeamRoleLocalService _teamRoleLocalService;
 
 }

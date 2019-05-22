@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,24 +12,21 @@
  *
  *
  */
+--%>
 
-package com.liferay.osb.koroneiki.taproot.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Amos Fong
- */
-public class TaprootWebKeys {
+<c:if test="<%= !SessionErrors.isEmpty(renderRequest) %>">
+	<div class="alert alert-danger">
+		<liferay-ui:icon
+			icon="exclamation-full"
+			markupView="lexicon"
+		/>
 
-	public static final String ACCOUNT = "ACCOUNT";
-
-	public static final String CONTACT = "CONTACT";
-
-	public static final String CONTACT_ROLE = "CONTACT_ROLE";
-
-	public static final String PROJECT = "PROJECT";
-
-	public static final String TEAM = "TEAM";
-
-	public static final String TEAM_ROLE = "TEAM_ROLE";
-
-}
+		<c:choose>
+			<c:when test="<%= SessionErrors.contains(renderRequest, NoSuchTeamException.class.getName()) %>">
+				<liferay-ui:message key="the-team-could-not-be-found" />
+			</c:when>
+		</c:choose>
+	</div>
+</c:if>

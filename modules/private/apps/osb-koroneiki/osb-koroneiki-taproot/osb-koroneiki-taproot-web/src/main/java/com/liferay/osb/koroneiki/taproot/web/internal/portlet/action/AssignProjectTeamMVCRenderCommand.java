@@ -30,16 +30,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Amos Fong
+ * @author Kyle Bischof
  */
 @Component(
 	property = {
 		"javax.portlet.name=" + TaprootPortletKeys.PROJECTS_ADMIN,
-		"mvc.command.name=/projects_admin/edit_project"
+		"mvc.command.name=/projects_admin/assign_project_team"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditProjectMVCRenderCommand implements MVCRenderCommand {
+public class AssignProjectTeamMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -49,22 +49,11 @@ public class EditProjectMVCRenderCommand implements MVCRenderCommand {
 		try {
 			long projectId = ParamUtil.getLong(renderRequest, "projectId");
 
-			if (projectId > 0) {
-				Project project = _projectLocalService.getProject(projectId);
+			Project project = _projectLocalService.getProject(projectId);
 
-				renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
-			}
+			renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
 
-			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
-
-			if (tabs1.equals("contact-roles")) {
-				return "/projects_admin/edit_project_contact_roles.jsp";
-			}
-			else if (tabs1.equals("team-roles")) {
-				return "/projects_admin/edit_project_team_roles.jsp";
-			}
-
-			return "/projects_admin/edit_project.jsp";
+			return "/projects_admin/assign_project_team.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());

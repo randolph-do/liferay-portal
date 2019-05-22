@@ -17,7 +17,9 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
 import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
+import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,16 +32,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Amos Fong
+ * @author Kyle Bischof
  */
 @Component(
 	property = {
 		"javax.portlet.name=" + TaprootPortletKeys.PROJECTS_ADMIN,
-		"mvc.command.name=/projects_admin/edit_project"
+		"mvc.command.name=/projects_admin/assign_project_team_roles"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditProjectMVCRenderCommand implements MVCRenderCommand {
+public class AssignProjectTeamRolesMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -48,23 +51,17 @@ public class EditProjectMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			long projectId = ParamUtil.getLong(renderRequest, "projectId");
+			long teamId = ParamUtil.getLong(renderRequest, "teamId");
 
-			if (projectId > 0) {
-				Project project = _projectLocalService.getProject(projectId);
+			Project project = _projectLocalService.getProject(projectId);
 
-				renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
-			}
+			renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
 
-			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
+			Team team = _teamLocalService.getTeam(teamId);
 
-			if (tabs1.equals("contact-roles")) {
-				return "/projects_admin/edit_project_contact_roles.jsp";
-			}
-			else if (tabs1.equals("team-roles")) {
-				return "/projects_admin/edit_project_team_roles.jsp";
-			}
+			renderRequest.setAttribute(TaprootWebKeys.TEAM, team);
 
-			return "/projects_admin/edit_project.jsp";
+			return "/projects_admin/assign_project_team_roles.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());
@@ -75,5 +72,8 @@ public class EditProjectMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ProjectLocalService _projectLocalService;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 }

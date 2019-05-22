@@ -101,4 +101,81 @@
 				(Koroneiki_ContactProjectRole.contactId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.countByN_T">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT Koroneiki_Team.teamId) AS COUNT_VALUE
+			FROM
+				Koroneiki_Team
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(Koroneiki_Team.name LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Team.type_ = ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.findByN_T">
+		<![CDATA[
+			SELECT
+				DISTINCT {Koroneiki_Team.*}
+			FROM
+				Koroneiki_Team
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(Koroneiki_Team.name LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Koroneiki_Team.type_ = ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.joinByProject">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_TeamProjectRole ON
+					Koroneiki_TeamProjectRole.teamId = Koroneiki_Team.teamId
+			WHERE
+				Koroneiki_TeamProjectRole.projectId = ?
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamRoleFinder.countByName">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT Koroneiki_TeamRole.teamRoleId) AS COUNT_VALUE
+			FROM
+				Koroneiki_TeamRole
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(
+					(Koroneiki_TeamRole.name LIKE ?) OR
+					(? IS NULL)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamRoleFinder.findByName">
+		<![CDATA[
+			SELECT
+				{Koroneiki_TeamRole.*}
+			FROM
+				Koroneiki_TeamRole
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(
+					(Koroneiki_TeamRole.name LIKE ?) OR
+					(? IS NULL)
+				)
+			ORDER BY
+				Koroneiki_TeamRole.name
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamRoleFinder.joinByProjectTeam">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_TeamProjectRole ON
+					Koroneiki_TeamProjectRole.teamRoleId = Koroneiki_TeamRole.teamRoleId
+			WHERE
+				(Koroneiki_TeamProjectRole.projectId = ?) AND
+				(Koroneiki_TeamProjectRole.teamId = ?)
+		]]>
+	</sql>
 </custom-sql>

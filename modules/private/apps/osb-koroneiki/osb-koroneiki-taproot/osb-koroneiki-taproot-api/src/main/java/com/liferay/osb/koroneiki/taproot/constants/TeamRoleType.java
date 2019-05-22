@@ -12,25 +12,29 @@
  *
  */
 
-package com.liferay.osb.koroneiki.taproot.model.impl;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.taproot.service.AccountLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.osb.koroneiki.taproot.constants;
 
 /**
  * @author Kyle Bischof
  */
-@ProviderType
-public class TeamImpl extends TeamBaseImpl {
+public class TeamRoleType {
 
-	public TeamImpl() {
-	}
+	public static final int PROJECT = 2;
 
-	public Account getAccount() throws PortalException {
-		return AccountLocalServiceUtil.getAccount(getAccountId());
+	public static final int REGULAR = 1;
+
+	public static final int[] VALUES = {REGULAR, PROJECT};
+
+	public static String getLabel(int value) {
+		if (value == REGULAR) {
+			return "regular";
+		}
+		else if (value == PROJECT) {
+			return "project";
+		}
+		else {
+			return null;
+		}
 	}
 
 }

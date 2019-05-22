@@ -37,13 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class TeamServiceImpl extends TeamServiceBaseImpl {
 
-	public Team addTeam(long accountId, String name, int type)
-		throws PortalException {
-
+	public Team addTeam(long accountId, String name) throws PortalException {
 		_teamPermission.check(
 			getPermissionChecker(), TaprootActionKeys.ADD_TEAM);
 
-		return teamLocalService.addTeam(getUserId(), accountId, name, type);
+		return teamLocalService.addTeam(getUserId(), accountId, name);
 	}
 
 	public Team deleteTeam(long teamId) throws PortalException {
@@ -53,13 +51,11 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return teamLocalService.deleteTeam(teamId);
 	}
 
-	public Team updateTeam(long teamId, String name, int type)
-		throws PortalException {
-
+	public Team updateTeam(long teamId, String name) throws PortalException {
 		_teamPermission.check(
 			getPermissionChecker(), teamId, ActionKeys.UPDATE);
 
-		return teamLocalService.updateTeam(teamId, name, type);
+		return teamLocalService.updateTeam(teamId, name);
 	}
 
 	@Reference

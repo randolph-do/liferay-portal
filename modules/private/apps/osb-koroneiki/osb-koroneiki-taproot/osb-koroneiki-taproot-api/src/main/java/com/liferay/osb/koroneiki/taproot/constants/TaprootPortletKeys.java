@@ -32,4 +32,10 @@ public class TaprootPortletKeys {
 	public static final String PROJECTS_ADMIN =
 		"com_liferay_osb_koroneiki_taproot_web_portlet_ProjectsAdminPortlet";
 
+	public static final String TEAM_ROLES_ADMIN =
+		"com_liferay_osb_koroneiki_taproot_web_TeamRolesAdminPortlet";
+
+	public static final String TEAMS_ADMIN =
+		"com_liferay_osb_koroneiki_taproot_web_TeamsAdminPortlet";
+
 }

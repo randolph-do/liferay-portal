@@ -18,7 +18,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.osb.koroneiki.root.service.ExternalIdMapperServiceUtil</code> service
+ * <code>com.liferay.osb.koroneiki.root.service.ExternalLinkServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -27,10 +27,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a <code>java.util.List</code>,
  * that is translated to an array of
- * <code>com.liferay.osb.koroneiki.root.model.ExternalIdMapperSoap</code>. If the method in the
+ * <code>com.liferay.osb.koroneiki.root.model.ExternalLinkSoap</code>. If the method in the
  * service utility returns a
- * <code>com.liferay.osb.koroneiki.root.model.ExternalIdMapper</code>, that is translated to a
- * <code>com.liferay.osb.koroneiki.root.model.ExternalIdMapperSoap</code>. Methods that SOAP
+ * <code>com.liferay.osb.koroneiki.root.model.ExternalLink</code>, that is translated to a
+ * <code>com.liferay.osb.koroneiki.root.model.ExternalLinkSoap</code>. Methods that SOAP
  * cannot safely wire are skipped.
  * </p>
  *
@@ -52,9 +52,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ExternalIdMapperServiceHttp
+ * @see ExternalLinkServiceHttp
  * @generated
  */
 @ProviderType
-public class ExternalIdMapperServiceSoap {
+public class ExternalLinkServiceSoap {
 }

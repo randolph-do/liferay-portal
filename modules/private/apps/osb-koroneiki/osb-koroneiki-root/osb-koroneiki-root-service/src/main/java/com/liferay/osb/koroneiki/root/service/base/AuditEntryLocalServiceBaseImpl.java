@@ -17,7 +17,7 @@ package com.liferay.osb.koroneiki.root.service.base;
 import com.liferay.osb.koroneiki.root.model.AuditEntry;
 import com.liferay.osb.koroneiki.root.service.AuditEntryLocalService;
 import com.liferay.osb.koroneiki.root.service.persistence.AuditEntryPersistence;
-import com.liferay.osb.koroneiki.root.service.persistence.ExternalIdMapperPersistence;
+import com.liferay.osb.koroneiki.root.service.persistence.ExternalLinkPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -388,7 +388,7 @@ public abstract class AuditEntryLocalServiceBaseImpl
 	protected AuditEntryPersistence auditEntryPersistence;
 
 	@Reference
-	protected ExternalIdMapperPersistence externalIdMapperPersistence;
+	protected ExternalLinkPersistence externalLinkPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

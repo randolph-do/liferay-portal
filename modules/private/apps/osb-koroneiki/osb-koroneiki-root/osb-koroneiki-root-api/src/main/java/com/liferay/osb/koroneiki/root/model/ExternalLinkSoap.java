@@ -23,34 +23,32 @@ import java.util.List;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.osb.koroneiki.root.service.http.ExternalIdMapperServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.osb.koroneiki.root.service.http.ExternalLinkServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class ExternalIdMapperSoap implements Serializable {
+public class ExternalLinkSoap implements Serializable {
 
-	public static ExternalIdMapperSoap toSoapModel(ExternalIdMapper model) {
-		ExternalIdMapperSoap soapModel = new ExternalIdMapperSoap();
+	public static ExternalLinkSoap toSoapModel(ExternalLink model) {
+		ExternalLinkSoap soapModel = new ExternalLinkSoap();
 
-		soapModel.setExternalIdMapperId(model.getExternalIdMapperId());
+		soapModel.setExternalLinkId(model.getExternalLinkId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setExternalSource(model.getExternalSource());
-		soapModel.setExternalId(model.getExternalId());
+		soapModel.setDomain(model.getDomain());
+		soapModel.setEntityName(model.getEntityName());
+		soapModel.setEntityId(model.getEntityId());
 
 		return soapModel;
 	}
 
-	public static ExternalIdMapperSoap[] toSoapModels(
-		ExternalIdMapper[] models) {
-
-		ExternalIdMapperSoap[] soapModels =
-			new ExternalIdMapperSoap[models.length];
+	public static ExternalLinkSoap[] toSoapModels(ExternalLink[] models) {
+		ExternalLinkSoap[] soapModels = new ExternalLinkSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -59,17 +57,14 @@ public class ExternalIdMapperSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ExternalIdMapperSoap[][] toSoapModels(
-		ExternalIdMapper[][] models) {
-
-		ExternalIdMapperSoap[][] soapModels = null;
+	public static ExternalLinkSoap[][] toSoapModels(ExternalLink[][] models) {
+		ExternalLinkSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new ExternalIdMapperSoap[models.length][models[0].length];
+			soapModels = new ExternalLinkSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new ExternalIdMapperSoap[0][0];
+			soapModels = new ExternalLinkSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -79,36 +74,34 @@ public class ExternalIdMapperSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ExternalIdMapperSoap[] toSoapModels(
-		List<ExternalIdMapper> models) {
+	public static ExternalLinkSoap[] toSoapModels(List<ExternalLink> models) {
+		List<ExternalLinkSoap> soapModels = new ArrayList<ExternalLinkSoap>(
+			models.size());
 
-		List<ExternalIdMapperSoap> soapModels =
-			new ArrayList<ExternalIdMapperSoap>(models.size());
-
-		for (ExternalIdMapper model : models) {
+		for (ExternalLink model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new ExternalIdMapperSoap[soapModels.size()]);
+		return soapModels.toArray(new ExternalLinkSoap[soapModels.size()]);
 	}
 
-	public ExternalIdMapperSoap() {
+	public ExternalLinkSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _externalIdMapperId;
+		return _externalLinkId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setExternalIdMapperId(pk);
+		setExternalLinkId(pk);
 	}
 
-	public long getExternalIdMapperId() {
-		return _externalIdMapperId;
+	public long getExternalLinkId() {
+		return _externalLinkId;
 	}
 
-	public void setExternalIdMapperId(long externalIdMapperId) {
-		_externalIdMapperId = externalIdMapperId;
+	public void setExternalLinkId(long externalLinkId) {
+		_externalLinkId = externalLinkId;
 	}
 
 	public long getCompanyId() {
@@ -151,29 +144,38 @@ public class ExternalIdMapperSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public int getExternalSource() {
-		return _externalSource;
+	public String getDomain() {
+		return _domain;
 	}
 
-	public void setExternalSource(int externalSource) {
-		_externalSource = externalSource;
+	public void setDomain(String domain) {
+		_domain = domain;
 	}
 
-	public String getExternalId() {
-		return _externalId;
+	public String getEntityName() {
+		return _entityName;
 	}
 
-	public void setExternalId(String externalId) {
-		_externalId = externalId;
+	public void setEntityName(String entityName) {
+		_entityName = entityName;
 	}
 
-	private long _externalIdMapperId;
+	public String getEntityId() {
+		return _entityId;
+	}
+
+	public void setEntityId(String entityId) {
+		_entityId = entityId;
+	}
+
+	private long _externalLinkId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private int _externalSource;
-	private String _externalId;
+	private String _domain;
+	private String _entityName;
+	private String _entityId;
 
 }

@@ -14,28 +14,28 @@
 
 package com.liferay.osb.koroneiki.root.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchExternalIdMapperException extends NoSuchModelException {
+public class NoSuchExternalLinkException extends NoSuchModelException {
 
-	public NoSuchExternalIdMapperException() {
+	public NoSuchExternalLinkException() {
 	}
 
-	public NoSuchExternalIdMapperException(String msg) {
+	public NoSuchExternalLinkException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchExternalIdMapperException(String msg, Throwable cause) {
+	public NoSuchExternalLinkException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchExternalIdMapperException(Throwable cause) {
+	public NoSuchExternalLinkException(Throwable cause) {
 		super(cause);
 	}
 

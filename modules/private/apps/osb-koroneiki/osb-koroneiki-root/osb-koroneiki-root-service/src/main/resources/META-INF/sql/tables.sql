@@ -19,13 +19,14 @@ create table Koroneiki_AuditEntry (
 	description VARCHAR(75) null
 );
 
-create table Koroneiki_ExternalIdMapper (
-	externalIdMapperId LONG not null primary key,
+create table Koroneiki_ExternalLink (
+	externalLinkId LONG not null primary key,
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	externalSource INTEGER,
-	externalId VARCHAR(75) null
+	domain VARCHAR(75) null,
+	entityName VARCHAR(75) null,
+	entityId VARCHAR(75) null
 );

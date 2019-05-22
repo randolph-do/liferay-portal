@@ -18,7 +18,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.osb.koroneiki.root.service.ExternalIdMapperServiceUtil</code> service
+ * <code>com.liferay.osb.koroneiki.root.service.ExternalLinkServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
@@ -40,9 +40,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ExternalIdMapperServiceSoap
+ * @see ExternalLinkServiceSoap
  * @generated
  */
 @ProviderType
-public class ExternalIdMapperServiceHttp {
+public class ExternalLinkServiceHttp {
 }

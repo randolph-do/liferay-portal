@@ -20,24 +20,24 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the remote service utility for ExternalIdMapper. This utility wraps
- * <code>com.liferay.osb.koroneiki.root.service.impl.ExternalIdMapperServiceImpl</code> and is an
+ * Provides the remote service utility for ExternalLink. This utility wraps
+ * <code>com.liferay.osb.koroneiki.root.service.impl.ExternalLinkServiceImpl</code> and is an
  * access point for service operations in application layer code running on a
  * remote server. Methods of this service are expected to have security checks
  * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see ExternalIdMapperService
+ * @see ExternalLinkService
  * @generated
  */
 @ProviderType
-public class ExternalIdMapperServiceUtil {
+public class ExternalLinkServiceUtil {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.root.service.impl.ExternalIdMapperServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.root.service.impl.ExternalLinkServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -49,22 +49,20 @@ public class ExternalIdMapperServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static ExternalIdMapperService getService() {
+	public static ExternalLinkService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<ExternalIdMapperService, ExternalIdMapperService> _serviceTracker;
+	private static ServiceTracker<ExternalLinkService, ExternalLinkService>
+		_serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(ExternalIdMapperService.class);
+		Bundle bundle = FrameworkUtil.getBundle(ExternalLinkService.class);
 
-		ServiceTracker<ExternalIdMapperService, ExternalIdMapperService>
+		ServiceTracker<ExternalLinkService, ExternalLinkService>
 			serviceTracker =
-				new ServiceTracker
-					<ExternalIdMapperService, ExternalIdMapperService>(
-						bundle.getBundleContext(),
-						ExternalIdMapperService.class, null);
+				new ServiceTracker<ExternalLinkService, ExternalLinkService>(
+					bundle.getBundleContext(), ExternalLinkService.class, null);
 
 		serviceTracker.open();
 

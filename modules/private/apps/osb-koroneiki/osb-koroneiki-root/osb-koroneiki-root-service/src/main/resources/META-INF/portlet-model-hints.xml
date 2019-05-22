@@ -21,14 +21,15 @@
 		<field name="newValue" type="String" />
 		<field name="description" type="String" />
 	</model>
-	<model name="com.liferay.osb.koroneiki.root.model.ExternalIdMapper">
-		<field name="externalIdMapperId" type="long" />
+	<model name="com.liferay.osb.koroneiki.root.model.ExternalLink">
+		<field name="externalLinkId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="externalSource" type="int" />
-		<field name="externalId" type="String" />
+		<field name="domain" type="String" />
+		<field name="entityName" type="String" />
+		<field name="entityId" type="String" />
 	</model>
 </model-hints>

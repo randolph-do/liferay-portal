@@ -14,7 +14,7 @@
 
 package com.liferay.osb.koroneiki.root.model.impl;
 
-import com.liferay.osb.koroneiki.root.model.ExternalIdMapper;
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -29,14 +29,14 @@ import java.util.Date;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The cache model class for representing ExternalIdMapper in entity cache.
+ * The cache model class for representing ExternalLink in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class ExternalIdMapperCacheModel
-	implements CacheModel<ExternalIdMapper>, Externalizable {
+public class ExternalLinkCacheModel
+	implements CacheModel<ExternalLink>, Externalizable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -44,16 +44,14 @@ public class ExternalIdMapperCacheModel
 			return true;
 		}
 
-		if (!(obj instanceof ExternalIdMapperCacheModel)) {
+		if (!(obj instanceof ExternalLinkCacheModel)) {
 			return false;
 		}
 
-		ExternalIdMapperCacheModel externalIdMapperCacheModel =
-			(ExternalIdMapperCacheModel)obj;
+		ExternalLinkCacheModel externalLinkCacheModel =
+			(ExternalLinkCacheModel)obj;
 
-		if (externalIdMapperId ==
-				externalIdMapperCacheModel.externalIdMapperId) {
-
+		if (externalLinkId == externalLinkCacheModel.externalLinkId) {
 			return true;
 		}
 
@@ -62,15 +60,15 @@ public class ExternalIdMapperCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, externalIdMapperId);
+		return HashUtil.hash(0, externalLinkId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{externalIdMapperId=");
-		sb.append(externalIdMapperId);
+		sb.append("{externalLinkId=");
+		sb.append(externalLinkId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", createDate=");
@@ -81,55 +79,70 @@ public class ExternalIdMapperCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", externalSource=");
-		sb.append(externalSource);
-		sb.append(", externalId=");
-		sb.append(externalId);
+		sb.append(", domain=");
+		sb.append(domain);
+		sb.append(", entityName=");
+		sb.append(entityName);
+		sb.append(", entityId=");
+		sb.append(entityId);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public ExternalIdMapper toEntityModel() {
-		ExternalIdMapperImpl externalIdMapperImpl = new ExternalIdMapperImpl();
+	public ExternalLink toEntityModel() {
+		ExternalLinkImpl externalLinkImpl = new ExternalLinkImpl();
 
-		externalIdMapperImpl.setExternalIdMapperId(externalIdMapperId);
-		externalIdMapperImpl.setCompanyId(companyId);
+		externalLinkImpl.setExternalLinkId(externalLinkId);
+		externalLinkImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
-			externalIdMapperImpl.setCreateDate(null);
+			externalLinkImpl.setCreateDate(null);
 		}
 		else {
-			externalIdMapperImpl.setCreateDate(new Date(createDate));
+			externalLinkImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			externalIdMapperImpl.setModifiedDate(null);
+			externalLinkImpl.setModifiedDate(null);
 		}
 		else {
-			externalIdMapperImpl.setModifiedDate(new Date(modifiedDate));
+			externalLinkImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		externalIdMapperImpl.setClassNameId(classNameId);
-		externalIdMapperImpl.setClassPK(classPK);
-		externalIdMapperImpl.setExternalSource(externalSource);
+		externalLinkImpl.setClassNameId(classNameId);
+		externalLinkImpl.setClassPK(classPK);
 
-		if (externalId == null) {
-			externalIdMapperImpl.setExternalId("");
+		if (domain == null) {
+			externalLinkImpl.setDomain("");
 		}
 		else {
-			externalIdMapperImpl.setExternalId(externalId);
+			externalLinkImpl.setDomain(domain);
 		}
 
-		externalIdMapperImpl.resetOriginalValues();
+		if (entityName == null) {
+			externalLinkImpl.setEntityName("");
+		}
+		else {
+			externalLinkImpl.setEntityName(entityName);
+		}
 
-		return externalIdMapperImpl;
+		if (entityId == null) {
+			externalLinkImpl.setEntityId("");
+		}
+		else {
+			externalLinkImpl.setEntityId(entityId);
+		}
+
+		externalLinkImpl.resetOriginalValues();
+
+		return externalLinkImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		externalIdMapperId = objectInput.readLong();
+		externalLinkId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
@@ -138,14 +151,14 @@ public class ExternalIdMapperCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-
-		externalSource = objectInput.readInt();
-		externalId = objectInput.readUTF();
+		domain = objectInput.readUTF();
+		entityName = objectInput.readUTF();
+		entityId = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(externalIdMapperId);
+		objectOutput.writeLong(externalLinkId);
 
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
@@ -155,23 +168,36 @@ public class ExternalIdMapperCacheModel
 
 		objectOutput.writeLong(classPK);
 
-		objectOutput.writeInt(externalSource);
-
-		if (externalId == null) {
+		if (domain == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(externalId);
+			objectOutput.writeUTF(domain);
+		}
+
+		if (entityName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(entityName);
+		}
+
+		if (entityId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(entityId);
 		}
 	}
 
-	public long externalIdMapperId;
+	public long externalLinkId;
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public int externalSource;
-	public String externalId;
+	public String domain;
+	public String entityName;
+	public String entityId;
 
 }

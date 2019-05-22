@@ -19,21 +19,18 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides a wrapper for {@link ExternalIdMapperService}.
+ * Provides a wrapper for {@link ExternalLinkService}.
  *
  * @author Brian Wing Shun Chan
- * @see ExternalIdMapperService
+ * @see ExternalLinkService
  * @generated
  */
 @ProviderType
-public class ExternalIdMapperServiceWrapper
-	implements ExternalIdMapperService,
-			   ServiceWrapper<ExternalIdMapperService> {
+public class ExternalLinkServiceWrapper
+	implements ExternalLinkService, ServiceWrapper<ExternalLinkService> {
 
-	public ExternalIdMapperServiceWrapper(
-		ExternalIdMapperService externalIdMapperService) {
-
-		_externalIdMapperService = externalIdMapperService;
+	public ExternalLinkServiceWrapper(ExternalLinkService externalLinkService) {
+		_externalLinkService = externalLinkService;
 	}
 
 	/**
@@ -43,21 +40,19 @@ public class ExternalIdMapperServiceWrapper
 	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
-		return _externalIdMapperService.getOSGiServiceIdentifier();
+		return _externalLinkService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public ExternalIdMapperService getWrappedService() {
-		return _externalIdMapperService;
+	public ExternalLinkService getWrappedService() {
+		return _externalLinkService;
 	}
 
 	@Override
-	public void setWrappedService(
-		ExternalIdMapperService externalIdMapperService) {
-
-		_externalIdMapperService = externalIdMapperService;
+	public void setWrappedService(ExternalLinkService externalLinkService) {
+		_externalLinkService = externalLinkService;
 	}
 
-	private ExternalIdMapperService _externalIdMapperService;
+	private ExternalLinkService _externalLinkService;
 
 }

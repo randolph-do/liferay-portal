@@ -45,8 +45,17 @@ int type = BeanParamUtil.getInteger(teamRole, request, "type");
 			<aui:input name="name" />
 
 			<aui:select name="type">
-				<aui:option label="regular" value="1" />
-				<aui:option label="project" value="2" />
+
+				<%
+				for (int curType : TeamRoleType.VALUES) {
+				%>
+
+					<aui:option label="<%= TeamRoleType.getLabel(curType) %>" value="<%= curType %>" />
+
+				<%
+				}
+				%>
+
 			</aui:select>
 
 			<aui:input name="description" type="textarea" />

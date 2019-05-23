@@ -14,12 +14,15 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
 import com.liferay.osb.koroneiki.taproot.model.TeamProjectRole;
+import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamProjectRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -37,19 +40,34 @@ public class TeamProjectRoleServiceImpl extends TeamProjectRoleServiceBaseImpl {
 			long teamId, long projectId, long teamRoleId)
 		throws PortalException {
 
+		_projectPermission.check(
+			getPermissionChecker(), projectId, TaprootActionKeys.ASSIGN_TEAM);
+
 		return teamProjectRoleLocalService.addTeamProjectRole(
 			teamId, projectId, teamRoleId);
 	}
 
 	public TeamProjectRole deleteTeamProjectRole(
-		long teamId, long projectId, long teamRoleId) {
+			long teamId, long projectId, long teamRoleId)
+		throws PortalException {
+
+		_projectPermission.check(
+			getPermissionChecker(), projectId, TaprootActionKeys.ASSIGN_TEAM);
 
 		return teamProjectRoleLocalService.deleteTeamProjectRole(
 			teamId, projectId, teamRoleId);
 	}
 
-	public void deleteTeamProjectRoles(long teamId, long projectId) {
+	public void deleteTeamProjectRoles(long teamId, long projectId)
+		throws PortalException {
+
+		_projectPermission.check(
+			getPermissionChecker(), projectId, TaprootActionKeys.ASSIGN_TEAM);
+
 		teamProjectRoleLocalService.deleteTeamProjectRoles(teamId, projectId);
 	}
+
+	@Reference
+	private ProjectPermission _projectPermission;
 
 }

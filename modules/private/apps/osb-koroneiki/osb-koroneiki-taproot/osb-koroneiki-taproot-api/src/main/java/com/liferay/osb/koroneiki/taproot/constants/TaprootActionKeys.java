@@ -33,4 +33,6 @@ public class TaprootActionKeys {
 
 	public static final String ASSIGN_CONTACT = "ASSIGN_CONTACT";
 
+	public static final String ASSIGN_TEAM = "ASSIGN_TEAM";
+
 }

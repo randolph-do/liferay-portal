@@ -51,7 +51,7 @@ Team team = (Team)row.getObject();
 
 	<liferay-ui:icon-delete
 		confirmation="are-you-sure-you-want-to-remove-this-team"
-		message="remove-membership"
+		message="remove-assignment"
 		url="<%= deleteURL %>"
 	/>
 </liferay-ui:icon-menu>

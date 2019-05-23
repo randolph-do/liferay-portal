@@ -223,8 +223,8 @@
 
 		<!-- Other fields -->
 
-		<column name="description" type="String" />
 		<column accessor="true" name="name" type="String" />
+		<column name="description" type="String" />
 		<column name="type" type="int" />
 
 		<!-- Order -->

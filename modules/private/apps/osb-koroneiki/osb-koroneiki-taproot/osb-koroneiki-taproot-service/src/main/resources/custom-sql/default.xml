@@ -101,7 +101,7 @@
 				(Koroneiki_ContactProjectRole.contactId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.countByN_T">
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.countByName">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT Koroneiki_Team.teamId) AS COUNT_VALUE
@@ -110,11 +110,10 @@
 			[$JOIN$]
 			WHERE
 				[$WHERE$]
-				(Koroneiki_Team.name LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(Koroneiki_Team.type_ = ? [$AND_OR_NULL_CHECK$])
+				(Koroneiki_Team.name LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
-	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.findByN_T">
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.findByName">
 		<![CDATA[
 			SELECT
 				DISTINCT {Koroneiki_Team.*}
@@ -123,8 +122,7 @@
 			[$JOIN$]
 			WHERE
 				[$WHERE$]
-				(Koroneiki_Team.name LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(Koroneiki_Team.type_ = ? [$AND_OR_NULL_CHECK$])
+				(Koroneiki_Team.name LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.joinByProject">

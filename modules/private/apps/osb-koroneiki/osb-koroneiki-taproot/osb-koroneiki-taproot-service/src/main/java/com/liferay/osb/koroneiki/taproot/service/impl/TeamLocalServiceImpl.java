@@ -42,6 +42,8 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		User user = userLocalService.getUser(userId);
 
+		validate(name);
+
 		long teamId = counterLocalService.increment();
 
 		Team team = teamPersistence.create(teamId);
@@ -80,7 +82,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		params.put("project", projectId);
 
-		return teamFinder.findByN_T(null, 0, params, start, end);
+		return teamFinder.findByName(null, params, start, end);
 	}
 
 	public int getProjectTeamsCount(long projectId) {
@@ -88,7 +90,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		params.put("project", projectId);
 
-		return teamFinder.countByN_T(null, 0, params);
+		return teamFinder.countByName(null, params);
 	}
 
 	public List<Team> getTeams(String name) throws PortalException {
@@ -96,6 +98,8 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	public Team updateTeam(long teamId, String name) throws PortalException {
+		validate(name);
+
 		Team team = teamPersistence.findByPrimaryKey(teamId);
 
 		team.setName(name);

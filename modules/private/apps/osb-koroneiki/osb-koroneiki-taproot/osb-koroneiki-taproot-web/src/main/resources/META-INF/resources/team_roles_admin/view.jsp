@@ -68,24 +68,25 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			className="com.liferay.osb.koroneiki.taproot.model.TeamRole"
 			escapedModel="<%= true %>"
 			keyProperty="teamRoleId"
-			modelVar="koroneikiTeamRole"
+			modelVar="teamRole"
 		>
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcRenderCommandName" value="/team_roles_admin/edit_team_role" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="teamRoleId" value="<%= String.valueOf(koroneikiTeamRole.getTeamRoleId()) %>" />
+				<portlet:param name="teamRoleId" value="<%= String.valueOf(teamRole.getTeamRoleId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="name"
-				value="<%= koroneikiTeamRole.getName() %>"
+				value="<%= teamRole.getName() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="type"
-				value="<%= TeamRoleType.getLabel(koroneikiTeamRole.getType()) %>"
+				translate="<%= true %>"
+				value="<%= TeamRoleType.getLabel(teamRole.getType()) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

@@ -29,6 +29,8 @@ public class TaprootActionKeys {
 
 	public static final String ADD_TEAM = "ADD_TEAM";
 
+	public static final String ADD_TEAM_ROLE = "ADD_TEAM_ROLE";
+
 	public static final String ASSIGN_CONTACT = "ASSIGN_CONTACT";
 
 }

@@ -14,12 +14,16 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
 import com.liferay.osb.koroneiki.taproot.model.TeamRole;
+import com.liferay.osb.koroneiki.taproot.permission.TeamRolePermission;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -33,24 +37,35 @@ import org.osgi.service.component.annotations.Component;
 )
 public class TeamRoleServiceImpl extends TeamRoleServiceBaseImpl {
 
-	public TeamRole addTeamRole(
-			long userId, String name, String description, int type)
+	public TeamRole addTeamRole(String name, String description, int type)
 		throws PortalException {
 
+		_teamRolePermission.check(
+			getPermissionChecker(), TaprootActionKeys.ADD_TEAM_ROLE);
+
 		return teamRoleLocalService.addTeamRole(
-			userId, name, description, type);
+			getUserId(), name, description, type);
 	}
 
 	public TeamRole deleteTeamRole(long teamRoleId) throws PortalException {
+		_teamRolePermission.check(
+			getPermissionChecker(), teamRoleId, ActionKeys.DELETE);
+
 		return teamRoleLocalService.deleteTeamRole(teamRoleId);
 	}
 
 	public TeamRole updateTeamRole(
-			long userId, long teamRoleId, String name, String description)
+			long teamRoleId, String name, String description)
 		throws PortalException {
 
+		_teamRolePermission.check(
+			getPermissionChecker(), teamRoleId, ActionKeys.UPDATE);
+
 		return teamRoleLocalService.updateTeamRole(
-			userId, teamRoleId, name, description);
+			getUserId(), teamRoleId, name, description);
 	}
+
+	@Reference
+	private TeamRolePermission _teamRolePermission;
 
 }

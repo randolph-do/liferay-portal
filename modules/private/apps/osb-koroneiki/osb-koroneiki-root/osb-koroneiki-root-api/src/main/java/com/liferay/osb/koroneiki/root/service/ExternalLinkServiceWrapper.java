@@ -33,6 +33,24 @@ public class ExternalLinkServiceWrapper
 		_externalLinkService = externalLinkService;
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.root.model.ExternalLink addExternalLink(
+			long classNameId, long classPK, String domain, String entityName,
+			String entityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _externalLinkService.addExternalLink(
+			classNameId, classPK, domain, entityName, entityId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.root.model.ExternalLink deleteExternalLink(
+			long externalLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _externalLinkService.deleteExternalLink(externalLinkId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -41,6 +59,15 @@ public class ExternalLinkServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _externalLinkService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.root.model.ExternalLink updateExternalLink(
+			long externalLinkId, String entityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _externalLinkService.updateExternalLink(
+			externalLinkId, entityId);
 	}
 
 	@Override

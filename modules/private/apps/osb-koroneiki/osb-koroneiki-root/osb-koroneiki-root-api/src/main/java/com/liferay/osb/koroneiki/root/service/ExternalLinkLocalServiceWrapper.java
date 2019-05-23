@@ -255,6 +255,13 @@ public class ExternalLinkLocalServiceWrapper
 		return _externalLinkLocalService.getExternalLinks(classNameId, classPK);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks(String className, long classPK) {
+
+		return _externalLinkLocalService.getExternalLinks(className, classPK);
+	}
+
 	/**
 	 * Returns the number of external links.
 	 *

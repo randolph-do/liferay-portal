@@ -14,11 +14,17 @@
 
 package com.liferay.osb.koroneiki.root.service.http;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.osb.koroneiki.root.service.ExternalLinkServiceUtil</code> service
+ * <code>ExternalLinkServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,66 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class ExternalLinkServiceSoap {
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
+			addExternalLink(
+				long classNameId, long classPK, String domain,
+				String entityName, String entityId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.ExternalLink returnValue =
+				ExternalLinkServiceUtil.addExternalLink(
+					classNameId, classPK, domain, entityName, entityId);
+
+			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
+			deleteExternalLink(long externalLinkId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.ExternalLink returnValue =
+				ExternalLinkServiceUtil.deleteExternalLink(externalLinkId);
+
+			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
+			updateExternalLink(long externalLinkId, String entityId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.ExternalLink returnValue =
+				ExternalLinkServiceUtil.updateExternalLink(
+					externalLinkId, entityId);
+
+			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ExternalLinkServiceSoap.class);
+
 }

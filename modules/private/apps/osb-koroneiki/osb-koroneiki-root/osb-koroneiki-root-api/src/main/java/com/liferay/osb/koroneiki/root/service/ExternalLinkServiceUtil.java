@@ -39,6 +39,22 @@ public class ExternalLinkServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.root.service.impl.ExternalLinkServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			addExternalLink(
+				long classNameId, long classPK, String domain,
+				String entityName, String entityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addExternalLink(
+			classNameId, classPK, domain, entityName, entityId);
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			deleteExternalLink(long externalLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteExternalLink(externalLinkId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -47,6 +63,13 @@ public class ExternalLinkServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			updateExternalLink(long externalLinkId, String entityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateExternalLink(externalLinkId, entityId);
 	}
 
 	public static ExternalLinkService getService() {

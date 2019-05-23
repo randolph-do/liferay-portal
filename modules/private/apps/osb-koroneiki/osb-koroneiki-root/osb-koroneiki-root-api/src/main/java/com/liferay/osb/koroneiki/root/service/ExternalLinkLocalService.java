@@ -211,6 +211,9 @@ public interface ExternalLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExternalLink> getExternalLinks(long classNameId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExternalLink> getExternalLinks(String className, long classPK);
+
 	/**
 	 * Returns the number of external links.
 	 *

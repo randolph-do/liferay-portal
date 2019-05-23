@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.root.service;
 
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -47,6 +48,13 @@ public interface ExternalLinkService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExternalLinkServiceUtil} to access the external link remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.root.service.impl.ExternalLinkServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public ExternalLink addExternalLink(
+			long classNameId, long classPK, String domain, String entityName,
+			String entityId)
+		throws PortalException;
+
+	public ExternalLink deleteExternalLink(long externalLinkId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +62,8 @@ public interface ExternalLinkService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ExternalLink updateExternalLink(long externalLinkId, String entityId)
+		throws PortalException;
 
 }

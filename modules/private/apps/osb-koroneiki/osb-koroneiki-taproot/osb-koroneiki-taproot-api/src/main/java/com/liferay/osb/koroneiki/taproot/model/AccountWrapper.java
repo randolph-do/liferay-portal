@@ -255,6 +255,13 @@ public class AccountWrapper
 		return model.getDescription();
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks() {
+
+		return model.getExternalLinks();
+	}
+
 	/**
 	 * Returns the fax number of this account.
 	 *

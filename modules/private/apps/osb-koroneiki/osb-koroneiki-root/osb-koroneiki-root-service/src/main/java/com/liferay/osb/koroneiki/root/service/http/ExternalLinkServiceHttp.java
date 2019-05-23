@@ -14,15 +14,23 @@
 
 package com.liferay.osb.koroneiki.root.service.http;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.osb.koroneiki.root.service.ExternalLinkServiceUtil</code> service
+ * <code>ExternalLinkServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -45,4 +53,135 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class ExternalLinkServiceHttp {
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			addExternalLink(
+				HttpPrincipal httpPrincipal, long classNameId, long classPK,
+				String domain, String entityName, String entityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExternalLinkServiceUtil.class, "addExternalLink",
+				_addExternalLinkParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, classNameId, classPK, domain, entityName, entityId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.root.model.ExternalLink)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			deleteExternalLink(HttpPrincipal httpPrincipal, long externalLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExternalLinkServiceUtil.class, "deleteExternalLink",
+				_deleteExternalLinkParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalLinkId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.root.model.ExternalLink)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			updateExternalLink(
+				HttpPrincipal httpPrincipal, long externalLinkId,
+				String entityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExternalLinkServiceUtil.class, "updateExternalLink",
+				_updateExternalLinkParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalLinkId, entityId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.root.model.ExternalLink)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ExternalLinkServiceHttp.class);
+
+	private static final Class<?>[] _addExternalLinkParameterTypes0 =
+		new Class[] {
+			long.class, long.class, String.class, String.class, String.class
+		};
+	private static final Class<?>[] _deleteExternalLinkParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateExternalLinkParameterTypes2 =
+		new Class[] {long.class, String.class};
+
 }

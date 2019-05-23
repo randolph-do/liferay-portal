@@ -58,6 +58,9 @@ public interface Account extends AccountModel, PersistedModel {
 
 		};
 
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks();
+
 	public java.util.List<Project> getProjects()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

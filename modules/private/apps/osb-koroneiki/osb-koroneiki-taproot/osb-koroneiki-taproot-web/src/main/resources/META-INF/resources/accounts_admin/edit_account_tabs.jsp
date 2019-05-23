@@ -57,6 +57,17 @@ long accountId = BeanParamUtil.getLong(koroneikiAccount, request, "accountId");
 
 						navigationItem.setLabel(LanguageUtil.get(request, "contact-roles"));
 					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("external-links"));
+
+						if (koroneikiAccount != null) {
+							navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/accounts_admin/edit_account", "tabs1", "external-links", "accountId", accountId);
+						}
+
+						navigationItem.setLabel(LanguageUtil.get(request, "external-links"));
+					});
 			}
 		}
 	%>"

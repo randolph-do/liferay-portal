@@ -64,4 +64,9 @@
 			<finder-column name="entityId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>ExternalLinkDomain</exception>
+		<exception>ExternalLinkEntityId</exception>
+		<exception>ExternalLinkEntityName</exception>
+	</exceptions>
 </service-builder>

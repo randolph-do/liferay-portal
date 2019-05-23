@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
+import com.liferay.osb.koroneiki.root.constants.RootWebKeys;
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
-import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + TaprootPortletKeys.ACCOUNTS_ADMIN,
-		"mvc.command.name=/accounts_admin/edit_account"
+		"mvc.command.name=/edit_external_link"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditAccountMVCRenderCommand implements MVCRenderCommand {
+public class EditExternalLinkMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -47,37 +47,27 @@ public class EditAccountMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			long accountId = ParamUtil.getLong(renderRequest, "accountId");
+			long externalLinkId = ParamUtil.getLong(
+				renderRequest, "externalLinkId");
 
-			if (accountId > 0) {
-				Account account = _accountLocalService.getAccount(accountId);
+			if (externalLinkId > 0) {
+				ExternalLink externalLink =
+					_externalLinkLocalService.getExternalLink(externalLinkId);
 
-				renderRequest.setAttribute(TaprootWebKeys.ACCOUNT, account);
+				renderRequest.setAttribute(
+					RootWebKeys.EXTERNAL_LINK, externalLink);
 			}
 
-			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
-
-			if (tabs1.equals("contact-roles")) {
-				return "/accounts_admin/edit_account_contact_roles.jsp";
-			}
-			else if (tabs1.equals("external-links")) {
-				return "/accounts_admin/edit_account_external_links.jsp";
-			}
-			else if (tabs1.equals("projects")) {
-				return "/accounts_admin/edit_account_projects.jsp";
-			}
-			else {
-				return "/accounts_admin/edit_account.jsp";
-			}
+			return "/edit_external_link.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/accounts_admin/error.jsp";
+			throw new PortletException(e);
 		}
 	}
 
 	@Reference
-	private AccountLocalService _accountLocalService;
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 }

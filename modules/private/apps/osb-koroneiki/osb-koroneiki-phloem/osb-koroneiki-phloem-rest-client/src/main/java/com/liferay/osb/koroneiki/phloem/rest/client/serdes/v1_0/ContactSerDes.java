@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -25,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -100,6 +102,26 @@ public class ContactSerDes {
 			sb.append(_escape(contact.getEmailAddress()));
 
 			sb.append("\"");
+		}
+
+		if (contact.getExternalLinks() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < contact.getExternalLinks().length; i++) {
+				sb.append(String.valueOf(contact.getExternalLinks()[i]));
+
+				if ((i + 1) < contact.getExternalLinks().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (contact.getFirstName() != null) {
@@ -202,6 +224,14 @@ public class ContactSerDes {
 		}
 		else {
 			map.put("emailAddress", String.valueOf(contact.getEmailAddress()));
+		}
+
+		if (contact.getExternalLinks() == null) {
+			map.put("externalLinks", null);
+		}
+		else {
+			map.put(
+				"externalLinks", String.valueOf(contact.getExternalLinks()));
 		}
 
 		if (contact.getFirstName() == null) {
@@ -309,6 +339,18 @@ public class ContactSerDes {
 			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
 					contact.setEmailAddress((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
+				if (jsonParserFieldValue != null) {
+					contact.setExternalLinks(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ExternalLinkSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ExternalLink[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "firstName")) {

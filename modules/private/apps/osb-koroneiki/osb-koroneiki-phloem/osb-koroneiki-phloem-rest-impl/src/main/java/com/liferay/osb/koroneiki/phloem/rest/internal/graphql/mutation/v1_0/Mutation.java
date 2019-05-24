@@ -17,10 +17,12 @@ package com.liferay.osb.koroneiki.phloem.rest.internal.graphql.mutation.v1_0;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -64,6 +66,14 @@ public class Mutation {
 
 		_contactRoleResourceComponentServiceObjects =
 			contactRoleResourceComponentServiceObjects;
+	}
+
+	public static void setExternalLinkResourceComponentServiceObjects(
+		ComponentServiceObjects<ExternalLinkResource>
+			externalLinkResourceComponentServiceObjects) {
+
+		_externalLinkResourceComponentServiceObjects =
+			externalLinkResourceComponentServiceObjects;
 	}
 
 	public static void setProjectResourceComponentServiceObjects(
@@ -222,6 +232,63 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public ExternalLink postAccountExternalLink(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("externalLink") ExternalLink externalLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource ->
+				externalLinkResource.postAccountExternalLink(
+					accountId, externalLink));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ExternalLink postContactExternalLink(
+			@GraphQLName("contactId") Long contactId,
+			@GraphQLName("externalLink") ExternalLink externalLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource ->
+				externalLinkResource.postContactExternalLink(
+					contactId, externalLink));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteExternalLink(
+			@GraphQLName("externalLinkId") Long externalLinkId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> externalLinkResource.deleteExternalLink(
+				externalLinkId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ExternalLink postProjectExternalLink(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("externalLink") ExternalLink externalLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource ->
+				externalLinkResource.postProjectExternalLink(
+					projectId, externalLink));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Project postAccountProject(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("project") Project project)
@@ -373,6 +440,15 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(
+			ExternalLinkResource externalLinkResource)
+		throws Exception {
+
+		externalLinkResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(ProjectResource projectResource)
 		throws Exception {
 
@@ -387,6 +463,8 @@ public class Mutation {
 		_contactResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactRoleResource>
 		_contactRoleResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ExternalLinkResource>
+		_externalLinkResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
 

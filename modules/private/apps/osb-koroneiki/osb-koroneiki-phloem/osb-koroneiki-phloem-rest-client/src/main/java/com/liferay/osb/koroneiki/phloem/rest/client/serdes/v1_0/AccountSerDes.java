@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -25,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -102,6 +104,26 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
+		if (account.getExternalLinks() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getExternalLinks().length; i++) {
+				sb.append(String.valueOf(account.getExternalLinks()[i]));
+
+				if ((i + 1) < account.getExternalLinks().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (account.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -160,6 +182,14 @@ public class AccountSerDes {
 		}
 		else {
 			map.put("description", String.valueOf(account.getDescription()));
+		}
+
+		if (account.getExternalLinks() == null) {
+			map.put("externalLinks", null);
+		}
+		else {
+			map.put(
+				"externalLinks", String.valueOf(account.getExternalLinks()));
 		}
 
 		if (account.getId() == null) {
@@ -246,6 +276,18 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					account.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
+				if (jsonParserFieldValue != null) {
+					account.setExternalLinks(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ExternalLinkSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ExternalLink[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

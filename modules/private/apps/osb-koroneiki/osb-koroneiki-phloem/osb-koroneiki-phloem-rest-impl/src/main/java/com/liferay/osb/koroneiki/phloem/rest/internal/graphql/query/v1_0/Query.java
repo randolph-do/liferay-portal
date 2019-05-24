@@ -17,10 +17,12 @@ package com.liferay.osb.koroneiki.phloem.rest.internal.graphql.query.v1_0;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -68,6 +70,14 @@ public class Query {
 
 		_contactRoleResourceComponentServiceObjects =
 			contactRoleResourceComponentServiceObjects;
+	}
+
+	public static void setExternalLinkResourceComponentServiceObjects(
+		ComponentServiceObjects<ExternalLinkResource>
+			externalLinkResourceComponentServiceObjects) {
+
+		_externalLinkResourceComponentServiceObjects =
+			externalLinkResourceComponentServiceObjects;
 	}
 
 	public static void setProjectResourceComponentServiceObjects(
@@ -153,6 +163,79 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<ExternalLink> getAccountExternalLinksPage(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> {
+				Page paginationPage =
+					externalLinkResource.getAccountExternalLinksPage(
+						accountId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ExternalLink> getContactExternalLinksPage(
+			@GraphQLName("contactId") Long contactId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> {
+				Page paginationPage =
+					externalLinkResource.getContactExternalLinksPage(
+						contactId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ExternalLink getExternalLink(
+			@GraphQLName("externalLinkId") Long externalLinkId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> externalLinkResource.getExternalLink(
+				externalLinkId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ExternalLink> getProjectExternalLinksPage(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> {
+				Page paginationPage =
+					externalLinkResource.getProjectExternalLinksPage(
+						projectId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<Project> getAccountProjectsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -225,6 +308,15 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(
+			ExternalLinkResource externalLinkResource)
+		throws Exception {
+
+		externalLinkResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(ProjectResource projectResource)
 		throws Exception {
 
@@ -239,6 +331,8 @@ public class Query {
 		_contactResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactRoleResource>
 		_contactRoleResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ExternalLinkResource>
+		_externalLinkResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
 

@@ -702,6 +702,14 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (account.getExternalLinks() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (account.getName() == null) {
 					valid = false;
@@ -771,6 +779,17 @@ public abstract class BaseAccountResourceTestCase {
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						account1.getDescription(), account2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getExternalLinks(),
+						account2.getExternalLinks())) {
 
 					return false;
 				}
@@ -917,6 +936,11 @@ public abstract class BaseAccountResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("externalLinks")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {

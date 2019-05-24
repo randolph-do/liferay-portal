@@ -139,6 +139,34 @@ public class Contact {
 	@NotEmpty
 	protected String emailAddress;
 
+	@Schema(description = "The account's links to external domains.")
+	public ExternalLink[] getExternalLinks() {
+		return externalLinks;
+	}
+
+	public void setExternalLinks(ExternalLink[] externalLinks) {
+		this.externalLinks = externalLinks;
+	}
+
+	@JsonIgnore
+	public void setExternalLinks(
+		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
+
+		try {
+			externalLinks = externalLinksUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected ExternalLink[] externalLinks;
+
 	@Schema(description = "The first name of the contact.")
 	public String getFirstName() {
 		return firstName;
@@ -349,6 +377,26 @@ public class Contact {
 			sb.append(_escape(emailAddress));
 
 			sb.append("\"");
+		}
+
+		if (externalLinks != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < externalLinks.length; i++) {
+				sb.append(String.valueOf(externalLinks[i]));
+
+				if ((i + 1) < externalLinks.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (firstName != null) {

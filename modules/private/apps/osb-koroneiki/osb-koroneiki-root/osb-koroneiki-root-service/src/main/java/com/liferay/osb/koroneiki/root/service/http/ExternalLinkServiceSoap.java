@@ -104,6 +104,59 @@ public class ExternalLinkServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
+			getExternalLink(long externalLinkId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.ExternalLink returnValue =
+				ExternalLinkServiceUtil.getExternalLink(externalLinkId);
+
+			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap[]
+			getExternalLinks(long classNameId, long classPK, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+				returnValue = ExternalLinkServiceUtil.getExternalLinks(
+					classNameId, classPK, start, end);
+
+			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getExternalLinksCount(long classNameId, long classPK)
+		throws RemoteException {
+
+		try {
+			int returnValue = ExternalLinkServiceUtil.getExternalLinksCount(
+				classNameId, classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
 			updateExternalLink(long externalLinkId, String entityId)
 		throws RemoteException {
 

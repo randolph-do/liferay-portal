@@ -58,6 +58,9 @@ public interface Contact extends ContactModel, PersistedModel {
 
 		};
 
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks();
+
 	public String getFullName();
 
 }

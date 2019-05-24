@@ -46,13 +46,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Account")
+@GraphQLName("ExternalLink")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"name"})
-@XmlRootElement(name = "Account")
-public class Account {
+@Schema(requiredProperties = {"domain", "entityId", "entityName"})
+@XmlRootElement(name = "ExternalLink")
+public class ExternalLink {
 
-	@Schema(description = "The account's creation date.")
+	@Schema(description = "The external link's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -80,51 +80,21 @@ public class Account {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
-	@Schema(
-		description = "The most recent time that any of the account's fields changed."
-	)
-	public Date getDateModified() {
-		return dateModified;
+	@Schema(description = "The external domain.")
+	public String getDomain() {
+		return domain;
 	}
 
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date dateModified;
-
-	@Schema(description = "The description of the account.")
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setDomain(
+		UnsafeSupplier<String, Exception> domainUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			domain = domainUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -136,23 +106,24 @@ public class Account {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	@NotEmpty
+	protected String domain;
 
-	@Schema(description = "The account's links to external domains.")
-	public ExternalLink[] getExternalLinks() {
-		return externalLinks;
+	@Schema(description = "The unique ID for the entity.")
+	public String getEntityId() {
+		return entityId;
 	}
 
-	public void setExternalLinks(ExternalLink[] externalLinks) {
-		this.externalLinks = externalLinks;
+	public void setEntityId(String entityId) {
+		this.entityId = entityId;
 	}
 
 	@JsonIgnore
-	public void setExternalLinks(
-		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
+	public void setEntityId(
+		UnsafeSupplier<String, Exception> entityIdUnsafeSupplier) {
 
 		try {
-			externalLinks = externalLinksUnsafeSupplier.get();
+			entityId = entityIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -163,10 +134,40 @@ public class Account {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected ExternalLink[] externalLinks;
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String entityId;
 
-	@Schema(description = "The account's ID.")
+	@Schema(description = "The unique classification for the entity.")
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	@JsonIgnore
+	public void setEntityName(
+		UnsafeSupplier<String, Exception> entityNameUnsafeSupplier) {
+
+		try {
+			entityName = entityNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String entityName;
+
+	@Schema(description = "The external link's ID.")
 	public Long getId() {
 		return id;
 	}
@@ -192,46 +193,19 @@ public class Account {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(description = "The name of the account.")
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String name;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof Account)) {
+		if (!(object instanceof ExternalLink)) {
 			return false;
 		}
 
-		Account account = (Account)object;
+		ExternalLink externalLink = (ExternalLink)object;
 
-		return Objects.equals(toString(), account.toString());
+		return Objects.equals(toString(), externalLink.toString());
 	}
 
 	@Override
@@ -263,52 +237,46 @@ public class Account {
 			sb.append("\"");
 		}
 
-		if (dateModified != null) {
+		if (domain != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dateModified\": ");
+			sb.append("\"domain\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(dateModified));
+			sb.append(_escape(domain));
 
 			sb.append("\"");
 		}
 
-		if (description != null) {
+		if (entityId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"entityId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(description));
+			sb.append(_escape(entityId));
 
 			sb.append("\"");
 		}
 
-		if (externalLinks != null) {
+		if (entityName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"externalLinks\": ");
+			sb.append("\"entityName\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < externalLinks.length; i++) {
-				sb.append(String.valueOf(externalLinks[i]));
+			sb.append(_escape(entityName));
 
-				if ((i + 1) < externalLinks.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
 		if (id != null) {
@@ -319,20 +287,6 @@ public class Account {
 			sb.append("\"id\": ");
 
 			sb.append(id);
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
 		}
 
 		sb.append("}");

@@ -111,6 +111,27 @@ public class Project {
 
 	protected Date dateModified;
 
+	public ExternalLink[] getExternalLinks() {
+		return externalLinks;
+	}
+
+	public void setExternalLinks(ExternalLink[] externalLinks) {
+		this.externalLinks = externalLinks;
+	}
+
+	public void setExternalLinks(
+		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
+
+		try {
+			externalLinks = externalLinksUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ExternalLink[] externalLinks;
+
 	public Long getId() {
 		return id;
 	}

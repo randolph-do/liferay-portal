@@ -82,6 +82,8 @@ public class OpenAPIResourceImpl {
 
 			add(ContactRoleResourceImpl.class);
 
+			add(ExternalLinkResourceImpl.class);
+
 			add(ProjectResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

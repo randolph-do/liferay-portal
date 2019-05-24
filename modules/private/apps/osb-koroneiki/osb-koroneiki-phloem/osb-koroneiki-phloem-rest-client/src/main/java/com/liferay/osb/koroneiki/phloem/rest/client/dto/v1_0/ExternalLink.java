@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.function.UnsafeSupplier;
-import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AccountSerDes;
+import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ExternalLinkSerDes;
 
 import java.util.Date;
 import java.util.Objects;
@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Account {
+public class ExternalLink {
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -50,68 +50,68 @@ public class Account {
 
 	protected Date dateCreated;
 
-	public Date getDateModified() {
-		return dateModified;
+	public String getDomain() {
+		return domain;
 	}
 
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+	public void setDomain(
+		UnsafeSupplier<String, Exception> domainUnsafeSupplier) {
 
 		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
+			domain = domainUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Date dateModified;
+	protected String domain;
 
-	public String getDescription() {
-		return description;
+	public String getEntityId() {
+		return entityId;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setEntityId(String entityId) {
+		this.entityId = entityId;
 	}
 
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setEntityId(
+		UnsafeSupplier<String, Exception> entityIdUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			entityId = entityIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String description;
+	protected String entityId;
 
-	public ExternalLink[] getExternalLinks() {
-		return externalLinks;
+	public String getEntityName() {
+		return entityName;
 	}
 
-	public void setExternalLinks(ExternalLink[] externalLinks) {
-		this.externalLinks = externalLinks;
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
 	}
 
-	public void setExternalLinks(
-		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
+	public void setEntityName(
+		UnsafeSupplier<String, Exception> entityNameUnsafeSupplier) {
 
 		try {
-			externalLinks = externalLinksUnsafeSupplier.get();
+			entityName = entityNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ExternalLink[] externalLinks;
+	protected String entityName;
 
 	public Long getId() {
 		return id;
@@ -132,38 +132,19 @@ public class Account {
 
 	protected Long id;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String name;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof Account)) {
+		if (!(object instanceof ExternalLink)) {
 			return false;
 		}
 
-		Account account = (Account)object;
+		ExternalLink externalLink = (ExternalLink)object;
 
-		return Objects.equals(toString(), account.toString());
+		return Objects.equals(toString(), externalLink.toString());
 	}
 
 	@Override
@@ -174,7 +155,7 @@ public class Account {
 	}
 
 	public String toString() {
-		return AccountSerDes.toJSON(this);
+		return ExternalLinkSerDes.toJSON(this);
 	}
 
 }

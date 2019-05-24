@@ -678,6 +678,14 @@ public abstract class BaseContactResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (contact.getExternalLinks() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("firstName", additionalAssertFieldName)) {
 				if (contact.getFirstName() == null) {
 					valid = false;
@@ -772,6 +780,17 @@ public abstract class BaseContactResourceTestCase {
 				if (!Objects.deepEquals(
 						contact1.getEmailAddress(),
 						contact2.getEmailAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						contact1.getExternalLinks(),
+						contact2.getExternalLinks())) {
 
 					return false;
 				}
@@ -948,6 +967,11 @@ public abstract class BaseContactResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("externalLinks")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("firstName")) {

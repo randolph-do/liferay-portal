@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
@@ -25,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -110,6 +112,26 @@ public class ProjectSerDes {
 				liferayToJSONDateFormat.format(project.getDateModified()));
 
 			sb.append("\"");
+		}
+
+		if (project.getExternalLinks() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < project.getExternalLinks().length; i++) {
+				sb.append(String.valueOf(project.getExternalLinks()[i]));
+
+				if ((i + 1) < project.getExternalLinks().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (project.getId() != null) {
@@ -235,6 +257,14 @@ public class ProjectSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(project.getDateModified()));
 
+		if (project.getExternalLinks() == null) {
+			map.put("externalLinks", null);
+		}
+		else {
+			map.put(
+				"externalLinks", String.valueOf(project.getExternalLinks()));
+		}
+
 		if (project.getId() == null) {
 			map.put("id", null);
 		}
@@ -353,6 +383,18 @@ public class ProjectSerDes {
 				if (jsonParserFieldValue != null) {
 					project.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
+				if (jsonParserFieldValue != null) {
+					project.setExternalLinks(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ExternalLinkSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ExternalLink[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -54,6 +57,19 @@ public interface ExternalLinkService extends BaseService {
 		throws PortalException;
 
 	public ExternalLink deleteExternalLink(long externalLinkId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExternalLink getExternalLink(long externalLinkId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExternalLink> getExternalLinks(
+			long classNameId, long classPK, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExternalLinksCount(long classNameId, long classPK)
 		throws PortalException;
 
 	/**

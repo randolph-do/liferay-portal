@@ -75,6 +75,11 @@ public interface ExternalLinkLocalService
 			String entityName, String entityId)
 		throws PortalException;
 
+	public ExternalLink addExternalLink(
+			long userId, String className, long classPK, String domain,
+			String entityName, String entityId)
+		throws PortalException;
+
 	/**
 	 * Creates a new external link with the primary key. Does not add the external link to the database.
 	 *
@@ -209,10 +214,12 @@ public interface ExternalLinkLocalService
 	public List<ExternalLink> getExternalLinks(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExternalLink> getExternalLinks(long classNameId, long classPK);
+	public List<ExternalLink> getExternalLinks(
+		long classNameId, long classPK, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExternalLink> getExternalLinks(String className, long classPK);
+	public List<ExternalLink> getExternalLinks(
+		String className, long classPK, int start, int end);
 
 	/**
 	 * Returns the number of external links.
@@ -221,6 +228,12 @@ public interface ExternalLinkLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExternalLinksCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExternalLinksCount(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExternalLinksCount(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

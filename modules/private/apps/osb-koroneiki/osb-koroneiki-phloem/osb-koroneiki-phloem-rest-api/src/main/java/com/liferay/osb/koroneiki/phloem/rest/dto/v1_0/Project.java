@@ -164,6 +164,34 @@ public class Project {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The account's links to external domains.")
+	public ExternalLink[] getExternalLinks() {
+		return externalLinks;
+	}
+
+	public void setExternalLinks(ExternalLink[] externalLinks) {
+		this.externalLinks = externalLinks;
+	}
+
+	@JsonIgnore
+	public void setExternalLinks(
+		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
+
+		try {
+			externalLinks = externalLinksUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected ExternalLink[] externalLinks;
+
 	@Schema(description = "The project's ID.")
 	public Long getId() {
 		return id;
@@ -408,6 +436,26 @@ public class Project {
 			sb.append(liferayToJSONDateFormat.format(dateModified));
 
 			sb.append("\"");
+		}
+
+		if (externalLinks != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < externalLinks.length; i++) {
+				sb.append(String.valueOf(externalLinks[i]));
+
+				if ((i + 1) < externalLinks.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (id != null) {

@@ -14,7 +14,9 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
 
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Amos Fong
@@ -31,6 +33,9 @@ public class ProjectUtil {
 				code = project.getCode();
 				dateCreated = project.getCreateDate();
 				dateModified = project.getModifiedDate();
+				externalLinks = TransformUtil.transformToArray(
+					project.getExternalLinks(),
+					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				id = project.getProjectId();
 				name = project.getName();
 				notes = project.getNotes();

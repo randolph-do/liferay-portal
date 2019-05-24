@@ -862,6 +862,14 @@ public abstract class BaseProjectResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (project.getExternalLinks() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("industry", additionalAssertFieldName)) {
 				if (project.getIndustry() == null) {
 					valid = false;
@@ -973,6 +981,17 @@ public abstract class BaseProjectResourceTestCase {
 				if (!Objects.deepEquals(
 						project1.getDateModified(),
 						project2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						project1.getExternalLinks(),
+						project2.getExternalLinks())) {
 
 					return false;
 				}
@@ -1164,6 +1183,11 @@ public abstract class BaseProjectResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("externalLinks")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {

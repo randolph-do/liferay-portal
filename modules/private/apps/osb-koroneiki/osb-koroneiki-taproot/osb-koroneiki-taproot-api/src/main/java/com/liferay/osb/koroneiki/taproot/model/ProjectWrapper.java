@@ -226,6 +226,13 @@ public class ProjectWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks() {
+
+		return model.getExternalLinks();
+	}
+
 	/**
 	 * Returns the industry of this project.
 	 *

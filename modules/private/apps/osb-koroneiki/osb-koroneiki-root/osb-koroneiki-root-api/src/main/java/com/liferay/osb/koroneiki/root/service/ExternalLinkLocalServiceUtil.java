@@ -63,6 +63,16 @@ public class ExternalLinkLocalServiceUtil {
 			userId, classNameId, classPK, domain, entityName, entityId);
 	}
 
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			addExternalLink(
+				long userId, String className, long classPK, String domain,
+				String entityName, String entityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addExternalLink(
+			userId, className, classPK, domain, entityName, entityId);
+	}
+
 	/**
 	 * Creates a new external link with the primary key. Does not add the external link to the database.
 	 *
@@ -244,16 +254,16 @@ public class ExternalLinkLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.osb.koroneiki.root.model.ExternalLink> getExternalLinks(
-			long classNameId, long classPK) {
+			long classNameId, long classPK, int start, int end) {
 
-		return getService().getExternalLinks(classNameId, classPK);
+		return getService().getExternalLinks(classNameId, classPK, start, end);
 	}
 
 	public static java.util.List
 		<com.liferay.osb.koroneiki.root.model.ExternalLink> getExternalLinks(
-			String className, long classPK) {
+			String className, long classPK, int start, int end) {
 
-		return getService().getExternalLinks(className, classPK);
+		return getService().getExternalLinks(className, classPK, start, end);
 	}
 
 	/**
@@ -263,6 +273,14 @@ public class ExternalLinkLocalServiceUtil {
 	 */
 	public static int getExternalLinksCount() {
 		return getService().getExternalLinksCount();
+	}
+
+	public static int getExternalLinksCount(long classNameId, long classPK) {
+		return getService().getExternalLinksCount(classNameId, classPK);
+	}
+
+	public static int getExternalLinksCount(String className, long classPK) {
+		return getService().getExternalLinksCount(className, classPK);
 	}
 
 	public static

@@ -170,6 +170,13 @@ public class ContactWrapper
 		return model.getEmailAddress();
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks() {
+
+		return model.getExternalLinks();
+	}
+
 	/**
 	 * Returns the first name of this contact.
 	 *

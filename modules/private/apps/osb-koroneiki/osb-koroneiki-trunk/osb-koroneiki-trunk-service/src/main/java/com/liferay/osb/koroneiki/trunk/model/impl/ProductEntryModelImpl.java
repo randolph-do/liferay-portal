@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -258,6 +261,32 @@ public class ProductEntryModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, ProductEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ProductEntry.class.getClassLoader(), ProductEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ProductEntry> constructor =
+				(Constructor<ProductEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<ProductEntry, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ProductEntry, Object>>
@@ -460,8 +489,7 @@ public class ProductEntryModelImpl
 	@Override
 	public ProductEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ProductEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -664,11 +692,8 @@ public class ProductEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ProductEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ProductEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ProductEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

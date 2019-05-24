@@ -34,6 +34,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -257,6 +260,32 @@ public class ServiceProducerModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, ServiceProducer>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ServiceProducer.class.getClassLoader(), ServiceProducer.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ServiceProducer> constructor =
+				(Constructor<ServiceProducer>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<ServiceProducer, Object>>
@@ -494,8 +523,7 @@ public class ServiceProducerModelImpl
 	@Override
 	public ServiceProducer toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ServiceProducer)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -692,11 +720,8 @@ public class ServiceProducerModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ServiceProducer.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ServiceProducer.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ServiceProducer>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

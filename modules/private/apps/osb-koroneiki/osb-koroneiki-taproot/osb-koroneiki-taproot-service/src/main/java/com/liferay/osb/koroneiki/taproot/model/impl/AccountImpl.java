@@ -37,7 +37,8 @@ public class AccountImpl extends AccountBaseImpl {
 
 	public List<ExternalLink> getExternalLinks() {
 		return ExternalLinkLocalServiceUtil.getExternalLinks(
-			Account.class.getName(), getAccountId());
+			Account.class.getName(), getAccountId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	public List<Project> getProjects() throws PortalException {

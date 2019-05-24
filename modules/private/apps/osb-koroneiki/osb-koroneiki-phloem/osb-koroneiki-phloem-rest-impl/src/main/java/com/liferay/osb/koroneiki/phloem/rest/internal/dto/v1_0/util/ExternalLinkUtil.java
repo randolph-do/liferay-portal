@@ -14,29 +14,24 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
 
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Amos Fong
  */
-public class AccountUtil {
+public class ExternalLinkUtil {
 
-	public static Account toAccount(
-			com.liferay.osb.koroneiki.taproot.model.Account account)
+	public static ExternalLink toExternalLink(
+			com.liferay.osb.koroneiki.root.model.ExternalLink externalLink)
 		throws Exception {
 
-		return new Account() {
+		return new ExternalLink() {
 			{
-				dateCreated = account.getCreateDate();
-				dateModified = account.getModifiedDate();
-				description = account.getDescription();
-				externalLinks = TransformUtil.transformToArray(
-					account.getExternalLinks(),
-					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = account.getAccountId();
-				name = account.getName();
+				dateCreated = externalLink.getCreateDate();
+				domain = externalLink.getDomain();
+				entityId = externalLink.getEntityId();
+				entityName = externalLink.getEntityName();
+				id = externalLink.getExternalLinkId();
 			}
 		};
 	}

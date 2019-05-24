@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,7 +46,7 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 			String entityId)
 		throws PortalException {
 
-		checkPermission(classNameId, classPK);
+		checkPermission(classNameId, classPK, ActionKeys.UPDATE);
 
 		return externalLinkLocalService.addExternalLink(
 			getUserId(), classNameId, classPK, domain, entityName, entityId);
@@ -57,9 +59,42 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 			externalLinkId);
 
 		checkPermission(
-			externalLink.getClassNameId(), externalLink.getClassPK());
+			externalLink.getClassNameId(), externalLink.getClassPK(),
+			ActionKeys.UPDATE);
 
 		return externalLinkLocalService.deleteExternalLink(externalLinkId);
+	}
+
+	public ExternalLink getExternalLink(long externalLinkId)
+		throws PortalException {
+
+		ExternalLink externalLink = externalLinkLocalService.getExternalLink(
+			externalLinkId);
+
+		checkPermission(
+			externalLink.getClassNameId(), externalLink.getClassPK(),
+			ActionKeys.VIEW);
+
+		return externalLink;
+	}
+
+	public List<ExternalLink> getExternalLinks(
+			long classNameId, long classPK, int start, int end)
+		throws PortalException {
+
+		checkPermission(classNameId, classPK, ActionKeys.VIEW);
+
+		return externalLinkLocalService.getExternalLinks(
+			classNameId, classPK, start, end);
+	}
+
+	public int getExternalLinksCount(long classNameId, long classPK)
+		throws PortalException {
+
+		checkPermission(classNameId, classPK, ActionKeys.VIEW);
+
+		return externalLinkLocalService.getExternalLinksCount(
+			classNameId, classPK);
 	}
 
 	public ExternalLink updateExternalLink(long externalLinkId, String entityId)
@@ -69,25 +104,26 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 			externalLinkId);
 
 		checkPermission(
-			externalLink.getClassNameId(), externalLink.getClassPK());
+			externalLink.getClassNameId(), externalLink.getClassPK(),
+			ActionKeys.UPDATE);
 
 		return externalLinkLocalService.updateExternalLink(
 			externalLinkId, entityId);
 	}
 
-	protected void checkPermission(long classNameId, long classPK)
+	protected void checkPermission(
+			long classNameId, long classPK, String action)
 		throws PortalException {
 
 		if (classNameId == classNameLocalService.getClassNameId(
 				Account.class)) {
 
-			_accountPermission.check(
-				getPermissionChecker(), classPK, ActionKeys.UPDATE);
+			_accountPermission.check(getPermissionChecker(), classPK, action);
 		}
 		else {
 			throw new PrincipalException.MustHavePermission(
 				getPermissionChecker(), String.valueOf(classNameId), classPK,
-				ActionKeys.UPDATE);
+				action);
 		}
 	}
 

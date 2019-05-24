@@ -16,10 +16,15 @@ package com.liferay.osb.koroneiki.taproot.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -29,6 +34,12 @@ import java.util.Locale;
 public class ContactImpl extends ContactBaseImpl {
 
 	public ContactImpl() {
+	}
+
+	public List<ExternalLink> getExternalLinks() {
+		return ExternalLinkLocalServiceUtil.getExternalLinks(
+			Contact.class.getName(), getContactId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	public String getFullName() {

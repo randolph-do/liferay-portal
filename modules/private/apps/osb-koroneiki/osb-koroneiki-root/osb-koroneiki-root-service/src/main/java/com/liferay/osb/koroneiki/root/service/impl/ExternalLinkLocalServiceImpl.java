@@ -62,14 +62,40 @@ public class ExternalLinkLocalServiceImpl
 		return externalLinkPersistence.update(externalLink);
 	}
 
-	public List<ExternalLink> getExternalLinks(long classNameId, long classPK) {
-		return externalLinkPersistence.findByC_C(classNameId, classPK);
-	}
+	public ExternalLink addExternalLink(
+			long userId, String className, long classPK, String domain,
+			String entityName, String entityId)
+		throws PortalException {
 
-	public List<ExternalLink> getExternalLinks(String className, long classPK) {
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		return getExternalLinks(classNameId, classPK);
+		return addExternalLink(
+			userId, classNameId, classPK, domain, entityName, entityId);
+	}
+
+	public List<ExternalLink> getExternalLinks(
+		long classNameId, long classPK, int start, int end) {
+
+		return externalLinkPersistence.findByC_C(
+			classNameId, classPK, start, end);
+	}
+
+	public List<ExternalLink> getExternalLinks(
+		String className, long classPK, int start, int end) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return getExternalLinks(classNameId, classPK, start, end);
+	}
+
+	public int getExternalLinksCount(long classNameId, long classPK) {
+		return externalLinkPersistence.countByC_C(classNameId, classPK);
+	}
+
+	public int getExternalLinksCount(String className, long classPK) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return getExternalLinksCount(classNameId, classPK);
 	}
 
 	public ExternalLink updateExternalLink(long externalLinkId, String entityId)

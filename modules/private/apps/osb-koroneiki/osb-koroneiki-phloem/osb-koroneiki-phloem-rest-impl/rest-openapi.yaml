@@ -16,6 +16,12 @@ components:
                 description:
                     description: The description of the account.
                     type: string
+                externalLinks:
+                    description: The account's links to external domains.
+                    items:
+                        $ref: "#/components/schemas/ExternalLink"
+                    readOnly: true
+                    type: array
                 id:
                     description: The account's ID.
                     format: int64
@@ -43,6 +49,12 @@ components:
                 emailAddress:
                     description: The email address of the contact.
                     type: string
+                externalLinks:
+                    description: The account's links to external domains.
+                    items:
+                        $ref: "#/components/schemas/ExternalLink"
+                    readOnly: true
+                    type: array
                 firstName:
                     description: The first name of the contact.
                     type: string
@@ -100,6 +112,33 @@ components:
                 - name
                 - type
             type: object
+        ExternalLink:
+            description: Represents a link to an entity in a different domain.
+            properties:
+                dateCreated:
+                    description: The external link's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                domain:
+                    description: The external domain.
+                    type: string
+                entityId:
+                    description: The unique ID for the entity.
+                    type: string
+                entityName:
+                    description: The unique classification for the entity.
+                    type: string
+                id:
+                    description: The external link's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+            required:
+                - domain
+                - entityId
+                - entityName
+            type: object
         Project:
             description: Represents a project.
             properties:
@@ -121,6 +160,12 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                externalLinks:
+                    description: The account's links to external domains.
+                    items:
+                        $ref: "#/components/schemas/ExternalLink"
+                    readOnly: true
+                    type: array
                 id:
                     description: The project's ID.
                     format: int64
@@ -383,6 +428,70 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["Account"]
+    "/accounts/{accountId}/external-links":
+        get:
+            description: Retrieves the account's external links.
+            operationId: getAccountExternalLinksPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                    description: ""
+            tags: ["ExternalLink"]
+        post:
+            description: Adds an external link to the account.
+            operationId: postAccountExternalLink
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]
     "/accounts/{accountId}/projects":
         get:
             description: Retrieves the account's projects.
@@ -595,6 +704,107 @@ paths:
                                 $ref: "#/components/schemas/Contact"
                     description: ""
             tags: ["Contact"]
+    "/contacts/{contactId}/external-links":
+        get:
+            description: Retrieves the contact's external links.
+            operationId: getContactExternalLinksPage
+            parameters:
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                    description: ""
+            tags: ["ExternalLink"]
+        post:
+            description: Adds an external link to the contact.
+            operationId: postContactExternalLink
+            parameters:
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]
+    "/external-links/{externalLinkId}":
+        delete:
+            operationId: deleteExternalLink
+            parameters:
+                - in: path
+                  name: externalLinkId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["ExternalLink"]
+        get:
+            description: Retrieves the external link.
+            operationId: getExternalLink
+            parameters:
+                - in: path
+                  name: externalLinkId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]
     "/projects/{projectId}":
         delete:
             operationId: deleteProject
@@ -804,3 +1014,67 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["Project"]
+    "/projects/{projectId}/external-links":
+        get:
+            description: Retrieves the project's external links.
+            operationId: getProjectExternalLinksPage
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                    description: ""
+            tags: ["ExternalLink"]
+        post:
+            description: Adds an external link to the project.
+            operationId: postProjectExternalLink
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]

@@ -16,10 +16,16 @@ package com.liferay.osb.koroneiki.taproot.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalServiceUtil;
 import com.liferay.osb.koroneiki.taproot.model.Account;
+import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
 
 /**
  * @author Kyle Bischof
@@ -32,6 +38,12 @@ public class ProjectImpl extends ProjectBaseImpl {
 
 	public Account getAccount() throws PortalException {
 		return AccountLocalServiceUtil.getAccount(getAccountId());
+	}
+
+	public List<ExternalLink> getExternalLinks() {
+		return ExternalLinkLocalServiceUtil.getExternalLinks(
+			Project.class.getName(), getProjectId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	public String getStatusLabel() {

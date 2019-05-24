@@ -35,9 +35,35 @@ long projectId = BeanParamUtil.getLong(project, request, "projectId");
 
 	<aui:fieldset-group>
 		<aui:fieldset>
-			<aui:input name="teamName" />
+			<aui:select name="teamName">
+				<aui:option value="" />
 
-			<aui:input name="teamRoleName" />
+				<%
+				for (Team team : TeamLocalServiceUtil.getTeams(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+				%>
+
+					<aui:option label="<%= team.getName() %>" value="<%= team.getTeamId() %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:select name="teamRoleName">
+				<aui:option value="" />
+
+				<%
+				for (TeamRole teamRole : TeamRoleLocalServiceUtil.getTeamRoles(TeamRoleType.PROJECT, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+				%>
+
+					<aui:option label="<%= teamRole.getName() %>" value="<%= teamRole.getTeamRoleId() %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

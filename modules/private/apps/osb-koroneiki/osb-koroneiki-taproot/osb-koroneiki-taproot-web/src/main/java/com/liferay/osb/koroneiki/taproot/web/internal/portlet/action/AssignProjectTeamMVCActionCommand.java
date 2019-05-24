@@ -16,8 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamException;
-import com.liferay.osb.koroneiki.taproot.model.Team;
-import com.liferay.osb.koroneiki.taproot.model.TeamRole;
 import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
 import com.liferay.osb.koroneiki.taproot.service.TeamProjectRoleService;
 import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalService;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -66,26 +63,13 @@ public class AssignProjectTeamMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			long projectId = ParamUtil.getLong(actionRequest, "projectId");
 
-			String teamName = ParamUtil.getString(actionRequest, "teamName");
-			String teamRoleName = ParamUtil.getString(
-				actionRequest, "teamRoleName");
-
-			List<Team> teams = _teamLocalService.getTeams(teamName);
-			List<TeamRole> teamRoles = _teamRoleLocalService.getTeamRoles(
-				teamRoleName);
-
-			Team team = teams.get(0);
-			TeamRole teamRole = teamRoles.get(0);
+			long teamId = ParamUtil.getLong(actionRequest, "teamName");
+			long teamRoleId = ParamUtil.getLong(actionRequest, "teamRoleName");
 
 			_teamProjectRoleService.addTeamProjectRole(
-				team.getTeamId(), projectId, teamRole.getTeamRoleId());
+				teamId, projectId, teamRoleId);
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			JSONObject jsonObject = JSONUtil.put("redirectURL", redirect);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchTeamException) {

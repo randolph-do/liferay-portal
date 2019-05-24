@@ -14,7 +14,10 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.constants.TeamRoleType;
+import com.liferay.osb.koroneiki.taproot.exception.TeamRoleTypeException;
 import com.liferay.osb.koroneiki.taproot.model.TeamProjectRole;
+import com.liferay.osb.koroneiki.taproot.model.TeamRole;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamProjectRoleLocalServiceBaseImpl;
 import com.liferay.osb.koroneiki.taproot.service.persistence.TeamProjectRolePK;
 import com.liferay.portal.aop.AopService;
@@ -36,7 +39,7 @@ public class TeamProjectRoleLocalServiceImpl
 			long teamId, long projectId, long teamRoleId)
 		throws PortalException {
 
-		validate(teamId, projectId);
+		validate(teamId, projectId, teamRoleId);
 
 		TeamProjectRolePK teamProjectRolePK = new TeamProjectRolePK(
 			teamId, projectId, teamRoleId);
@@ -74,12 +77,18 @@ public class TeamProjectRoleLocalServiceImpl
 		teamProjectRolePersistence.removeByT_P(teamId, projectId);
 	}
 
-	protected void validate(long teamId, long projectId)
+	protected void validate(long teamId, long projectId, long teamRoleId)
 		throws PortalException {
 
 		teamPersistence.findByPrimaryKey(teamId);
 
 		projectPersistence.findByPrimaryKey(projectId);
+
+		TeamRole teamRole = teamRolePersistence.findByPrimaryKey(teamRoleId);
+
+		if (teamRole.getType() != TeamRoleType.PROJECT) {
+			throw new TeamRoleTypeException();
+		}
 	}
 
 }

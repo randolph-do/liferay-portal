@@ -33,6 +33,63 @@ components:
             required:
                 - name
             type: object
+        AuditEntry:
+            description: Represends and audit entry.
+            properties:
+                action:
+                    description: The audit entry's action.
+                    readOnly: true
+                    type: string
+                auditSetId:
+                    description: The id of related audit entries.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                classNameId:
+                    description: The id of the class being audited.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                classPK:
+                    description: The primary key of the class object being audited.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                dateCreated:
+                    description: The audit entry's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    description: The description of the audit entry.
+                    readOnly: true
+                    type: string
+                field:
+                    description: The field being audited.
+                    readOnly: true
+                    type: string
+                fieldClassNameId:
+                    description: The id of the class of the field being audited.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                fieldClassPK:
+                    description: The primary key of the field class object being audited.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                newValue:
+                    description: The old value of the object being audited.
+                    readOnly: true
+                    type: string
+                oldValue:
+                    description: The new value of the object being audited.
+                userName:
+                    description: The full name of creator of the audit entry.
+                    readOnly: true
+                    type: string
+            required:
+            type: object
         Contact:
             description: Represents a contact.
             properties:
@@ -684,6 +741,51 @@ paths:
                                 $ref: "#/components/schemas/Team"
                     description: ""
             tags: ["Team"]
+    "/audit-entries":
+        post:
+            operationId: postAuditEntry
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AuditEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AuditEntry"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AuditEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AuditEntry"
+                    description: ""
+            tags: ["AuditEntry"]
+    "/audit-entries/{auditEntryId}":
+        get:
+            description: Retrieves the audit entry.
+            operationId: getAuditEntry
+            parameters:
+                - in: path
+                  name: auditEntryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AuditEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AuditEntry"
+                    description: ""
+            tags: ["AuditEntry"]
     "/contact-roles":
         post:
             operationId: postContactRole

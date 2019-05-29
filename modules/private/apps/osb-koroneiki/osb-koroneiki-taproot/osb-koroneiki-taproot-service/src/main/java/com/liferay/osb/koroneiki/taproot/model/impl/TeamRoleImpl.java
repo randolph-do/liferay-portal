@@ -14,6 +14,8 @@
 
 package com.liferay.osb.koroneiki.taproot.model.impl;
 
+import com.liferay.osb.koroneiki.taproot.constants.TeamRoleType;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -23,6 +25,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public class TeamRoleImpl extends TeamRoleBaseImpl {
 
 	public TeamRoleImpl() {
+	}
+
+	public String getTypeLabel() {
+		return TeamRoleType.getLabel(getType());
 	}
 
 }

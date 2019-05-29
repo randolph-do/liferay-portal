@@ -17,7 +17,11 @@ package com.liferay.osb.koroneiki.root.service.impl;
 import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.osb.koroneiki.root.service.base.ExternalLinkServiceBaseImpl;
 import com.liferay.osb.koroneiki.taproot.model.Account;
+import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
+import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
+import com.liferay.osb.koroneiki.taproot.permission.TeamPermission;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -120,6 +124,16 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 
 			_accountPermission.check(getPermissionChecker(), classPK, action);
 		}
+		else if (classNameId == classNameLocalService.getClassNameId(
+					Project.class)) {
+
+			_projectPermission.check(getPermissionChecker(), classPK, action);
+		}
+		else if (classNameId == classNameLocalService.getClassNameId(
+					Team.class)) {
+
+			_teamPermission.check(getPermissionChecker(), classPK, action);
+		}
 		else {
 			throw new PrincipalException.MustHavePermission(
 				getPermissionChecker(), String.valueOf(classNameId), classPK,
@@ -129,5 +143,11 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 
 	@Reference
 	private AccountPermission _accountPermission;
+
+	@Reference
+	private ProjectPermission _projectPermission;
+
+	@Reference
+	private TeamPermission _teamPermission;
 
 }

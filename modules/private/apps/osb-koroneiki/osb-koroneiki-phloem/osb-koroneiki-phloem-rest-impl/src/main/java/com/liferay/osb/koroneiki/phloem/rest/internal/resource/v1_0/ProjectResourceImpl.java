@@ -23,6 +23,7 @@ import com.liferay.osb.koroneiki.taproot.service.ContactProjectRoleService;
 import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectService;
+import com.liferay.osb.koroneiki.taproot.service.TeamProjectRoleService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -63,6 +64,17 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 		for (Long contactRoleId : contactRoleIds) {
 			_contactProjectRoleService.deleteContactProjectRole(
 				contactId, projectId, contactRoleId);
+		}
+	}
+
+	@Override
+	public void deleteProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		for (long teamRoleId : teamRoleIds) {
+			_teamProjectRoleService.deleteTeamProjectRole(
+				teamId, projectId, teamRoleId);
 		}
 	}
 
@@ -133,6 +145,17 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 		}
 	}
 
+	@Override
+	public void putProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		for (long teamRoleId : teamRoleIds) {
+			_teamProjectRoleService.addTeamProjectRole(
+				teamId, projectId, teamRoleId);
+		}
+	}
+
 	@Reference
 	private ContactProjectRoleService _contactProjectRoleService;
 
@@ -144,5 +167,8 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 
 	@Reference
 	private ProjectService _projectService;
+
+	@Reference
+	private TeamProjectRoleService _teamProjectRoleService;
 
 }

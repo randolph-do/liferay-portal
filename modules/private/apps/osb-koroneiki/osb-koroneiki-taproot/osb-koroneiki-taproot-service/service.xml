@@ -189,6 +189,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="AccountId" return-type="Collection">
+			<finder-column name="accountId" />
+		</finder>
 		<finder name="Name" return-type="Collection">
 			<finder-column name="name" />
 		</finder>

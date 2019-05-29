@@ -77,6 +77,14 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		return teamPersistence.remove(teamId);
 	}
 
+	public List<Team> getAccountTeams(long accountId, int start, int end) {
+		return teamPersistence.findByAccountId(accountId, start, end);
+	}
+
+	public int getAccountTeamsCount(long accountId) {
+		return teamPersistence.countByAccountId(accountId);
+	}
+
 	public List<Team> getProjectTeams(long projectId, int start, int end) {
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 

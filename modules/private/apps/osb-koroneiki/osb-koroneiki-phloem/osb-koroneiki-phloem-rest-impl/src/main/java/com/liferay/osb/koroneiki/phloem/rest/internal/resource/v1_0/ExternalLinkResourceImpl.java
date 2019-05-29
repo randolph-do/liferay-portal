@@ -21,6 +21,7 @@ import com.liferay.osb.koroneiki.root.service.ExternalLinkService;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -101,6 +102,23 @@ public class ExternalLinkResourceImpl extends BaseExternalLinkResourceImpl {
 	}
 
 	@Override
+	public Page<ExternalLink> getTeamExternalLinksPage(
+			Long teamId, Pagination pagination)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(Team.class);
+
+		return Page.of(
+			transform(
+				_externalLinkService.getExternalLinks(
+					classNameId, teamId, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				ExternalLinkUtil::toExternalLink),
+			pagination,
+			_externalLinkService.getExternalLinksCount(classNameId, teamId));
+	}
+
+	@Override
 	public ExternalLink postAccountExternalLink(
 			Long accountId, ExternalLink externalLink)
 		throws Exception {
@@ -136,6 +154,19 @@ public class ExternalLinkResourceImpl extends BaseExternalLinkResourceImpl {
 		return ExternalLinkUtil.toExternalLink(
 			_externalLinkService.addExternalLink(
 				classNameId, projectId, externalLink.getDomain(),
+				externalLink.getEntityName(), externalLink.getEntityId()));
+	}
+
+	@Override
+	public ExternalLink postTeamExternalLink(
+			Long teamId, ExternalLink externalLink)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(Team.class);
+
+		return ExternalLinkUtil.toExternalLink(
+			_externalLinkService.addExternalLink(
+				classNameId, teamId, externalLink.getDomain(),
 				externalLink.getEntityName(), externalLink.getEntityId()));
 	}
 

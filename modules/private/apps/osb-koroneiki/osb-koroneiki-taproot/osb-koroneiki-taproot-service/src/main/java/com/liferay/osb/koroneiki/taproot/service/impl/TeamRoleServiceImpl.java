@@ -54,6 +54,13 @@ public class TeamRoleServiceImpl extends TeamRoleServiceBaseImpl {
 		return teamRoleLocalService.deleteTeamRole(teamRoleId);
 	}
 
+	public TeamRole getTeamRole(long teamRoleId) throws PortalException {
+		_teamRolePermission.check(
+			getPermissionChecker(), teamRoleId, ActionKeys.VIEW);
+
+		return teamRoleLocalService.getTeamRole(teamRoleId);
+	}
+
 	public TeamRole updateTeamRole(
 			long teamRoleId, String name, String description)
 		throws PortalException {

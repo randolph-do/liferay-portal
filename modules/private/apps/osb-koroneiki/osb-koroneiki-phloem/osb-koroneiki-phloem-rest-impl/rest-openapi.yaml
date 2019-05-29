@@ -17,7 +17,7 @@ components:
                     description: The description of the account.
                     type: string
                 externalLinks:
-                    description: The account's links to external domains.
+                    description: The account's links to entities in external domains.
                     items:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
@@ -50,7 +50,7 @@ components:
                     description: The email address of the contact.
                     type: string
                 externalLinks:
-                    description: The account's links to external domains.
+                    description: The account's links to entities in external domains.
                     items:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
@@ -161,7 +161,7 @@ components:
                     readOnly: true
                     type: string
                 externalLinks:
-                    description: The account's links to external domains.
+                    description: The account's links to entities in external domains.
                     items:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
@@ -189,6 +189,72 @@ components:
             required:
                 - name
                 - status
+            type: object
+        Team:
+            description: Represents a team.
+            properties:
+                accountId:
+                    description: The team's account's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                dateCreated:
+                    description: The team's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description: The most recent time that any of the team's fields changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                externalLinks:
+                    description: The team's links to entities in external domains.
+                    items:
+                        $ref: "#/components/schemas/ExternalLink"
+                    readOnly: true
+                    type: array
+                id:
+                    description: The team's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description: The name of the team.
+                    type: string
+            required:
+                - name
+            type: object
+        TeamRole:
+            description: Represents a team role.
+            properties:
+                dateCreated:
+                    description: The team role's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description: The most recent time that any of the team role's fields changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    description: The description of the team role.
+                    type: string
+                id:
+                    description: The team role's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description: The name of the team role.
+                    type: string
+                type:
+                    description: The team role's type.
+                    type: string
+            required:
+                - name
+                - type
             type: object
 info:
     description: ""
@@ -555,6 +621,69 @@ paths:
                                 $ref: "#/components/schemas/Project"
                     description: ""
             tags: ["Project"]
+    "/accounts/{accountId}/teams":
+        get:
+            description: Retrieves the account's teams.
+            operationId: getAccountTeamsPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Team"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Team"
+                                type: array
+                    description: ""
+            tags: ["Team"]
+        post:
+            operationId: postAccountTeam
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Team"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Team"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Team"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Team"
+                    description: ""
+            tags: ["Team"]
     "/contact-roles":
         post:
             operationId: postContactRole
@@ -1054,6 +1183,286 @@ paths:
             parameters:
                 - in: path
                   name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]
+    "/projects/{projectId}/teams/{teamId}/roles":
+        delete:
+            description: Unassigns roles from the team for the project.
+            operationId: deleteProjectTeamRole
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: teamId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: teamRoleIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Project"]
+        put:
+            description: Assigns roles to the team for the project.
+            operationId: putProjectTeamRole
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: teamId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: teamRoleIds
+                  required: true
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Project"]
+    "/team-roles":
+        post:
+            operationId: postTeamRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TeamRole"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TeamRole"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TeamRole"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TeamRole"
+                    description: ""
+            tags: ["TeamRole"]
+    "/team-roles/{teamRoleId}":
+        delete:
+            operationId: deleteTeamRole
+            parameters:
+                - in: path
+                  name: teamRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["TeamRole"]
+        get:
+            description: Retrieves the team role.
+            operationId: getTeamRole
+            parameters:
+                - in: path
+                  name: teamRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TeamRole"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TeamRole"
+                    description: ""
+            tags: ["TeamRole"]
+        put:
+            operationId: putTeamRole
+            parameters:
+                - in: path
+                  name: teamRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TeamRole"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TeamRole"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TeamRole"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TeamRole"
+                    description: ""
+            tags: ["TeamRole"]
+    "/teams/{teamId}":
+        delete:
+            operationId: deleteTeam
+            parameters:
+                - in: path
+                  name: teamId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Team"]
+        get:
+            description: Retrieves the team.
+            operationId: getTeam
+            parameters:
+                - in: path
+                  name: teamId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Team"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Team"
+                    description: ""
+            tags: ["Team"]
+        put:
+            operationId: putTeam
+            parameters:
+                - in: path
+                  name: teamId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Team"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Team"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Team"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Team"
+                    description: ""
+            tags: ["Team"]
+    "/teams/{teamId}/external-links":
+        get:
+            description: Retrieves the team's external links.
+            operationId: getTeamExternalLinksPage
+            parameters:
+                - in: path
+                  name: teamId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                    description: ""
+            tags: ["ExternalLink"]
+        post:
+            description: Adds an external link to the team.
+            operationId: postTeamExternalLink
+            parameters:
+                - in: path
+                  name: teamId
                   required: true
                   schema:
                       format: int64

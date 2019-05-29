@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.exception.ProjectNameException;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.base.ProjectLocalServiceBaseImpl;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -77,11 +79,25 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	public Project deleteProject(long projectId) throws PortalException {
 		Project project = projectLocalService.getProject(projectId);
 
+		// Contact project roles
+
+		contactProjectRolePersistence.removeByProjectId(projectId);
+
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(Project.class);
+
+		_externalLinkLocalService.deleteExternalLinks(classNameId, projectId);
+
 		// Resources
 
 		resourceLocalService.deleteResource(
 			project.getCompanyId(), Project.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, project.getProjectId());
+
+		// Team project roles
+
+		teamProjectRolePersistence.removeByProjectId(projectId);
 
 		return projectPersistence.remove(projectId);
 	}
@@ -119,5 +135,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			throw new ProjectNameException();
 		}
 	}
+
+	@Reference
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 }

@@ -70,6 +70,15 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ContactId" return-type="Collection">
+			<finder-column name="contactId" />
+		</finder>
+		<finder name="AccountId" return-type="Collection">
+			<finder-column name="accountId" />
+		</finder>
+		<finder name="ContactRoleId" return-type="Collection">
+			<finder-column name="contactRoleId" />
+		</finder>
 		<finder name="C_A" return-type="Collection">
 			<finder-column name="contactId" />
 			<finder-column name="accountId" />
@@ -85,6 +94,15 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ContactId" return-type="Collection">
+			<finder-column name="contactId" />
+		</finder>
+		<finder name="ProjectId" return-type="Collection">
+			<finder-column name="projectId" />
+		</finder>
+		<finder name="ContactRoleId" return-type="Collection">
+			<finder-column name="contactRoleId" />
+		</finder>
 		<finder name="C_P" return-type="Collection">
 			<finder-column name="contactId" />
 			<finder-column name="projectId" />
@@ -134,6 +152,18 @@
 		<column name="contactId" primary="true" type="long" />
 		<column name="teamId" primary="true" type="long" />
 		<column name="contactRoleId" primary="true" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="ContactId" return-type="Collection">
+			<finder-column name="contactId" />
+		</finder>
+		<finder name="TeamId" return-type="Collection">
+			<finder-column name="teamId" />
+		</finder>
+		<finder name="ContactRoleId" return-type="Collection">
+			<finder-column name="contactRoleId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="Project" remote-service="true" uuid="true">
 
@@ -206,6 +236,15 @@
 
 		<!-- Finder methods -->
 
+		<finder name="TeamId" return-type="Collection">
+			<finder-column name="teamId" />
+		</finder>
+		<finder name="ProjectId" return-type="Collection">
+			<finder-column name="projectId" />
+		</finder>
+		<finder name="TeamRoleId" return-type="Collection">
+			<finder-column name="teamRoleId" />
+		</finder>
 		<finder name="T_P" return-type="Collection">
 			<finder-column name="teamId" />
 			<finder-column name="projectId" />
@@ -251,6 +290,7 @@
 		<exception>ContactRoleName</exception>
 		<exception>ContactRoleType</exception>
 		<exception>ProjectName</exception>
+		<exception>RequiredAccount</exception>
 		<exception>TeamName</exception>
 		<exception>TeamRoleName</exception>
 		<exception>TeamRoleType</exception>

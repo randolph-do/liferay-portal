@@ -14,7 +14,9 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.exception.AccountNameException;
+import com.liferay.osb.koroneiki.taproot.exception.RequiredAccountException;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.base.AccountLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -84,11 +87,29 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 	public Account deleteAccount(long accountId) throws PortalException {
 		Account account = accountLocalService.getAccount(accountId);
 
+		if (projectPersistence.countByAccountId(accountId) > 0) {
+			throw new RequiredAccountException();
+		}
+
+		// Contact account roles
+
+		contactAccountRolePersistence.removeByAccountId(accountId);
+
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(Account.class);
+
+		_externalLinkLocalService.deleteExternalLinks(classNameId, accountId);
+
 		// Resources
 
 		resourceLocalService.deleteResource(
 			account.getCompanyId(), Account.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, account.getAccountId());
+
+		// Teams
+
+		teamPersistence.removeByAccountId(accountId);
 
 		return accountPersistence.remove(accountId);
 	}
@@ -129,5 +150,8 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 			throw new AccountNameException();
 		}
 	}
+
+	@Reference
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.exception.TeamNameException;
 import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamLocalServiceBaseImpl;
@@ -27,6 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -67,6 +69,12 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	@Override
 	public Team deleteTeam(long teamId) throws PortalException {
 		Team team = teamLocalService.getTeam(teamId);
+
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(Team.class);
+
+		_externalLinkLocalService.deleteExternalLinks(classNameId, teamId);
 
 		// Resources
 
@@ -120,5 +128,8 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 			throw new TeamNameException();
 		}
 	}
+
+	@Reference
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.exception.ContactEmailAddressException;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactLocalServiceBaseImpl;
@@ -27,6 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -72,6 +74,24 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 	@Override
 	public Contact deleteContact(long contactId) throws PortalException {
 		Contact contact = contactLocalService.getContact(contactId);
+
+		// Contact account roles
+
+		contactAccountRolePersistence.removeByContactId(contactId);
+
+		// Contact project roles
+
+		contactProjectRolePersistence.removeByContactId(contactId);
+
+		// Contact team roles
+
+		contactTeamRolePersistence.removeByContactId(contactId);
+
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(Contact.class);
+
+		_externalLinkLocalService.deleteExternalLinks(classNameId, contactId);
 
 		// Resources
 
@@ -161,5 +181,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 				emailAddress);
 		}
 	}
+
+	@Reference
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 }

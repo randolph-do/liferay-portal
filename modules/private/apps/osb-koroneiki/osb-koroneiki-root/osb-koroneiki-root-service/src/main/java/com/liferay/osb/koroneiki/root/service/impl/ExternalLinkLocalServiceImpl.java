@@ -73,6 +73,10 @@ public class ExternalLinkLocalServiceImpl
 			userId, classNameId, classPK, domain, entityName, entityId);
 	}
 
+	public void deleteExternalLinks(long classNameId, long classPK) {
+		externalLinkPersistence.removeByC_C(classNameId, classPK);
+	}
+
 	public List<ExternalLink> getExternalLinks(
 		long classNameId, long classPK, int start, int end) {
 

@@ -49,15 +49,13 @@ navigationItems.add(entriesNavigationItem);
 	showSearch="<%= false %>"
 />
 
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
-%>
+<liferay-ui:error exception="<%= RequiredAccountException.class %>" message="you-cannot-delete-accounts-that-have-projects" />
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-accounts-were-found"
 		headerNames="name,description,status,"
-		iteratorURL="<%= portletURL %>"
+		iteratorURL="<%= renderResponse.createRenderURL() %>"
 		total="<%= AccountLocalServiceUtil.getAccountsCount() %>"
 	>
 		<liferay-ui:search-container-results

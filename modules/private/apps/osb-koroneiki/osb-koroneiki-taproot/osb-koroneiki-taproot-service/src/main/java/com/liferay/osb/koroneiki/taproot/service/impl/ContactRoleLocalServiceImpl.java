@@ -108,6 +108,18 @@ public class ContactRoleLocalServiceImpl
 		ContactRole contactRole = contactRoleLocalService.getContactRole(
 			contactRoleId);
 
+		// Contact account roles
+
+		contactAccountRolePersistence.removeByContactRoleId(contactRoleId);
+
+		// Contact project roles
+
+		contactProjectRolePersistence.removeByContactRoleId(contactRoleId);
+
+		// Contact team roles
+
+		contactTeamRolePersistence.removeByContactRoleId(contactRoleId);
+
 		// Resources
 
 		resourceLocalService.deleteResource(

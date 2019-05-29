@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -95,6 +98,12 @@ public class ContactTeamRoleModelImpl
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
+
+	public static final long CONTACTID_COLUMN_BITMASK = 1L;
+
+	public static final long CONTACTROLEID_COLUMN_BITMASK = 2L;
+
+	public static final long TEAMID_COLUMN_BITMASK = 4L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -237,6 +246,32 @@ public class ContactTeamRoleModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, ContactTeamRole>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ContactTeamRole.class.getClassLoader(), ContactTeamRole.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ContactTeamRole> constructor =
+				(Constructor<ContactTeamRole>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<ContactTeamRole, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ContactTeamRole, Object>>
@@ -279,7 +314,19 @@ public class ContactTeamRoleModelImpl
 
 	@Override
 	public void setContactId(long contactId) {
+		_columnBitmask |= CONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactId) {
+			_setOriginalContactId = true;
+
+			_originalContactId = _contactId;
+		}
+
 		_contactId = contactId;
+	}
+
+	public long getOriginalContactId() {
+		return _originalContactId;
 	}
 
 	@JSON
@@ -290,7 +337,19 @@ public class ContactTeamRoleModelImpl
 
 	@Override
 	public void setTeamId(long teamId) {
+		_columnBitmask |= TEAMID_COLUMN_BITMASK;
+
+		if (!_setOriginalTeamId) {
+			_setOriginalTeamId = true;
+
+			_originalTeamId = _teamId;
+		}
+
 		_teamId = teamId;
+	}
+
+	public long getOriginalTeamId() {
+		return _originalTeamId;
 	}
 
 	@JSON
@@ -301,14 +360,29 @@ public class ContactTeamRoleModelImpl
 
 	@Override
 	public void setContactRoleId(long contactRoleId) {
+		_columnBitmask |= CONTACTROLEID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactRoleId) {
+			_setOriginalContactRoleId = true;
+
+			_originalContactRoleId = _contactRoleId;
+		}
+
 		_contactRoleId = contactRoleId;
+	}
+
+	public long getOriginalContactRoleId() {
+		return _originalContactRoleId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
 	public ContactTeamRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ContactTeamRole)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -374,6 +448,24 @@ public class ContactTeamRoleModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		ContactTeamRoleModelImpl contactTeamRoleModelImpl = this;
+
+		contactTeamRoleModelImpl._originalContactId =
+			contactTeamRoleModelImpl._contactId;
+
+		contactTeamRoleModelImpl._setOriginalContactId = false;
+
+		contactTeamRoleModelImpl._originalTeamId =
+			contactTeamRoleModelImpl._teamId;
+
+		contactTeamRoleModelImpl._setOriginalTeamId = false;
+
+		contactTeamRoleModelImpl._originalContactRoleId =
+			contactTeamRoleModelImpl._contactRoleId;
+
+		contactTeamRoleModelImpl._setOriginalContactRoleId = false;
+
+		contactTeamRoleModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -455,17 +547,21 @@ public class ContactTeamRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ContactTeamRole.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ContactTeamRole.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ContactTeamRole>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
 	private long _contactId;
+	private long _originalContactId;
+	private boolean _setOriginalContactId;
 	private long _teamId;
+	private long _originalTeamId;
+	private boolean _setOriginalTeamId;
 	private long _contactRoleId;
+	private long _originalContactRoleId;
+	private boolean _setOriginalContactRoleId;
+	private long _columnBitmask;
 	private ContactTeamRole _escapedModel;
 
 }

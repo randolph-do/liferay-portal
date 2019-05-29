@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -243,6 +246,32 @@ public class TeamProjectRoleModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, TeamProjectRole>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			TeamProjectRole.class.getClassLoader(), TeamProjectRole.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<TeamProjectRole> constructor =
+				(Constructor<TeamProjectRole>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<TeamProjectRole, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<TeamProjectRole, Object>>
@@ -330,7 +359,19 @@ public class TeamProjectRoleModelImpl
 
 	@Override
 	public void setTeamRoleId(long teamRoleId) {
+		_columnBitmask |= TEAMROLEID_COLUMN_BITMASK;
+
+		if (!_setOriginalTeamRoleId) {
+			_setOriginalTeamRoleId = true;
+
+			_originalTeamRoleId = _teamRoleId;
+		}
+
 		_teamRoleId = teamRoleId;
+	}
+
+	public long getOriginalTeamRoleId() {
+		return _originalTeamRoleId;
 	}
 
 	public long getColumnBitmask() {
@@ -340,8 +381,7 @@ public class TeamProjectRoleModelImpl
 	@Override
 	public TeamProjectRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TeamProjectRole)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -418,6 +458,11 @@ public class TeamProjectRoleModelImpl
 			teamProjectRoleModelImpl._projectId;
 
 		teamProjectRoleModelImpl._setOriginalProjectId = false;
+
+		teamProjectRoleModelImpl._originalTeamRoleId =
+			teamProjectRoleModelImpl._teamRoleId;
+
+		teamProjectRoleModelImpl._setOriginalTeamRoleId = false;
 
 		teamProjectRoleModelImpl._columnBitmask = 0;
 	}
@@ -501,11 +546,8 @@ public class TeamProjectRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TeamProjectRole.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TeamProjectRole.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, TeamProjectRole>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
@@ -516,6 +558,8 @@ public class TeamProjectRoleModelImpl
 	private long _originalProjectId;
 	private boolean _setOriginalProjectId;
 	private long _teamRoleId;
+	private long _originalTeamRoleId;
+	private boolean _setOriginalTeamRoleId;
 	private long _columnBitmask;
 	private TeamProjectRole _escapedModel;
 

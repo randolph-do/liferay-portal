@@ -128,6 +128,536 @@ public class ContactAccountRoleUtil {
 	}
 
 	/**
+	 * Returns all the contact account roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactId(long contactId) {
+		return getPersistence().findByContactId(contactId);
+	}
+
+	/**
+	 * Returns a range of all the contact account roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @return the range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactId(
+		long contactId, int start, int end) {
+
+		return getPersistence().findByContactId(contactId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact account roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().findByContactId(
+			contactId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact account roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactAccountRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByContactId(
+			contactId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first contact account role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact account role
+	 * @throws NoSuchContactAccountRoleException if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole findByContactId_First(
+			long contactId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByContactId_First(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first contact account role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact account role, or <code>null</code> if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole fetchByContactId_First(
+		long contactId,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().fetchByContactId_First(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact account role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact account role
+	 * @throws NoSuchContactAccountRoleException if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole findByContactId_Last(
+			long contactId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByContactId_Last(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact account role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact account role, or <code>null</code> if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole fetchByContactId_Last(
+		long contactId,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().fetchByContactId_Last(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the contact account roles before and after the current contact account role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactAccountRolePK the primary key of the current contact account role
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact account role
+	 * @throws NoSuchContactAccountRoleException if a contact account role with the primary key could not be found
+	 */
+	public static ContactAccountRole[] findByContactId_PrevAndNext(
+			ContactAccountRolePK contactAccountRolePK, long contactId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByContactId_PrevAndNext(
+			contactAccountRolePK, contactId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the contact account roles where contactId = &#63; from the database.
+	 *
+	 * @param contactId the contact ID
+	 */
+	public static void removeByContactId(long contactId) {
+		getPersistence().removeByContactId(contactId);
+	}
+
+	/**
+	 * Returns the number of contact account roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the number of matching contact account roles
+	 */
+	public static int countByContactId(long contactId) {
+		return getPersistence().countByContactId(contactId);
+	}
+
+	/**
+	 * Returns all the contact account roles where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByAccountId(long accountId) {
+		return getPersistence().findByAccountId(accountId);
+	}
+
+	/**
+	 * Returns a range of all the contact account roles where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @return the range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByAccountId(
+		long accountId, int start, int end) {
+
+		return getPersistence().findByAccountId(accountId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact account roles where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByAccountId(
+		long accountId, int start, int end,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().findByAccountId(
+			accountId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact account roles where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByAccountId(
+		long accountId, int start, int end,
+		OrderByComparator<ContactAccountRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByAccountId(
+			accountId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first contact account role in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact account role
+	 * @throws NoSuchContactAccountRoleException if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole findByAccountId_First(
+			long accountId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByAccountId_First(
+			accountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first contact account role in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact account role, or <code>null</code> if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole fetchByAccountId_First(
+		long accountId,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().fetchByAccountId_First(
+			accountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact account role in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact account role
+	 * @throws NoSuchContactAccountRoleException if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole findByAccountId_Last(
+			long accountId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByAccountId_Last(
+			accountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact account role in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact account role, or <code>null</code> if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole fetchByAccountId_Last(
+		long accountId,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().fetchByAccountId_Last(
+			accountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the contact account roles before and after the current contact account role in the ordered set where accountId = &#63;.
+	 *
+	 * @param contactAccountRolePK the primary key of the current contact account role
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact account role
+	 * @throws NoSuchContactAccountRoleException if a contact account role with the primary key could not be found
+	 */
+	public static ContactAccountRole[] findByAccountId_PrevAndNext(
+			ContactAccountRolePK contactAccountRolePK, long accountId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByAccountId_PrevAndNext(
+			contactAccountRolePK, accountId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the contact account roles where accountId = &#63; from the database.
+	 *
+	 * @param accountId the account ID
+	 */
+	public static void removeByAccountId(long accountId) {
+		getPersistence().removeByAccountId(accountId);
+	}
+
+	/**
+	 * Returns the number of contact account roles where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the number of matching contact account roles
+	 */
+	public static int countByAccountId(long accountId) {
+		return getPersistence().countByAccountId(accountId);
+	}
+
+	/**
+	 * Returns all the contact account roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactRoleId(
+		long contactRoleId) {
+
+		return getPersistence().findByContactRoleId(contactRoleId);
+	}
+
+	/**
+	 * Returns a range of all the contact account roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @return the range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactRoleId(
+		long contactRoleId, int start, int end) {
+
+		return getPersistence().findByContactRoleId(contactRoleId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact account roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().findByContactRoleId(
+			contactRoleId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact account roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactAccountRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact account roles
+	 * @param end the upper bound of the range of contact account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact account roles
+	 */
+	public static List<ContactAccountRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactAccountRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByContactRoleId(
+			contactRoleId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first contact account role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact account role
+	 * @throws NoSuchContactAccountRoleException if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole findByContactRoleId_First(
+			long contactRoleId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByContactRoleId_First(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first contact account role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact account role, or <code>null</code> if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole fetchByContactRoleId_First(
+		long contactRoleId,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().fetchByContactRoleId_First(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact account role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact account role
+	 * @throws NoSuchContactAccountRoleException if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole findByContactRoleId_Last(
+			long contactRoleId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByContactRoleId_Last(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact account role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact account role, or <code>null</code> if a matching contact account role could not be found
+	 */
+	public static ContactAccountRole fetchByContactRoleId_Last(
+		long contactRoleId,
+		OrderByComparator<ContactAccountRole> orderByComparator) {
+
+		return getPersistence().fetchByContactRoleId_Last(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the contact account roles before and after the current contact account role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactAccountRolePK the primary key of the current contact account role
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact account role
+	 * @throws NoSuchContactAccountRoleException if a contact account role with the primary key could not be found
+	 */
+	public static ContactAccountRole[] findByContactRoleId_PrevAndNext(
+			ContactAccountRolePK contactAccountRolePK, long contactRoleId,
+			OrderByComparator<ContactAccountRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactAccountRoleException {
+
+		return getPersistence().findByContactRoleId_PrevAndNext(
+			contactAccountRolePK, contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the contact account roles where contactRoleId = &#63; from the database.
+	 *
+	 * @param contactRoleId the contact role ID
+	 */
+	public static void removeByContactRoleId(long contactRoleId) {
+		getPersistence().removeByContactRoleId(contactRoleId);
+	}
+
+	/**
+	 * Returns the number of contact account roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the number of matching contact account roles
+	 */
+	public static int countByContactRoleId(long contactRoleId) {
+		return getPersistence().countByContactRoleId(contactRoleId);
+	}
+
+	/**
 	 * Returns all the contact account roles where contactId = &#63; and accountId = &#63;.
 	 *
 	 * @param contactId the contact ID

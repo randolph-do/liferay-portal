@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -35,9 +36,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.List;
@@ -85,6 +89,1540 @@ public class ContactTeamRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByContactId;
+	private FinderPath _finderPathWithoutPaginationFindByContactId;
+	private FinderPath _finderPathCountByContactId;
+
+	/**
+	 * Returns all the contact team roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactId(long contactId) {
+		return findByContactId(
+			contactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the contact team roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @return the range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactId(
+		long contactId, int start, int end) {
+
+		return findByContactId(contactId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		return findByContactId(contactId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByContactId;
+			finderArgs = new Object[] {contactId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByContactId;
+			finderArgs = new Object[] {
+				contactId, start, end, orderByComparator
+			};
+		}
+
+		List<ContactTeamRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactTeamRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactTeamRole contactTeamRole : list) {
+					if ((contactId != contactTeamRole.getContactId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTTEAMROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(ContactTeamRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactId);
+
+				if (!pagination) {
+					list = (List<ContactTeamRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactTeamRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole findByContactId_First(
+			long contactId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = fetchByContactId_First(
+			contactId, orderByComparator);
+
+		if (contactTeamRole != null) {
+			return contactTeamRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactId=");
+		msg.append(contactId);
+
+		msg.append("}");
+
+		throw new NoSuchContactTeamRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole fetchByContactId_First(
+		long contactId, OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		List<ContactTeamRole> list = findByContactId(
+			contactId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole findByContactId_Last(
+			long contactId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = fetchByContactId_Last(
+			contactId, orderByComparator);
+
+		if (contactTeamRole != null) {
+			return contactTeamRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactId=");
+		msg.append(contactId);
+
+		msg.append("}");
+
+		throw new NoSuchContactTeamRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole fetchByContactId_Last(
+		long contactId, OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		int count = countByContactId(contactId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactTeamRole> list = findByContactId(
+			contactId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact team roles before and after the current contact team role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactTeamRolePK the primary key of the current contact team role
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact team role
+	 * @throws NoSuchContactTeamRoleException if a contact team role with the primary key could not be found
+	 */
+	@Override
+	public ContactTeamRole[] findByContactId_PrevAndNext(
+			ContactTeamRolePK contactTeamRolePK, long contactId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = findByPrimaryKey(contactTeamRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactTeamRole[] array = new ContactTeamRoleImpl[3];
+
+			array[0] = getByContactId_PrevAndNext(
+				session, contactTeamRole, contactId, orderByComparator, true);
+
+			array[1] = contactTeamRole;
+
+			array[2] = getByContactId_PrevAndNext(
+				session, contactTeamRole, contactId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactTeamRole getByContactId_PrevAndNext(
+		Session session, ContactTeamRole contactTeamRole, long contactId,
+		OrderByComparator<ContactTeamRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTTEAMROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactTeamRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(contactId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						contactTeamRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ContactTeamRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact team roles where contactId = &#63; from the database.
+	 *
+	 * @param contactId the contact ID
+	 */
+	@Override
+	public void removeByContactId(long contactId) {
+		for (ContactTeamRole contactTeamRole :
+				findByContactId(
+					contactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(contactTeamRole);
+		}
+	}
+
+	/**
+	 * Returns the number of contact team roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the number of matching contact team roles
+	 */
+	@Override
+	public int countByContactId(long contactId) {
+		FinderPath finderPath = _finderPathCountByContactId;
+
+		Object[] finderArgs = new Object[] {contactId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTTEAMROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTACTID_CONTACTID_2 =
+		"contactTeamRole.id.contactId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByTeamId;
+	private FinderPath _finderPathWithoutPaginationFindByTeamId;
+	private FinderPath _finderPathCountByTeamId;
+
+	/**
+	 * Returns all the contact team roles where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @return the matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByTeamId(long teamId) {
+		return findByTeamId(teamId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the contact team roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @return the range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByTeamId(long teamId, int start, int end) {
+		return findByTeamId(teamId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByTeamId(
+		long teamId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		return findByTeamId(teamId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByTeamId(
+		long teamId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByTeamId;
+			finderArgs = new Object[] {teamId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByTeamId;
+			finderArgs = new Object[] {teamId, start, end, orderByComparator};
+		}
+
+		List<ContactTeamRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactTeamRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactTeamRole contactTeamRole : list) {
+					if ((teamId != contactTeamRole.getTeamId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTTEAMROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEAMID_TEAMID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(ContactTeamRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(teamId);
+
+				if (!pagination) {
+					list = (List<ContactTeamRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactTeamRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole findByTeamId_First(
+			long teamId, OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = fetchByTeamId_First(
+			teamId, orderByComparator);
+
+		if (contactTeamRole != null) {
+			return contactTeamRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("teamId=");
+		msg.append(teamId);
+
+		msg.append("}");
+
+		throw new NoSuchContactTeamRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole fetchByTeamId_First(
+		long teamId, OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		List<ContactTeamRole> list = findByTeamId(
+			teamId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole findByTeamId_Last(
+			long teamId, OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = fetchByTeamId_Last(
+			teamId, orderByComparator);
+
+		if (contactTeamRole != null) {
+			return contactTeamRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("teamId=");
+		msg.append(teamId);
+
+		msg.append("}");
+
+		throw new NoSuchContactTeamRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole fetchByTeamId_Last(
+		long teamId, OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		int count = countByTeamId(teamId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactTeamRole> list = findByTeamId(
+			teamId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact team roles before and after the current contact team role in the ordered set where teamId = &#63;.
+	 *
+	 * @param contactTeamRolePK the primary key of the current contact team role
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact team role
+	 * @throws NoSuchContactTeamRoleException if a contact team role with the primary key could not be found
+	 */
+	@Override
+	public ContactTeamRole[] findByTeamId_PrevAndNext(
+			ContactTeamRolePK contactTeamRolePK, long teamId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = findByPrimaryKey(contactTeamRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactTeamRole[] array = new ContactTeamRoleImpl[3];
+
+			array[0] = getByTeamId_PrevAndNext(
+				session, contactTeamRole, teamId, orderByComparator, true);
+
+			array[1] = contactTeamRole;
+
+			array[2] = getByTeamId_PrevAndNext(
+				session, contactTeamRole, teamId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactTeamRole getByTeamId_PrevAndNext(
+		Session session, ContactTeamRole contactTeamRole, long teamId,
+		OrderByComparator<ContactTeamRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTTEAMROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_TEAMID_TEAMID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactTeamRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(teamId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						contactTeamRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ContactTeamRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact team roles where teamId = &#63; from the database.
+	 *
+	 * @param teamId the team ID
+	 */
+	@Override
+	public void removeByTeamId(long teamId) {
+		for (ContactTeamRole contactTeamRole :
+				findByTeamId(
+					teamId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(contactTeamRole);
+		}
+	}
+
+	/**
+	 * Returns the number of contact team roles where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @return the number of matching contact team roles
+	 */
+	@Override
+	public int countByTeamId(long teamId) {
+		FinderPath finderPath = _finderPathCountByTeamId;
+
+		Object[] finderArgs = new Object[] {teamId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTTEAMROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEAMID_TEAMID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(teamId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TEAMID_TEAMID_2 =
+		"contactTeamRole.id.teamId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByContactRoleId;
+	private FinderPath _finderPathWithoutPaginationFindByContactRoleId;
+	private FinderPath _finderPathCountByContactRoleId;
+
+	/**
+	 * Returns all the contact team roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactRoleId(long contactRoleId) {
+		return findByContactRoleId(
+			contactRoleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the contact team roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @return the range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactRoleId(
+		long contactRoleId, int start, int end) {
+
+		return findByContactRoleId(contactRoleId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		return findByContactRoleId(
+			contactRoleId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact team roles
+	 */
+	@Override
+	public List<ContactTeamRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByContactRoleId;
+			finderArgs = new Object[] {contactRoleId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByContactRoleId;
+			finderArgs = new Object[] {
+				contactRoleId, start, end, orderByComparator
+			};
+		}
+
+		List<ContactTeamRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactTeamRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactTeamRole contactTeamRole : list) {
+					if ((contactRoleId != contactTeamRole.getContactRoleId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTTEAMROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(ContactTeamRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactRoleId);
+
+				if (!pagination) {
+					list = (List<ContactTeamRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactTeamRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole findByContactRoleId_First(
+			long contactRoleId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = fetchByContactRoleId_First(
+			contactRoleId, orderByComparator);
+
+		if (contactTeamRole != null) {
+			return contactTeamRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactRoleId=");
+		msg.append(contactRoleId);
+
+		msg.append("}");
+
+		throw new NoSuchContactTeamRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole fetchByContactRoleId_First(
+		long contactRoleId,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		List<ContactTeamRole> list = findByContactRoleId(
+			contactRoleId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole findByContactRoleId_Last(
+			long contactRoleId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = fetchByContactRoleId_Last(
+			contactRoleId, orderByComparator);
+
+		if (contactTeamRole != null) {
+			return contactTeamRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactRoleId=");
+		msg.append(contactRoleId);
+
+		msg.append("}");
+
+		throw new NoSuchContactTeamRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	@Override
+	public ContactTeamRole fetchByContactRoleId_Last(
+		long contactRoleId,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		int count = countByContactRoleId(contactRoleId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactTeamRole> list = findByContactRoleId(
+			contactRoleId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact team roles before and after the current contact team role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactTeamRolePK the primary key of the current contact team role
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact team role
+	 * @throws NoSuchContactTeamRoleException if a contact team role with the primary key could not be found
+	 */
+	@Override
+	public ContactTeamRole[] findByContactRoleId_PrevAndNext(
+			ContactTeamRolePK contactTeamRolePK, long contactRoleId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws NoSuchContactTeamRoleException {
+
+		ContactTeamRole contactTeamRole = findByPrimaryKey(contactTeamRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactTeamRole[] array = new ContactTeamRoleImpl[3];
+
+			array[0] = getByContactRoleId_PrevAndNext(
+				session, contactTeamRole, contactRoleId, orderByComparator,
+				true);
+
+			array[1] = contactTeamRole;
+
+			array[2] = getByContactRoleId_PrevAndNext(
+				session, contactTeamRole, contactRoleId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactTeamRole getByContactRoleId_PrevAndNext(
+		Session session, ContactTeamRole contactTeamRole, long contactRoleId,
+		OrderByComparator<ContactTeamRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTTEAMROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactTeamRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(contactRoleId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						contactTeamRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ContactTeamRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact team roles where contactRoleId = &#63; from the database.
+	 *
+	 * @param contactRoleId the contact role ID
+	 */
+	@Override
+	public void removeByContactRoleId(long contactRoleId) {
+		for (ContactTeamRole contactTeamRole :
+				findByContactRoleId(
+					contactRoleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(contactTeamRole);
+		}
+	}
+
+	/**
+	 * Returns the number of contact team roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the number of matching contact team roles
+	 */
+	@Override
+	public int countByContactRoleId(long contactRoleId) {
+		FinderPath finderPath = _finderPathCountByContactRoleId;
+
+		Object[] finderArgs = new Object[] {contactRoleId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTTEAMROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactRoleId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2 =
+		"contactTeamRole.id.contactRoleId = ?";
 
 	public ContactTeamRolePersistenceImpl() {
 		setModelClass(ContactTeamRole.class);
@@ -278,6 +1816,26 @@ public class ContactTeamRolePersistenceImpl
 	public ContactTeamRole updateImpl(ContactTeamRole contactTeamRole) {
 		boolean isNew = contactTeamRole.isNew();
 
+		if (!(contactTeamRole instanceof ContactTeamRoleModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(contactTeamRole.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					contactTeamRole);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in contactTeamRole proxy " +
+						invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ContactTeamRole implementation " +
+					contactTeamRole.getClass());
+		}
+
+		ContactTeamRoleModelImpl contactTeamRoleModelImpl =
+			(ContactTeamRoleModelImpl)contactTeamRole;
+
 		Session session = null;
 
 		try {
@@ -302,10 +1860,93 @@ public class ContactTeamRolePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (!_columnBitmaskEnabled) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else if (isNew) {
+			Object[] args = new Object[] {
+				contactTeamRoleModelImpl.getContactId()
+			};
+
+			finderCache.removeResult(_finderPathCountByContactId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByContactId, args);
+
+			args = new Object[] {contactTeamRoleModelImpl.getTeamId()};
+
+			finderCache.removeResult(_finderPathCountByTeamId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByTeamId, args);
+
+			args = new Object[] {contactTeamRoleModelImpl.getContactRoleId()};
+
+			finderCache.removeResult(_finderPathCountByContactRoleId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByContactRoleId, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((contactTeamRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByContactId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					contactTeamRoleModelImpl.getOriginalContactId()
+				};
+
+				finderCache.removeResult(_finderPathCountByContactId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactId, args);
+
+				args = new Object[] {contactTeamRoleModelImpl.getContactId()};
+
+				finderCache.removeResult(_finderPathCountByContactId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactId, args);
+			}
+
+			if ((contactTeamRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByTeamId.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					contactTeamRoleModelImpl.getOriginalTeamId()
+				};
+
+				finderCache.removeResult(_finderPathCountByTeamId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByTeamId, args);
+
+				args = new Object[] {contactTeamRoleModelImpl.getTeamId()};
+
+				finderCache.removeResult(_finderPathCountByTeamId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByTeamId, args);
+			}
+
+			if ((contactTeamRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByContactRoleId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					contactTeamRoleModelImpl.getOriginalContactRoleId()
+				};
+
+				finderCache.removeResult(_finderPathCountByContactRoleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactRoleId, args);
+
+				args = new Object[] {
+					contactTeamRoleModelImpl.getContactRoleId()
+				};
+
+				finderCache.removeResult(_finderPathCountByContactRoleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactRoleId, args);
+			}
 		}
 
 		entityCache.putResult(
@@ -611,6 +2252,63 @@ public class ContactTeamRolePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByContactId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactTeamRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContactId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByContactId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactTeamRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContactId",
+			new String[] {Long.class.getName()},
+			ContactTeamRoleModelImpl.CONTACTID_COLUMN_BITMASK);
+
+		_finderPathCountByContactId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByTeamId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactTeamRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTeamId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByTeamId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactTeamRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTeamId",
+			new String[] {Long.class.getName()},
+			ContactTeamRoleModelImpl.TEAMID_COLUMN_BITMASK);
+
+		_finderPathCountByTeamId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeamId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByContactRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactTeamRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContactRoleId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByContactRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactTeamRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContactRoleId",
+			new String[] {Long.class.getName()},
+			ContactTeamRoleModelImpl.CONTACTROLEID_COLUMN_BITMASK);
+
+		_finderPathCountByContactRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactRoleId",
+			new String[] {Long.class.getName()});
 	}
 
 	@Deactivate
@@ -664,13 +2362,22 @@ public class ContactTeamRolePersistenceImpl
 	private static final String _SQL_SELECT_CONTACTTEAMROLE =
 		"SELECT contactTeamRole FROM ContactTeamRole contactTeamRole";
 
+	private static final String _SQL_SELECT_CONTACTTEAMROLE_WHERE =
+		"SELECT contactTeamRole FROM ContactTeamRole contactTeamRole WHERE ";
+
 	private static final String _SQL_COUNT_CONTACTTEAMROLE =
 		"SELECT COUNT(contactTeamRole) FROM ContactTeamRole contactTeamRole";
+
+	private static final String _SQL_COUNT_CONTACTTEAMROLE_WHERE =
+		"SELECT COUNT(contactTeamRole) FROM ContactTeamRole contactTeamRole WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "contactTeamRole.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No ContactTeamRole exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No ContactTeamRole exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContactTeamRolePersistenceImpl.class);

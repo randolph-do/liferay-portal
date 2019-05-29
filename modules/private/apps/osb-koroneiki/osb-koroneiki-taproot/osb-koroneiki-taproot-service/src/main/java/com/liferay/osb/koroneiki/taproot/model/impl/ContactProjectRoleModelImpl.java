@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -99,9 +102,9 @@ public class ContactProjectRoleModelImpl
 
 	public static final long CONTACTID_COLUMN_BITMASK = 1L;
 
-	public static final long PROJECTID_COLUMN_BITMASK = 2L;
+	public static final long CONTACTROLEID_COLUMN_BITMASK = 2L;
 
-	public static final long CONTACTROLEID_COLUMN_BITMASK = 4L;
+	public static final long PROJECTID_COLUMN_BITMASK = 4L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -244,6 +247,32 @@ public class ContactProjectRoleModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, ContactProjectRole>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ContactProjectRole.class.getClassLoader(), ContactProjectRole.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ContactProjectRole> constructor =
+				(Constructor<ContactProjectRole>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<ContactProjectRole, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ContactProjectRole, Object>>
@@ -337,7 +366,19 @@ public class ContactProjectRoleModelImpl
 
 	@Override
 	public void setContactRoleId(long contactRoleId) {
+		_columnBitmask |= CONTACTROLEID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactRoleId) {
+			_setOriginalContactRoleId = true;
+
+			_originalContactRoleId = _contactRoleId;
+		}
+
 		_contactRoleId = contactRoleId;
+	}
+
+	public long getOriginalContactRoleId() {
+		return _originalContactRoleId;
 	}
 
 	public long getColumnBitmask() {
@@ -347,8 +388,7 @@ public class ContactProjectRoleModelImpl
 	@Override
 	public ContactProjectRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ContactProjectRole)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -426,6 +466,11 @@ public class ContactProjectRoleModelImpl
 			contactProjectRoleModelImpl._projectId;
 
 		contactProjectRoleModelImpl._setOriginalProjectId = false;
+
+		contactProjectRoleModelImpl._originalContactRoleId =
+			contactProjectRoleModelImpl._contactRoleId;
+
+		contactProjectRoleModelImpl._setOriginalContactRoleId = false;
 
 		contactProjectRoleModelImpl._columnBitmask = 0;
 	}
@@ -509,11 +554,8 @@ public class ContactProjectRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ContactProjectRole.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ContactProjectRole.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ContactProjectRole>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
@@ -524,6 +566,8 @@ public class ContactProjectRoleModelImpl
 	private long _originalProjectId;
 	private boolean _setOriginalProjectId;
 	private long _contactRoleId;
+	private long _originalContactRoleId;
+	private boolean _setOriginalContactRoleId;
 	private long _columnBitmask;
 	private ContactProjectRole _escapedModel;
 

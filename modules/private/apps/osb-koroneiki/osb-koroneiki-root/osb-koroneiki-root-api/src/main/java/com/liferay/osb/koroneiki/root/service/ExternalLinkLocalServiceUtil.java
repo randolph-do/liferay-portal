@@ -112,6 +112,10 @@ public class ExternalLinkLocalServiceUtil {
 		return getService().deleteExternalLink(externalLinkId);
 	}
 
+	public static void deleteExternalLinks(long classNameId, long classPK) {
+		getService().deleteExternalLinks(classNameId, classPK);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

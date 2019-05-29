@@ -89,6 +89,1536 @@ public class TeamProjectRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByTeamId;
+	private FinderPath _finderPathWithoutPaginationFindByTeamId;
+	private FinderPath _finderPathCountByTeamId;
+
+	/**
+	 * Returns all the team project roles where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @return the matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamId(long teamId) {
+		return findByTeamId(teamId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the team project roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @return the range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamId(long teamId, int start, int end) {
+		return findByTeamId(teamId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamId(
+		long teamId, int start, int end,
+		OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		return findByTeamId(teamId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamId(
+		long teamId, int start, int end,
+		OrderByComparator<TeamProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByTeamId;
+			finderArgs = new Object[] {teamId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByTeamId;
+			finderArgs = new Object[] {teamId, start, end, orderByComparator};
+		}
+
+		List<TeamProjectRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<TeamProjectRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TeamProjectRole teamProjectRole : list) {
+					if ((teamId != teamProjectRole.getTeamId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_TEAMPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEAMID_TEAMID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(TeamProjectRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(teamId);
+
+				if (!pagination) {
+					list = (List<TeamProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<TeamProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole findByTeamId_First(
+			long teamId, OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = fetchByTeamId_First(
+			teamId, orderByComparator);
+
+		if (teamProjectRole != null) {
+			return teamProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("teamId=");
+		msg.append(teamId);
+
+		msg.append("}");
+
+		throw new NoSuchTeamProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole fetchByTeamId_First(
+		long teamId, OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		List<TeamProjectRole> list = findByTeamId(
+			teamId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole findByTeamId_Last(
+			long teamId, OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = fetchByTeamId_Last(
+			teamId, orderByComparator);
+
+		if (teamProjectRole != null) {
+			return teamProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("teamId=");
+		msg.append(teamId);
+
+		msg.append("}");
+
+		throw new NoSuchTeamProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole fetchByTeamId_Last(
+		long teamId, OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		int count = countByTeamId(teamId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TeamProjectRole> list = findByTeamId(
+			teamId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the team project roles before and after the current team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamProjectRolePK the primary key of the current team project role
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team project role
+	 * @throws NoSuchTeamProjectRoleException if a team project role with the primary key could not be found
+	 */
+	@Override
+	public TeamProjectRole[] findByTeamId_PrevAndNext(
+			TeamProjectRolePK teamProjectRolePK, long teamId,
+			OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = findByPrimaryKey(teamProjectRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TeamProjectRole[] array = new TeamProjectRoleImpl[3];
+
+			array[0] = getByTeamId_PrevAndNext(
+				session, teamProjectRole, teamId, orderByComparator, true);
+
+			array[1] = teamProjectRole;
+
+			array[2] = getByTeamId_PrevAndNext(
+				session, teamProjectRole, teamId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TeamProjectRole getByTeamId_PrevAndNext(
+		Session session, TeamProjectRole teamProjectRole, long teamId,
+		OrderByComparator<TeamProjectRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TEAMPROJECTROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_TEAMID_TEAMID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TeamProjectRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(teamId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						teamProjectRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<TeamProjectRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the team project roles where teamId = &#63; from the database.
+	 *
+	 * @param teamId the team ID
+	 */
+	@Override
+	public void removeByTeamId(long teamId) {
+		for (TeamProjectRole teamProjectRole :
+				findByTeamId(
+					teamId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(teamProjectRole);
+		}
+	}
+
+	/**
+	 * Returns the number of team project roles where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @return the number of matching team project roles
+	 */
+	@Override
+	public int countByTeamId(long teamId) {
+		FinderPath finderPath = _finderPathCountByTeamId;
+
+		Object[] finderArgs = new Object[] {teamId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TEAMPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEAMID_TEAMID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(teamId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TEAMID_TEAMID_2 =
+		"teamProjectRole.id.teamId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByProjectId;
+	private FinderPath _finderPathWithoutPaginationFindByProjectId;
+	private FinderPath _finderPathCountByProjectId;
+
+	/**
+	 * Returns all the team project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByProjectId(long projectId) {
+		return findByProjectId(
+			projectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the team project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @return the range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByProjectId(
+		long projectId, int start, int end) {
+
+		return findByProjectId(projectId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the team project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		return findByProjectId(projectId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the team project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		OrderByComparator<TeamProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByProjectId;
+			finderArgs = new Object[] {projectId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByProjectId;
+			finderArgs = new Object[] {
+				projectId, start, end, orderByComparator
+			};
+		}
+
+		List<TeamProjectRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<TeamProjectRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TeamProjectRole teamProjectRole : list) {
+					if ((projectId != teamProjectRole.getProjectId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_TEAMPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_PROJECTID_PROJECTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(TeamProjectRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(projectId);
+
+				if (!pagination) {
+					list = (List<TeamProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<TeamProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole findByProjectId_First(
+			long projectId,
+			OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = fetchByProjectId_First(
+			projectId, orderByComparator);
+
+		if (teamProjectRole != null) {
+			return teamProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("projectId=");
+		msg.append(projectId);
+
+		msg.append("}");
+
+		throw new NoSuchTeamProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole fetchByProjectId_First(
+		long projectId, OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		List<TeamProjectRole> list = findByProjectId(
+			projectId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole findByProjectId_Last(
+			long projectId,
+			OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = fetchByProjectId_Last(
+			projectId, orderByComparator);
+
+		if (teamProjectRole != null) {
+			return teamProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("projectId=");
+		msg.append(projectId);
+
+		msg.append("}");
+
+		throw new NoSuchTeamProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole fetchByProjectId_Last(
+		long projectId, OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		int count = countByProjectId(projectId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TeamProjectRole> list = findByProjectId(
+			projectId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the team project roles before and after the current team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param teamProjectRolePK the primary key of the current team project role
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team project role
+	 * @throws NoSuchTeamProjectRoleException if a team project role with the primary key could not be found
+	 */
+	@Override
+	public TeamProjectRole[] findByProjectId_PrevAndNext(
+			TeamProjectRolePK teamProjectRolePK, long projectId,
+			OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = findByPrimaryKey(teamProjectRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TeamProjectRole[] array = new TeamProjectRoleImpl[3];
+
+			array[0] = getByProjectId_PrevAndNext(
+				session, teamProjectRole, projectId, orderByComparator, true);
+
+			array[1] = teamProjectRole;
+
+			array[2] = getByProjectId_PrevAndNext(
+				session, teamProjectRole, projectId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TeamProjectRole getByProjectId_PrevAndNext(
+		Session session, TeamProjectRole teamProjectRole, long projectId,
+		OrderByComparator<TeamProjectRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TEAMPROJECTROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_PROJECTID_PROJECTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TeamProjectRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(projectId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						teamProjectRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<TeamProjectRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the team project roles where projectId = &#63; from the database.
+	 *
+	 * @param projectId the project ID
+	 */
+	@Override
+	public void removeByProjectId(long projectId) {
+		for (TeamProjectRole teamProjectRole :
+				findByProjectId(
+					projectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(teamProjectRole);
+		}
+	}
+
+	/**
+	 * Returns the number of team project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the number of matching team project roles
+	 */
+	@Override
+	public int countByProjectId(long projectId) {
+		FinderPath finderPath = _finderPathCountByProjectId;
+
+		Object[] finderArgs = new Object[] {projectId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TEAMPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_PROJECTID_PROJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(projectId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PROJECTID_PROJECTID_2 =
+		"teamProjectRole.id.projectId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByTeamRoleId;
+	private FinderPath _finderPathWithoutPaginationFindByTeamRoleId;
+	private FinderPath _finderPathCountByTeamRoleId;
+
+	/**
+	 * Returns all the team project roles where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @return the matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamRoleId(long teamRoleId) {
+		return findByTeamRoleId(
+			teamRoleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the team project roles where teamRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @return the range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamRoleId(
+		long teamRoleId, int start, int end) {
+
+		return findByTeamRoleId(teamRoleId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamRoleId(
+		long teamRoleId, int start, int end,
+		OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		return findByTeamRoleId(
+			teamRoleId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching team project roles
+	 */
+	@Override
+	public List<TeamProjectRole> findByTeamRoleId(
+		long teamRoleId, int start, int end,
+		OrderByComparator<TeamProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByTeamRoleId;
+			finderArgs = new Object[] {teamRoleId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByTeamRoleId;
+			finderArgs = new Object[] {
+				teamRoleId, start, end, orderByComparator
+			};
+		}
+
+		List<TeamProjectRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<TeamProjectRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TeamProjectRole teamProjectRole : list) {
+					if ((teamRoleId != teamProjectRole.getTeamRoleId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_TEAMPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEAMROLEID_TEAMROLEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(TeamProjectRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(teamRoleId);
+
+				if (!pagination) {
+					list = (List<TeamProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<TeamProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole findByTeamRoleId_First(
+			long teamRoleId,
+			OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = fetchByTeamRoleId_First(
+			teamRoleId, orderByComparator);
+
+		if (teamProjectRole != null) {
+			return teamProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("teamRoleId=");
+		msg.append(teamRoleId);
+
+		msg.append("}");
+
+		throw new NoSuchTeamProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole fetchByTeamRoleId_First(
+		long teamRoleId, OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		List<TeamProjectRole> list = findByTeamRoleId(
+			teamRoleId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole findByTeamRoleId_Last(
+			long teamRoleId,
+			OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = fetchByTeamRoleId_Last(
+			teamRoleId, orderByComparator);
+
+		if (teamProjectRole != null) {
+			return teamProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("teamRoleId=");
+		msg.append(teamRoleId);
+
+		msg.append("}");
+
+		throw new NoSuchTeamProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	@Override
+	public TeamProjectRole fetchByTeamRoleId_Last(
+		long teamRoleId, OrderByComparator<TeamProjectRole> orderByComparator) {
+
+		int count = countByTeamRoleId(teamRoleId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TeamProjectRole> list = findByTeamRoleId(
+			teamRoleId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the team project roles before and after the current team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamProjectRolePK the primary key of the current team project role
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team project role
+	 * @throws NoSuchTeamProjectRoleException if a team project role with the primary key could not be found
+	 */
+	@Override
+	public TeamProjectRole[] findByTeamRoleId_PrevAndNext(
+			TeamProjectRolePK teamProjectRolePK, long teamRoleId,
+			OrderByComparator<TeamProjectRole> orderByComparator)
+		throws NoSuchTeamProjectRoleException {
+
+		TeamProjectRole teamProjectRole = findByPrimaryKey(teamProjectRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TeamProjectRole[] array = new TeamProjectRoleImpl[3];
+
+			array[0] = getByTeamRoleId_PrevAndNext(
+				session, teamProjectRole, teamRoleId, orderByComparator, true);
+
+			array[1] = teamProjectRole;
+
+			array[2] = getByTeamRoleId_PrevAndNext(
+				session, teamProjectRole, teamRoleId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TeamProjectRole getByTeamRoleId_PrevAndNext(
+		Session session, TeamProjectRole teamProjectRole, long teamRoleId,
+		OrderByComparator<TeamProjectRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TEAMPROJECTROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_TEAMROLEID_TEAMROLEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TeamProjectRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(teamRoleId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						teamProjectRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<TeamProjectRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the team project roles where teamRoleId = &#63; from the database.
+	 *
+	 * @param teamRoleId the team role ID
+	 */
+	@Override
+	public void removeByTeamRoleId(long teamRoleId) {
+		for (TeamProjectRole teamProjectRole :
+				findByTeamRoleId(
+					teamRoleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(teamProjectRole);
+		}
+	}
+
+	/**
+	 * Returns the number of team project roles where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @return the number of matching team project roles
+	 */
+	@Override
+	public int countByTeamRoleId(long teamRoleId) {
+		FinderPath finderPath = _finderPathCountByTeamRoleId;
+
+		Object[] finderArgs = new Object[] {teamRoleId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TEAMPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEAMROLEID_TEAMROLEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(teamRoleId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TEAMROLEID_TEAMROLEID_2 =
+		"teamProjectRole.id.teamRoleId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByT_P;
 	private FinderPath _finderPathWithoutPaginationFindByT_P;
 	private FinderPath _finderPathCountByT_P;
@@ -881,7 +2411,25 @@ public class TeamProjectRolePersistenceImpl
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
-			Object[] args = new Object[] {
+			Object[] args = new Object[] {teamProjectRoleModelImpl.getTeamId()};
+
+			finderCache.removeResult(_finderPathCountByTeamId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByTeamId, args);
+
+			args = new Object[] {teamProjectRoleModelImpl.getProjectId()};
+
+			finderCache.removeResult(_finderPathCountByProjectId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByProjectId, args);
+
+			args = new Object[] {teamProjectRoleModelImpl.getTeamRoleId()};
+
+			finderCache.removeResult(_finderPathCountByTeamRoleId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByTeamRoleId, args);
+
+			args = new Object[] {
 				teamProjectRoleModelImpl.getTeamId(),
 				teamProjectRoleModelImpl.getProjectId()
 			};
@@ -895,6 +2443,63 @@ public class TeamProjectRolePersistenceImpl
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 		else {
+			if ((teamProjectRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByTeamId.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					teamProjectRoleModelImpl.getOriginalTeamId()
+				};
+
+				finderCache.removeResult(_finderPathCountByTeamId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByTeamId, args);
+
+				args = new Object[] {teamProjectRoleModelImpl.getTeamId()};
+
+				finderCache.removeResult(_finderPathCountByTeamId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByTeamId, args);
+			}
+
+			if ((teamProjectRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByProjectId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					teamProjectRoleModelImpl.getOriginalProjectId()
+				};
+
+				finderCache.removeResult(_finderPathCountByProjectId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByProjectId, args);
+
+				args = new Object[] {teamProjectRoleModelImpl.getProjectId()};
+
+				finderCache.removeResult(_finderPathCountByProjectId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByProjectId, args);
+			}
+
+			if ((teamProjectRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByTeamRoleId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					teamProjectRoleModelImpl.getOriginalTeamRoleId()
+				};
+
+				finderCache.removeResult(_finderPathCountByTeamRoleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByTeamRoleId, args);
+
+				args = new Object[] {teamProjectRoleModelImpl.getTeamRoleId()};
+
+				finderCache.removeResult(_finderPathCountByTeamRoleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByTeamRoleId, args);
+			}
+
 			if ((teamProjectRoleModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByT_P.getColumnBitmask()) !=
 					 0) {
@@ -1222,6 +2827,63 @@ public class TeamProjectRolePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByTeamId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTeamId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByTeamId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTeamId",
+			new String[] {Long.class.getName()},
+			TeamProjectRoleModelImpl.TEAMID_COLUMN_BITMASK);
+
+		_finderPathCountByTeamId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeamId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByProjectId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByProjectId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByProjectId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByProjectId",
+			new String[] {Long.class.getName()},
+			TeamProjectRoleModelImpl.PROJECTID_COLUMN_BITMASK);
+
+		_finderPathCountByProjectId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByProjectId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByTeamRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTeamRoleId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByTeamRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTeamRoleId",
+			new String[] {Long.class.getName()},
+			TeamProjectRoleModelImpl.TEAMROLEID_COLUMN_BITMASK);
+
+		_finderPathCountByTeamRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeamRoleId",
+			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByT_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, TeamProjectRoleImpl.class,

@@ -110,6 +110,11 @@ public class ExternalLinkLocalServiceWrapper
 		return _externalLinkLocalService.deleteExternalLink(externalLinkId);
 	}
 
+	@Override
+	public void deleteExternalLinks(long classNameId, long classPK) {
+		_externalLinkLocalService.deleteExternalLinks(classNameId, classPK);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

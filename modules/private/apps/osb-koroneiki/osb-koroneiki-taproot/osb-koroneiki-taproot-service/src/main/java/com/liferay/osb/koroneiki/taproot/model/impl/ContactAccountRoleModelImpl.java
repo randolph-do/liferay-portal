@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -244,6 +247,32 @@ public class ContactAccountRoleModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, ContactAccountRole>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ContactAccountRole.class.getClassLoader(), ContactAccountRole.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ContactAccountRole> constructor =
+				(Constructor<ContactAccountRole>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<ContactAccountRole, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ContactAccountRole, Object>>
@@ -337,7 +366,19 @@ public class ContactAccountRoleModelImpl
 
 	@Override
 	public void setContactRoleId(long contactRoleId) {
+		_columnBitmask |= CONTACTROLEID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactRoleId) {
+			_setOriginalContactRoleId = true;
+
+			_originalContactRoleId = _contactRoleId;
+		}
+
 		_contactRoleId = contactRoleId;
+	}
+
+	public long getOriginalContactRoleId() {
+		return _originalContactRoleId;
 	}
 
 	public long getColumnBitmask() {
@@ -347,8 +388,7 @@ public class ContactAccountRoleModelImpl
 	@Override
 	public ContactAccountRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ContactAccountRole)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -426,6 +466,11 @@ public class ContactAccountRoleModelImpl
 			contactAccountRoleModelImpl._accountId;
 
 		contactAccountRoleModelImpl._setOriginalAccountId = false;
+
+		contactAccountRoleModelImpl._originalContactRoleId =
+			contactAccountRoleModelImpl._contactRoleId;
+
+		contactAccountRoleModelImpl._setOriginalContactRoleId = false;
 
 		contactAccountRoleModelImpl._columnBitmask = 0;
 	}
@@ -509,11 +554,8 @@ public class ContactAccountRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ContactAccountRole.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ContactAccountRole.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ContactAccountRole>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
@@ -524,6 +566,8 @@ public class ContactAccountRoleModelImpl
 	private long _originalAccountId;
 	private boolean _setOriginalAccountId;
 	private long _contactRoleId;
+	private long _originalContactRoleId;
+	private boolean _setOriginalContactRoleId;
 	private long _columnBitmask;
 	private ContactAccountRole _escapedModel;
 

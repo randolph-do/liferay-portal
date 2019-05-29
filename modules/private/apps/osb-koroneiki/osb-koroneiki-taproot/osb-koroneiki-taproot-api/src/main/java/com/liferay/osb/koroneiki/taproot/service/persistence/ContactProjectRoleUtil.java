@@ -128,6 +128,536 @@ public class ContactProjectRoleUtil {
 	}
 
 	/**
+	 * Returns all the contact project roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactId(long contactId) {
+		return getPersistence().findByContactId(contactId);
+	}
+
+	/**
+	 * Returns a range of all the contact project roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @return the range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactId(
+		long contactId, int start, int end) {
+
+		return getPersistence().findByContactId(contactId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().findByContactId(
+			contactId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByContactId(
+			contactId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole findByContactId_First(
+			long contactId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByContactId_First(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole fetchByContactId_First(
+		long contactId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().fetchByContactId_First(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole findByContactId_Last(
+			long contactId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByContactId_Last(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole fetchByContactId_Last(
+		long contactId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().fetchByContactId_Last(
+			contactId, orderByComparator);
+	}
+
+	/**
+	 * Returns the contact project roles before and after the current contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactProjectRolePK the primary key of the current contact project role
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact project role
+	 * @throws NoSuchContactProjectRoleException if a contact project role with the primary key could not be found
+	 */
+	public static ContactProjectRole[] findByContactId_PrevAndNext(
+			ContactProjectRolePK contactProjectRolePK, long contactId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByContactId_PrevAndNext(
+			contactProjectRolePK, contactId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the contact project roles where contactId = &#63; from the database.
+	 *
+	 * @param contactId the contact ID
+	 */
+	public static void removeByContactId(long contactId) {
+		getPersistence().removeByContactId(contactId);
+	}
+
+	/**
+	 * Returns the number of contact project roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the number of matching contact project roles
+	 */
+	public static int countByContactId(long contactId) {
+		return getPersistence().countByContactId(contactId);
+	}
+
+	/**
+	 * Returns all the contact project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByProjectId(long projectId) {
+		return getPersistence().findByProjectId(projectId);
+	}
+
+	/**
+	 * Returns a range of all the contact project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @return the range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByProjectId(
+		long projectId, int start, int end) {
+
+		return getPersistence().findByProjectId(projectId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().findByProjectId(
+			projectId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByProjectId(
+			projectId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole findByProjectId_First(
+			long projectId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByProjectId_First(
+			projectId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole fetchByProjectId_First(
+		long projectId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().fetchByProjectId_First(
+			projectId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole findByProjectId_Last(
+			long projectId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByProjectId_Last(
+			projectId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole fetchByProjectId_Last(
+		long projectId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().fetchByProjectId_Last(
+			projectId, orderByComparator);
+	}
+
+	/**
+	 * Returns the contact project roles before and after the current contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param contactProjectRolePK the primary key of the current contact project role
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact project role
+	 * @throws NoSuchContactProjectRoleException if a contact project role with the primary key could not be found
+	 */
+	public static ContactProjectRole[] findByProjectId_PrevAndNext(
+			ContactProjectRolePK contactProjectRolePK, long projectId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByProjectId_PrevAndNext(
+			contactProjectRolePK, projectId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the contact project roles where projectId = &#63; from the database.
+	 *
+	 * @param projectId the project ID
+	 */
+	public static void removeByProjectId(long projectId) {
+		getPersistence().removeByProjectId(projectId);
+	}
+
+	/**
+	 * Returns the number of contact project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the number of matching contact project roles
+	 */
+	public static int countByProjectId(long projectId) {
+		return getPersistence().countByProjectId(projectId);
+	}
+
+	/**
+	 * Returns all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactRoleId(
+		long contactRoleId) {
+
+		return getPersistence().findByContactRoleId(contactRoleId);
+	}
+
+	/**
+	 * Returns a range of all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @return the range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactRoleId(
+		long contactRoleId, int start, int end) {
+
+		return getPersistence().findByContactRoleId(contactRoleId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().findByContactRoleId(
+			contactRoleId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact project roles
+	 */
+	public static List<ContactProjectRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByContactRoleId(
+			contactRoleId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole findByContactRoleId_First(
+			long contactRoleId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByContactRoleId_First(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole fetchByContactRoleId_First(
+		long contactRoleId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().fetchByContactRoleId_First(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole findByContactRoleId_Last(
+			long contactRoleId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByContactRoleId_Last(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	public static ContactProjectRole fetchByContactRoleId_Last(
+		long contactRoleId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return getPersistence().fetchByContactRoleId_Last(
+			contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the contact project roles before and after the current contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactProjectRolePK the primary key of the current contact project role
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact project role
+	 * @throws NoSuchContactProjectRoleException if a contact project role with the primary key could not be found
+	 */
+	public static ContactProjectRole[] findByContactRoleId_PrevAndNext(
+			ContactProjectRolePK contactProjectRolePK, long contactRoleId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactProjectRoleException {
+
+		return getPersistence().findByContactRoleId_PrevAndNext(
+			contactProjectRolePK, contactRoleId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the contact project roles where contactRoleId = &#63; from the database.
+	 *
+	 * @param contactRoleId the contact role ID
+	 */
+	public static void removeByContactRoleId(long contactRoleId) {
+		getPersistence().removeByContactRoleId(contactRoleId);
+	}
+
+	/**
+	 * Returns the number of contact project roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the number of matching contact project roles
+	 */
+	public static int countByContactRoleId(long contactRoleId) {
+		return getPersistence().countByContactRoleId(contactRoleId);
+	}
+
+	/**
 	 * Returns all the contact project roles where contactId = &#63; and projectId = &#63;.
 	 *
 	 * @param contactId the contact ID

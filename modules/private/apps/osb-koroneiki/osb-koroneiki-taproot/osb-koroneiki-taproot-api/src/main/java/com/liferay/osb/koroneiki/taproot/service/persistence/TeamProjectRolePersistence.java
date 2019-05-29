@@ -44,6 +44,435 @@ public interface TeamProjectRolePersistence
 	 */
 
 	/**
+	 * Returns all the team project roles where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @return the matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamId(long teamId);
+
+	/**
+	 * Returns a range of all the team project roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @return the range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamId(
+		long teamId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamId(
+		long teamId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamId(
+		long teamId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	public TeamProjectRole findByTeamId_First(
+			long teamId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Returns the first team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	public TeamProjectRole fetchByTeamId_First(
+		long teamId,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns the last team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	public TeamProjectRole findByTeamId_Last(
+			long teamId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Returns the last team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	public TeamProjectRole fetchByTeamId_Last(
+		long teamId,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns the team project roles before and after the current team project role in the ordered set where teamId = &#63;.
+	 *
+	 * @param teamProjectRolePK the primary key of the current team project role
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team project role
+	 * @throws NoSuchTeamProjectRoleException if a team project role with the primary key could not be found
+	 */
+	public TeamProjectRole[] findByTeamId_PrevAndNext(
+			TeamProjectRolePK teamProjectRolePK, long teamId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Removes all the team project roles where teamId = &#63; from the database.
+	 *
+	 * @param teamId the team ID
+	 */
+	public void removeByTeamId(long teamId);
+
+	/**
+	 * Returns the number of team project roles where teamId = &#63;.
+	 *
+	 * @param teamId the team ID
+	 * @return the number of matching team project roles
+	 */
+	public int countByTeamId(long teamId);
+
+	/**
+	 * Returns all the team project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByProjectId(long projectId);
+
+	/**
+	 * Returns a range of all the team project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @return the range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByProjectId(
+		long projectId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the team project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the team project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	public TeamProjectRole findByProjectId_First(
+			long projectId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Returns the first team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	public TeamProjectRole fetchByProjectId_First(
+		long projectId,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns the last team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	public TeamProjectRole findByProjectId_Last(
+			long projectId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Returns the last team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	public TeamProjectRole fetchByProjectId_Last(
+		long projectId,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns the team project roles before and after the current team project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param teamProjectRolePK the primary key of the current team project role
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team project role
+	 * @throws NoSuchTeamProjectRoleException if a team project role with the primary key could not be found
+	 */
+	public TeamProjectRole[] findByProjectId_PrevAndNext(
+			TeamProjectRolePK teamProjectRolePK, long projectId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Removes all the team project roles where projectId = &#63; from the database.
+	 *
+	 * @param projectId the project ID
+	 */
+	public void removeByProjectId(long projectId);
+
+	/**
+	 * Returns the number of team project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the number of matching team project roles
+	 */
+	public int countByProjectId(long projectId);
+
+	/**
+	 * Returns all the team project roles where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @return the matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamRoleId(long teamRoleId);
+
+	/**
+	 * Returns a range of all the team project roles where teamRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @return the range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamRoleId(
+		long teamRoleId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamRoleId(
+		long teamRoleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the team project roles where teamRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param start the lower bound of the range of team project roles
+	 * @param end the upper bound of the range of team project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching team project roles
+	 */
+	public java.util.List<TeamProjectRole> findByTeamRoleId(
+		long teamRoleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	public TeamProjectRole findByTeamRoleId_First(
+			long teamRoleId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Returns the first team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	public TeamProjectRole fetchByTeamRoleId_First(
+		long teamRoleId,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns the last team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role
+	 * @throws NoSuchTeamProjectRoleException if a matching team project role could not be found
+	 */
+	public TeamProjectRole findByTeamRoleId_Last(
+			long teamRoleId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Returns the last team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team project role, or <code>null</code> if a matching team project role could not be found
+	 */
+	public TeamProjectRole fetchByTeamRoleId_Last(
+		long teamRoleId,
+		com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+			orderByComparator);
+
+	/**
+	 * Returns the team project roles before and after the current team project role in the ordered set where teamRoleId = &#63;.
+	 *
+	 * @param teamProjectRolePK the primary key of the current team project role
+	 * @param teamRoleId the team role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team project role
+	 * @throws NoSuchTeamProjectRoleException if a team project role with the primary key could not be found
+	 */
+	public TeamProjectRole[] findByTeamRoleId_PrevAndNext(
+			TeamProjectRolePK teamProjectRolePK, long teamRoleId,
+			com.liferay.portal.kernel.util.OrderByComparator<TeamProjectRole>
+				orderByComparator)
+		throws NoSuchTeamProjectRoleException;
+
+	/**
+	 * Removes all the team project roles where teamRoleId = &#63; from the database.
+	 *
+	 * @param teamRoleId the team role ID
+	 */
+	public void removeByTeamRoleId(long teamRoleId);
+
+	/**
+	 * Returns the number of team project roles where teamRoleId = &#63;.
+	 *
+	 * @param teamRoleId the team role ID
+	 * @return the number of matching team project roles
+	 */
+	public int countByTeamRoleId(long teamRoleId);
+
+	/**
 	 * Returns all the team project roles where teamId = &#63; and projectId = &#63;.
 	 *
 	 * @param teamId the team ID

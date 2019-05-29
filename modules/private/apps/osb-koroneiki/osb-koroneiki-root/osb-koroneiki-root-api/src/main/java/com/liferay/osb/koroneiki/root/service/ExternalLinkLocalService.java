@@ -109,6 +109,8 @@ public interface ExternalLinkLocalService
 	public ExternalLink deleteExternalLink(long externalLinkId)
 		throws PortalException;
 
+	public void deleteExternalLinks(long classNameId, long classPK);
+
 	/**
 	 * @throws PortalException
 	 */

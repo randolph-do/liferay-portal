@@ -89,6 +89,1562 @@ public class ContactProjectRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByContactId;
+	private FinderPath _finderPathWithoutPaginationFindByContactId;
+	private FinderPath _finderPathCountByContactId;
+
+	/**
+	 * Returns all the contact project roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactId(long contactId) {
+		return findByContactId(
+			contactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the contact project roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @return the range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactId(
+		long contactId, int start, int end) {
+
+		return findByContactId(contactId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return findByContactId(contactId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactId(
+		long contactId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByContactId;
+			finderArgs = new Object[] {contactId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByContactId;
+			finderArgs = new Object[] {
+				contactId, start, end, orderByComparator
+			};
+		}
+
+		List<ContactProjectRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactProjectRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactProjectRole contactProjectRole : list) {
+					if ((contactId != contactProjectRole.getContactId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(ContactProjectRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactId);
+
+				if (!pagination) {
+					list = (List<ContactProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole findByContactId_First(
+			long contactId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = fetchByContactId_First(
+			contactId, orderByComparator);
+
+		if (contactProjectRole != null) {
+			return contactProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactId=");
+		msg.append(contactId);
+
+		msg.append("}");
+
+		throw new NoSuchContactProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole fetchByContactId_First(
+		long contactId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		List<ContactProjectRole> list = findByContactId(
+			contactId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole findByContactId_Last(
+			long contactId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = fetchByContactId_Last(
+			contactId, orderByComparator);
+
+		if (contactProjectRole != null) {
+			return contactProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactId=");
+		msg.append(contactId);
+
+		msg.append("}");
+
+		throw new NoSuchContactProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole fetchByContactId_Last(
+		long contactId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		int count = countByContactId(contactId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactProjectRole> list = findByContactId(
+			contactId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact project roles before and after the current contact project role in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactProjectRolePK the primary key of the current contact project role
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact project role
+	 * @throws NoSuchContactProjectRoleException if a contact project role with the primary key could not be found
+	 */
+	@Override
+	public ContactProjectRole[] findByContactId_PrevAndNext(
+			ContactProjectRolePK contactProjectRolePK, long contactId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = findByPrimaryKey(
+			contactProjectRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactProjectRole[] array = new ContactProjectRoleImpl[3];
+
+			array[0] = getByContactId_PrevAndNext(
+				session, contactProjectRole, contactId, orderByComparator,
+				true);
+
+			array[1] = contactProjectRole;
+
+			array[2] = getByContactId_PrevAndNext(
+				session, contactProjectRole, contactId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactProjectRole getByContactId_PrevAndNext(
+		Session session, ContactProjectRole contactProjectRole, long contactId,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTPROJECTROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactProjectRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(contactId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						contactProjectRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ContactProjectRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact project roles where contactId = &#63; from the database.
+	 *
+	 * @param contactId the contact ID
+	 */
+	@Override
+	public void removeByContactId(long contactId) {
+		for (ContactProjectRole contactProjectRole :
+				findByContactId(
+					contactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(contactProjectRole);
+		}
+	}
+
+	/**
+	 * Returns the number of contact project roles where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the number of matching contact project roles
+	 */
+	@Override
+	public int countByContactId(long contactId) {
+		FinderPath finderPath = _finderPathCountByContactId;
+
+		Object[] finderArgs = new Object[] {contactId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTACTID_CONTACTID_2 =
+		"contactProjectRole.id.contactId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByProjectId;
+	private FinderPath _finderPathWithoutPaginationFindByProjectId;
+	private FinderPath _finderPathCountByProjectId;
+
+	/**
+	 * Returns all the contact project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByProjectId(long projectId) {
+		return findByProjectId(
+			projectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the contact project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @return the range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByProjectId(
+		long projectId, int start, int end) {
+
+		return findByProjectId(projectId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return findByProjectId(projectId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByProjectId(
+		long projectId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByProjectId;
+			finderArgs = new Object[] {projectId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByProjectId;
+			finderArgs = new Object[] {
+				projectId, start, end, orderByComparator
+			};
+		}
+
+		List<ContactProjectRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactProjectRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactProjectRole contactProjectRole : list) {
+					if ((projectId != contactProjectRole.getProjectId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_PROJECTID_PROJECTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(ContactProjectRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(projectId);
+
+				if (!pagination) {
+					list = (List<ContactProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole findByProjectId_First(
+			long projectId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = fetchByProjectId_First(
+			projectId, orderByComparator);
+
+		if (contactProjectRole != null) {
+			return contactProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("projectId=");
+		msg.append(projectId);
+
+		msg.append("}");
+
+		throw new NoSuchContactProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole fetchByProjectId_First(
+		long projectId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		List<ContactProjectRole> list = findByProjectId(
+			projectId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole findByProjectId_Last(
+			long projectId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = fetchByProjectId_Last(
+			projectId, orderByComparator);
+
+		if (contactProjectRole != null) {
+			return contactProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("projectId=");
+		msg.append(projectId);
+
+		msg.append("}");
+
+		throw new NoSuchContactProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole fetchByProjectId_Last(
+		long projectId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		int count = countByProjectId(projectId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactProjectRole> list = findByProjectId(
+			projectId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact project roles before and after the current contact project role in the ordered set where projectId = &#63;.
+	 *
+	 * @param contactProjectRolePK the primary key of the current contact project role
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact project role
+	 * @throws NoSuchContactProjectRoleException if a contact project role with the primary key could not be found
+	 */
+	@Override
+	public ContactProjectRole[] findByProjectId_PrevAndNext(
+			ContactProjectRolePK contactProjectRolePK, long projectId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = findByPrimaryKey(
+			contactProjectRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactProjectRole[] array = new ContactProjectRoleImpl[3];
+
+			array[0] = getByProjectId_PrevAndNext(
+				session, contactProjectRole, projectId, orderByComparator,
+				true);
+
+			array[1] = contactProjectRole;
+
+			array[2] = getByProjectId_PrevAndNext(
+				session, contactProjectRole, projectId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactProjectRole getByProjectId_PrevAndNext(
+		Session session, ContactProjectRole contactProjectRole, long projectId,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTPROJECTROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_PROJECTID_PROJECTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactProjectRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(projectId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						contactProjectRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ContactProjectRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact project roles where projectId = &#63; from the database.
+	 *
+	 * @param projectId the project ID
+	 */
+	@Override
+	public void removeByProjectId(long projectId) {
+		for (ContactProjectRole contactProjectRole :
+				findByProjectId(
+					projectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(contactProjectRole);
+		}
+	}
+
+	/**
+	 * Returns the number of contact project roles where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the number of matching contact project roles
+	 */
+	@Override
+	public int countByProjectId(long projectId) {
+		FinderPath finderPath = _finderPathCountByProjectId;
+
+		Object[] finderArgs = new Object[] {projectId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_PROJECTID_PROJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(projectId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PROJECTID_PROJECTID_2 =
+		"contactProjectRole.id.projectId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByContactRoleId;
+	private FinderPath _finderPathWithoutPaginationFindByContactRoleId;
+	private FinderPath _finderPathCountByContactRoleId;
+
+	/**
+	 * Returns all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactRoleId(long contactRoleId) {
+		return findByContactRoleId(
+			contactRoleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @return the range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactRoleId(
+		long contactRoleId, int start, int end) {
+
+		return findByContactRoleId(contactRoleId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		return findByContactRoleId(
+			contactRoleId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact project roles where contactRoleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactProjectRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param start the lower bound of the range of contact project roles
+	 * @param end the upper bound of the range of contact project roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact project roles
+	 */
+	@Override
+	public List<ContactProjectRole> findByContactRoleId(
+		long contactRoleId, int start, int end,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByContactRoleId;
+			finderArgs = new Object[] {contactRoleId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByContactRoleId;
+			finderArgs = new Object[] {
+				contactRoleId, start, end, orderByComparator
+			};
+		}
+
+		List<ContactProjectRole> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactProjectRole>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactProjectRole contactProjectRole : list) {
+					if ((contactRoleId !=
+							contactProjectRole.getContactRoleId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(ContactProjectRoleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactRoleId);
+
+				if (!pagination) {
+					list = (List<ContactProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactProjectRole>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole findByContactRoleId_First(
+			long contactRoleId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = fetchByContactRoleId_First(
+			contactRoleId, orderByComparator);
+
+		if (contactProjectRole != null) {
+			return contactProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactRoleId=");
+		msg.append(contactRoleId);
+
+		msg.append("}");
+
+		throw new NoSuchContactProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole fetchByContactRoleId_First(
+		long contactRoleId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		List<ContactProjectRole> list = findByContactRoleId(
+			contactRoleId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role
+	 * @throws NoSuchContactProjectRoleException if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole findByContactRoleId_Last(
+			long contactRoleId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = fetchByContactRoleId_Last(
+			contactRoleId, orderByComparator);
+
+		if (contactProjectRole != null) {
+			return contactProjectRole;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactRoleId=");
+		msg.append(contactRoleId);
+
+		msg.append("}");
+
+		throw new NoSuchContactProjectRoleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact project role, or <code>null</code> if a matching contact project role could not be found
+	 */
+	@Override
+	public ContactProjectRole fetchByContactRoleId_Last(
+		long contactRoleId,
+		OrderByComparator<ContactProjectRole> orderByComparator) {
+
+		int count = countByContactRoleId(contactRoleId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactProjectRole> list = findByContactRoleId(
+			contactRoleId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact project roles before and after the current contact project role in the ordered set where contactRoleId = &#63;.
+	 *
+	 * @param contactProjectRolePK the primary key of the current contact project role
+	 * @param contactRoleId the contact role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact project role
+	 * @throws NoSuchContactProjectRoleException if a contact project role with the primary key could not be found
+	 */
+	@Override
+	public ContactProjectRole[] findByContactRoleId_PrevAndNext(
+			ContactProjectRolePK contactProjectRolePK, long contactRoleId,
+			OrderByComparator<ContactProjectRole> orderByComparator)
+		throws NoSuchContactProjectRoleException {
+
+		ContactProjectRole contactProjectRole = findByPrimaryKey(
+			contactProjectRolePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactProjectRole[] array = new ContactProjectRoleImpl[3];
+
+			array[0] = getByContactRoleId_PrevAndNext(
+				session, contactProjectRole, contactRoleId, orderByComparator,
+				true);
+
+			array[1] = contactProjectRole;
+
+			array[2] = getByContactRoleId_PrevAndNext(
+				session, contactProjectRole, contactRoleId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactProjectRole getByContactRoleId_PrevAndNext(
+		Session session, ContactProjectRole contactProjectRole,
+		long contactRoleId,
+		OrderByComparator<ContactProjectRole> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTPROJECTROLE_WHERE);
+
+		query.append(_FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactProjectRoleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(contactRoleId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						contactProjectRole)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ContactProjectRole> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact project roles where contactRoleId = &#63; from the database.
+	 *
+	 * @param contactRoleId the contact role ID
+	 */
+	@Override
+	public void removeByContactRoleId(long contactRoleId) {
+		for (ContactProjectRole contactProjectRole :
+				findByContactRoleId(
+					contactRoleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(contactProjectRole);
+		}
+	}
+
+	/**
+	 * Returns the number of contact project roles where contactRoleId = &#63;.
+	 *
+	 * @param contactRoleId the contact role ID
+	 * @return the number of matching contact project roles
+	 */
+	@Override
+	public int countByContactRoleId(long contactRoleId) {
+		FinderPath finderPath = _finderPathCountByContactRoleId;
+
+		Object[] finderArgs = new Object[] {contactRoleId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTPROJECTROLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactRoleId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTACTROLEID_CONTACTROLEID_2 =
+		"contactProjectRole.id.contactRoleId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_P;
 	private FinderPath _finderPathWithoutPaginationFindByC_P;
 	private FinderPath _finderPathCountByC_P;
@@ -891,6 +2447,28 @@ public class ContactProjectRolePersistenceImpl
 		}
 		else if (isNew) {
 			Object[] args = new Object[] {
+				contactProjectRoleModelImpl.getContactId()
+			};
+
+			finderCache.removeResult(_finderPathCountByContactId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByContactId, args);
+
+			args = new Object[] {contactProjectRoleModelImpl.getProjectId()};
+
+			finderCache.removeResult(_finderPathCountByProjectId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByProjectId, args);
+
+			args = new Object[] {
+				contactProjectRoleModelImpl.getContactRoleId()
+			};
+
+			finderCache.removeResult(_finderPathCountByContactRoleId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByContactRoleId, args);
+
+			args = new Object[] {
 				contactProjectRoleModelImpl.getContactId(),
 				contactProjectRoleModelImpl.getProjectId()
 			};
@@ -904,6 +2482,69 @@ public class ContactProjectRolePersistenceImpl
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 		else {
+			if ((contactProjectRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByContactId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					contactProjectRoleModelImpl.getOriginalContactId()
+				};
+
+				finderCache.removeResult(_finderPathCountByContactId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactId, args);
+
+				args = new Object[] {
+					contactProjectRoleModelImpl.getContactId()
+				};
+
+				finderCache.removeResult(_finderPathCountByContactId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactId, args);
+			}
+
+			if ((contactProjectRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByProjectId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					contactProjectRoleModelImpl.getOriginalProjectId()
+				};
+
+				finderCache.removeResult(_finderPathCountByProjectId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByProjectId, args);
+
+				args = new Object[] {
+					contactProjectRoleModelImpl.getProjectId()
+				};
+
+				finderCache.removeResult(_finderPathCountByProjectId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByProjectId, args);
+			}
+
+			if ((contactProjectRoleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByContactRoleId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					contactProjectRoleModelImpl.getOriginalContactRoleId()
+				};
+
+				finderCache.removeResult(_finderPathCountByContactRoleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactRoleId, args);
+
+				args = new Object[] {
+					contactProjectRoleModelImpl.getContactRoleId()
+				};
+
+				finderCache.removeResult(_finderPathCountByContactRoleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByContactRoleId, args);
+			}
+
 			if ((contactProjectRoleModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByC_P.getColumnBitmask()) !=
 					 0) {
@@ -1234,6 +2875,69 @@ public class ContactProjectRolePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByContactId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ContactProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContactId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByContactId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ContactProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContactId",
+			new String[] {Long.class.getName()},
+			ContactProjectRoleModelImpl.CONTACTID_COLUMN_BITMASK);
+
+		_finderPathCountByContactId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByProjectId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ContactProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByProjectId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByProjectId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ContactProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByProjectId",
+			new String[] {Long.class.getName()},
+			ContactProjectRoleModelImpl.PROJECTID_COLUMN_BITMASK);
+
+		_finderPathCountByProjectId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByProjectId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByContactRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ContactProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContactRoleId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByContactRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ContactProjectRoleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContactRoleId",
+			new String[] {Long.class.getName()},
+			ContactProjectRoleModelImpl.CONTACTROLEID_COLUMN_BITMASK);
+
+		_finderPathCountByContactRoleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactRoleId",
+			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,

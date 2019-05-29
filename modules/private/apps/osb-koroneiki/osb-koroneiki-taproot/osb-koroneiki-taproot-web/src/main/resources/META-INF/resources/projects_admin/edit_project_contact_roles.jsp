@@ -64,9 +64,14 @@ renderResponse.setTitle(project.getName());
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
-				name="full-name"
-				value="<%= koroneikiContact.getFullName() %>"
-			/>
+				name="name"
+			>
+				<span class="lfr-portal-tooltip" data-title="<liferay-ui:message key="user" />">
+					<aui:icon cssClass="icon-monospaced" image="user" markupView="lexicon" />
+				</span>
+
+				<%= koroneikiContact.getFullName() %>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"

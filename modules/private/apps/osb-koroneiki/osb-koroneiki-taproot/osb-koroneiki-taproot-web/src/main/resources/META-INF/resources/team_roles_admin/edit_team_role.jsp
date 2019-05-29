@@ -38,25 +38,34 @@ int type = BeanParamUtil.getInteger(teamRole, request, "type");
 
 	<aui:fieldset-group>
 		<aui:fieldset>
-			<c:if test="<%= teamRole != null %>">
-				<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= teamRole.getUuid() %>" />
-			</c:if>
+			<c:choose>
+				<c:when test="<%= teamRole != null %>">
+					<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= teamRole.getUuid() %>" />
+
+					<h5><liferay-ui:message key="type" /></h5>
+
+					<p>
+						<liferay-ui:message key="<%= TeamRoleType.getLabel(teamRole.getType()) %>" />
+					</p>
+				</c:when>
+				<c:otherwise>
+					<aui:select name="type">
+
+						<%
+						for (int curType : TeamRoleType.VALUES) {
+						%>
+
+							<aui:option label="<%= TeamRoleType.getLabel(curType) %>" value="<%= curType %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</c:otherwise>
+			</c:choose>
 
 			<aui:input name="name" />
-
-			<aui:select name="type">
-
-				<%
-				for (int curType : TeamRoleType.VALUES) {
-				%>
-
-					<aui:option label="<%= TeamRoleType.getLabel(curType) %>" value="<%= curType %>" />
-
-				<%
-				}
-				%>
-
-			</aui:select>
 
 			<aui:input name="description" type="textarea" />
 		</aui:fieldset>

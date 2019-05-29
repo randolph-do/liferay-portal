@@ -66,8 +66,13 @@ renderResponse.setTitle(koroneikiAccount.getName());
 			>
 				<liferay-ui:search-container-column-text
 					name="domain"
-					value="<%= externalLink.getDomain() %>"
-				/>
+				>
+					<span class="lfr-portal-tooltip" data-title="<liferay-ui:message key="external-link" />">
+						<aui:icon cssClass="icon-monospaced" image="third-party" markupView="lexicon" />
+					</span>
+
+					<%= externalLink.getDomain() %>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					name="entity-name"

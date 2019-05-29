@@ -63,8 +63,8 @@ public class AssignProjectTeamMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			long projectId = ParamUtil.getLong(actionRequest, "projectId");
 
-			long teamId = ParamUtil.getLong(actionRequest, "teamName");
-			long teamRoleId = ParamUtil.getLong(actionRequest, "teamRoleName");
+			long teamId = ParamUtil.getLong(actionRequest, "teamId");
+			long teamRoleId = ParamUtil.getLong(actionRequest, "teamRoleId");
 
 			_teamProjectRoleService.addTeamProjectRole(
 				teamId, projectId, teamRoleId);

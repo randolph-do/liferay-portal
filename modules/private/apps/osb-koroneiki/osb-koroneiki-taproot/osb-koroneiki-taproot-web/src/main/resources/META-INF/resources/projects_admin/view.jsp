@@ -83,8 +83,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="name"
-				value="<%= project.getName() %>"
-			/>
+			>
+				<span class="lfr-portal-tooltip" data-title="<liferay-ui:message key="project" />">
+					<aui:icon cssClass="icon-monospaced" image="organizations" markupView="lexicon" />
+				</span>
+
+				<%= project.getName() %>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"

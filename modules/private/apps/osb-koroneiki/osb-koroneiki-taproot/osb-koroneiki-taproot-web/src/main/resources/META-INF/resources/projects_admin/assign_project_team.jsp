@@ -35,7 +35,7 @@ long projectId = BeanParamUtil.getLong(project, request, "projectId");
 
 	<aui:fieldset-group>
 		<aui:fieldset>
-			<aui:select name="teamName">
+			<aui:select label="team" name="teamId">
 				<aui:option value="" />
 
 				<%
@@ -50,7 +50,7 @@ long projectId = BeanParamUtil.getLong(project, request, "projectId");
 
 			</aui:select>
 
-			<aui:select name="teamRoleName">
+			<aui:select label="role" name="teamRoleId">
 				<aui:option value="" />
 
 				<%

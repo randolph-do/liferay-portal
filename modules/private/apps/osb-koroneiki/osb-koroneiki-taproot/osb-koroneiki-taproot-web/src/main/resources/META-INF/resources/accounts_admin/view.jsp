@@ -79,8 +79,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="name"
-				value="<%= koroneikiAccount.getName() %>"
-			/>
+			>
+				<span class="lfr-portal-tooltip" data-title="<liferay-ui:message key="account" />">
+					<aui:icon cssClass="icon-monospaced" image="users" markupView="lexicon" />
+				</span>
+
+				<%= koroneikiAccount.getName() %>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"

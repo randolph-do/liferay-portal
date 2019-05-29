@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -104,7 +105,7 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 
 				Object value = entry.getValue();
 
-				if (!oldValue.equals(value)) {
+				if (!Objects.equals(oldValue, value)) {
 					auditEntryLocalService.addAuditEntry(
 						userId, getClassNameId(model), getClassPK(model),
 						_auditSetId.get(), getFieldClassNameId(model),

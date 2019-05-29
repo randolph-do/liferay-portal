@@ -55,6 +55,12 @@ public class EditTeamMVCRenderCommand implements MVCRenderCommand {
 				renderRequest.setAttribute(TaprootWebKeys.TEAM, team);
 			}
 
+			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
+
+			if (tabs1.equals("external-links")) {
+				return "/teams_admin/edit_team_external_links.jsp";
+			}
+
 			return "/teams_admin/edit_team.jsp";
 		}
 		catch (Exception e) {

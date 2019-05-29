@@ -40,6 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + TaprootPortletKeys.ACCOUNTS_ADMIN,
+		"javax.portlet.name=" + TaprootPortletKeys.PROJECTS_ADMIN,
+		"javax.portlet.name=" + TaprootPortletKeys.TEAMS_ADMIN,
 		"mvc.command.name=/edit_external_link"
 	},
 	service = MVCActionCommand.class

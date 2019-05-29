@@ -60,6 +60,9 @@ public class EditProjectMVCRenderCommand implements MVCRenderCommand {
 			if (tabs1.equals("contact-roles")) {
 				return "/projects_admin/edit_project_contact_roles.jsp";
 			}
+			else if (tabs1.equals("external-links")) {
+				return "/projects_admin/edit_project_external_links.jsp";
+			}
 			else if (tabs1.equals("team-roles")) {
 				return "/projects_admin/edit_project_team_roles.jsp";
 			}

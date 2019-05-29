@@ -24,6 +24,8 @@ Team team = (Team)request.getAttribute(TaprootWebKeys.TEAM);
 long teamId = BeanParamUtil.getLong(team, request, "teamId");
 %>
 
+<liferay-util:include page="/teams_admin/edit_team_tabs.jsp" servletContext="<%= application %>" />
+
 <portlet:actionURL name="/teams_admin/edit_team" var="editTeamURL" />
 
 <aui:form action="<%= editTeamURL %>" cssClass="container-fluid-1280" method="post" name="fm">
@@ -61,8 +63,6 @@ long teamId = BeanParamUtil.getLong(team, request, "teamId");
 					</aui:select>
 				</c:when>
 				<c:otherwise>
-					<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= team.getUuid() %>" />
-
 					<h5><liferay-ui:message key="account" /></h5>
 
 					<p>

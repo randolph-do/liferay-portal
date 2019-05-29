@@ -57,6 +57,17 @@ long projectId = BeanParamUtil.getLong(project, request, "projectId");
 
 						navigationItem.setLabel(LanguageUtil.get(request, "team-roles"));
 					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("external-links"));
+
+						if (project != null) {
+							navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/projects_admin/edit_project", "tabs1", "external-links", "projectId", projectId);
+						}
+
+						navigationItem.setLabel(LanguageUtil.get(request, "external-links"));
+					});
 			}
 		}
 	%>"

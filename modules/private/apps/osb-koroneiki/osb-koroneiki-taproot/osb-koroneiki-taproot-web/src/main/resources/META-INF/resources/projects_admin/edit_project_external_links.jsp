@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Account koroneikiAccount = (Account)request.getAttribute(TaprootWebKeys.ACCOUNT);
+Project project = (Project)request.getAttribute(TaprootWebKeys.PROJECT);
 
-renderResponse.setTitle(koroneikiAccount.getName());
+renderResponse.setTitle(project.getName());
 %>
 
-<liferay-util:include page="/accounts_admin/edit_account_tabs.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/projects_admin/edit_project_tabs.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
 	creationMenu='<%=
@@ -30,7 +30,7 @@ renderResponse.setTitle(koroneikiAccount.getName());
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/edit_external_link", "redirect", PortalUtil.getCurrentURL(request), "classNameId", PortalUtil.getClassNameId(Account.class.getName()), "classPK", koroneikiAccount.getAccountId(), "title", koroneikiAccount.getName());
+						dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/edit_external_link", "redirect", PortalUtil.getCurrentURL(request), "classNameId", PortalUtil.getClassNameId(Project.class.getName()), "classPK", project.getProjectId(), "title", project.getName());
 						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 					});
 			}
@@ -43,7 +43,7 @@ renderResponse.setTitle(koroneikiAccount.getName());
 <div class="main-content-body">
 
 	<%
-	List<ExternalLink> externalLinks = koroneikiAccount.getExternalLinks();
+	List<ExternalLink> externalLinks = project.getExternalLinks();
 	%>
 
 	<div class="container-fluid-1280">

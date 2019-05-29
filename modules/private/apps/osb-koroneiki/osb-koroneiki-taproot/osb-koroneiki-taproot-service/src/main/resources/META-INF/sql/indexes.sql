@@ -12,6 +12,7 @@ create index IX_856F85E0 on Koroneiki_ContactRole (uuid_[$COLUMN_LENGTH:75$], co
 create index IX_478EC5E9 on Koroneiki_Project (accountId);
 create index IX_E74A30C3 on Koroneiki_Project (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_DC3C7305 on Koroneiki_Team (accountId);
 create index IX_AD200E72 on Koroneiki_Team (name[$COLUMN_LENGTH:75$]);
 create index IX_ADF0CC27 on Koroneiki_Team (uuid_[$COLUMN_LENGTH:75$], companyId);
 

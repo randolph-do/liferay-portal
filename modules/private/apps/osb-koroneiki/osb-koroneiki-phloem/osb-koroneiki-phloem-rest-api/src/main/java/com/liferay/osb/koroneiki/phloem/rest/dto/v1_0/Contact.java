@@ -139,7 +139,9 @@ public class Contact {
 	@NotEmpty
 	protected String emailAddress;
 
-	@Schema(description = "The account's links to external domains.")
+	@Schema(
+		description = "The account's links to entities in external domains."
+	)
 	public ExternalLink[] getExternalLinks() {
 		return externalLinks;
 	}

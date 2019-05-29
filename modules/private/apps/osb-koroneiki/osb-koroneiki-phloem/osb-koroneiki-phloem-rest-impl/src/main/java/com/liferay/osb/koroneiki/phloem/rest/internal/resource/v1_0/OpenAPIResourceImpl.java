@@ -86,6 +86,10 @@ public class OpenAPIResourceImpl {
 
 			add(ProjectResourceImpl.class);
 
+			add(TeamResourceImpl.class);
+
+			add(TeamRoleResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

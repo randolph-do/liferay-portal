@@ -289,6 +289,74 @@ public class ExternalLinkResource {
 		}
 	}
 
+	public Page<ExternalLink> getTeamExternalLinksPage(
+			Long teamId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+		httpInvoker.parameter(
+			"pageSize", String.valueOf(pagination.getPageSize()));
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}/external-links",
+			teamId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		return Page.of(content, ExternalLinkSerDes::toDTO);
+	}
+
+	public ExternalLink postTeamExternalLink(
+			Long teamId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			ExternalLinkSerDes.toJSON(externalLink), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}/external-links",
+			teamId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		try {
+			return ExternalLinkSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
 	private static final Logger _logger = Logger.getLogger(
 		ExternalLinkResource.class.getName());
 

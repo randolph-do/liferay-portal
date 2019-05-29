@@ -227,6 +227,50 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 		throws Exception {
 	}
 
+	@Override
+	@DELETE
+	@Operation(description = "Unassigns roles from the team for the project.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.PATH, name = "teamId"),
+			@Parameter(in = ParameterIn.QUERY, name = "teamRoleIds")
+		}
+	)
+	@Path("/projects/{projectId}/teams/{teamId}/roles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Project")})
+	public void deleteProjectTeamRole(
+			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
+				projectId,
+			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+			@NotNull @Parameter(hidden = true) @QueryParam("teamRoleIds") Long[]
+				teamRoleIds)
+		throws Exception {
+	}
+
+	@Override
+	@Operation(description = "Assigns roles to the team for the project.")
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.PATH, name = "teamId"),
+			@Parameter(in = ParameterIn.QUERY, name = "teamRoleIds")
+		}
+	)
+	@Path("/projects/{projectId}/teams/{teamId}/roles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Project")})
+	public void putProjectTeamRole(
+			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
+				projectId,
+			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+			@NotNull @Parameter(hidden = true) @QueryParam("teamRoleIds") Long[]
+				teamRoleIds)
+		throws Exception {
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

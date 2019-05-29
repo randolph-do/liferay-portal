@@ -470,6 +470,213 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the teams where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the matching teams
+	 */
+	public java.util.List<Team> findByAccountId(long accountId);
+
+	/**
+	 * Returns a range of all the teams where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @return the range of matching teams
+	 */
+	public java.util.List<Team> findByAccountId(
+		long accountId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the teams where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching teams
+	 */
+	public java.util.List<Team> findByAccountId(
+		long accountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Team>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the teams where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching teams
+	 */
+	public java.util.List<Team> findByAccountId(
+		long accountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Team>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first team in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team
+	 * @throws NoSuchTeamException if a matching team could not be found
+	 */
+	public Team findByAccountId_First(
+			long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<Team>
+				orderByComparator)
+		throws NoSuchTeamException;
+
+	/**
+	 * Returns the first team in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public Team fetchByAccountId_First(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator<Team>
+			orderByComparator);
+
+	/**
+	 * Returns the last team in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team
+	 * @throws NoSuchTeamException if a matching team could not be found
+	 */
+	public Team findByAccountId_Last(
+			long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<Team>
+				orderByComparator)
+		throws NoSuchTeamException;
+
+	/**
+	 * Returns the last team in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public Team fetchByAccountId_Last(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator<Team>
+			orderByComparator);
+
+	/**
+	 * Returns the teams before and after the current team in the ordered set where accountId = &#63;.
+	 *
+	 * @param teamId the primary key of the current team
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team
+	 * @throws NoSuchTeamException if a team with the primary key could not be found
+	 */
+	public Team[] findByAccountId_PrevAndNext(
+			long teamId, long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<Team>
+				orderByComparator)
+		throws NoSuchTeamException;
+
+	/**
+	 * Returns all the teams that the user has permission to view where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the matching teams that the user has permission to view
+	 */
+	public java.util.List<Team> filterFindByAccountId(long accountId);
+
+	/**
+	 * Returns a range of all the teams that the user has permission to view where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @return the range of matching teams that the user has permission to view
+	 */
+	public java.util.List<Team> filterFindByAccountId(
+		long accountId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the teams that the user has permissions to view where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching teams that the user has permission to view
+	 */
+	public java.util.List<Team> filterFindByAccountId(
+		long accountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Team>
+			orderByComparator);
+
+	/**
+	 * Returns the teams before and after the current team in the ordered set of teams that the user has permission to view where accountId = &#63;.
+	 *
+	 * @param teamId the primary key of the current team
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next team
+	 * @throws NoSuchTeamException if a team with the primary key could not be found
+	 */
+	public Team[] filterFindByAccountId_PrevAndNext(
+			long teamId, long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<Team>
+				orderByComparator)
+		throws NoSuchTeamException;
+
+	/**
+	 * Removes all the teams where accountId = &#63; from the database.
+	 *
+	 * @param accountId the account ID
+	 */
+	public void removeByAccountId(long accountId);
+
+	/**
+	 * Returns the number of teams where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the number of matching teams
+	 */
+	public int countByAccountId(long accountId);
+
+	/**
+	 * Returns the number of teams that the user has permission to view where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the number of matching teams that the user has permission to view
+	 */
+	public int filterCountByAccountId(long accountId);
+
+	/**
 	 * Returns all the teams where name = &#63;.
 	 *
 	 * @param name the name

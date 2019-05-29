@@ -46,67 +46,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Project")
+@GraphQLName("TeamRole")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"name", "status"})
-@XmlRootElement(name = "Project")
-public class Project {
+@Schema(requiredProperties = {"name", "type"})
+@XmlRootElement(name = "TeamRole")
+public class TeamRole {
 
-	@Schema(description = "The project's account's ID.")
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
-
-	@JsonIgnore
-	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
-
-		try {
-			accountId = accountIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long accountId;
-
-	@Schema(description = "The code of the project.")
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	@JsonIgnore
-	public void setCode(UnsafeSupplier<String, Exception> codeUnsafeSupplier) {
-		try {
-			code = codeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String code;
-
-	@Schema(description = "The project's creation date.")
+	@Schema(description = "The team role's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -135,7 +81,7 @@ public class Project {
 	protected Date dateCreated;
 
 	@Schema(
-		description = "The most recent time that any of the project's fields changed."
+		description = "The most recent time that any of the team role's fields changed."
 	)
 	public Date getDateModified() {
 		return dateModified;
@@ -164,23 +110,21 @@ public class Project {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
-	@Schema(
-		description = "The account's links to entities in external domains."
-	)
-	public ExternalLink[] getExternalLinks() {
-		return externalLinks;
+	@Schema(description = "The description of the team role.")
+	public String getDescription() {
+		return description;
 	}
 
-	public void setExternalLinks(ExternalLink[] externalLinks) {
-		this.externalLinks = externalLinks;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@JsonIgnore
-	public void setExternalLinks(
-		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
 		try {
-			externalLinks = externalLinksUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -191,10 +135,10 @@ public class Project {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected ExternalLink[] externalLinks;
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
 
-	@Schema(description = "The project's ID.")
+	@Schema(description = "The team role's ID.")
 	public Long getId() {
 		return id;
 	}
@@ -220,35 +164,7 @@ public class Project {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(description = "The industry of the project.")
-	public String getIndustry() {
-		return industry;
-	}
-
-	public void setIndustry(String industry) {
-		this.industry = industry;
-	}
-
-	@JsonIgnore
-	public void setIndustry(
-		UnsafeSupplier<String, Exception> industryUnsafeSupplier) {
-
-		try {
-			industry = industryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String industry;
-
-	@Schema(description = "The name of the project.")
+	@Schema(description = "The name of the team role.")
 	public String getName() {
 		return name;
 	}
@@ -275,49 +191,19 @@ public class Project {
 	@NotEmpty
 	protected String name;
 
-	@Schema(description = "The notes of the project.")
-	public String getNotes() {
-		return notes;
+	@Schema(description = "The team role's type.")
+	public String getType() {
+		return type;
 	}
 
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	@JsonIgnore
-	public void setNotes(
-		UnsafeSupplier<String, Exception> notesUnsafeSupplier) {
-
-		try {
-			notes = notesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String notes;
-
-	@Schema(description = "The status of the project.")
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
-
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
-			status = statusUnsafeSupplier.get();
+			type = typeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -330,33 +216,7 @@ public class Project {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
-	protected String status;
-
-	@Schema(description = "The tier of the project.")
-	public String getTier() {
-		return tier;
-	}
-
-	public void setTier(String tier) {
-		this.tier = tier;
-	}
-
-	@JsonIgnore
-	public void setTier(UnsafeSupplier<String, Exception> tierUnsafeSupplier) {
-		try {
-			tier = tierUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String tier;
+	protected String type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -364,13 +224,13 @@ public class Project {
 			return true;
 		}
 
-		if (!(object instanceof Project)) {
+		if (!(object instanceof TeamRole)) {
 			return false;
 		}
 
-		Project project = (Project)object;
+		TeamRole teamRole = (TeamRole)object;
 
-		return Objects.equals(toString(), project.toString());
+		return Objects.equals(toString(), teamRole.toString());
 	}
 
 	@Override
@@ -387,30 +247,6 @@ public class Project {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (accountId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"accountId\": ");
-
-			sb.append(accountId);
-		}
-
-		if (code != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"code\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(code));
-
-			sb.append("\"");
-		}
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -440,24 +276,18 @@ public class Project {
 			sb.append("\"");
 		}
 
-		if (externalLinks != null) {
+		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"externalLinks\": ");
+			sb.append("\"description\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < externalLinks.length; i++) {
-				sb.append(String.valueOf(externalLinks[i]));
+			sb.append(_escape(description));
 
-				if ((i + 1) < externalLinks.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
 		if (id != null) {
@@ -468,20 +298,6 @@ public class Project {
 			sb.append("\"id\": ");
 
 			sb.append(id);
-		}
-
-		if (industry != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"industry\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(industry));
-
-			sb.append("\"");
 		}
 
 		if (name != null) {
@@ -498,44 +314,16 @@ public class Project {
 			sb.append("\"");
 		}
 
-		if (notes != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"notes\": ");
+			sb.append("\"type\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(notes));
-
-			sb.append("\"");
-		}
-
-		if (status != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"status\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(status));
-
-			sb.append("\"");
-		}
-
-		if (tier != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"tier\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(tier));
+			sb.append(_escape(type));
 
 			sb.append("\"");
 		}

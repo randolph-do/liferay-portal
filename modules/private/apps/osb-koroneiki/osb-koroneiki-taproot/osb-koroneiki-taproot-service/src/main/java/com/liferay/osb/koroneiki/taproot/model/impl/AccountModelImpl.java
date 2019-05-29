@@ -37,9 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -290,31 +287,6 @@ public class AccountModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, Account>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			Account.class.getClassLoader(), Account.class, ModelWrapper.class);
-
-		try {
-			Constructor<Account> constructor =
-				(Constructor<Account>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException roe) {
-					throw new InternalError(roe);
-				}
-			};
-		}
-		catch (NoSuchMethodException nsme) {
-			throw new InternalError(nsme);
-		}
 	}
 
 	private static final Map<String, Function<Account, Object>>
@@ -844,7 +816,8 @@ public class AccountModelImpl
 	@Override
 	public Account toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			_escapedModel = (Account)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1143,8 +1116,11 @@ public class AccountModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, Account>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static final ClassLoader _classLoader =
+		Account.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+		Account.class, ModelWrapper.class
+	};
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

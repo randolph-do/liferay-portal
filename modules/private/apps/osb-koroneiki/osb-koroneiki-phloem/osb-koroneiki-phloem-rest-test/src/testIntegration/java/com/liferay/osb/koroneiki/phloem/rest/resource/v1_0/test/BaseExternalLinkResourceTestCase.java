@@ -980,6 +980,233 @@ public abstract class BaseExternalLinkResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testGetTeamExternalLinksPage() throws Exception {
+		Long teamId = testGetTeamExternalLinksPage_getTeamId();
+		Long irrelevantTeamId =
+			testGetTeamExternalLinksPage_getIrrelevantTeamId();
+
+		if ((irrelevantTeamId != null)) {
+			ExternalLink irrelevantExternalLink =
+				testGetTeamExternalLinksPage_addExternalLink(
+					irrelevantTeamId, randomIrrelevantExternalLink());
+
+			Page<ExternalLink> page = invokeGetTeamExternalLinksPage(
+				irrelevantTeamId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantExternalLink),
+				(List<ExternalLink>)page.getItems());
+			assertValid(page);
+		}
+
+		ExternalLink externalLink1 =
+			testGetTeamExternalLinksPage_addExternalLink(
+				teamId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetTeamExternalLinksPage_addExternalLink(
+				teamId, randomExternalLink());
+
+		Page<ExternalLink> page = invokeGetTeamExternalLinksPage(
+			teamId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2),
+			(List<ExternalLink>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetTeamExternalLinksPageWithPagination() throws Exception {
+		Long teamId = testGetTeamExternalLinksPage_getTeamId();
+
+		ExternalLink externalLink1 =
+			testGetTeamExternalLinksPage_addExternalLink(
+				teamId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetTeamExternalLinksPage_addExternalLink(
+				teamId, randomExternalLink());
+
+		ExternalLink externalLink3 =
+			testGetTeamExternalLinksPage_addExternalLink(
+				teamId, randomExternalLink());
+
+		Page<ExternalLink> page1 = invokeGetTeamExternalLinksPage(
+			teamId, Pagination.of(1, 2));
+
+		List<ExternalLink> externalLinks1 =
+			(List<ExternalLink>)page1.getItems();
+
+		Assert.assertEquals(
+			externalLinks1.toString(), 2, externalLinks1.size());
+
+		Page<ExternalLink> page2 = invokeGetTeamExternalLinksPage(
+			teamId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ExternalLink> externalLinks2 =
+			(List<ExternalLink>)page2.getItems();
+
+		Assert.assertEquals(
+			externalLinks2.toString(), 1, externalLinks2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2, externalLink3),
+			new ArrayList<ExternalLink>() {
+				{
+					addAll(externalLinks1);
+					addAll(externalLinks2);
+				}
+			});
+	}
+
+	protected ExternalLink testGetTeamExternalLinksPage_addExternalLink(
+			Long teamId, ExternalLink externalLink)
+		throws Exception {
+
+		return invokePostTeamExternalLink(teamId, externalLink);
+	}
+
+	protected Long testGetTeamExternalLinksPage_getTeamId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetTeamExternalLinksPage_getIrrelevantTeamId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<ExternalLink> invokeGetTeamExternalLinksPage(
+			Long teamId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return Page.of(string, ExternalLinkSerDes::toDTO);
+	}
+
+	protected Http.Response invokeGetTeamExternalLinksPageResponse(
+			Long teamId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostTeamExternalLink() throws Exception {
+		ExternalLink randomExternalLink = randomExternalLink();
+
+		ExternalLink postExternalLink =
+			testPostTeamExternalLink_addExternalLink(randomExternalLink);
+
+		assertEquals(randomExternalLink, postExternalLink);
+		assertValid(postExternalLink);
+	}
+
+	protected ExternalLink testPostTeamExternalLink_addExternalLink(
+			ExternalLink externalLink)
+		throws Exception {
+
+		return invokePostTeamExternalLink(
+			testGetTeamExternalLinksPage_getTeamId(), externalLink);
+	}
+
+	protected ExternalLink invokePostTeamExternalLink(
+			Long teamId, ExternalLink externalLink)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			ExternalLinkSerDes.toJSON(externalLink),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return ExternalLinkSerDes.toDTO(string);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostTeamExternalLinkResponse(
+			Long teamId, ExternalLink externalLink)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			ExternalLinkSerDes.toJSON(externalLink),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 

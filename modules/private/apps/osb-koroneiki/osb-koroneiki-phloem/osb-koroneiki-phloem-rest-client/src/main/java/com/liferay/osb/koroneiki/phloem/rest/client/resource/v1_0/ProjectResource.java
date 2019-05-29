@@ -281,6 +281,54 @@ public class ProjectResource {
 		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
+	public void deleteProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
+			projectId, teamId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+	}
+
+	public void putProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
+			projectId, teamId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+	}
+
 	private static final Logger _logger = Logger.getLogger(
 		ProjectResource.class.getName());
 

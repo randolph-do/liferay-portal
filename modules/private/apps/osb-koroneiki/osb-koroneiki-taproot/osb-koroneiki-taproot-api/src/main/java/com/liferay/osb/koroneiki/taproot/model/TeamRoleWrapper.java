@@ -196,6 +196,11 @@ public class TeamRoleWrapper
 		return model.getType();
 	}
 
+	@Override
+	public String getTypeLabel() {
+		return model.getTypeLabel();
+	}
+
 	/**
 	 * Returns the user ID of this team role.
 	 *

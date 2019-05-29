@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -262,32 +259,6 @@ public class TeamRoleModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, TeamRole>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			TeamRole.class.getClassLoader(), TeamRole.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<TeamRole> constructor =
-				(Constructor<TeamRole>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException roe) {
-					throw new InternalError(roe);
-				}
-			};
-		}
-		catch (NoSuchMethodException nsme) {
-			throw new InternalError(nsme);
-		}
 	}
 
 	private static final Map<String, Function<TeamRole, Object>>
@@ -543,7 +514,8 @@ public class TeamRoleModelImpl
 	@Override
 	public TeamRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			_escapedModel = (TeamRole)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -760,8 +732,11 @@ public class TeamRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, TeamRole>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static final ClassLoader _classLoader =
+		TeamRole.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+		TeamRole.class, ModelWrapper.class
+	};
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

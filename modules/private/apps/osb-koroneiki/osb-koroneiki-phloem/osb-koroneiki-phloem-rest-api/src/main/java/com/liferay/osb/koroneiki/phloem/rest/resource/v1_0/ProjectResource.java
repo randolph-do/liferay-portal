@@ -59,6 +59,14 @@ public interface ProjectResource {
 			Long projectId, Long contactId, Long[] contactRoleIds)
 		throws Exception;
 
+	public void deleteProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception;
+
+	public void putProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception;
+
 	public void setContextCompany(Company contextCompany);
 
 }

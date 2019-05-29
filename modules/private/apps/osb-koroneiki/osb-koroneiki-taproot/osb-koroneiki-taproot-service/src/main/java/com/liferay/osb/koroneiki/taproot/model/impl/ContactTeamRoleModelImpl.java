@@ -28,9 +28,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -240,32 +237,6 @@ public class ContactTeamRoleModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, ContactTeamRole>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			ContactTeamRole.class.getClassLoader(), ContactTeamRole.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<ContactTeamRole> constructor =
-				(Constructor<ContactTeamRole>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException roe) {
-					throw new InternalError(roe);
-				}
-			};
-		}
-		catch (NoSuchMethodException nsme) {
-			throw new InternalError(nsme);
-		}
-	}
-
 	private static final Map<String, Function<ContactTeamRole, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ContactTeamRole, Object>>
@@ -336,7 +307,8 @@ public class ContactTeamRoleModelImpl
 	@Override
 	public ContactTeamRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			_escapedModel = (ContactTeamRole)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -483,8 +455,11 @@ public class ContactTeamRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, ContactTeamRole>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static final ClassLoader _classLoader =
+		ContactTeamRole.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+		ContactTeamRole.class, ModelWrapper.class
+	};
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

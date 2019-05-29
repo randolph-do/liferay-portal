@@ -101,6 +101,24 @@ public class TeamRoleServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap
+			getTeamRole(long teamRoleId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.TeamRole returnValue =
+				TeamRoleServiceUtil.getTeamRole(teamRoleId);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap
 			updateTeamRole(long teamRoleId, String name, String description)
 		throws RemoteException {
 

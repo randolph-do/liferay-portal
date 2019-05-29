@@ -781,6 +781,125 @@ public abstract class BaseProjectResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testDeleteProjectTeamRole() throws Exception {
+		Project project = testDeleteProjectTeamRole_addProject();
+
+		assertResponseCode(
+			204, invokeDeleteProjectTeamRoleResponse(project.getId()));
+
+		assertResponseCode(
+			404, invokeGetProjectTeamRoleResponse(project.getId()));
+
+		assertResponseCode(404, invokeGetProjectTeamRoleResponse(0L));
+	}
+
+	protected Project testDeleteProjectTeamRole_addProject() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokeDeleteProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/projects/{projectId}/teams/{teamId}/roles", projectId,
+					teamId);
+
+		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokeDeleteProjectTeamRoleResponse(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/projects/{projectId}/teams/{teamId}/roles", projectId,
+					teamId);
+
+		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutProjectTeamRole() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void invokePutProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/projects/{projectId}/teams/{teamId}/roles", projectId,
+					teamId);
+
+		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokePutProjectTeamRoleResponse(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/projects/{projectId}/teams/{teamId}/roles", projectId,
+					teamId);
+
+		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 

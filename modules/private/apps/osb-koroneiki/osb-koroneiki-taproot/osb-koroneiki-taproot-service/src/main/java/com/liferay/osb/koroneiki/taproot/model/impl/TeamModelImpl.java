@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -112,13 +109,15 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ACCOUNTID_COLUMN_BITMASK = 1L;
 
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
 
-	public static final long TEAMID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	public static final long TEAMID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -254,31 +253,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, Team>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			Team.class.getClassLoader(), Team.class, ModelWrapper.class);
-
-		try {
-			Constructor<Team> constructor =
-				(Constructor<Team>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException roe) {
-					throw new InternalError(roe);
-				}
-			};
-		}
-		catch (NoSuchMethodException nsme) {
-			throw new InternalError(nsme);
-		}
 	}
 
 	private static final Map<String, Function<Team, Object>>
@@ -446,7 +420,19 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public void setAccountId(long accountId) {
+		_columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
+
+		if (!_setOriginalAccountId) {
+			_setOriginalAccountId = true;
+
+			_originalAccountId = _accountId;
+		}
+
 		_accountId = accountId;
+	}
+
+	public long getOriginalAccountId() {
+		return _originalAccountId;
 	}
 
 	@JSON
@@ -501,7 +487,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	@Override
 	public Team toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			_escapedModel = (Team)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -589,6 +576,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamModelImpl._setOriginalCompanyId = false;
 
 		teamModelImpl._setModifiedDate = false;
+
+		teamModelImpl._originalAccountId = teamModelImpl._accountId;
+
+		teamModelImpl._setOriginalAccountId = false;
 
 		teamModelImpl._originalName = teamModelImpl._name;
 
@@ -705,8 +696,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, Team>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static final ClassLoader _classLoader = Team.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+		Team.class, ModelWrapper.class
+	};
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
@@ -721,6 +714,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _accountId;
+	private long _originalAccountId;
+	private boolean _setOriginalAccountId;
 	private String _name;
 	private String _originalName;
 	private long _columnBitmask;

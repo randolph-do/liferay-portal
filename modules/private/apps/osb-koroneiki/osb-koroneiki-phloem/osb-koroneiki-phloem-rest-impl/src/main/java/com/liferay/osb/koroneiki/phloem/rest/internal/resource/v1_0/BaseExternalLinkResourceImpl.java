@@ -205,6 +205,43 @@ public abstract class BaseExternalLinkResourceImpl
 		return new ExternalLink();
 	}
 
+	@Override
+	@GET
+	@Operation(description = "Retrieves the team's external links.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "teamId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/teams/{teamId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public Page<ExternalLink> getTeamExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Adds an external link to the team.")
+	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamId")})
+	@Path("/teams/{teamId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public ExternalLink postTeamExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+			ExternalLink externalLink)
+		throws Exception {
+
+		return new ExternalLink();
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

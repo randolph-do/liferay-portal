@@ -48,6 +48,21 @@ public class TeamServiceWrapper
 		return _teamService.deleteTeam(teamId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+			getAccountTeams(long accountId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.getAccountTeams(accountId, start, end);
+	}
+
+	@Override
+	public int getAccountTeamsCount(long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.getAccountTeamsCount(accountId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -56,6 +71,13 @@ public class TeamServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _teamService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Team getTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.getTeam(teamId);
 	}
 
 	@Override

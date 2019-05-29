@@ -19,11 +19,15 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -82,6 +86,22 @@ public class Mutation {
 
 		_projectResourceComponentServiceObjects =
 			projectResourceComponentServiceObjects;
+	}
+
+	public static void setTeamResourceComponentServiceObjects(
+		ComponentServiceObjects<TeamResource>
+			teamResourceComponentServiceObjects) {
+
+		_teamResourceComponentServiceObjects =
+			teamResourceComponentServiceObjects;
+	}
+
+	public static void setTeamRoleResourceComponentServiceObjects(
+		ComponentServiceObjects<TeamRoleResource>
+			teamRoleResourceComponentServiceObjects) {
+
+		_teamRoleResourceComponentServiceObjects =
+			teamRoleResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -289,6 +309,20 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public ExternalLink postTeamExternalLink(
+			@GraphQLName("teamId") Long teamId,
+			@GraphQLName("externalLink") ExternalLink externalLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> externalLinkResource.postTeamExternalLink(
+				teamId, externalLink));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Project postAccountProject(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("project") Project project)
@@ -377,6 +411,102 @@ public class Mutation {
 				projectId, contactId, contactRoleIds));
 	}
 
+	@GraphQLInvokeDetached
+	public void deleteProjectTeamRole(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("teamId") Long teamId,
+			@GraphQLName("teamRoleIds") Long[] teamRoleIds)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_projectResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			projectResource -> projectResource.deleteProjectTeamRole(
+				projectId, teamId, teamRoleIds));
+	}
+
+	@GraphQLInvokeDetached
+	public void putProjectTeamRole(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("teamId") Long teamId,
+			@GraphQLName("teamRoleIds") Long[] teamRoleIds)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_projectResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			projectResource -> projectResource.putProjectTeamRole(
+				projectId, teamId, teamRoleIds));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Team postAccountTeam(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("team") Team team)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_teamResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamResource -> teamResource.postAccountTeam(accountId, team));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteTeam(@GraphQLName("teamId") Long teamId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_teamResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamResource -> teamResource.deleteTeam(teamId));
+	}
+
+	@GraphQLInvokeDetached
+	public Team putTeam(
+			@GraphQLName("teamId") Long teamId, @GraphQLName("team") Team team)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_teamResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamResource -> teamResource.putTeam(teamId, team));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TeamRole postTeamRole(@GraphQLName("teamRole") TeamRole teamRole)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_teamRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamRoleResource -> teamRoleResource.postTeamRole(teamRole));
+	}
+
+	@GraphQLInvokeDetached
+	public void deleteTeamRole(@GraphQLName("teamRoleId") Long teamRoleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_teamRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamRoleResource -> teamRoleResource.deleteTeamRole(teamRoleId));
+	}
+
+	@GraphQLInvokeDetached
+	public TeamRole putTeamRole(
+			@GraphQLName("teamRoleId") Long teamRoleId,
+			@GraphQLName("teamRole") TeamRole teamRole)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_teamRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamRoleResource -> teamRoleResource.putTeamRole(
+				teamRoleId, teamRole));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -457,6 +587,22 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(TeamResource teamResource)
+		throws Exception {
+
+		teamResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(TeamRoleResource teamRoleResource)
+		throws Exception {
+
+		teamRoleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactResource>
@@ -467,5 +613,9 @@ public class Mutation {
 		_externalLinkResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TeamResource>
+		_teamResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TeamRoleResource>
+		_teamRoleResourceComponentServiceObjects;
 
 }

@@ -21,6 +21,8 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -52,6 +54,10 @@ public class ServletDataImpl implements ServletData {
 			_externalLinkResourceComponentServiceObjects);
 		Mutation.setProjectResourceComponentServiceObjects(
 			_projectResourceComponentServiceObjects);
+		Mutation.setTeamResourceComponentServiceObjects(
+			_teamResourceComponentServiceObjects);
+		Mutation.setTeamRoleResourceComponentServiceObjects(
+			_teamRoleResourceComponentServiceObjects);
 
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
@@ -63,6 +69,10 @@ public class ServletDataImpl implements ServletData {
 			_externalLinkResourceComponentServiceObjects);
 		Query.setProjectResourceComponentServiceObjects(
 			_projectResourceComponentServiceObjects);
+		Query.setTeamResourceComponentServiceObjects(
+			_teamResourceComponentServiceObjects);
+		Query.setTeamRoleResourceComponentServiceObjects(
+			_teamRoleResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -99,5 +109,13 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TeamResource>
+		_teamResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TeamRoleResource>
+		_teamRoleResourceComponentServiceObjects;
 
 }

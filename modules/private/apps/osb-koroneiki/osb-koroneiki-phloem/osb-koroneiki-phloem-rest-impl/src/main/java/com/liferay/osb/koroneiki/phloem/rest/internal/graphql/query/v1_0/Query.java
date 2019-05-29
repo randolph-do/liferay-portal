@@ -19,11 +19,15 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -86,6 +90,22 @@ public class Query {
 
 		_projectResourceComponentServiceObjects =
 			projectResourceComponentServiceObjects;
+	}
+
+	public static void setTeamResourceComponentServiceObjects(
+		ComponentServiceObjects<TeamResource>
+			teamResourceComponentServiceObjects) {
+
+		_teamResourceComponentServiceObjects =
+			teamResourceComponentServiceObjects;
+	}
+
+	public static void setTeamRoleResourceComponentServiceObjects(
+		ComponentServiceObjects<TeamRoleResource>
+			teamRoleResourceComponentServiceObjects) {
+
+		_teamRoleResourceComponentServiceObjects =
+			teamRoleResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -236,6 +256,26 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<ExternalLink> getTeamExternalLinksPage(
+			@GraphQLName("teamId") Long teamId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> {
+				Page paginationPage =
+					externalLinkResource.getTeamExternalLinksPage(
+						teamId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<Project> getAccountProjectsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -262,6 +302,45 @@ public class Query {
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			projectResource -> projectResource.getProject(projectId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Team> getAccountTeamsPage(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_teamResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamResource -> {
+				Page paginationPage = teamResource.getAccountTeamsPage(
+					accountId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Team getTeam(@GraphQLName("teamId") Long teamId) throws Exception {
+		return _applyComponentServiceObjects(
+			_teamResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamResource -> teamResource.getTeam(teamId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TeamRole getTeamRole(@GraphQLName("teamRoleId") Long teamRoleId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_teamRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			teamRoleResource -> teamRoleResource.getTeamRole(teamRoleId));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -325,6 +404,22 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(TeamResource teamResource)
+		throws Exception {
+
+		teamResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(TeamRoleResource teamRoleResource)
+		throws Exception {
+
+		teamRoleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactResource>
@@ -335,5 +430,9 @@ public class Query {
 		_externalLinkResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TeamResource>
+		_teamResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TeamRoleResource>
+		_teamRoleResourceComponentServiceObjects;
 
 }

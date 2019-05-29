@@ -60,6 +60,14 @@ public class TeamRoleServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.TeamRole getTeamRole(
+			long teamRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamRoleService.getTeamRole(teamRoleId);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.TeamRole updateTeamRole(
 			long teamRoleId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {

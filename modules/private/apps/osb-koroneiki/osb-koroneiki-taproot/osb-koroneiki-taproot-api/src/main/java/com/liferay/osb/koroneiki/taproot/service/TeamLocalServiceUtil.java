@@ -211,6 +211,16 @@ public class TeamLocalServiceUtil {
 		return getService().fetchTeamByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+		getAccountTeams(long accountId, int start, int end) {
+
+		return getService().getAccountTeams(accountId, start, end);
+	}
+
+	public static int getAccountTeamsCount(long accountId) {
+		return getService().getAccountTeamsCount(accountId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

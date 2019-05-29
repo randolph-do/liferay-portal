@@ -138,7 +138,9 @@ public class Account {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	@Schema(description = "The account's links to external domains.")
+	@Schema(
+		description = "The account's links to entities in external domains."
+	)
 	public ExternalLink[] getExternalLinks() {
 		return externalLinks;
 	}

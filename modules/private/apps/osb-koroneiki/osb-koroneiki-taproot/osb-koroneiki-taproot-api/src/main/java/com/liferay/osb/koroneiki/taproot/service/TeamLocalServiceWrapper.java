@@ -214,6 +214,18 @@ public class TeamLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+		getAccountTeams(long accountId, int start, int end) {
+
+		return _teamLocalService.getAccountTeams(accountId, start, end);
+	}
+
+	@Override
+	public int getAccountTeamsCount(long accountId) {
+		return _teamLocalService.getAccountTeamsCount(accountId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

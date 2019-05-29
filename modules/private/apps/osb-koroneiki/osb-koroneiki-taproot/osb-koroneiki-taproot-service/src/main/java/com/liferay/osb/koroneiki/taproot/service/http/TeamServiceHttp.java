@@ -128,6 +128,120 @@ public class TeamServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+			getAccountTeams(
+				HttpPrincipal httpPrincipal, long accountId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamServiceUtil.class, "getAccountTeams",
+				_getAccountTeamsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.osb.koroneiki.taproot.model.Team>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getAccountTeamsCount(
+			HttpPrincipal httpPrincipal, long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamServiceUtil.class, "getAccountTeamsCount",
+				_getAccountTeamsCountParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Team getTeam(
+			HttpPrincipal httpPrincipal, long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamServiceUtil.class, "getTeam", _getTeamParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, teamId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Team)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
 			HttpPrincipal httpPrincipal, long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -135,7 +249,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "updateTeam",
-				_updateTeamParameterTypes2);
+				_updateTeamParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, teamId, name);
@@ -174,7 +288,14 @@ public class TeamServiceHttp {
 	private static final Class<?>[] _deleteTeamParameterTypes1 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _updateTeamParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getAccountTeamsParameterTypes2 =
+		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getAccountTeamsCountParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getTeamParameterTypes4 = new Class[] {
+		long.class
+	};
+	private static final Class<?>[] _updateTeamParameterTypes5 = new Class[] {
 		long.class, String.class
 	};
 

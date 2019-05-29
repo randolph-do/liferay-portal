@@ -60,6 +60,14 @@ public interface ExternalLinkResource {
 			Long projectId, ExternalLink externalLink)
 		throws Exception;
 
+	public Page<ExternalLink> getTeamExternalLinksPage(
+			Long teamId, Pagination pagination)
+		throws Exception;
+
+	public ExternalLink postTeamExternalLink(
+			Long teamId, ExternalLink externalLink)
+		throws Exception;
+
 	public void setContextCompany(Company contextCompany);
 
 }

@@ -61,4 +61,7 @@ public interface Team extends PersistedModel, TeamModel {
 	public Account getAccount()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks();
+
 }

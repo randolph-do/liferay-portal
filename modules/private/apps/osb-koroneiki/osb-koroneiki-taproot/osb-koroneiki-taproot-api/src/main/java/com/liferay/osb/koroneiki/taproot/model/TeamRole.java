@@ -77,4 +77,6 @@ public interface TeamRole extends PersistedModel, TeamRoleModel {
 
 		};
 
+	public String getTypeLabel();
+
 }

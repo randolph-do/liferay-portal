@@ -89,7 +89,7 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 		try {
 			long userId = PrincipalThreadLocal.getUserId();
 
-			long classPK = getClassPK(model);
+			long classPK = (Long)model.getPrimaryKeyObj();
 
 			T oldModel = getModel(classPK);
 

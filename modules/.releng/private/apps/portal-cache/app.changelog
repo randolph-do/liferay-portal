@@ -1,0 +1,16 @@
+#
+# Liferay App Version 2.0.0
+#
+
+app.artifacts-2.0.0=\
+	com.liferay.portal.cache.api-2.0.0.jar,\
+	com.liferay.portal.cache.ehcache.impl-2.0.1.jar,\
+	com.liferay.portal.cache.ehcache.provider-4.0.0.jar,\
+	com.liferay.portal.cache.ehcache.spi-2.0.0.jar,\
+	com.liferay.portal.cache.extender-1.0.1.jar,\
+	com.liferay.portal.cache.impl-2.0.1.jar,\
+	com.liferay.portal.cache.multiple-3.0.5.jar
+
+app.change.log-2.0.0=LPS-77425 LPS-77699 LPS-80332 LPS-80517 LPS-81028 LPS-81287 LPS-81555 LPS-82828 LPS-83545 LPS-83597 LPS-83807 LPS-83869 LPS-84093 LPS-84119 LPS-84374 LPS-85008 LPS-85099 LPS-86198 LPS-86408 LPS-86714 LPS-86806 LPS-87590 LPS-87729 LPS-88547 LPS-91335 LPS-91534 LPS-93254 LPS-93265 LPS-94555 LPS-95413 LPS-95555
+
+app.git.id-2.0.0=03a7cf8d3014e3319d723ca20b917f3ce3e0bc33

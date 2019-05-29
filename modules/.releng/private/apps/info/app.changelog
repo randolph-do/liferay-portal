@@ -1,0 +1,11 @@
+#
+# Liferay App Version 1.0.0
+#
+
+app.artifacts-1.0.0=\
+	com.liferay.info.api-4.0.0.jar,\
+	com.liferay.info.impl-3.0.1.jar
+
+app.change.log-1.0.0=LPS-88218 LPS-91855 LPS-92446 LPS-92553 LPS-92603 LPS-93434 LPS-93586 LPS-94085 LPS-94228 LPS-94618 LPS-94990 LPS-95413 LPS-95555 LPS-95858 LPS-95893
+
+app.git.id-1.0.0=03a7cf8d3014e3319d723ca20b917f3ce3e0bc33

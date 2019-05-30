@@ -1,0 +1,11 @@
+#
+# Liferay App Version 2.0.0
+#
+
+app.artifacts-2.0.0=\
+	com.liferay.portal.rules.engine.api-4.0.3.jar,\
+	com.liferay.portal.rules.engine.wiring-4.0.2.jar
+
+app.change.log-2.0.0=LPS-77425 LPS-79679 LPS-80332 LPS-82828 LPS-84119 LPS-85296 LPS-95067 LPS-95413 LPS-95555
+
+app.git.id-2.0.0=ad21b659c8575f2234de29d295dfd21612df0d10

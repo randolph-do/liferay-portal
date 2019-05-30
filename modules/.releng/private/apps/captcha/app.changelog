@@ -1,0 +1,12 @@
+#
+# Liferay App Version 2.0.0
+#
+
+app.artifacts-2.0.0=\
+	com.liferay.captcha.api-3.0.6.jar,\
+	com.liferay.captcha.impl-2.0.2.jar,\
+	com.liferay.captcha.taglib-3.0.1.jar
+
+app.change.log-2.0.0=LPS-0 LPS-77425 LPS-77699 LPS-79653 LPS-79679 LPS-80332 LPS-80830 LPS-81217 LPS-81723 LPS-82021/LPS-82022 LPS-82343 LPS-82647 LPS-84090 LPS-84119 LPS-84283 LPS-84311 LPS-85296 LPS-86806 LPS-87590 LPS-89188 LPS-89291 LPS-91772 LPS-94555 LPS-95413 LPS-95555
+
+app.git.id-2.0.0=ad21b659c8575f2234de29d295dfd21612df0d10

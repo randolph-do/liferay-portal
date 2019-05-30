@@ -1,0 +1,34 @@
+#
+# Liferay App Version 2.0.0
+#
+
+app.artifacts-2.0.0=\
+	com.liferay.layout.admin.api-2.0.1.jar,\
+	com.liferay.layout.admin.web-3.0.22.jar,\
+	com.liferay.layout.api-2.0.0.jar,\
+	com.liferay.layout.change.tracking-1.0.4.jar,\
+	com.liferay.layout.content.page.editor.api-1.0.1.jar,\
+	com.liferay.layout.content.page.editor.web-1.0.20.jar,\
+	com.liferay.layout.impl-4.0.8.jar,\
+	com.liferay.layout.item.selector.api-3.0.1.jar,\
+	com.liferay.layout.item.selector.web-3.0.1.jar,\
+	com.liferay.layout.page.template.api-2.1.0.jar,\
+	com.liferay.layout.page.template.service-2.1.9.jar,\
+	com.liferay.layout.prototype.api-3.0.0.jar,\
+	com.liferay.layout.prototype.impl-3.0.3.jar,\
+	com.liferay.layout.set.prototype.api-3.0.0.jar,\
+	com.liferay.layout.set.prototype.impl-4.0.2.jar,\
+	com.liferay.layout.set.prototype.web-3.0.4.jar,\
+	com.liferay.layout.taglib-4.0.8.jar,\
+	com.liferay.layout.type.controller.asset.display-2.0.4.jar,\
+	com.liferay.layout.type.controller.content-2.0.10.jar,\
+	com.liferay.layout.type.controller.control.panel-4.0.1.jar,\
+	com.liferay.layout.type.controller.display.page-1.0.12.jar,\
+	com.liferay.layout.type.controller.full.page.application-4.0.4.jar,\
+	com.liferay.layout.type.controller.link.to.page-2.0.6.jar,\
+	com.liferay.layout.type.controller.node-4.0.3.jar,\
+	com.liferay.layout.uad-4.0.0.jar
+
+app.change.log-2.0.0=[[trimmed]]78 LPS-94595 LPS-94596 LPS-94597 LPS-94612 LPS-94618 LPS-94633 LPS-94649 LPS-94705 LPS-94737 LPS-94780 LPS-94782 LPS-94787 LPS-94789 LPS-94790 LPS-94837 LPS-94845 LPS-94882 LPS-94910 LPS-94917 LPS-94918 LPS-94931 LPS-94971 LPS-94990 LPS-95002 LPS-95028 LPS-95043 LPS-95045 LPS-95052 LPS-95059 LPS-95063 LPS-95071 LPS-95072 LPS-95082 LPS-95088 LPS-95093 LPS-95096 LPS-95100 LPS-95109 LPS-95111 LPS-95113 LPS-95119 LPS-95178 LPS-95179 LPS-95184 LPS-95186 LPS-95212 LPS-95219 LPS-95255 LPS-95260 LPS-95271 LPS-95295 LPS-95311 LPS-95324 LPS-95349 LPS-95351 LPS-95392 LPS-95398 LPS-95401 LPS-95413 LPS-95452 LPS-95519 LPS-95555 LPS-95567 LPS-95639 LPS-95652 LPS-95673 LPS-95675 LPS-95681 LPS-95713 LPS-95740 LPS-95750 LPS-95840 LPS-95847 LPS-95858 LPS-95881 LPS-95886 LPS-96014 LPS-96018 LPS-96046 LPS-96047 LPS-96048 LPS-96049 LPS-96058 LPS-96059 LPS-96077 LPS-96091 LPS-96148 LPS-96183 LPS-96201 LPS-96218 LPS-96239 LPS-96240 LPS-96246 LPS-96256 LRDOCS-5658 LRDOCS-6300 LRDOCS-6450 LRQA-44612 LRQA-47907
+
+app.git.id-2.0.0=ad21b659c8575f2234de29d295dfd21612df0d10

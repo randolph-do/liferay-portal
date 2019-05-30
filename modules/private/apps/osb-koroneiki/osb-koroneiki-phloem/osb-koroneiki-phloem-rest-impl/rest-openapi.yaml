@@ -34,10 +34,10 @@ components:
                 - name
             type: object
         AuditEntry:
-            description: Represends and audit entry.
+            description: An audit log that records changes to objects.
             properties:
                 action:
-                    description: The audit entry's action.
+                    description: The action performed on the object.
                     readOnly: true
                     type: string
                 auditSetId:
@@ -45,13 +45,12 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
-                classNameId:
-                    description: The id of the class being audited.
-                    format: int64
+                className:
+                    description: The name of the audited object.
                     readOnly: true
-                    type: integer
+                    type: string
                 classPK:
-                    description: The primary key of the class object being audited.
+                    description: The primary key of the audited object.
                     format: int64
                     readOnly: true
                     type: integer
@@ -65,30 +64,40 @@ components:
                     readOnly: true
                     type: string
                 field:
-                    description: The field being audited.
+                    description: The field of the audited object.
                     readOnly: true
                     type: string
-                fieldClassNameId:
-                    description: The id of the class of the field being audited.
+                fieldClassName:
+                    description: If the field is on a child object of the audited object, the name of the child object. Otherwise the name of the audited object.
+                    readOnly: true
+                    type: string
+                fieldClassPK:
+                    description: If the field is on a child object of the audited object, the primary key of the child object. Otherwise the primary key of the audited object.
                     format: int64
                     readOnly: true
                     type: integer
-                fieldClassPK:
-                    description: The primary key of the field class object being audited.
+                id:
+                    description: The audit entry's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 newValue:
-                    description: The old value of the object being audited.
+                    description: The new value of the field on the audited object.
                     readOnly: true
                     type: string
                 oldValue:
-                    description: The new value of the object being audited.
-                userName:
-                    description: The full name of creator of the audit entry.
+                    description: The old value of the field on the audited object.
                     readOnly: true
                     type: string
-            required:
+                userId:
+                    description: The ID of the user performing the audited action.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                userName:
+                    description: The full name of the user performing the audited action.
+                    readOnly: true
+                    type: string
             type: object
         Contact:
             description: Represents a contact.
@@ -408,6 +417,40 @@ paths:
                                 $ref: "#/components/schemas/Account"
                     description: ""
             tags: ["Account"]
+    "/accounts/{accountId}/audit-entries":
+        get:
+            description: Retrieves the account's audit history.
+            operationId: getAccountAuditEntriesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                    description: ""
+            tags: ["AuditEntry"]
     "/accounts/{accountId}/contacts":
         delete:
             description: Unassigns contacts from the account.
@@ -741,29 +784,6 @@ paths:
                                 $ref: "#/components/schemas/Team"
                     description: ""
             tags: ["Team"]
-    "/audit-entries":
-        post:
-            operationId: postAuditEntry
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/AuditEntry"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/AuditEntry"
-                required: true
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/AuditEntry"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/AuditEntry"
-                    description: ""
-            tags: ["AuditEntry"]
     "/audit-entries/{auditEntryId}":
         get:
             description: Retrieves the audit entry.
@@ -875,6 +895,40 @@ paths:
                                 $ref: "#/components/schemas/ContactRole"
                     description: ""
             tags: ["ContactRole"]
+    "/contact-roles/{contactRoleId}/audit-entries":
+        get:
+            description: Retrieves the contact role's audit history.
+            operationId: getContactRoleAuditEntriesPage
+            parameters:
+                - in: path
+                  name: contactRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                    description: ""
+            tags: ["AuditEntry"]
     "/contacts":
         post:
             operationId: postContact
@@ -935,6 +989,40 @@ paths:
                                 $ref: "#/components/schemas/Contact"
                     description: ""
             tags: ["Contact"]
+    "/contacts/{contactId}/audit-entries":
+        get:
+            description: Retrieves the contact's audit history.
+            operationId: getContactAuditEntriesPage
+            parameters:
+                - in: path
+                  name: contactId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                    description: ""
+            tags: ["AuditEntry"]
     "/contacts/{contactId}/external-links":
         get:
             description: Retrieves the contact's external links.
@@ -1102,6 +1190,40 @@ paths:
                                 $ref: "#/components/schemas/Project"
                     description: ""
             tags: ["Project"]
+    "/projects/{projectId}/audit-entries":
+        get:
+            description: Retrieves the project's audit history.
+            operationId: getProjectAuditEntriesPage
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                    description: ""
+            tags: ["AuditEntry"]
     "/projects/{projectId}/contacts":
         delete:
             description: Unassigns contacts from the project.
@@ -1459,6 +1581,40 @@ paths:
                                 $ref: "#/components/schemas/TeamRole"
                     description: ""
             tags: ["TeamRole"]
+    "/team-roles/{teamRoleId}/audit-entries":
+        get:
+            description: Retrieves the team role's audit history.
+            operationId: getTeamRoleAuditEntriesPage
+            parameters:
+                - in: path
+                  name: teamRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                    description: ""
+            tags: ["AuditEntry"]
     "/teams/{teamId}":
         delete:
             operationId: deleteTeam
@@ -1525,6 +1681,40 @@ paths:
                                 $ref: "#/components/schemas/Team"
                     description: ""
             tags: ["Team"]
+    "/teams/{teamId}/audit-entries":
+        get:
+            description: Retrieves the team's audit history.
+            operationId: getTeamAuditEntriesPage
+            parameters:
+                - in: path
+                  name: teamId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AuditEntry"
+                                type: array
+                    description: ""
+            tags: ["AuditEntry"]
     "/teams/{teamId}/external-links":
         get:
             description: Retrieves the team's external links.

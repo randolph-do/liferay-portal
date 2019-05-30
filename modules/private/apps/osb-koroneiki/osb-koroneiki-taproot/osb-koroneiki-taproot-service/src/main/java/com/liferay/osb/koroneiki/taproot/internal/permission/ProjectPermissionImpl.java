@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.internal.permission;
 
+import com.liferay.osb.koroneiki.root.permission.ModelPermission;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
@@ -28,8 +29,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = ProjectPermission.class)
-public class ProjectPermissionImpl implements ProjectPermission {
+@Component(
+	immediate = true, service = {ModelPermission.class, ProjectPermission.class}
+)
+public class ProjectPermissionImpl
+	implements ModelPermission, ProjectPermission {
 
 	public static final String RESOURCE_NAME_PROJECTS =
 		"com.liferay.osb.koroneiki.taproot.projects";
@@ -128,6 +132,11 @@ public class ProjectPermissionImpl implements ProjectPermission {
 
 		return permissionChecker.hasPermission(
 			0, RESOURCE_NAME_PROJECTS, RESOURCE_NAME_PROJECTS, actionId);
+	}
+
+	@Override
+	public String getClassName() {
+		return Project.class.getName();
 	}
 
 	@Reference

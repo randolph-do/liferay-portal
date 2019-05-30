@@ -22,6 +22,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -67,6 +69,17 @@ public class AuditEntryLocalServiceImpl extends AuditEntryLocalServiceBaseImpl {
 		auditEntry.setDescription(description);
 
 		return auditEntryPersistence.update(auditEntry);
+	}
+
+	public List<AuditEntry> getAuditEntries(
+		long classNameId, long classPK, int start, int end) {
+
+		return auditEntryPersistence.findByC_C(
+			classNameId, classPK, start, end);
+	}
+
+	public int getAuditEntriesCount(long classNameId, long classPK) {
+		return auditEntryPersistence.countByC_C(classNameId, classPK);
 	}
 
 	public long getNextAuditSetId(long classNameId, long classPK) {

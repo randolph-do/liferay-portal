@@ -31,6 +31,13 @@
 		<column name="newLabel" type="String" />
 		<column name="newValue" type="String" />
 		<column name="description" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ExternalLink" remote-service="true">
 

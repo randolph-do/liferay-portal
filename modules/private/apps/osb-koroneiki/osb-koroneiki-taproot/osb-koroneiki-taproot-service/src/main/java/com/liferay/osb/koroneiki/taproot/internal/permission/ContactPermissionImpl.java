@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.internal.permission;
 
+import com.liferay.osb.koroneiki.root.permission.ModelPermission;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.permission.ContactPermission;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
@@ -28,8 +29,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = ContactPermission.class)
-public class ContactPermissionImpl implements ContactPermission {
+@Component(
+	immediate = true, service = {ContactPermission.class, ModelPermission.class}
+)
+public class ContactPermissionImpl
+	implements ContactPermission, ModelPermission {
 
 	public static final String RESOURCE_NAME_CONTACTS =
 		"com.liferay.osb.koroneiki.taproot.contacts";
@@ -128,6 +132,11 @@ public class ContactPermissionImpl implements ContactPermission {
 
 		return permissionChecker.hasPermission(
 			0, RESOURCE_NAME_CONTACTS, RESOURCE_NAME_CONTACTS, actionId);
+	}
+
+	@Override
+	public String getClassName() {
+		return Contact.class.getName();
 	}
 
 	@Reference

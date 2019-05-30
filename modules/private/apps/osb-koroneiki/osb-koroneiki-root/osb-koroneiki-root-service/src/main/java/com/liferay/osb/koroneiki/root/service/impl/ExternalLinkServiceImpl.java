@@ -15,16 +15,10 @@
 package com.liferay.osb.koroneiki.root.service.impl;
 
 import com.liferay.osb.koroneiki.root.model.ExternalLink;
+import com.liferay.osb.koroneiki.root.permission.ModelPermissionRegistry;
 import com.liferay.osb.koroneiki.root.service.base.ExternalLinkServiceBaseImpl;
-import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.taproot.model.Project;
-import com.liferay.osb.koroneiki.taproot.model.Team;
-import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
-import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
-import com.liferay.osb.koroneiki.taproot.permission.TeamPermission;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import java.util.List;
@@ -50,7 +44,8 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 			String entityId)
 		throws PortalException {
 
-		checkPermission(classNameId, classPK, ActionKeys.UPDATE);
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), classNameId, classPK, ActionKeys.UPDATE);
 
 		return externalLinkLocalService.addExternalLink(
 			getUserId(), classNameId, classPK, domain, entityName, entityId);
@@ -62,9 +57,9 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 		ExternalLink externalLink = externalLinkLocalService.getExternalLink(
 			externalLinkId);
 
-		checkPermission(
-			externalLink.getClassNameId(), externalLink.getClassPK(),
-			ActionKeys.UPDATE);
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), externalLink.getClassNameId(),
+			externalLink.getClassPK(), ActionKeys.UPDATE);
 
 		return externalLinkLocalService.deleteExternalLink(externalLinkId);
 	}
@@ -75,9 +70,9 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 		ExternalLink externalLink = externalLinkLocalService.getExternalLink(
 			externalLinkId);
 
-		checkPermission(
-			externalLink.getClassNameId(), externalLink.getClassPK(),
-			ActionKeys.VIEW);
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), externalLink.getClassNameId(),
+			externalLink.getClassPK(), ActionKeys.VIEW);
 
 		return externalLink;
 	}
@@ -86,7 +81,8 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 			long classNameId, long classPK, int start, int end)
 		throws PortalException {
 
-		checkPermission(classNameId, classPK, ActionKeys.VIEW);
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), classNameId, classPK, ActionKeys.VIEW);
 
 		return externalLinkLocalService.getExternalLinks(
 			classNameId, classPK, start, end);
@@ -95,7 +91,8 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 	public int getExternalLinksCount(long classNameId, long classPK)
 		throws PortalException {
 
-		checkPermission(classNameId, classPK, ActionKeys.VIEW);
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), classNameId, classPK, ActionKeys.VIEW);
 
 		return externalLinkLocalService.getExternalLinksCount(
 			classNameId, classPK);
@@ -107,47 +104,15 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 		ExternalLink externalLink = externalLinkLocalService.getExternalLink(
 			externalLinkId);
 
-		checkPermission(
-			externalLink.getClassNameId(), externalLink.getClassPK(),
-			ActionKeys.UPDATE);
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), externalLink.getClassNameId(),
+			externalLink.getClassPK(), ActionKeys.UPDATE);
 
 		return externalLinkLocalService.updateExternalLink(
 			externalLinkId, entityId);
 	}
 
-	protected void checkPermission(
-			long classNameId, long classPK, String action)
-		throws PortalException {
-
-		if (classNameId == classNameLocalService.getClassNameId(
-				Account.class)) {
-
-			_accountPermission.check(getPermissionChecker(), classPK, action);
-		}
-		else if (classNameId == classNameLocalService.getClassNameId(
-					Project.class)) {
-
-			_projectPermission.check(getPermissionChecker(), classPK, action);
-		}
-		else if (classNameId == classNameLocalService.getClassNameId(
-					Team.class)) {
-
-			_teamPermission.check(getPermissionChecker(), classPK, action);
-		}
-		else {
-			throw new PrincipalException.MustHavePermission(
-				getPermissionChecker(), String.valueOf(classNameId), classPK,
-				action);
-		}
-	}
-
 	@Reference
-	private AccountPermission _accountPermission;
-
-	@Reference
-	private ProjectPermission _projectPermission;
-
-	@Reference
-	private TeamPermission _teamPermission;
+	private ModelPermissionRegistry _modelPermissionRegistry;
 
 }

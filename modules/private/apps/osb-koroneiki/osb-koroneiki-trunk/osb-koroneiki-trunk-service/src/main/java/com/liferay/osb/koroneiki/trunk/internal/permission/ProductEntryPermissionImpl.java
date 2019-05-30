@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.trunk.internal.permission;
 
+import com.liferay.osb.koroneiki.root.permission.ModelPermission;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.permission.ProductEntryPermission;
 import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalService;
@@ -28,8 +29,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = ProductEntryPermission.class)
-public class ProductEntryPermissionImpl implements ProductEntryPermission {
+@Component(
+	immediate = true,
+	service = {ModelPermission.class, ProductEntryPermission.class}
+)
+public class ProductEntryPermissionImpl
+	implements ModelPermission, ProductEntryPermission {
 
 	public static final String RESOURCE_NAME_PRODUCTS =
 		"com.liferay.osb.koroneiki.trunk.products";
@@ -131,6 +136,11 @@ public class ProductEntryPermissionImpl implements ProductEntryPermission {
 
 		return permissionChecker.hasPermission(
 			0, RESOURCE_NAME_PRODUCTS, RESOURCE_NAME_PRODUCTS, actionId);
+	}
+
+	@Override
+	public String getClassName() {
+		return ProductEntry.class.getName();
 	}
 
 	@Reference

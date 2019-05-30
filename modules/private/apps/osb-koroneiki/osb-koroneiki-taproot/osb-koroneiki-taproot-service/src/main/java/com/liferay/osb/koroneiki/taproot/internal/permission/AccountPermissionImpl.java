@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.internal.permission;
 
+import com.liferay.osb.koroneiki.root.permission.ModelPermission;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
@@ -28,8 +29,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = AccountPermission.class)
-public class AccountPermissionImpl implements AccountPermission {
+@Component(
+	immediate = true, service = {AccountPermission.class, ModelPermission.class}
+)
+public class AccountPermissionImpl
+	implements AccountPermission, ModelPermission {
 
 	public static final String RESOURCE_NAME_ACCOUNTS =
 		"com.liferay.osb.koroneiki.taproot.accounts";
@@ -128,6 +132,11 @@ public class AccountPermissionImpl implements AccountPermission {
 
 		return permissionChecker.hasPermission(
 			0, RESOURCE_NAME_ACCOUNTS, RESOURCE_NAME_ACCOUNTS, actionId);
+	}
+
+	@Override
+	public String getClassName() {
+		return Account.class.getName();
 	}
 
 	@Reference

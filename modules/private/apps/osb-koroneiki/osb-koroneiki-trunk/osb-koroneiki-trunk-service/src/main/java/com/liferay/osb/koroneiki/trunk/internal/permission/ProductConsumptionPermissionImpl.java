@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.trunk.internal.permission;
 
+import com.liferay.osb.koroneiki.root.permission.ModelPermission;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.permission.ProductConsumptionPermission;
 import com.liferay.osb.koroneiki.trunk.service.ProductConsumptionLocalService;
@@ -28,9 +29,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = ProductConsumptionPermission.class)
+@Component(
+	immediate = true,
+	service = {ModelPermission.class, ProductConsumptionPermission.class}
+)
 public class ProductConsumptionPermissionImpl
-	implements ProductConsumptionPermission {
+	implements ModelPermission, ProductConsumptionPermission {
 
 	@Override
 	public void check(
@@ -112,6 +116,11 @@ public class ProductConsumptionPermissionImpl
 		return permissionChecker.hasPermission(
 			0, ProductConsumption.class.getName(),
 			productConsumption.getProductConsumptionId(), actionId);
+	}
+
+	@Override
+	public String getClassName() {
+		return ProductConsumption.class.getName();
 	}
 
 	@Reference

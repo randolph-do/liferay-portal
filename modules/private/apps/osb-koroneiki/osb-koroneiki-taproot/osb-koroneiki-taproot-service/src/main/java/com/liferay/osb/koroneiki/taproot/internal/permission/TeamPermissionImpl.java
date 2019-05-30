@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.internal.permission;
 
+import com.liferay.osb.koroneiki.root.permission.ModelPermission;
 import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.permission.TeamPermission;
 import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
@@ -28,8 +29,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = TeamPermission.class)
-public class TeamPermissionImpl implements TeamPermission {
+@Component(
+	immediate = true, service = {ModelPermission.class, TeamPermission.class}
+)
+public class TeamPermissionImpl implements ModelPermission, TeamPermission {
 
 	public static final String RESOURCE_NAME_TEAMS =
 		"com.liferay.osb.koroneiki.taproot.teams";
@@ -123,6 +126,11 @@ public class TeamPermissionImpl implements TeamPermission {
 
 		return permissionChecker.hasPermission(
 			0, Team.class.getName(), team.getTeamId(), actionId);
+	}
+
+	@Override
+	public String getClassName() {
+		return Team.class.getName();
 	}
 
 	@Reference

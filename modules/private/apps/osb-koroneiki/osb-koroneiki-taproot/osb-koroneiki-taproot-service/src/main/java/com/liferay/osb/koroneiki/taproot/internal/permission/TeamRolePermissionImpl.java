@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.internal.permission;
 
+import com.liferay.osb.koroneiki.root.permission.ModelPermission;
 import com.liferay.osb.koroneiki.taproot.model.TeamRole;
 import com.liferay.osb.koroneiki.taproot.permission.TeamRolePermission;
 import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalService;
@@ -28,8 +29,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = TeamRolePermission.class)
-public class TeamRolePermissionImpl implements TeamRolePermission {
+@Component(
+	immediate = true,
+	service = {ModelPermission.class, TeamRolePermission.class}
+)
+public class TeamRolePermissionImpl
+	implements ModelPermission, TeamRolePermission {
 
 	public static final String RESOURCE_NAME_TEAM_ROLES =
 		"com.liferay.osb.koroneiki.taproot.team.roles";
@@ -128,6 +133,11 @@ public class TeamRolePermissionImpl implements TeamRolePermission {
 
 		return permissionChecker.hasPermission(
 			0, TeamRole.class.getName(), teamRole.getTeamRoleId(), actionId);
+	}
+
+	@Override
+	public String getClassName() {
+		return TeamRole.class.getName();
 	}
 
 	@Reference

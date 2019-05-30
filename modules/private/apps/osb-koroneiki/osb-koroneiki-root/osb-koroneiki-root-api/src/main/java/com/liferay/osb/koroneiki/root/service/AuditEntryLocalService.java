@@ -199,6 +199,10 @@ public interface AuditEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AuditEntry> getAuditEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AuditEntry> getAuditEntries(
+		long classNameId, long classPK, int start, int end);
+
 	/**
 	 * Returns the number of audit entries.
 	 *
@@ -206,6 +210,9 @@ public interface AuditEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAuditEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAuditEntriesCount(long classNameId, long classPK);
 
 	/**
 	 * Returns the audit entry with the primary key.

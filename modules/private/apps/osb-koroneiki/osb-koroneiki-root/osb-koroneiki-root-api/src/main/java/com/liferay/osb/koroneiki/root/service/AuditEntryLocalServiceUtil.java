@@ -230,6 +230,13 @@ public class AuditEntryLocalServiceUtil {
 		return getService().getAuditEntries(start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.root.model.AuditEntry> getAuditEntries(
+			long classNameId, long classPK, int start, int end) {
+
+		return getService().getAuditEntries(classNameId, classPK, start, end);
+	}
+
 	/**
 	 * Returns the number of audit entries.
 	 *
@@ -237,6 +244,10 @@ public class AuditEntryLocalServiceUtil {
 	 */
 	public static int getAuditEntriesCount() {
 		return getService().getAuditEntriesCount();
+	}
+
+	public static int getAuditEntriesCount(long classNameId, long classPK) {
+		return getService().getAuditEntriesCount(classNameId, classPK);
 	}
 
 	/**

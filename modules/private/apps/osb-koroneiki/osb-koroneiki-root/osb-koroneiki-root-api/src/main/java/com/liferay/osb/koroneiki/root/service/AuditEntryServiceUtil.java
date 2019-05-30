@@ -39,6 +39,26 @@ public class AuditEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.root.service.impl.AuditEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static java.util.List
+		<com.liferay.osb.koroneiki.root.model.AuditEntry> getAuditEntries(
+				long classNameId, long classPK, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAuditEntries(classNameId, classPK, start, end);
+	}
+
+	public static int getAuditEntriesCount(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAuditEntriesCount(classNameId, classPK);
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.AuditEntry getAuditEntry(
+			long auditEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAuditEntry(auditEntryId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.

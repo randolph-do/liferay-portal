@@ -427,7 +427,10 @@ public abstract class BaseAccountResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -449,7 +452,10 @@ public abstract class BaseAccountResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -471,7 +477,10 @@ public abstract class BaseAccountResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -493,7 +502,10 @@ public abstract class BaseAccountResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -538,8 +550,10 @@ public abstract class BaseAccountResourceTestCase {
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -564,8 +578,10 @@ public abstract class BaseAccountResourceTestCase {
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -591,8 +607,10 @@ public abstract class BaseAccountResourceTestCase {
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -617,8 +635,10 @@ public abstract class BaseAccountResourceTestCase {
 					"/accounts/{accountId}/contacts/{contactId}/roles",
 					accountId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 

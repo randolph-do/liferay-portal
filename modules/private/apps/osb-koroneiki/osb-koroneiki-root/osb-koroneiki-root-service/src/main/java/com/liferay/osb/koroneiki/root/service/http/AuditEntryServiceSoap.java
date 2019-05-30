@@ -14,11 +14,17 @@
 
 package com.liferay.osb.koroneiki.root.service.http;
 
+import com.liferay.osb.koroneiki.root.service.AuditEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.osb.koroneiki.root.service.AuditEntryServiceUtil</code> service
+ * <code>AuditEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,61 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class AuditEntryServiceSoap {
+
+	public static com.liferay.osb.koroneiki.root.model.AuditEntrySoap[]
+			getAuditEntries(long classNameId, long classPK, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.osb.koroneiki.root.model.AuditEntry>
+				returnValue = AuditEntryServiceUtil.getAuditEntries(
+					classNameId, classPK, start, end);
+
+			return com.liferay.osb.koroneiki.root.model.AuditEntrySoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getAuditEntriesCount(long classNameId, long classPK)
+		throws RemoteException {
+
+		try {
+			int returnValue = AuditEntryServiceUtil.getAuditEntriesCount(
+				classNameId, classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.AuditEntrySoap
+			getAuditEntry(long auditEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.AuditEntry returnValue =
+				AuditEntryServiceUtil.getAuditEntry(auditEntryId);
+
+			return com.liferay.osb.koroneiki.root.model.AuditEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AuditEntryServiceSoap.class);
+
 }

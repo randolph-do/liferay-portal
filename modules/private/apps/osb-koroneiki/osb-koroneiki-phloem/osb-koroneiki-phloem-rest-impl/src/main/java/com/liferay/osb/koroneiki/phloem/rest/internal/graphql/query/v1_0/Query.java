@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.graphql.query.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.AuditEntry;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
@@ -22,6 +23,7 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
@@ -58,6 +60,14 @@ public class Query {
 
 		_accountResourceComponentServiceObjects =
 			accountResourceComponentServiceObjects;
+	}
+
+	public static void setAuditEntryResourceComponentServiceObjects(
+		ComponentServiceObjects<AuditEntryResource>
+			auditEntryResourceComponentServiceObjects) {
+
+		_auditEntryResourceComponentServiceObjects =
+			auditEntryResourceComponentServiceObjects;
 	}
 
 	public static void setContactResourceComponentServiceObjects(
@@ -117,6 +127,139 @@ public class Query {
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountResource -> accountResource.getAccount(accountId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<AuditEntry> getAccountAuditEntriesPage(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			auditEntryResource -> {
+				Page paginationPage =
+					auditEntryResource.getAccountAuditEntriesPage(
+						accountId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public AuditEntry getAuditEntry(
+			@GraphQLName("auditEntryId") Long auditEntryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			auditEntryResource -> auditEntryResource.getAuditEntry(
+				auditEntryId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<AuditEntry> getContactRoleAuditEntriesPage(
+			@GraphQLName("contactRoleId") Long contactRoleId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			auditEntryResource -> {
+				Page paginationPage =
+					auditEntryResource.getContactRoleAuditEntriesPage(
+						contactRoleId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<AuditEntry> getContactAuditEntriesPage(
+			@GraphQLName("contactId") Long contactId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			auditEntryResource -> {
+				Page paginationPage =
+					auditEntryResource.getContactAuditEntriesPage(
+						contactId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<AuditEntry> getProjectAuditEntriesPage(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			auditEntryResource -> {
+				Page paginationPage =
+					auditEntryResource.getProjectAuditEntriesPage(
+						projectId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<AuditEntry> getTeamRoleAuditEntriesPage(
+			@GraphQLName("teamRoleId") Long teamRoleId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			auditEntryResource -> {
+				Page paginationPage =
+					auditEntryResource.getTeamRoleAuditEntriesPage(
+						teamRoleId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<AuditEntry> getTeamAuditEntriesPage(
+			@GraphQLName("teamId") Long teamId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			auditEntryResource -> {
+				Page paginationPage =
+					auditEntryResource.getTeamAuditEntriesPage(
+						teamId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -370,6 +513,14 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(AuditEntryResource auditEntryResource)
+		throws Exception {
+
+		auditEntryResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(ContactResource contactResource)
 		throws Exception {
 
@@ -422,6 +573,8 @@ public class Query {
 
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AuditEntryResource>
+		_auditEntryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactResource>
 		_contactResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactRoleResource>

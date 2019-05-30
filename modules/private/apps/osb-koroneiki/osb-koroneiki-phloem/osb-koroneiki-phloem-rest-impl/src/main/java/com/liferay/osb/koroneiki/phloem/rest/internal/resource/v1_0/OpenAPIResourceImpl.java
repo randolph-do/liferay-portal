@@ -78,6 +78,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AccountResourceImpl.class);
 
+			add(AuditEntryResourceImpl.class);
+
 			add(ContactResourceImpl.class);
 
 			add(ContactRoleResourceImpl.class);

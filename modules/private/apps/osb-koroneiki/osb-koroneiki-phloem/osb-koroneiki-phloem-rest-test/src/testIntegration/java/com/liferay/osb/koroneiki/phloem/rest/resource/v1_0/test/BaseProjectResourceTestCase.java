@@ -256,10 +256,12 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/projects", accountId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -281,10 +283,12 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/accounts/{accountId}/projects", accountId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -579,7 +583,10 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -601,7 +608,10 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -623,7 +633,10 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -645,7 +658,10 @@ public abstract class BaseProjectResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/projects/{projectId}/contacts", projectId);
 
-		location = HttpUtil.addParameter(location, "contactIds", contactIds);
+		if (contactIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactIds", contactIds);
+		}
 
 		options.setLocation(location);
 
@@ -690,8 +706,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -716,8 +734,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -743,8 +763,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -769,8 +791,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/contacts/{contactId}/roles",
 					projectId, contactId);
 
-		location = HttpUtil.addParameter(
-			location, "contactRoleIds", contactRoleIds);
+		if (contactRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "contactRoleIds", contactRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -813,7 +837,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/teams/{teamId}/roles", projectId,
 					teamId);
 
-		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+		if (teamRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "teamRoleIds", teamRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -838,7 +865,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/teams/{teamId}/roles", projectId,
 					teamId);
 
-		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+		if (teamRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "teamRoleIds", teamRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -864,7 +894,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/teams/{teamId}/roles", projectId,
 					teamId);
 
-		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+		if (teamRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "teamRoleIds", teamRoleIds);
+		}
 
 		options.setLocation(location);
 
@@ -889,7 +922,10 @@ public abstract class BaseProjectResourceTestCase {
 					"/projects/{projectId}/teams/{teamId}/roles", projectId,
 					teamId);
 
-		location = HttpUtil.addParameter(location, "teamRoleIds", teamRoleIds);
+		if (teamRoleIds != null) {
+			location = HttpUtil.addParameter(
+				location, "teamRoleIds", teamRoleIds);
+		}
 
 		options.setLocation(location);
 

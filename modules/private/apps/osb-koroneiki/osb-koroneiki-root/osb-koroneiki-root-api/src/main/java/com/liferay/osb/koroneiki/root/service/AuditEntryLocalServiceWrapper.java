@@ -236,6 +236,14 @@ public class AuditEntryLocalServiceWrapper
 		return _auditEntryLocalService.getAuditEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.root.model.AuditEntry>
+		getAuditEntries(long classNameId, long classPK, int start, int end) {
+
+		return _auditEntryLocalService.getAuditEntries(
+			classNameId, classPK, start, end);
+	}
+
 	/**
 	 * Returns the number of audit entries.
 	 *
@@ -244,6 +252,12 @@ public class AuditEntryLocalServiceWrapper
 	@Override
 	public int getAuditEntriesCount() {
 		return _auditEntryLocalService.getAuditEntriesCount();
+	}
+
+	@Override
+	public int getAuditEntriesCount(long classNameId, long classPK) {
+		return _auditEntryLocalService.getAuditEntriesCount(
+			classNameId, classPK);
 	}
 
 	/**

@@ -129,6 +129,12 @@ public class AuditEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
+	public static final long AUDITENTRYID_COLUMN_BITMASK = 4L;
+
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
 	}
@@ -516,7 +522,19 @@ public class AuditEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -527,7 +545,19 @@ public class AuditEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -675,6 +705,10 @@ public class AuditEntryModelImpl
 		_description = description;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
@@ -783,6 +817,17 @@ public class AuditEntryModelImpl
 		AuditEntryModelImpl auditEntryModelImpl = this;
 
 		auditEntryModelImpl._setModifiedDate = false;
+
+		auditEntryModelImpl._originalClassNameId =
+			auditEntryModelImpl._classNameId;
+
+		auditEntryModelImpl._setOriginalClassNameId = false;
+
+		auditEntryModelImpl._originalClassPK = auditEntryModelImpl._classPK;
+
+		auditEntryModelImpl._setOriginalClassPK = false;
+
+		auditEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -966,7 +1011,11 @@ public class AuditEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private long _auditSetId;
 	private long _fieldClassNameId;
 	private long _fieldClassPK;
@@ -977,6 +1026,7 @@ public class AuditEntryModelImpl
 	private String _newLabel;
 	private String _newValue;
 	private String _description;
+	private long _columnBitmask;
 	private AuditEntry _escapedModel;
 
 }

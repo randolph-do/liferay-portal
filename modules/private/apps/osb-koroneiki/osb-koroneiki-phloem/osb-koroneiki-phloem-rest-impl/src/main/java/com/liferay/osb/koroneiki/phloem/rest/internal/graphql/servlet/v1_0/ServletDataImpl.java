@@ -17,6 +17,7 @@ package com.liferay.osb.koroneiki.phloem.rest.internal.graphql.servlet.v1_0;
 import com.liferay.osb.koroneiki.phloem.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.osb.koroneiki.phloem.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
@@ -61,6 +62,8 @@ public class ServletDataImpl implements ServletData {
 
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
+		Query.setAuditEntryResourceComponentServiceObjects(
+			_auditEntryResourceComponentServiceObjects);
 		Query.setContactResourceComponentServiceObjects(
 			_contactResourceComponentServiceObjects);
 		Query.setContactRoleResourceComponentServiceObjects(
@@ -117,5 +120,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TeamRoleResource>
 		_teamRoleResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AuditEntryResource>
+		_auditEntryResourceComponentServiceObjects;
 
 }

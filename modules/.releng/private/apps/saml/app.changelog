@@ -1,0 +1,17 @@
+#
+# Liferay App Version 5.0.0
+#
+
+app.artifacts-5.0.0=\
+	com.liferay.saml.addon.keep.alive.web-3.0.2.jar,\
+	com.liferay.saml.api-3.0.2.jar,\
+	com.liferay.saml.impl-3.0.2.jar,\
+	com.liferay.saml.opensaml.integration-3.0.7.jar,\
+	com.liferay.saml.persistence.api-3.0.2.jar,\
+	com.liferay.saml.persistence.service-3.0.3.jar,\
+	com.liferay.saml.web-3.0.3.jar,\
+	saml-hook-7.2.10.2.war
+
+app.change.log-5.0.0=LPS-84119 LPS-88218 LPS-90460 LPS-90465 LPS-94445 LPS-94835 LPS-95010 LPS-95067 LPS-95317 LPS-95413 LPS-95428 LPS-95555 LPS-96018 LPS-96104
+
+app.git.id-5.0.0=681bf0f6e5eb7d082bbe20949ecbbbe70bd6faf4

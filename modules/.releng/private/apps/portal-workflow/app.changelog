@@ -1,0 +1,33 @@
+#
+# Liferay App Version 2.0.0
+#
+
+app.artifacts-2.0.0=\
+	com.liferay.portal.workflow.api-5.0.0.jar,\
+	com.liferay.portal.workflow.kaleo.api-4.0.2.jar,\
+	com.liferay.portal.workflow.kaleo.definition.api-4.0.0.jar,\
+	com.liferay.portal.workflow.kaleo.definition.impl-4.0.1.jar,\
+	com.liferay.portal.workflow.kaleo.designer.web-3.0.5.jar,\
+	com.liferay.portal.workflow.kaleo.forms.api-3.0.2.jar,\
+	com.liferay.portal.workflow.kaleo.forms.service-3.0.3.jar,\
+	com.liferay.portal.workflow.kaleo.forms.web-3.0.4.jar,\
+	com.liferay.portal.workflow.kaleo.runtime.api-4.0.2.jar,\
+	com.liferay.portal.workflow.kaleo.runtime.form.impl-2.0.1.jar,\
+	com.liferay.portal.workflow.kaleo.runtime.impl-4.0.7.jar,\
+	com.liferay.portal.workflow.kaleo.runtime.integration.impl-3.0.2.jar,\
+	com.liferay.portal.workflow.kaleo.runtime.scripting.impl-3.0.2.jar,\
+	com.liferay.portal.workflow.kaleo.service-4.0.9.jar,\
+	com.liferay.portal.workflow.lang-4.0.5.jar,\
+	com.liferay.portal.workflow.metrics.api-1.0.2.jar,\
+	com.liferay.portal.workflow.metrics.lang-1.0.3.jar,\
+	com.liferay.portal.workflow.metrics.rest.api-1.0.2.jar,\
+	com.liferay.portal.workflow.metrics.rest.impl-1.0.4.jar,\
+	com.liferay.portal.workflow.metrics.service-1.0.3.jar,\
+	com.liferay.portal.workflow.metrics.web-1.0.4.jar,\
+	com.liferay.portal.workflow.task.web-3.0.8.jar,\
+	com.liferay.portal.workflow.uad-4.0.0.jar,\
+	com.liferay.portal.workflow.web-2.0.6.jar
+
+app.change.log-2.0.0=[[trimmed]]S-83160 LPS-83241 LPS-83249 LPS-83250 LPS-83326 LPS-83494 LPS-83646 LPS-83662 LPS-83705 LPS-84093 LPS-84119 LPS-84282 LPS-84292 LPS-84389 LPS-84399 LPS-84421 LPS-84444 LPS-84448 LPS-84449 LPS-84450 LPS-84451 LPS-84502 LPS-84583 LPS-85097 LPS-85263 LPS-85296 LPS-85410 LPS-85776 LPS-85849 LPS-85924 LPS-86291 LPS-86406 LPS-86408 LPS-86413 LPS-86806 LPS-86816 LPS-87004 LPS-87037 LPS-87393 LPS-87560 LPS-87590 LPS-87746 LPS-87768 LPS-87825 LPS-87885 LPS-88140 LPS-88170 LPS-88181 LPS-88217 LPS-88218 LPS-88258 LPS-88631 LPS-88665 LPS-88823 LPS-89139 LPS-89242 LPS-89243 LPS-89307 LPS-89456 LPS-89457 LPS-89568 LPS-89592 LPS-90025 LPS-90066 LPS-90082 LPS-90144 LPS-90257 LPS-90259 LPS-90260 LPS-90523 LPS-90930 LPS-91343 LPS-91359 LPS-91429 LPS-91495 LPS-91949 LPS-91970 LPS-92069 LPS-92099 LPS-92151 LPS-92356 LPS-92511 LPS-92526 LPS-94231 LPS-94555 LPS-94722 LPS-94726 LPS-95067 LPS-95361 LPS-95413 LPS-95555 LPS-95704 LPS-95806 LPS-95807 LPS-95910 LPS-95933 LPS-96018 LPS-96067 LPS-96127 LRDOCS-6300 
+
+app.git.id-2.0.0=e7e0d199a06d2f64b862cdffcfe4ff276d847e1f

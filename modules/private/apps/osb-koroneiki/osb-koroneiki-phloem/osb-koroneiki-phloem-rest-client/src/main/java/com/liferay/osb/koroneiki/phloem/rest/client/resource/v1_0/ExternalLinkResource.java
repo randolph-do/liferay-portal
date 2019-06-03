@@ -32,8 +32,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class ExternalLinkResource {
 
-	public Page<ExternalLink> getAccountExternalLinksPage(
+	public static Page<ExternalLink> getAccountExternalLinksPage(
 			Long accountId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getAccountExternalLinksPageHttpResponse(accountId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ExternalLinkSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getAccountExternalLinksPageHttpResponse(
+				Long accountId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -52,26 +71,43 @@ public class ExternalLinkResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static ExternalLink postAccountExternalLink(
+			Long accountId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postAccountExternalLinkHttpResponse(accountId, externalLink);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		return Page.of(content, ExternalLinkSerDes::toDTO);
+		try {
+			return ExternalLinkSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public ExternalLink postAccountExternalLink(
+	public static HttpInvoker.HttpResponse postAccountExternalLinkHttpResponse(
 			Long accountId, ExternalLink externalLink)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			ExternalLinkSerDes.toJSON(externalLink), "application/json");
+		httpInvoker.body(externalLink.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -81,29 +117,30 @@ public class ExternalLinkResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ExternalLink> getContactExternalLinksPage(
+			Long contactId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getContactExternalLinksPageHttpResponse(contactId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		try {
-			return ExternalLinkSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return Page.of(content, ExternalLinkSerDes::toDTO);
 	}
 
-	public Page<ExternalLink> getContactExternalLinksPage(
-			Long contactId, Pagination pagination)
+	public static HttpInvoker.HttpResponse
+			getContactExternalLinksPageHttpResponse(
+				Long contactId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -122,43 +159,23 @@ public class ExternalLinkResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ExternalLinkSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public ExternalLink postContactExternalLink(
+	public static ExternalLink postContactExternalLink(
 			Long contactId, ExternalLink externalLink)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			ExternalLinkSerDes.toJSON(externalLink), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/contacts/{contactId}/external-links",
-			contactId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postContactExternalLinkHttpResponse(contactId, externalLink);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ExternalLinkSerDes.toDTO(content);
@@ -172,7 +189,44 @@ public class ExternalLinkResource {
 		}
 	}
 
-	public void deleteExternalLink(Long externalLinkId) throws Exception {
+	public static HttpInvoker.HttpResponse postContactExternalLinkHttpResponse(
+			Long contactId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(externalLink.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/contacts/{contactId}/external-links",
+			contactId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteExternalLink(Long externalLinkId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = deleteExternalLinkHttpResponse(
+			externalLinkId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse deleteExternalLinkHttpResponse(
+			Long externalLinkId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -183,35 +237,22 @@ public class ExternalLinkResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		return httpInvoker.invoke();
 	}
 
-	public ExternalLink getExternalLink(Long externalLinkId) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public static ExternalLink getExternalLink(Long externalLinkId)
+		throws Exception {
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/external-links/{externalLinkId}",
+		HttpInvoker.HttpResponse httpResponse = getExternalLinkHttpResponse(
 			externalLinkId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ExternalLinkSerDes.toDTO(content);
@@ -225,8 +266,44 @@ public class ExternalLinkResource {
 		}
 	}
 
-	public Page<ExternalLink> getProjectExternalLinksPage(
+	public static HttpInvoker.HttpResponse getExternalLinkHttpResponse(
+			Long externalLinkId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/external-links/{externalLinkId}",
+			externalLinkId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ExternalLink> getProjectExternalLinksPage(
 			Long projectId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getProjectExternalLinksPageHttpResponse(projectId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ExternalLinkSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getProjectExternalLinksPageHttpResponse(
+				Long projectId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -245,43 +322,23 @@ public class ExternalLinkResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ExternalLinkSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public ExternalLink postProjectExternalLink(
+	public static ExternalLink postProjectExternalLink(
 			Long projectId, ExternalLink externalLink)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			ExternalLinkSerDes.toJSON(externalLink), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/external-links",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postProjectExternalLinkHttpResponse(projectId, externalLink);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ExternalLinkSerDes.toDTO(content);
@@ -295,7 +352,44 @@ public class ExternalLinkResource {
 		}
 	}
 
-	public Page<ExternalLink> getTeamExternalLinksPage(
+	public static HttpInvoker.HttpResponse postProjectExternalLinkHttpResponse(
+			Long projectId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(externalLink.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/external-links",
+			projectId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ExternalLink> getTeamExternalLinksPage(
+			Long teamId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getTeamExternalLinksPageHttpResponse(teamId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ExternalLinkSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getTeamExternalLinksPageHttpResponse(
 			Long teamId, Pagination pagination)
 		throws Exception {
 
@@ -315,43 +409,23 @@ public class ExternalLinkResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ExternalLinkSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public ExternalLink postTeamExternalLink(
+	public static ExternalLink postTeamExternalLink(
 			Long teamId, ExternalLink externalLink)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			ExternalLinkSerDes.toJSON(externalLink), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}/external-links",
-			teamId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postTeamExternalLinkHttpResponse(teamId, externalLink);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ExternalLinkSerDes.toDTO(content);
@@ -363,6 +437,25 @@ public class ExternalLinkResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse postTeamExternalLinkHttpResponse(
+			Long teamId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(externalLink.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}/external-links",
+			teamId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

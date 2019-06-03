@@ -14,29 +14,28 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AccountSerDes;
-import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -46,24 +45,19 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
 
-import java.net.URL;
-
 import java.text.DateFormat;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
@@ -100,7 +94,10 @@ public abstract class BaseAccountResourceTestCase {
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
 
-		_resourceURL = new URL("http://localhost:8080/o/koroneiki-rest/v1.0");
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_accountResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -114,10 +111,16 @@ public abstract class BaseAccountResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -135,9 +138,15 @@ public abstract class BaseAccountResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -148,6 +157,25 @@ public abstract class BaseAccountResourceTestCase {
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		Account account = randomAccount();
+
+		account.setDescription(regex);
+		account.setName(regex);
+
+		String json = AccountSerDes.toJSON(account);
+
+		Assert.assertFalse(json.contains(regex));
+
+		account = AccountSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, account.getDescription());
+		Assert.assertEquals(regex, account.getName());
 	}
 
 	@Test
@@ -167,62 +195,18 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Account invokePostAccount(Account account) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			AccountSerDes.toJSON(account), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
-
-		String location = _resourceURL + _toPath("/accounts");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return AccountSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostAccountResponse(Account account)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/accounts");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testDeleteAccount() throws Exception {
 		Account account = testDeleteAccount_addAccount();
 
-		assertResponseCode(204, invokeDeleteAccountResponse(account.getId()));
+		assertHttpResponseStatusCode(
+			204, AccountResource.deleteAccountHttpResponse(account.getId()));
 
-		assertResponseCode(404, invokeGetAccountResponse(account.getId()));
+		assertHttpResponseStatusCode(
+			404, AccountResource.getAccountHttpResponse(account.getId()));
 
-		assertResponseCode(404, invokeGetAccountResponse(0L));
+		assertHttpResponseStatusCode(
+			404, AccountResource.getAccountHttpResponse(0L));
 	}
 
 	protected Account testDeleteAccount_addAccount() throws Exception {
@@ -230,45 +214,11 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected void invokeDeleteAccount(Long accountId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}", accountId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteAccountResponse(Long accountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}", accountId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetAccount() throws Exception {
 		Account postAccount = testGetAccount_addAccount();
 
-		Account getAccount = invokeGetAccount(postAccount.getId());
+		Account getAccount = AccountResource.getAccount(postAccount.getId());
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
@@ -279,60 +229,19 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Account invokeGetAccount(Long accountId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}", accountId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return AccountSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetAccountResponse(Long accountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}", accountId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testPutAccount() throws Exception {
 		Account postAccount = testPutAccount_addAccount();
 
 		Account randomAccount = randomAccount();
 
-		Account putAccount = invokePutAccount(
+		Account putAccount = AccountResource.putAccount(
 			postAccount.getId(), randomAccount);
 
 		assertEquals(randomAccount, putAccount);
 		assertValid(putAccount);
 
-		Account getAccount = invokeGetAccount(putAccount.getId());
+		Account getAccount = AccountResource.getAccount(putAccount.getId());
 
 		assertEquals(randomAccount, getAccount);
 		assertValid(getAccount);
@@ -343,73 +252,14 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Account invokePutAccount(Long accountId, Account account)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			AccountSerDes.toJSON(account), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}", accountId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return AccountSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutAccountResponse(
-			Long accountId, Account account)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			AccountSerDes.toJSON(account), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}", accountId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testDeleteAccountContact() throws Exception {
 		Account account = testDeleteAccountContact_addAccount();
 
-		assertResponseCode(
-			204, invokeDeleteAccountContactResponse(account.getId()));
-
-		assertResponseCode(
-			404, invokeGetAccountContactResponse(account.getId()));
-
-		assertResponseCode(404, invokeGetAccountContactResponse(0L));
+		assertHttpResponseStatusCode(
+			204,
+			AccountResource.deleteAccountContactHttpResponse(
+				account.getId(), null));
 	}
 
 	protected Account testDeleteAccountContact_addAccount() throws Exception {
@@ -417,116 +267,19 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected void invokeDeleteAccountContact(Long accountId, Long[] contactIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
-
-		if (contactIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactIds", contactIds);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteAccountContactResponse(
-			Long accountId, Long[] contactIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
-
-		if (contactIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactIds", contactIds);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testPutAccountContact() throws Exception {
 		Assert.assertTrue(true);
-	}
-
-	protected void invokePutAccountContact(Long accountId, Long[] contactIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
-
-		if (contactIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactIds", contactIds);
-		}
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokePutAccountContactResponse(
-			Long accountId, Long[] contactIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/accounts/{accountId}/contacts", accountId);
-
-		if (contactIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactIds", contactIds);
-		}
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
 	public void testDeleteAccountContactRole() throws Exception {
 		Account account = testDeleteAccountContactRole_addAccount();
 
-		assertResponseCode(
-			204, invokeDeleteAccountContactRoleResponse(account.getId()));
-
-		assertResponseCode(
-			404, invokeGetAccountContactRoleResponse(account.getId()));
-
-		assertResponseCode(404, invokeGetAccountContactRoleResponse(0L));
+		assertHttpResponseStatusCode(
+			204,
+			AccountResource.deleteAccountContactRoleHttpResponse(
+				account.getId(), null, null));
 	}
 
 	protected Account testDeleteAccountContactRole_addAccount()
@@ -536,124 +289,17 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected void invokeDeleteAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/accounts/{accountId}/contacts/{contactId}/roles",
-					accountId, contactId);
-
-		if (contactRoleIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactRoleIds", contactRoleIds);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteAccountContactRoleResponse(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/accounts/{accountId}/contacts/{contactId}/roles",
-					accountId, contactId);
-
-		if (contactRoleIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactRoleIds", contactRoleIds);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testPutAccountContactRole() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void invokePutAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/accounts/{accountId}/contacts/{contactId}/roles",
-					accountId, contactId);
-
-		if (contactRoleIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactRoleIds", contactRoleIds);
-		}
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokePutAccountContactRoleResponse(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/accounts/{accountId}/contacts/{contactId}/roles",
-					accountId, contactId);
-
-		if (contactRoleIds != null) {
-			location = HttpUtil.addParameter(
-				location, "contactRoleIds", contactRoleIds);
-		}
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(Account account1, Account account2) {
@@ -1003,76 +649,10 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAccountResourceTestCase.class);
@@ -1092,8 +672,7 @@ public abstract class BaseAccountResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private AccountResource _accountResource;
-
-	private URL _resourceURL;
+	private com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource
+		_accountResource;
 
 }

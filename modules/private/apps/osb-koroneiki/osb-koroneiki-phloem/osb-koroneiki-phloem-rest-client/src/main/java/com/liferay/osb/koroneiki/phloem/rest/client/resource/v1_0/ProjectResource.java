@@ -32,7 +32,25 @@ import javax.annotation.Generated;
 @Generated("")
 public class ProjectResource {
 
-	public Page<Project> getAccountProjectsPage(
+	public static Page<Project> getAccountProjectsPage(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getAccountProjectsPageHttpResponse(accountId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ProjectSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getAccountProjectsPageHttpResponse(
 			Long accountId, Pagination pagination)
 		throws Exception {
 
@@ -52,41 +70,22 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ProjectSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public Project postAccountProject(Long accountId, Project project)
+	public static Project postAccountProject(Long accountId, Project project)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(ProjectSerDes.toJSON(project), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = postAccountProjectHttpResponse(
+			accountId, project);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ProjectSerDes.toDTO(content);
@@ -100,7 +99,42 @@ public class ProjectResource {
 		}
 	}
 
-	public void deleteProject(Long projectId) throws Exception {
+	public static HttpInvoker.HttpResponse postAccountProjectHttpResponse(
+			Long accountId, Project project)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(project.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
+			accountId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteProject(Long projectId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = deleteProjectHttpResponse(
+			projectId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse deleteProjectHttpResponse(
+			Long projectId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -111,17 +145,37 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Project getProject(Long projectId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getProjectHttpResponse(
+			projectId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return ProjectSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public Project getProject(Long projectId) throws Exception {
+	public static HttpInvoker.HttpResponse getProjectHttpResponse(
+			Long projectId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -132,14 +186,22 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Project putProject(Long projectId, Project project)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putProjectHttpResponse(
+			projectId, project);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ProjectSerDes.toDTO(content);
@@ -153,12 +215,13 @@ public class ProjectResource {
 		}
 	}
 
-	public Project putProject(Long projectId, Project project)
+	public static HttpInvoker.HttpResponse putProjectHttpResponse(
+			Long projectId, Project project)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(ProjectSerDes.toJSON(project), "application/json");
+		httpInvoker.body(project.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -168,33 +231,38 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteProjectContact(Long projectId, Long[] contactIds)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteProjectContactHttpResponse(projectId, contactIds);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return ProjectSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void deleteProjectContact(Long projectId, Long[] contactIds)
+	public static HttpInvoker.HttpResponse deleteProjectContactHttpResponse(
+			Long projectId, Long[] contactIds)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+		if (contactIds != null) {
+			for (int i = 0; i < contactIds.length; i++) {
+				httpInvoker.parameter(
+					"contactIds", String.valueOf(contactIds[i]));
+			}
+		}
 
 		httpInvoker.path(
 			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
@@ -202,22 +270,40 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void putProjectContact(Long projectId, Long[] contactIds)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putProjectContactHttpResponse(
+			projectId, contactIds);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void putProjectContact(Long projectId, Long[] contactIds)
+	public static HttpInvoker.HttpResponse putProjectContactHttpResponse(
+			Long projectId, Long[] contactIds)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+		httpInvoker.body(contactIds.toString(), "application/json");
+
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+		if (contactIds != null) {
+			for (int i = 0; i < contactIds.length; i++) {
+				httpInvoker.parameter(
+					"contactIds", String.valueOf(contactIds[i]));
+			}
+		}
 
 		httpInvoker.path(
 			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
@@ -225,17 +311,27 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteProjectContactRole(
+			Long projectId, Long contactId, Long[] contactRoleIds)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteProjectContactRoleHttpResponse(
+				projectId, contactId, contactRoleIds);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void deleteProjectContactRole(
+	public static HttpInvoker.HttpResponse deleteProjectContactRoleHttpResponse(
 			Long projectId, Long contactId, Long[] contactRoleIds)
 		throws Exception {
 
@@ -243,29 +339,55 @@ public class ProjectResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
+		if (contactRoleIds != null) {
+			for (int i = 0; i < contactRoleIds.length; i++) {
+				httpInvoker.parameter(
+					"contactRoleIds", String.valueOf(contactRoleIds[i]));
+			}
+		}
+
 		httpInvoker.path(
 			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
 			projectId, contactId);
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void putProjectContactRole(
+			Long projectId, Long contactId, Long[] contactRoleIds)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putProjectContactRoleHttpResponse(
+				projectId, contactId, contactRoleIds);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void putProjectContactRole(
+	public static HttpInvoker.HttpResponse putProjectContactRoleHttpResponse(
 			Long projectId, Long contactId, Long[] contactRoleIds)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+		httpInvoker.body(contactRoleIds.toString(), "application/json");
+
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+		if (contactRoleIds != null) {
+			for (int i = 0; i < contactRoleIds.length; i++) {
+				httpInvoker.parameter(
+					"contactRoleIds", String.valueOf(contactRoleIds[i]));
+			}
+		}
 
 		httpInvoker.path(
 			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
@@ -273,17 +395,26 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteProjectTeamRoleHttpResponse(projectId, teamId, teamRoleIds);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void deleteProjectTeamRole(
+	public static HttpInvoker.HttpResponse deleteProjectTeamRoleHttpResponse(
 			Long projectId, Long teamId, Long[] teamRoleIds)
 		throws Exception {
 
@@ -291,29 +422,54 @@ public class ProjectResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
+		if (teamRoleIds != null) {
+			for (int i = 0; i < teamRoleIds.length; i++) {
+				httpInvoker.parameter(
+					"teamRoleIds", String.valueOf(teamRoleIds[i]));
+			}
+		}
+
 		httpInvoker.path(
 			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
 			projectId, teamId);
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void putProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putProjectTeamRoleHttpResponse(
+			projectId, teamId, teamRoleIds);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void putProjectTeamRole(
+	public static HttpInvoker.HttpResponse putProjectTeamRoleHttpResponse(
 			Long projectId, Long teamId, Long[] teamRoleIds)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+		httpInvoker.body(teamRoleIds.toString(), "application/json");
+
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+		if (teamRoleIds != null) {
+			for (int i = 0; i < teamRoleIds.length; i++) {
+				httpInvoker.parameter(
+					"teamRoleIds", String.valueOf(teamRoleIds[i]));
+			}
+		}
 
 		httpInvoker.path(
 			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
@@ -321,14 +477,7 @@ public class ProjectResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

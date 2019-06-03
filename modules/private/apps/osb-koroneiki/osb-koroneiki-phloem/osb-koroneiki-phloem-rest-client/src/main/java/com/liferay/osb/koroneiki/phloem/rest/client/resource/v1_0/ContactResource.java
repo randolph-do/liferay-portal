@@ -32,7 +32,25 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContactResource {
 
-	public Page<Contact> getAccountContactsPage(
+	public static Page<Contact> getAccountContactsPage(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getAccountContactsPageHttpResponse(accountId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ContactSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getAccountContactsPageHttpResponse(
 			Long accountId, Pagination pagination)
 		throws Exception {
 
@@ -52,38 +70,20 @@ public class ContactResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ContactSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public Contact postContact(Contact contact) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(ContactSerDes.toJSON(contact), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/contacts");
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+	public static Contact postContact(Contact contact) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = postContactHttpResponse(
+			contact);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ContactSerDes.toDTO(content);
@@ -97,7 +97,41 @@ public class ContactResource {
 		}
 	}
 
-	public void deleteContact(Long contactId) throws Exception {
+	public static HttpInvoker.HttpResponse postContactHttpResponse(
+			Contact contact)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(contact.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/contacts");
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteContact(Long contactId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = deleteContactHttpResponse(
+			contactId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse deleteContactHttpResponse(
+			Long contactId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -108,35 +142,20 @@ public class ContactResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		return httpInvoker.invoke();
 	}
 
-	public Contact getContact(Long contactId) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/contacts/{contactId}",
+	public static Contact getContact(Long contactId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getContactHttpResponse(
 			contactId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ContactSerDes.toDTO(content);
@@ -150,7 +169,42 @@ public class ContactResource {
 		}
 	}
 
-	public Page<Contact> getProjectContactsPage(
+	public static HttpInvoker.HttpResponse getContactHttpResponse(
+			Long contactId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/contacts/{contactId}",
+			contactId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<Contact> getProjectContactsPage(
+			Long projectId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getProjectContactsPageHttpResponse(projectId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ContactSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getProjectContactsPageHttpResponse(
 			Long projectId, Pagination pagination)
 		throws Exception {
 
@@ -170,16 +224,7 @@ public class ContactResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ContactSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

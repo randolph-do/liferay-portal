@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
-import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ContactRoleSerDes;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,32 +29,23 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContactRoleResource {
 
-	public ContactRole postContactRole(ContactRole contactRole)
+	public static ContactRole postContactRole(ContactRole contactRole)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			ContactRoleSerDes.toJSON(contactRole), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/contact-roles");
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = postContactRoleHttpResponse(
+			contactRole);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
-			return ContactRoleSerDes.toDTO(content);
+			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+				ContactRoleSerDes.toDTO(content);
 		}
 		catch (Exception e) {
 			_logger.log(
@@ -66,7 +56,41 @@ public class ContactRoleResource {
 		}
 	}
 
-	public void deleteContactRole(Long contactRoleId) throws Exception {
+	public static HttpInvoker.HttpResponse postContactRoleHttpResponse(
+			ContactRole contactRole)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(contactRole.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/contact-roles");
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteContactRole(Long contactRoleId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = deleteContactRoleHttpResponse(
+			contactRoleId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse deleteContactRoleHttpResponse(
+			Long contactRoleId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -77,17 +101,40 @@ public class ContactRoleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static ContactRole getContactRole(Long contactRoleId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getContactRoleHttpResponse(
+			contactRoleId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+				ContactRoleSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public ContactRole getContactRole(Long contactRoleId) throws Exception {
+	public static HttpInvoker.HttpResponse getContactRoleHttpResponse(
+			Long contactRoleId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -98,17 +145,27 @@ public class ContactRoleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static ContactRole putContactRole(
+			Long contactRoleId, ContactRole contactRole)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putContactRoleHttpResponse(
+			contactRoleId, contactRole);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
-			return ContactRoleSerDes.toDTO(content);
+			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+				ContactRoleSerDes.toDTO(content);
 		}
 		catch (Exception e) {
 			_logger.log(
@@ -119,14 +176,13 @@ public class ContactRoleResource {
 		}
 	}
 
-	public ContactRole putContactRole(
+	public static HttpInvoker.HttpResponse putContactRoleHttpResponse(
 			Long contactRoleId, ContactRole contactRole)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			ContactRoleSerDes.toJSON(contactRole), "application/json");
+		httpInvoker.body(contactRole.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -136,25 +192,7 @@ public class ContactRoleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return ContactRoleSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -32,8 +32,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class AuditEntryResource {
 
-	public Page<AuditEntry> getAccountAuditEntriesPage(
+	public static Page<AuditEntry> getAccountAuditEntriesPage(
 			Long accountId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getAccountAuditEntriesPageHttpResponse(accountId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, AuditEntrySerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getAccountAuditEntriesPageHttpResponse(
+				Long accountId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -52,37 +71,20 @@ public class AuditEntryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, AuditEntrySerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public AuditEntry getAuditEntry(Long auditEntryId) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/audit-entries/{auditEntryId}",
+	public static AuditEntry getAuditEntry(Long auditEntryId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getAuditEntryHttpResponse(
 			auditEntryId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return AuditEntrySerDes.toDTO(content);
@@ -96,8 +98,45 @@ public class AuditEntryResource {
 		}
 	}
 
-	public Page<AuditEntry> getContactRoleAuditEntriesPage(
+	public static HttpInvoker.HttpResponse getAuditEntryHttpResponse(
+			Long auditEntryId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/audit-entries/{auditEntryId}",
+			auditEntryId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<AuditEntry> getContactRoleAuditEntriesPage(
 			Long contactRoleId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getContactRoleAuditEntriesPageHttpResponse(
+				contactRoleId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, AuditEntrySerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getContactRoleAuditEntriesPageHttpResponse(
+				Long contactRoleId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -116,20 +155,30 @@ public class AuditEntryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<AuditEntry> getContactAuditEntriesPage(
+			Long contactId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getContactAuditEntriesPageHttpResponse(contactId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, AuditEntrySerDes::toDTO);
 	}
 
-	public Page<AuditEntry> getContactAuditEntriesPage(
-			Long contactId, Pagination pagination)
+	public static HttpInvoker.HttpResponse
+			getContactAuditEntriesPageHttpResponse(
+				Long contactId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -148,20 +197,30 @@ public class AuditEntryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<AuditEntry> getProjectAuditEntriesPage(
+			Long projectId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getProjectAuditEntriesPageHttpResponse(projectId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, AuditEntrySerDes::toDTO);
 	}
 
-	public Page<AuditEntry> getProjectAuditEntriesPage(
-			Long projectId, Pagination pagination)
+	public static HttpInvoker.HttpResponse
+			getProjectAuditEntriesPageHttpResponse(
+				Long projectId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -180,20 +239,30 @@ public class AuditEntryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<AuditEntry> getTeamRoleAuditEntriesPage(
+			Long teamRoleId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getTeamRoleAuditEntriesPageHttpResponse(teamRoleId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, AuditEntrySerDes::toDTO);
 	}
 
-	public Page<AuditEntry> getTeamRoleAuditEntriesPage(
-			Long teamRoleId, Pagination pagination)
+	public static HttpInvoker.HttpResponse
+			getTeamRoleAuditEntriesPageHttpResponse(
+				Long teamRoleId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -212,19 +281,28 @@ public class AuditEntryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<AuditEntry> getTeamAuditEntriesPage(
+			Long teamId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getTeamAuditEntriesPageHttpResponse(teamId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, AuditEntrySerDes::toDTO);
 	}
 
-	public Page<AuditEntry> getTeamAuditEntriesPage(
+	public static HttpInvoker.HttpResponse getTeamAuditEntriesPageHttpResponse(
 			Long teamId, Pagination pagination)
 		throws Exception {
 
@@ -244,16 +322,7 @@ public class AuditEntryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, AuditEntrySerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

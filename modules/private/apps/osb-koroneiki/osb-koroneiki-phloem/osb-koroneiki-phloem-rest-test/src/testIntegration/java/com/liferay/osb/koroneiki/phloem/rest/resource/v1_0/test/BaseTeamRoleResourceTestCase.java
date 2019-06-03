@@ -14,29 +14,28 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.TeamRole;
+import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.TeamRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.TeamRoleSerDes;
-import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -46,24 +45,19 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
 
-import java.net.URL;
-
 import java.text.DateFormat;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
@@ -100,7 +94,10 @@ public abstract class BaseTeamRoleResourceTestCase {
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
 
-		_resourceURL = new URL("http://localhost:8080/o/koroneiki-rest/v1.0");
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_teamRoleResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -114,10 +111,16 @@ public abstract class BaseTeamRoleResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -135,9 +138,15 @@ public abstract class BaseTeamRoleResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -148,6 +157,27 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		TeamRole teamRole = randomTeamRole();
+
+		teamRole.setDescription(regex);
+		teamRole.setName(regex);
+		teamRole.setType(regex);
+
+		String json = TeamRoleSerDes.toJSON(teamRole);
+
+		Assert.assertFalse(json.contains(regex));
+
+		teamRole = TeamRoleSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, teamRole.getDescription());
+		Assert.assertEquals(regex, teamRole.getName());
+		Assert.assertEquals(regex, teamRole.getType());
 	}
 
 	@Test
@@ -167,62 +197,18 @@ public abstract class BaseTeamRoleResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected TeamRole invokePostTeamRole(TeamRole teamRole) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			TeamRoleSerDes.toJSON(teamRole), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
-
-		String location = _resourceURL + _toPath("/team-roles");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return TeamRoleSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostTeamRoleResponse(TeamRole teamRole)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/team-roles");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testDeleteTeamRole() throws Exception {
 		TeamRole teamRole = testDeleteTeamRole_addTeamRole();
 
-		assertResponseCode(204, invokeDeleteTeamRoleResponse(teamRole.getId()));
+		assertHttpResponseStatusCode(
+			204, TeamRoleResource.deleteTeamRoleHttpResponse(teamRole.getId()));
 
-		assertResponseCode(404, invokeGetTeamRoleResponse(teamRole.getId()));
+		assertHttpResponseStatusCode(
+			404, TeamRoleResource.getTeamRoleHttpResponse(teamRole.getId()));
 
-		assertResponseCode(404, invokeGetTeamRoleResponse(0L));
+		assertHttpResponseStatusCode(
+			404, TeamRoleResource.getTeamRoleHttpResponse(0L));
 	}
 
 	protected TeamRole testDeleteTeamRole_addTeamRole() throws Exception {
@@ -230,45 +216,12 @@ public abstract class BaseTeamRoleResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected void invokeDeleteTeamRole(Long teamRoleId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/team-roles/{teamRoleId}", teamRoleId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteTeamRoleResponse(Long teamRoleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/team-roles/{teamRoleId}", teamRoleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetTeamRole() throws Exception {
 		TeamRole postTeamRole = testGetTeamRole_addTeamRole();
 
-		TeamRole getTeamRole = invokeGetTeamRole(postTeamRole.getId());
+		TeamRole getTeamRole = TeamRoleResource.getTeamRole(
+			postTeamRole.getId());
 
 		assertEquals(postTeamRole, getTeamRole);
 		assertValid(getTeamRole);
@@ -279,60 +232,20 @@ public abstract class BaseTeamRoleResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected TeamRole invokeGetTeamRole(Long teamRoleId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/team-roles/{teamRoleId}", teamRoleId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return TeamRoleSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetTeamRoleResponse(Long teamRoleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/team-roles/{teamRoleId}", teamRoleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testPutTeamRole() throws Exception {
 		TeamRole postTeamRole = testPutTeamRole_addTeamRole();
 
 		TeamRole randomTeamRole = randomTeamRole();
 
-		TeamRole putTeamRole = invokePutTeamRole(
+		TeamRole putTeamRole = TeamRoleResource.putTeamRole(
 			postTeamRole.getId(), randomTeamRole);
 
 		assertEquals(randomTeamRole, putTeamRole);
 		assertValid(putTeamRole);
 
-		TeamRole getTeamRole = invokeGetTeamRole(putTeamRole.getId());
+		TeamRole getTeamRole = TeamRoleResource.getTeamRole(
+			putTeamRole.getId());
 
 		assertEquals(randomTeamRole, getTeamRole);
 		assertValid(getTeamRole);
@@ -343,67 +256,12 @@ public abstract class BaseTeamRoleResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected TeamRole invokePutTeamRole(Long teamRoleId, TeamRole teamRole)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			TeamRoleSerDes.toJSON(teamRole), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/team-roles/{teamRoleId}", teamRoleId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return TeamRoleSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutTeamRoleResponse(
-			Long teamRoleId, TeamRole teamRole)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			TeamRoleSerDes.toJSON(teamRole), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/team-roles/{teamRoleId}", teamRoleId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(TeamRole teamRole1, TeamRole teamRole2) {
@@ -758,76 +616,10 @@ public abstract class BaseTeamRoleResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseTeamRoleResourceTestCase.class);
@@ -847,8 +639,7 @@ public abstract class BaseTeamRoleResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private TeamRoleResource _teamRoleResource;
-
-	private URL _resourceURL;
+	private com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource
+		_teamRoleResource;
 
 }

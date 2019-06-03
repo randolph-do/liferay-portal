@@ -14,59 +14,52 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
+import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ExternalLinkSerDes;
-import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
 
-import java.net.URL;
-
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
@@ -103,7 +96,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
 
-		_resourceURL = new URL("http://localhost:8080/o/koroneiki-rest/v1.0");
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_externalLinkResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -117,10 +113,16 @@ public abstract class BaseExternalLinkResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -138,9 +140,15 @@ public abstract class BaseExternalLinkResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -154,6 +162,27 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		ExternalLink externalLink = randomExternalLink();
+
+		externalLink.setDomain(regex);
+		externalLink.setEntityId(regex);
+		externalLink.setEntityName(regex);
+
+		String json = ExternalLinkSerDes.toJSON(externalLink);
+
+		Assert.assertFalse(json.contains(regex));
+
+		externalLink = ExternalLinkSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, externalLink.getDomain());
+		Assert.assertEquals(regex, externalLink.getEntityId());
+		Assert.assertEquals(regex, externalLink.getEntityName());
+	}
+
+	@Test
 	public void testGetAccountExternalLinksPage() throws Exception {
 		Long accountId = testGetAccountExternalLinksPage_getAccountId();
 		Long irrelevantAccountId =
@@ -164,8 +193,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetAccountExternalLinksPage_addExternalLink(
 					irrelevantAccountId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page = invokeGetAccountExternalLinksPage(
-				irrelevantAccountId, Pagination.of(1, 2));
+			Page<ExternalLink> page =
+				ExternalLinkResource.getAccountExternalLinksPage(
+					irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -183,8 +213,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetAccountExternalLinksPage_addExternalLink(
 				accountId, randomExternalLink());
 
-		Page<ExternalLink> page = invokeGetAccountExternalLinksPage(
-			accountId, Pagination.of(1, 2));
+		Page<ExternalLink> page =
+			ExternalLinkResource.getAccountExternalLinksPage(
+				accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -212,8 +243,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetAccountExternalLinksPage_addExternalLink(
 				accountId, randomExternalLink());
 
-		Page<ExternalLink> page1 = invokeGetAccountExternalLinksPage(
-			accountId, Pagination.of(1, 2));
+		Page<ExternalLink> page1 =
+			ExternalLinkResource.getAccountExternalLinksPage(
+				accountId, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -221,8 +253,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks1.toString(), 2, externalLinks1.size());
 
-		Page<ExternalLink> page2 = invokeGetAccountExternalLinksPage(
-			accountId, Pagination.of(2, 2));
+		Page<ExternalLink> page2 =
+			ExternalLinkResource.getAccountExternalLinksPage(
+				accountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -232,21 +265,21 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks2.toString(), 1, externalLinks2.size());
 
+		Page<ExternalLink> page3 =
+			ExternalLinkResource.getAccountExternalLinksPage(
+				accountId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			new ArrayList<ExternalLink>() {
-				{
-					addAll(externalLinks1);
-					addAll(externalLinks2);
-				}
-			});
+			(List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink testGetAccountExternalLinksPage_addExternalLink(
 			Long accountId, ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostAccountExternalLink(accountId, externalLink);
+		return ExternalLinkResource.postAccountExternalLink(
+			accountId, externalLink);
 	}
 
 	protected Long testGetAccountExternalLinksPage_getAccountId()
@@ -260,58 +293,6 @@ public abstract class BaseExternalLinkResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	protected Page<ExternalLink> invokeGetAccountExternalLinksPage(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/accounts/{accountId}/external-links", accountId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, ExternalLinkSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetAccountExternalLinksPageResponse(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/accounts/{accountId}/external-links", accountId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -329,67 +310,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostAccountExternalLink(
+		return ExternalLinkResource.postAccountExternalLink(
 			testGetAccountExternalLinksPage_getAccountId(), externalLink);
-	}
-
-	protected ExternalLink invokePostAccountExternalLink(
-			Long accountId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/accounts/{accountId}/external-links", accountId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return ExternalLinkSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostAccountExternalLinkResponse(
-			Long accountId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/accounts/{accountId}/external-links", accountId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -403,8 +325,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetContactExternalLinksPage_addExternalLink(
 					irrelevantContactId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page = invokeGetContactExternalLinksPage(
-				irrelevantContactId, Pagination.of(1, 2));
+			Page<ExternalLink> page =
+				ExternalLinkResource.getContactExternalLinksPage(
+					irrelevantContactId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -422,8 +345,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetContactExternalLinksPage_addExternalLink(
 				contactId, randomExternalLink());
 
-		Page<ExternalLink> page = invokeGetContactExternalLinksPage(
-			contactId, Pagination.of(1, 2));
+		Page<ExternalLink> page =
+			ExternalLinkResource.getContactExternalLinksPage(
+				contactId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -451,8 +375,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetContactExternalLinksPage_addExternalLink(
 				contactId, randomExternalLink());
 
-		Page<ExternalLink> page1 = invokeGetContactExternalLinksPage(
-			contactId, Pagination.of(1, 2));
+		Page<ExternalLink> page1 =
+			ExternalLinkResource.getContactExternalLinksPage(
+				contactId, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -460,8 +385,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks1.toString(), 2, externalLinks1.size());
 
-		Page<ExternalLink> page2 = invokeGetContactExternalLinksPage(
-			contactId, Pagination.of(2, 2));
+		Page<ExternalLink> page2 =
+			ExternalLinkResource.getContactExternalLinksPage(
+				contactId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -471,21 +397,21 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks2.toString(), 1, externalLinks2.size());
 
+		Page<ExternalLink> page3 =
+			ExternalLinkResource.getContactExternalLinksPage(
+				contactId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			new ArrayList<ExternalLink>() {
-				{
-					addAll(externalLinks1);
-					addAll(externalLinks2);
-				}
-			});
+			(List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink testGetContactExternalLinksPage_addExternalLink(
 			Long contactId, ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostContactExternalLink(contactId, externalLink);
+		return ExternalLinkResource.postContactExternalLink(
+			contactId, externalLink);
 	}
 
 	protected Long testGetContactExternalLinksPage_getContactId()
@@ -499,58 +425,6 @@ public abstract class BaseExternalLinkResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	protected Page<ExternalLink> invokeGetContactExternalLinksPage(
-			Long contactId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/contacts/{contactId}/external-links", contactId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, ExternalLinkSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetContactExternalLinksPageResponse(
-			Long contactId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/contacts/{contactId}/external-links", contactId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -568,80 +442,26 @@ public abstract class BaseExternalLinkResourceTestCase {
 			ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostContactExternalLink(
+		return ExternalLinkResource.postContactExternalLink(
 			testGetContactExternalLinksPage_getContactId(), externalLink);
-	}
-
-	protected ExternalLink invokePostContactExternalLink(
-			Long contactId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/contacts/{contactId}/external-links", contactId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return ExternalLinkSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostContactExternalLinkResponse(
-			Long contactId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/contacts/{contactId}/external-links", contactId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
 	public void testDeleteExternalLink() throws Exception {
 		ExternalLink externalLink = testDeleteExternalLink_addExternalLink();
 
-		assertResponseCode(
-			204, invokeDeleteExternalLinkResponse(externalLink.getId()));
+		assertHttpResponseStatusCode(
+			204,
+			ExternalLinkResource.deleteExternalLinkHttpResponse(
+				externalLink.getId()));
 
-		assertResponseCode(
-			404, invokeGetExternalLinkResponse(externalLink.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			ExternalLinkResource.getExternalLinkHttpResponse(
+				externalLink.getId()));
 
-		assertResponseCode(404, invokeGetExternalLinkResponse(0L));
+		assertHttpResponseStatusCode(
+			404, ExternalLinkResource.getExternalLinkHttpResponse(0L));
 	}
 
 	protected ExternalLink testDeleteExternalLink_addExternalLink()
@@ -651,50 +471,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected void invokeDeleteExternalLink(Long externalLinkId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/external-links/{externalLinkId}", externalLinkId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteExternalLinkResponse(
-			Long externalLinkId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/external-links/{externalLinkId}", externalLinkId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetExternalLink() throws Exception {
 		ExternalLink postExternalLink = testGetExternalLink_addExternalLink();
 
-		ExternalLink getExternalLink = invokeGetExternalLink(
+		ExternalLink getExternalLink = ExternalLinkResource.getExternalLink(
 			postExternalLink.getId());
 
 		assertEquals(postExternalLink, getExternalLink);
@@ -708,51 +489,6 @@ public abstract class BaseExternalLinkResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected ExternalLink invokeGetExternalLink(Long externalLinkId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/external-links/{externalLinkId}", externalLinkId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return ExternalLinkSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetExternalLinkResponse(Long externalLinkId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/external-links/{externalLinkId}", externalLinkId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetProjectExternalLinksPage() throws Exception {
 		Long projectId = testGetProjectExternalLinksPage_getProjectId();
@@ -764,8 +500,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetProjectExternalLinksPage_addExternalLink(
 					irrelevantProjectId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page = invokeGetProjectExternalLinksPage(
-				irrelevantProjectId, Pagination.of(1, 2));
+			Page<ExternalLink> page =
+				ExternalLinkResource.getProjectExternalLinksPage(
+					irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -783,8 +520,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetProjectExternalLinksPage_addExternalLink(
 				projectId, randomExternalLink());
 
-		Page<ExternalLink> page = invokeGetProjectExternalLinksPage(
-			projectId, Pagination.of(1, 2));
+		Page<ExternalLink> page =
+			ExternalLinkResource.getProjectExternalLinksPage(
+				projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -812,8 +550,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetProjectExternalLinksPage_addExternalLink(
 				projectId, randomExternalLink());
 
-		Page<ExternalLink> page1 = invokeGetProjectExternalLinksPage(
-			projectId, Pagination.of(1, 2));
+		Page<ExternalLink> page1 =
+			ExternalLinkResource.getProjectExternalLinksPage(
+				projectId, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -821,8 +560,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks1.toString(), 2, externalLinks1.size());
 
-		Page<ExternalLink> page2 = invokeGetProjectExternalLinksPage(
-			projectId, Pagination.of(2, 2));
+		Page<ExternalLink> page2 =
+			ExternalLinkResource.getProjectExternalLinksPage(
+				projectId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -832,21 +572,21 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks2.toString(), 1, externalLinks2.size());
 
+		Page<ExternalLink> page3 =
+			ExternalLinkResource.getProjectExternalLinksPage(
+				projectId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			new ArrayList<ExternalLink>() {
-				{
-					addAll(externalLinks1);
-					addAll(externalLinks2);
-				}
-			});
+			(List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink testGetProjectExternalLinksPage_addExternalLink(
 			Long projectId, ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostProjectExternalLink(projectId, externalLink);
+		return ExternalLinkResource.postProjectExternalLink(
+			projectId, externalLink);
 	}
 
 	protected Long testGetProjectExternalLinksPage_getProjectId()
@@ -860,58 +600,6 @@ public abstract class BaseExternalLinkResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	protected Page<ExternalLink> invokeGetProjectExternalLinksPage(
-			Long projectId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/projects/{projectId}/external-links", projectId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, ExternalLinkSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetProjectExternalLinksPageResponse(
-			Long projectId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/projects/{projectId}/external-links", projectId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -929,67 +617,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostProjectExternalLink(
+		return ExternalLinkResource.postProjectExternalLink(
 			testGetProjectExternalLinksPage_getProjectId(), externalLink);
-	}
-
-	protected ExternalLink invokePostProjectExternalLink(
-			Long projectId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/projects/{projectId}/external-links", projectId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return ExternalLinkSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostProjectExternalLinkResponse(
-			Long projectId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/projects/{projectId}/external-links", projectId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -1003,8 +632,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetTeamExternalLinksPage_addExternalLink(
 					irrelevantTeamId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page = invokeGetTeamExternalLinksPage(
-				irrelevantTeamId, Pagination.of(1, 2));
+			Page<ExternalLink> page =
+				ExternalLinkResource.getTeamExternalLinksPage(
+					irrelevantTeamId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -1022,7 +652,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetTeamExternalLinksPage_addExternalLink(
 				teamId, randomExternalLink());
 
-		Page<ExternalLink> page = invokeGetTeamExternalLinksPage(
+		Page<ExternalLink> page = ExternalLinkResource.getTeamExternalLinksPage(
 			teamId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -1049,8 +679,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetTeamExternalLinksPage_addExternalLink(
 				teamId, randomExternalLink());
 
-		Page<ExternalLink> page1 = invokeGetTeamExternalLinksPage(
-			teamId, Pagination.of(1, 2));
+		Page<ExternalLink> page1 =
+			ExternalLinkResource.getTeamExternalLinksPage(
+				teamId, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -1058,8 +689,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks1.toString(), 2, externalLinks1.size());
 
-		Page<ExternalLink> page2 = invokeGetTeamExternalLinksPage(
-			teamId, Pagination.of(2, 2));
+		Page<ExternalLink> page2 =
+			ExternalLinkResource.getTeamExternalLinksPage(
+				teamId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1069,21 +701,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(
 			externalLinks2.toString(), 1, externalLinks2.size());
 
+		Page<ExternalLink> page3 =
+			ExternalLinkResource.getTeamExternalLinksPage(
+				teamId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			new ArrayList<ExternalLink>() {
-				{
-					addAll(externalLinks1);
-					addAll(externalLinks2);
-				}
-			});
+			(List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink testGetTeamExternalLinksPage_addExternalLink(
 			Long teamId, ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostTeamExternalLink(teamId, externalLink);
+		return ExternalLinkResource.postTeamExternalLink(teamId, externalLink);
 	}
 
 	protected Long testGetTeamExternalLinksPage_getTeamId() throws Exception {
@@ -1095,56 +726,6 @@ public abstract class BaseExternalLinkResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	protected Page<ExternalLink> invokeGetTeamExternalLinksPage(
-			Long teamId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, ExternalLinkSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetTeamExternalLinksPageResponse(
-			Long teamId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -1162,72 +743,16 @@ public abstract class BaseExternalLinkResourceTestCase {
 			ExternalLink externalLink)
 		throws Exception {
 
-		return invokePostTeamExternalLink(
+		return ExternalLinkResource.postTeamExternalLink(
 			testGetTeamExternalLinksPage_getTeamId(), externalLink);
 	}
 
-	protected ExternalLink invokePostTeamExternalLink(
-			Long teamId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return ExternalLinkSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostTeamExternalLinkResponse(
-			Long teamId, ExternalLink externalLink)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			ExternalLinkSerDes.toJSON(externalLink),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/teams/{teamId}/external-links", teamId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(
@@ -1545,76 +1070,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseExternalLinkResourceTestCase.class);
@@ -1634,8 +1093,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private ExternalLinkResource _externalLinkResource;
-
-	private URL _resourceURL;
+	private
+		com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource
+			_externalLinkResource;
 
 }

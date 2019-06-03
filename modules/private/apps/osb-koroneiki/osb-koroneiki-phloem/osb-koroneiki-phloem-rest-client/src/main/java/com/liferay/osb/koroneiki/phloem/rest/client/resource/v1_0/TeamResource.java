@@ -32,7 +32,26 @@ import javax.annotation.Generated;
 @Generated("")
 public class TeamResource {
 
-	public Page<Team> getAccountTeamsPage(Long accountId, Pagination pagination)
+	public static Page<Team> getAccountTeamsPage(
+			Long accountId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getAccountTeamsPageHttpResponse(
+			accountId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, TeamSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getAccountTeamsPageHttpResponse(
+			Long accountId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -51,39 +70,22 @@ public class TeamResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, TeamSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public Team postAccountTeam(Long accountId, Team team) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public static Team postAccountTeam(Long accountId, Team team)
+		throws Exception {
 
-		httpInvoker.body(TeamSerDes.toJSON(team), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = postAccountTeamHttpResponse(
+			accountId, team);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return TeamSerDes.toDTO(content);
@@ -97,7 +99,40 @@ public class TeamResource {
 		}
 	}
 
-	public void deleteTeam(Long teamId) throws Exception {
+	public static HttpInvoker.HttpResponse postAccountTeamHttpResponse(
+			Long accountId, Team team)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(team.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
+			accountId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteTeam(Long teamId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = deleteTeamHttpResponse(teamId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse deleteTeamHttpResponse(Long teamId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -108,17 +143,35 @@ public class TeamResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Team getTeam(Long teamId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getTeamHttpResponse(teamId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return TeamSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public Team getTeam(Long teamId) throws Exception {
+	public static HttpInvoker.HttpResponse getTeamHttpResponse(Long teamId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -129,14 +182,20 @@ public class TeamResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Team putTeam(Long teamId, Team team) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = putTeamHttpResponse(
+			teamId, team);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return TeamSerDes.toDTO(content);
@@ -150,10 +209,13 @@ public class TeamResource {
 		}
 	}
 
-	public Team putTeam(Long teamId, Team team) throws Exception {
+	public static HttpInvoker.HttpResponse putTeamHttpResponse(
+			Long teamId, Team team)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(TeamSerDes.toJSON(team), "application/json");
+		httpInvoker.body(team.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -163,25 +225,7 @@ public class TeamResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return TeamSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

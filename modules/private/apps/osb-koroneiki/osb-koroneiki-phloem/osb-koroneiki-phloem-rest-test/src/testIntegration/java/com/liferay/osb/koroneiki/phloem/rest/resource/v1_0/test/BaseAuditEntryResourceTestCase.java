@@ -14,57 +14,52 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.AuditEntry;
+import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
+import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.AuditEntryResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AuditEntrySerDes;
-import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
 
-import java.net.URL;
-
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
@@ -101,7 +96,10 @@ public abstract class BaseAuditEntryResourceTestCase {
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
 
-		_resourceURL = new URL("http://localhost:8080/o/koroneiki-rest/v1.0");
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_auditEntryResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -115,10 +113,16 @@ public abstract class BaseAuditEntryResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -136,9 +140,15 @@ public abstract class BaseAuditEntryResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -152,6 +162,37 @@ public abstract class BaseAuditEntryResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		AuditEntry auditEntry = randomAuditEntry();
+
+		auditEntry.setAction(regex);
+		auditEntry.setClassName(regex);
+		auditEntry.setDescription(regex);
+		auditEntry.setField(regex);
+		auditEntry.setFieldClassName(regex);
+		auditEntry.setNewValue(regex);
+		auditEntry.setOldValue(regex);
+		auditEntry.setUserName(regex);
+
+		String json = AuditEntrySerDes.toJSON(auditEntry);
+
+		Assert.assertFalse(json.contains(regex));
+
+		auditEntry = AuditEntrySerDes.toDTO(json);
+
+		Assert.assertEquals(regex, auditEntry.getAction());
+		Assert.assertEquals(regex, auditEntry.getClassName());
+		Assert.assertEquals(regex, auditEntry.getDescription());
+		Assert.assertEquals(regex, auditEntry.getField());
+		Assert.assertEquals(regex, auditEntry.getFieldClassName());
+		Assert.assertEquals(regex, auditEntry.getNewValue());
+		Assert.assertEquals(regex, auditEntry.getOldValue());
+		Assert.assertEquals(regex, auditEntry.getUserName());
+	}
+
+	@Test
 	public void testGetAccountAuditEntriesPage() throws Exception {
 		Long accountId = testGetAccountAuditEntriesPage_getAccountId();
 		Long irrelevantAccountId =
@@ -162,8 +203,9 @@ public abstract class BaseAuditEntryResourceTestCase {
 				testGetAccountAuditEntriesPage_addAuditEntry(
 					irrelevantAccountId, randomIrrelevantAuditEntry());
 
-			Page<AuditEntry> page = invokeGetAccountAuditEntriesPage(
-				irrelevantAccountId, Pagination.of(1, 2));
+			Page<AuditEntry> page =
+				AuditEntryResource.getAccountAuditEntriesPage(
+					irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -179,7 +221,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry2 = testGetAccountAuditEntriesPage_addAuditEntry(
 			accountId, randomAuditEntry());
 
-		Page<AuditEntry> page = invokeGetAccountAuditEntriesPage(
+		Page<AuditEntry> page = AuditEntryResource.getAccountAuditEntriesPage(
 			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -205,14 +247,14 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry3 = testGetAccountAuditEntriesPage_addAuditEntry(
 			accountId, randomAuditEntry());
 
-		Page<AuditEntry> page1 = invokeGetAccountAuditEntriesPage(
+		Page<AuditEntry> page1 = AuditEntryResource.getAccountAuditEntriesPage(
 			accountId, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = invokeGetAccountAuditEntriesPage(
+		Page<AuditEntry> page2 = AuditEntryResource.getAccountAuditEntriesPage(
 			accountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -221,14 +263,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
+		Page<AuditEntry> page3 = AuditEntryResource.getAccountAuditEntriesPage(
+			accountId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			new ArrayList<AuditEntry>() {
-				{
-					addAll(auditEntries1);
-					addAll(auditEntries2);
-				}
-			});
+			(List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetAccountAuditEntriesPage_addAuditEntry(
@@ -252,63 +292,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 		return null;
 	}
 
-	protected Page<AuditEntry> invokeGetAccountAuditEntriesPage(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/accounts/{accountId}/audit-entries", accountId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AuditEntrySerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetAccountAuditEntriesPageResponse(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/accounts/{accountId}/audit-entries", accountId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetAuditEntry() throws Exception {
 		AuditEntry postAuditEntry = testGetAuditEntry_addAuditEntry();
 
-		AuditEntry getAuditEntry = invokeGetAuditEntry(postAuditEntry.getId());
+		AuditEntry getAuditEntry = AuditEntryResource.getAuditEntry(
+			postAuditEntry.getId());
 
 		assertEquals(postAuditEntry, getAuditEntry);
 		assertValid(getAuditEntry);
@@ -317,51 +306,6 @@ public abstract class BaseAuditEntryResourceTestCase {
 	protected AuditEntry testGetAuditEntry_addAuditEntry() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected AuditEntry invokeGetAuditEntry(Long auditEntryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/audit-entries/{auditEntryId}", auditEntryId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return AuditEntrySerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetAuditEntryResponse(Long auditEntryId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/audit-entries/{auditEntryId}", auditEntryId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -376,8 +320,9 @@ public abstract class BaseAuditEntryResourceTestCase {
 				testGetContactRoleAuditEntriesPage_addAuditEntry(
 					irrelevantContactRoleId, randomIrrelevantAuditEntry());
 
-			Page<AuditEntry> page = invokeGetContactRoleAuditEntriesPage(
-				irrelevantContactRoleId, Pagination.of(1, 2));
+			Page<AuditEntry> page =
+				AuditEntryResource.getContactRoleAuditEntriesPage(
+					irrelevantContactRoleId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -395,8 +340,9 @@ public abstract class BaseAuditEntryResourceTestCase {
 			testGetContactRoleAuditEntriesPage_addAuditEntry(
 				contactRoleId, randomAuditEntry());
 
-		Page<AuditEntry> page = invokeGetContactRoleAuditEntriesPage(
-			contactRoleId, Pagination.of(1, 2));
+		Page<AuditEntry> page =
+			AuditEntryResource.getContactRoleAuditEntriesPage(
+				contactRoleId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -425,15 +371,17 @@ public abstract class BaseAuditEntryResourceTestCase {
 			testGetContactRoleAuditEntriesPage_addAuditEntry(
 				contactRoleId, randomAuditEntry());
 
-		Page<AuditEntry> page1 = invokeGetContactRoleAuditEntriesPage(
-			contactRoleId, Pagination.of(1, 2));
+		Page<AuditEntry> page1 =
+			AuditEntryResource.getContactRoleAuditEntriesPage(
+				contactRoleId, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = invokeGetContactRoleAuditEntriesPage(
-			contactRoleId, Pagination.of(2, 2));
+		Page<AuditEntry> page2 =
+			AuditEntryResource.getContactRoleAuditEntriesPage(
+				contactRoleId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -441,14 +389,13 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
+		Page<AuditEntry> page3 =
+			AuditEntryResource.getContactRoleAuditEntriesPage(
+				contactRoleId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			new ArrayList<AuditEntry>() {
-				{
-					addAll(auditEntries1);
-					addAll(auditEntries2);
-				}
-			});
+			(List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetContactRoleAuditEntriesPage_addAuditEntry(
@@ -473,62 +420,6 @@ public abstract class BaseAuditEntryResourceTestCase {
 		return null;
 	}
 
-	protected Page<AuditEntry> invokeGetContactRoleAuditEntriesPage(
-			Long contactRoleId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/contact-roles/{contactRoleId}/audit-entries",
-					contactRoleId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AuditEntrySerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetContactRoleAuditEntriesPageResponse(
-			Long contactRoleId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/contact-roles/{contactRoleId}/audit-entries",
-					contactRoleId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetContactAuditEntriesPage() throws Exception {
 		Long contactId = testGetContactAuditEntriesPage_getContactId();
@@ -540,8 +431,9 @@ public abstract class BaseAuditEntryResourceTestCase {
 				testGetContactAuditEntriesPage_addAuditEntry(
 					irrelevantContactId, randomIrrelevantAuditEntry());
 
-			Page<AuditEntry> page = invokeGetContactAuditEntriesPage(
-				irrelevantContactId, Pagination.of(1, 2));
+			Page<AuditEntry> page =
+				AuditEntryResource.getContactAuditEntriesPage(
+					irrelevantContactId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -557,7 +449,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry2 = testGetContactAuditEntriesPage_addAuditEntry(
 			contactId, randomAuditEntry());
 
-		Page<AuditEntry> page = invokeGetContactAuditEntriesPage(
+		Page<AuditEntry> page = AuditEntryResource.getContactAuditEntriesPage(
 			contactId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -583,14 +475,14 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry3 = testGetContactAuditEntriesPage_addAuditEntry(
 			contactId, randomAuditEntry());
 
-		Page<AuditEntry> page1 = invokeGetContactAuditEntriesPage(
+		Page<AuditEntry> page1 = AuditEntryResource.getContactAuditEntriesPage(
 			contactId, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = invokeGetContactAuditEntriesPage(
+		Page<AuditEntry> page2 = AuditEntryResource.getContactAuditEntriesPage(
 			contactId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -599,14 +491,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
+		Page<AuditEntry> page3 = AuditEntryResource.getContactAuditEntriesPage(
+			contactId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			new ArrayList<AuditEntry>() {
-				{
-					addAll(auditEntries1);
-					addAll(auditEntries2);
-				}
-			});
+			(List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetContactAuditEntriesPage_addAuditEntry(
@@ -630,58 +520,6 @@ public abstract class BaseAuditEntryResourceTestCase {
 		return null;
 	}
 
-	protected Page<AuditEntry> invokeGetContactAuditEntriesPage(
-			Long contactId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/contacts/{contactId}/audit-entries", contactId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AuditEntrySerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetContactAuditEntriesPageResponse(
-			Long contactId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/contacts/{contactId}/audit-entries", contactId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetProjectAuditEntriesPage() throws Exception {
 		Long projectId = testGetProjectAuditEntriesPage_getProjectId();
@@ -693,8 +531,9 @@ public abstract class BaseAuditEntryResourceTestCase {
 				testGetProjectAuditEntriesPage_addAuditEntry(
 					irrelevantProjectId, randomIrrelevantAuditEntry());
 
-			Page<AuditEntry> page = invokeGetProjectAuditEntriesPage(
-				irrelevantProjectId, Pagination.of(1, 2));
+			Page<AuditEntry> page =
+				AuditEntryResource.getProjectAuditEntriesPage(
+					irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -710,7 +549,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry2 = testGetProjectAuditEntriesPage_addAuditEntry(
 			projectId, randomAuditEntry());
 
-		Page<AuditEntry> page = invokeGetProjectAuditEntriesPage(
+		Page<AuditEntry> page = AuditEntryResource.getProjectAuditEntriesPage(
 			projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -736,14 +575,14 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry3 = testGetProjectAuditEntriesPage_addAuditEntry(
 			projectId, randomAuditEntry());
 
-		Page<AuditEntry> page1 = invokeGetProjectAuditEntriesPage(
+		Page<AuditEntry> page1 = AuditEntryResource.getProjectAuditEntriesPage(
 			projectId, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = invokeGetProjectAuditEntriesPage(
+		Page<AuditEntry> page2 = AuditEntryResource.getProjectAuditEntriesPage(
 			projectId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -752,14 +591,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
+		Page<AuditEntry> page3 = AuditEntryResource.getProjectAuditEntriesPage(
+			projectId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			new ArrayList<AuditEntry>() {
-				{
-					addAll(auditEntries1);
-					addAll(auditEntries2);
-				}
-			});
+			(List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetProjectAuditEntriesPage_addAuditEntry(
@@ -783,58 +620,6 @@ public abstract class BaseAuditEntryResourceTestCase {
 		return null;
 	}
 
-	protected Page<AuditEntry> invokeGetProjectAuditEntriesPage(
-			Long projectId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/projects/{projectId}/audit-entries", projectId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AuditEntrySerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetProjectAuditEntriesPageResponse(
-			Long projectId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/projects/{projectId}/audit-entries", projectId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetTeamRoleAuditEntriesPage() throws Exception {
 		Long teamRoleId = testGetTeamRoleAuditEntriesPage_getTeamRoleId();
@@ -846,8 +631,9 @@ public abstract class BaseAuditEntryResourceTestCase {
 				testGetTeamRoleAuditEntriesPage_addAuditEntry(
 					irrelevantTeamRoleId, randomIrrelevantAuditEntry());
 
-			Page<AuditEntry> page = invokeGetTeamRoleAuditEntriesPage(
-				irrelevantTeamRoleId, Pagination.of(1, 2));
+			Page<AuditEntry> page =
+				AuditEntryResource.getTeamRoleAuditEntriesPage(
+					irrelevantTeamRoleId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -863,7 +649,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry2 = testGetTeamRoleAuditEntriesPage_addAuditEntry(
 			teamRoleId, randomAuditEntry());
 
-		Page<AuditEntry> page = invokeGetTeamRoleAuditEntriesPage(
+		Page<AuditEntry> page = AuditEntryResource.getTeamRoleAuditEntriesPage(
 			teamRoleId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -889,14 +675,14 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry3 = testGetTeamRoleAuditEntriesPage_addAuditEntry(
 			teamRoleId, randomAuditEntry());
 
-		Page<AuditEntry> page1 = invokeGetTeamRoleAuditEntriesPage(
+		Page<AuditEntry> page1 = AuditEntryResource.getTeamRoleAuditEntriesPage(
 			teamRoleId, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = invokeGetTeamRoleAuditEntriesPage(
+		Page<AuditEntry> page2 = AuditEntryResource.getTeamRoleAuditEntriesPage(
 			teamRoleId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -905,14 +691,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
+		Page<AuditEntry> page3 = AuditEntryResource.getTeamRoleAuditEntriesPage(
+			teamRoleId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			new ArrayList<AuditEntry>() {
-				{
-					addAll(auditEntries1);
-					addAll(auditEntries2);
-				}
-			});
+			(List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetTeamRoleAuditEntriesPage_addAuditEntry(
@@ -936,58 +720,6 @@ public abstract class BaseAuditEntryResourceTestCase {
 		return null;
 	}
 
-	protected Page<AuditEntry> invokeGetTeamRoleAuditEntriesPage(
-			Long teamRoleId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/team-roles/{teamRoleId}/audit-entries", teamRoleId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AuditEntrySerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetTeamRoleAuditEntriesPageResponse(
-			Long teamRoleId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/team-roles/{teamRoleId}/audit-entries", teamRoleId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetTeamAuditEntriesPage() throws Exception {
 		Long teamId = testGetTeamAuditEntriesPage_getTeamId();
@@ -999,7 +731,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 				testGetTeamAuditEntriesPage_addAuditEntry(
 					irrelevantTeamId, randomIrrelevantAuditEntry());
 
-			Page<AuditEntry> page = invokeGetTeamAuditEntriesPage(
+			Page<AuditEntry> page = AuditEntryResource.getTeamAuditEntriesPage(
 				irrelevantTeamId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -1016,7 +748,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry2 = testGetTeamAuditEntriesPage_addAuditEntry(
 			teamId, randomAuditEntry());
 
-		Page<AuditEntry> page = invokeGetTeamAuditEntriesPage(
+		Page<AuditEntry> page = AuditEntryResource.getTeamAuditEntriesPage(
 			teamId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -1040,14 +772,14 @@ public abstract class BaseAuditEntryResourceTestCase {
 		AuditEntry auditEntry3 = testGetTeamAuditEntriesPage_addAuditEntry(
 			teamId, randomAuditEntry());
 
-		Page<AuditEntry> page1 = invokeGetTeamAuditEntriesPage(
+		Page<AuditEntry> page1 = AuditEntryResource.getTeamAuditEntriesPage(
 			teamId, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = invokeGetTeamAuditEntriesPage(
+		Page<AuditEntry> page2 = AuditEntryResource.getTeamAuditEntriesPage(
 			teamId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -1056,14 +788,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
+		Page<AuditEntry> page3 = AuditEntryResource.getTeamAuditEntriesPage(
+			teamId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			new ArrayList<AuditEntry>() {
-				{
-					addAll(auditEntries1);
-					addAll(auditEntries2);
-				}
-			});
+			(List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetTeamAuditEntriesPage_addAuditEntry(
@@ -1085,61 +815,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 		return null;
 	}
 
-	protected Page<AuditEntry> invokeGetTeamAuditEntriesPage(
-			Long teamId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/teams/{teamId}/audit-entries", teamId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, AuditEntrySerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetTeamAuditEntriesPageResponse(
-			Long teamId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/teams/{teamId}/audit-entries", teamId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(
@@ -1686,76 +1367,10 @@ public abstract class BaseAuditEntryResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAuditEntryResourceTestCase.class);
@@ -1775,8 +1390,8 @@ public abstract class BaseAuditEntryResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private AuditEntryResource _auditEntryResource;
-
-	private URL _resourceURL;
+	private
+		com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource
+			_auditEntryResource;
 
 }

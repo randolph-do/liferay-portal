@@ -1,0 +1,10 @@
+#
+# Liferay App Version 3.0.0
+#
+
+app.artifacts-3.0.0=\
+	com.liferay.portal.search.elasticsearch6.xpack.monitoring.web-3.0.2.jar
+
+app.change.log-3.0.0=LPS-84119 LPS-95413
+
+app.git.id-3.0.0=217d77a4c99bcc77c431b59d62f53ccd2e46bcd6

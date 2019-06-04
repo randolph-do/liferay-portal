@@ -14,6 +14,8 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
+import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
 import com.liferay.osb.koroneiki.trunk.exception.NoSuchProductConsumptionException;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
@@ -85,10 +87,68 @@ public class ProductConsumptionServiceImpl
 			productConsumption.getProductConsumptionId());
 	}
 
+	public List<ProductConsumption> getAccountProductConsumptions(
+			long accountId, int start, int end)
+		throws PortalException {
+
+		_accountPermission.check(
+			getPermissionChecker(), accountId, ActionKeys.VIEW);
+
+		return productConsumptionLocalService.getAccountProductConsumptions(
+			accountId, start, end);
+	}
+
+	public int getAccountProductConsumptionsCount(long accountId)
+		throws PortalException {
+
+		_accountPermission.check(
+			getPermissionChecker(), accountId, ActionKeys.VIEW);
+
+		return productConsumptionLocalService.
+			getAccountProductConsumptionsCount(accountId);
+	}
+
+	public ProductConsumption getProductConsumption(long productConsumptionId)
+		throws PortalException {
+
+		_productConsumptionPermission.check(
+			getPermissionChecker(), productConsumptionId, ActionKeys.VIEW);
+
+		return productConsumptionLocalService.getProductConsumption(
+			productConsumptionId);
+	}
+
+	public List<ProductConsumption> getProjectProductConsumptions(
+			long projectId, int start, int end)
+		throws PortalException {
+
+		_projectPermission.check(
+			getPermissionChecker(), projectId, ActionKeys.VIEW);
+
+		return productConsumptionLocalService.getProjectProductConsumptions(
+			projectId, start, end);
+	}
+
+	public int getProjectProductConsumptionsCount(long projectId)
+		throws PortalException {
+
+		_projectPermission.check(
+			getPermissionChecker(), projectId, ActionKeys.VIEW);
+
+		return productConsumptionLocalService.
+			getProjectProductConsumptionsCount(projectId);
+	}
+
+	@Reference
+	private AccountPermission _accountPermission;
+
 	@Reference
 	private ProductConsumptionPermission _productConsumptionPermission;
 
 	@Reference
 	private ProductEntryPermission _productEntryPermission;
+
+	@Reference
+	private ProjectPermission _projectPermission;
 
 }

@@ -110,12 +110,44 @@ public class ProductConsumptionLocalServiceImpl
 	}
 
 	@Override
+	public List<ProductConsumption> getAccountProductConsumptions(
+			long accountId, int start, int end)
+		throws PortalException {
+
+		return productConsumptionPersistence.findByAccountId(
+			accountId, start, end);
+	}
+
+	@Override
+	public int getAccountProductConsumptionsCount(long accountId)
+		throws PortalException {
+
+		return productConsumptionPersistence.countByAccountId(accountId);
+	}
+
+	@Override
 	public List<ProductConsumption> getProductConsumptions(
 			long userId, long accountId, long projectId, long productEntryId)
 		throws PortalException {
 
 		return productConsumptionPersistence.findByU_AI_PI_PEI(
 			userId, accountId, projectId, productEntryId);
+	}
+
+	@Override
+	public List<ProductConsumption> getProjectProductConsumptions(
+			long projectId, int start, int end)
+		throws PortalException {
+
+		return productConsumptionPersistence.findByProjectId(
+			projectId, start, end);
+	}
+
+	@Override
+	public int getProjectProductConsumptionsCount(long projectId)
+		throws PortalException {
+
+		return productConsumptionPersistence.countByProjectId(projectId);
 	}
 
 	protected void validate(long accountId, long projectId, long productEntryId)

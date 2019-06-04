@@ -14,6 +14,8 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
+import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
 import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
@@ -64,6 +66,58 @@ public class ProductPurchaseServiceImpl extends ProductPurchaseServiceBaseImpl {
 			productPurchaseId);
 	}
 
+	public List<ProductPurchase> getAccountProductPurchases(
+			long accountId, int start, int end)
+		throws PortalException {
+
+		_accountPermission.check(
+			getPermissionChecker(), accountId, ActionKeys.VIEW);
+
+		return productPurchaseLocalService.getAccountProductPurchases(
+			accountId, start, end);
+	}
+
+	public int getAccountProductPurchasesCount(long accountId)
+		throws PortalException {
+
+		_accountPermission.check(
+			getPermissionChecker(), accountId, ActionKeys.VIEW);
+
+		return productPurchaseLocalService.getAccountProductPurchasesCount(
+			accountId);
+	}
+
+	public ProductPurchase getProductPurchase(long productPurchaseId)
+		throws PortalException {
+
+		_productPurchasePermission.check(
+			getPermissionChecker(), productPurchaseId, ActionKeys.VIEW);
+
+		return productPurchaseLocalService.getProductPurchase(
+			productPurchaseId);
+	}
+
+	public List<ProductPurchase> getProjectProductPurchases(
+			long projectId, int start, int end)
+		throws PortalException {
+
+		_projectPermission.check(
+			getPermissionChecker(), projectId, ActionKeys.VIEW);
+
+		return productPurchaseLocalService.getProjectProductPurchases(
+			projectId, start, end);
+	}
+
+	public int getProjectProductPurchasesCount(long projectId)
+		throws PortalException {
+
+		_projectPermission.check(
+			getPermissionChecker(), projectId, ActionKeys.VIEW);
+
+		return productPurchaseLocalService.getProjectProductPurchasesCount(
+			projectId);
+	}
+
 	public ProductPurchase updateProductPurchase(
 			long productPurchaseId, Date startDate, Date endDate, int quantity,
 			List<ProductField> productFields)
@@ -78,6 +132,12 @@ public class ProductPurchaseServiceImpl extends ProductPurchaseServiceBaseImpl {
 	}
 
 	@Reference
+	private AccountPermission _accountPermission;
+
+	@Reference
 	private ProductPurchasePermission _productPurchasePermission;
+
+	@Reference
+	private ProjectPermission _projectPermission;
 
 }

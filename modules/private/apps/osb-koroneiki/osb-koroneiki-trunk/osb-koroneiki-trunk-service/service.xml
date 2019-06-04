@@ -24,6 +24,12 @@
 
 		<!-- Finder methods -->
 
+		<finder name="AccountId" return-type="Collection" where="projectId = 0">
+			<finder-column name="accountId" />
+		</finder>
+		<finder name="ProjectId" return-type="Collection">
+			<finder-column name="projectId" />
+		</finder>
 		<finder name="U_AI_PI_PEI" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="accountId" />
@@ -92,10 +98,20 @@
 		<column name="startDate" type="Date" />
 		<column name="endDate" type="Date" />
 		<column name="quantity" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="AccountId" return-type="Collection" where="projectId = 0">
+			<finder-column name="accountId" />
+		</finder>
+		<finder name="ProjectId" return-type="Collection">
+			<finder-column name="projectId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>ProductEntryName</exception>
 		<exception>ProductPurchaseEndDate</exception>
+		<exception>ProductPurchaseProject</exception>
 		<exception>ProductPurchaseQuantity</exception>
 	</exceptions>
 </service-builder>

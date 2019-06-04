@@ -205,6 +205,103 @@ components:
                 - entityId
                 - entityName
             type: object
+        Product:
+            description: Represents a product.
+            properties:
+                dateCreated:
+                    description: The product's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description: The most recent time that any of the product's fields changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    description: The product's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description: The name of the product.
+                    type: string
+            required:
+                - name
+            type: object
+        ProductConsumption:
+            description: Represents a product consumption.
+            properties:
+                accountId:
+                    description: The ID of the account consuming the product.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                dateCreated:
+                    description: The product consumption's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    description: The product consumption's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                productId:
+                    description: The ID of the product being consumed.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                projectId:
+                    description: The ID of the project consuming the product.
+                    format: int64
+                    readOnly: true
+                    type: integer
+            type: object
+        ProductPurchase:
+            description: Represents a product purchase.
+            properties:
+                accountId:
+                    description: The ID of the account purchasing the product.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                dateCreated:
+                    description: The product purchase's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                endDate:
+                    description: The product purchase's end date.
+                    format: date-time
+                    type: string
+                id:
+                    description: The product purchase's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                productId:
+                    description: The ID of the product being purchased.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                projectId:
+                    description: The ID of the project purchasing the product.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                properties:
+                    additionalProperties:
+                        type: string
+                    type: object
+                quantity:
+                    description: The quantity of the product purchased. Defaults to 1.
+                    type: integer
+                startDate:
+                    description: The product purchase's start date.
+                    format: date-time
+                    type: string
+            type: object
         Project:
             description: Represents a project.
             properties:
@@ -658,6 +755,155 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
+    "/accounts/{accountId}/product-consumptions":
+        delete:
+            operationId: deleteAccountProductConsumption
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["ProductConsumption"]
+        get:
+            description: Retrieves the account's product consumptions.
+            operationId: getAccountProductConsumptionsPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductConsumption"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductConsumption"
+                                type: array
+                    description: ""
+            tags: ["ProductConsumption"]
+        post:
+            operationId: postAccountProductConsumption
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+                    description: ""
+            tags: ["ProductConsumption"]
+    "/accounts/{accountId}/product-purchases":
+        get:
+            description: Retrieves the account's product purchases.
+            operationId: getAccountProductPurchasesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductPurchase"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductPurchase"
+                                type: array
+                    description: ""
+            tags: ["ProductPurchase"]
+        post:
+            operationId: postAccountProductPurchase
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductPurchase"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductPurchase"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                    description: ""
+            tags: ["ProductPurchase"]
     "/accounts/{accountId}/projects":
         get:
             description: Retrieves the account's projects.
@@ -1124,6 +1370,224 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
+    "/product-consumptions/{productConsumptionId}":
+        delete:
+            operationId: deleteProductConsumption
+            parameters:
+                - in: path
+                  name: productConsumptionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["ProductConsumption"]
+        get:
+            description: Retrieves the product consumption.
+            operationId: getProductConsumption
+            parameters:
+                - in: path
+                  name: productConsumptionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+                    description: ""
+            tags: ["ProductConsumption"]
+    "/product-purchases/{productPurchaseId}":
+        delete:
+            operationId: deleteProductPurchase
+            parameters:
+                - in: path
+                  name: productPurchaseId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["ProductPurchase"]
+        get:
+            description: Retrieves the product purchase.
+            operationId: getProductPurchase
+            parameters:
+                - in: path
+                  name: productPurchaseId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                    description: ""
+            tags: ["ProductPurchase"]
+        put:
+            operationId: putProductPurchase
+            parameters:
+                - in: path
+                  name: productPurchaseId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductPurchase"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductPurchase"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                    description: ""
+            tags: ["ProductPurchase"]
+    "/products":
+        get:
+            operationId: getProductsPage
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Product"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Product"
+                                type: array
+                    description: ""
+            tags: ["Product"]
+        post:
+            operationId: postProduct
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Product"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Product"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                    description: ""
+            tags: ["Product"]
+    "/products/{productId}":
+        delete:
+            operationId: deleteProduct
+            parameters:
+                - in: path
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Product"]
+        get:
+            description: Retrieves the product.
+            operationId: getProduct
+            parameters:
+                - in: path
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                    description: ""
+            tags: ["Product"]
+        put:
+            operationId: putProduct
+            parameters:
+                - in: path
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Product"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Product"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                    description: ""
+            tags: ["Product"]
     "/projects/{projectId}":
         delete:
             operationId: deleteProject
@@ -1431,6 +1895,155 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
+    "/projects/{projectId}/product-consumptions":
+        delete:
+            operationId: deleteProjectProductConsumption
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["ProductConsumption"]
+        get:
+            description: Retrieves the project's product consumptions.
+            operationId: getProjectProductConsumptionsPage
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductConsumption"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductConsumption"
+                                type: array
+                    description: ""
+            tags: ["ProductConsumption"]
+        post:
+            operationId: postProjectProductConsumption
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+                    description: ""
+            tags: ["ProductConsumption"]
+    "/projects/{projectId}/product-purchases":
+        get:
+            description: Retrieves the project's product purchases.
+            operationId: getProjectProductPurchasesPage
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductPurchase"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductPurchase"
+                                type: array
+                    description: ""
+            tags: ["ProductPurchase"]
+        post:
+            operationId: postProjectProductPurchase
+            parameters:
+                - in: path
+                  name: projectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductPurchase"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductPurchase"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductPurchase"
+                    description: ""
+            tags: ["ProductPurchase"]
     "/projects/{projectId}/teams/{teamId}/roles":
         delete:
             description: Unassigns roles from the team for the project.

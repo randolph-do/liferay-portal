@@ -20,7 +20,11 @@ import com.liferay.osb.koroneiki.trunk.permission.ProductEntryPermission;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +56,41 @@ public class ProductEntryServiceImpl extends ProductEntryServiceBaseImpl {
 			getPermissionChecker(), productEntryId, ActionKeys.DELETE);
 
 		return productEntryLocalService.deleteProductEntry(productEntryId);
+	}
+
+	public List<ProductEntry> getProductEntries(int start, int end)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ProductEntry.class.getName(), 0,
+				ActionKeys.VIEW);
+		}
+
+		return productEntryLocalService.getProductEntries(start, end);
+	}
+
+	public int getProductEntriesCount() throws PortalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ProductEntry.class.getName(), 0,
+				ActionKeys.VIEW);
+		}
+
+		return productEntryLocalService.getProductEntriesCount();
+	}
+
+	public ProductEntry getProductEntry(long productEntryId)
+		throws PortalException {
+
+		_productEntryPermission.check(
+			getPermissionChecker(), productEntryId, ActionKeys.VIEW);
+
+		return productEntryLocalService.getProductEntry(productEntryId);
 	}
 
 	public ProductEntry updateProductEntry(long productEntryId, String name)

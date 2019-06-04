@@ -14,9 +14,11 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.osb.koroneiki.trunk.exception.ProductPurchaseEndDateException;
+import com.liferay.osb.koroneiki.trunk.exception.ProductPurchaseProjectException;
 import com.liferay.osb.koroneiki.trunk.exception.ProductPurchaseQuantityException;
 import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
@@ -107,6 +109,28 @@ public class ProductPurchaseLocalServiceImpl
 		return productPurchasePersistence.remove(productPurchaseId);
 	}
 
+	public List<ProductPurchase> getAccountProductPurchases(
+		long accountId, int start, int end) {
+
+		return productPurchasePersistence.findByAccountId(
+			accountId, start, end);
+	}
+
+	public int getAccountProductPurchasesCount(long accountId) {
+		return productPurchasePersistence.countByAccountId(accountId);
+	}
+
+	public List<ProductPurchase> getProjectProductPurchases(
+		long projectId, int start, int end) {
+
+		return productPurchasePersistence.findByProjectId(
+			projectId, start, end);
+	}
+
+	public int getProjectProductPurchasesCount(long projectId) {
+		return productPurchasePersistence.countByProjectId(projectId);
+	}
+
 	public ProductPurchase updateProductPurchase(
 			long userId, long productPurchaseId, Date startDate, Date endDate,
 			int quantity, List<ProductField> productFields)
@@ -189,7 +213,11 @@ public class ProductPurchaseLocalServiceImpl
 		_accountLocalService.getAccount(accountId);
 
 		if (projectId > 0) {
-			_projectLocalService.getProject(projectId);
+			Project project = _projectLocalService.getProject(projectId);
+
+			if (project.getAccountId() != accountId) {
+				throw new ProductPurchaseProjectException();
+			}
 		}
 
 		productEntryPersistence.findByPrimaryKey(productEntryId);

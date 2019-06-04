@@ -26,7 +26,9 @@ import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalServiceUtil;
 import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Kyle Bischof
@@ -49,6 +51,19 @@ public class ProductPurchaseImpl extends ProductPurchaseBaseImpl {
 	public List<ProductField> getProductFields() {
 		return ProductFieldLocalServiceUtil.getProductFields(
 			getProductPurchaseId());
+	}
+
+	public Map<String, String> getProductFieldsMap() {
+		Map<String, String> productFieldsMap = new HashMap<>();
+
+		List<ProductField> productFields = getProductFields();
+
+		for (ProductField productField : productFields) {
+			productFieldsMap.put(
+				productField.getName(), productField.getValue());
+		}
+
+		return productFieldsMap;
 	}
 
 	public Project getProject() {

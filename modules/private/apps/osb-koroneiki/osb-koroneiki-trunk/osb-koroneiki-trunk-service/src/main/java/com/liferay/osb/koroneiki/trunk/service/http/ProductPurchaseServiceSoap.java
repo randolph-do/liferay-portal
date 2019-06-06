@@ -109,6 +109,101 @@ public class ProductPurchaseServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchaseSoap[]
+			getAccountProductPurchases(long accountId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+					returnValue =
+						ProductPurchaseServiceUtil.getAccountProductPurchases(
+							accountId, start, end);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductPurchaseSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getAccountProductPurchasesCount(long accountId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				ProductPurchaseServiceUtil.getAccountProductPurchasesCount(
+					accountId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchaseSoap
+			getProductPurchase(long productPurchaseId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductPurchase returnValue =
+				ProductPurchaseServiceUtil.getProductPurchase(
+					productPurchaseId);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductPurchaseSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchaseSoap[]
+			getProjectProductPurchases(long projectId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+					returnValue =
+						ProductPurchaseServiceUtil.getProjectProductPurchases(
+							projectId, start, end);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductPurchaseSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getProjectProductPurchasesCount(long projectId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				ProductPurchaseServiceUtil.getProjectProductPurchasesCount(
+					projectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchaseSoap
 			updateProductPurchase(
 				long productPurchaseId, java.util.Date startDate,

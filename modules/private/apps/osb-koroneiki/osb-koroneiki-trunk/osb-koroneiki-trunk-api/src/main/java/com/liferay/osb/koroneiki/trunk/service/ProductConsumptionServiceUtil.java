@@ -64,6 +64,22 @@ public class ProductConsumptionServiceUtil {
 			accountId, projectId, productEntryId);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+				getAccountProductConsumptions(
+					long accountId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountProductConsumptions(
+			accountId, start, end);
+	}
+
+	public static int getAccountProductConsumptionsCount(long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountProductConsumptionsCount(accountId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -71,6 +87,29 @@ public class ProductConsumptionServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			getProductConsumption(long productConsumptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductConsumption(productConsumptionId);
+	}
+
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+				getProjectProductConsumptions(
+					long projectId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjectProductConsumptions(
+			projectId, start, end);
+	}
+
+	public static int getProjectProductConsumptionsCount(long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjectProductConsumptionsCount(projectId);
 	}
 
 	public static ProductConsumptionService getService() {

@@ -121,11 +121,15 @@ public class ProductPurchaseModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ACCOUNTID_COLUMN_BITMASK = 1L;
 
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long PRODUCTPURCHASEID_COLUMN_BITMASK = 4L;
+	public static final long PROJECTID_COLUMN_BITMASK = 4L;
+
+	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	public static final long PRODUCTPURCHASEID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -502,7 +506,19 @@ public class ProductPurchaseModelImpl
 
 	@Override
 	public void setAccountId(long accountId) {
+		_columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
+
+		if (!_setOriginalAccountId) {
+			_setOriginalAccountId = true;
+
+			_originalAccountId = _accountId;
+		}
+
 		_accountId = accountId;
+	}
+
+	public long getOriginalAccountId() {
+		return _originalAccountId;
 	}
 
 	@JSON
@@ -513,7 +529,19 @@ public class ProductPurchaseModelImpl
 
 	@Override
 	public void setProjectId(long projectId) {
+		_columnBitmask |= PROJECTID_COLUMN_BITMASK;
+
+		if (!_setOriginalProjectId) {
+			_setOriginalProjectId = true;
+
+			_originalProjectId = _projectId;
+		}
+
 		_projectId = projectId;
+	}
+
+	public long getOriginalProjectId() {
+		return _originalProjectId;
 	}
 
 	@JSON
@@ -680,6 +708,16 @@ public class ProductPurchaseModelImpl
 
 		productPurchaseModelImpl._setModifiedDate = false;
 
+		productPurchaseModelImpl._originalAccountId =
+			productPurchaseModelImpl._accountId;
+
+		productPurchaseModelImpl._setOriginalAccountId = false;
+
+		productPurchaseModelImpl._originalProjectId =
+			productPurchaseModelImpl._projectId;
+
+		productPurchaseModelImpl._setOriginalProjectId = false;
+
 		productPurchaseModelImpl._columnBitmask = 0;
 	}
 
@@ -828,7 +866,11 @@ public class ProductPurchaseModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _accountId;
+	private long _originalAccountId;
+	private boolean _setOriginalAccountId;
 	private long _projectId;
+	private long _originalProjectId;
+	private boolean _setOriginalProjectId;
 	private long _productEntryId;
 	private Date _startDate;
 	private Date _endDate;

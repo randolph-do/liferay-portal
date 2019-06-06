@@ -62,6 +62,27 @@ public class ProductEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductEntry> getProductEntries(
+				int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductEntries(start, end);
+	}
+
+	public static int getProductEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductEntriesCount();
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			getProductEntry(long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductEntry(productEntryId);
+	}
+
 	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
 			updateProductEntry(long productEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -86,6 +86,12 @@ public class OpenAPIResourceImpl {
 
 			add(ExternalLinkResourceImpl.class);
 
+			add(ProductResourceImpl.class);
+
+			add(ProductConsumptionResourceImpl.class);
+
+			add(ProductPurchaseResourceImpl.class);
+
 			add(ProjectResourceImpl.class);
 
 			add(TeamResourceImpl.class);

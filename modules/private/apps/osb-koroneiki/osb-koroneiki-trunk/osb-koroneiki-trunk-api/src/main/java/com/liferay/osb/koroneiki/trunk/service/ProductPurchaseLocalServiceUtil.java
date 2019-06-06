@@ -224,6 +224,17 @@ public class ProductPurchaseLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+			getAccountProductPurchases(long accountId, int start, int end) {
+
+		return getService().getAccountProductPurchases(accountId, start, end);
+	}
+
+	public static int getAccountProductPurchasesCount(long accountId) {
+		return getService().getAccountProductPurchasesCount(accountId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -316,6 +327,17 @@ public class ProductPurchaseLocalServiceUtil {
 	 */
 	public static int getProductPurchasesCount() {
 		return getService().getProductPurchasesCount();
+	}
+
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+			getProjectProductPurchases(long projectId, int start, int end) {
+
+		return getService().getProjectProductPurchases(projectId, start, end);
+	}
+
+	public static int getProjectProductPurchasesCount(long projectId) {
+		return getService().getProjectProductPurchasesCount(projectId);
 	}
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase

@@ -226,6 +226,11 @@ public class ProductPurchaseWrapper
 		return model.getProductFields();
 	}
 
+	@Override
+	public Map<String, String> getProductFieldsMap() {
+		return model.getProductFieldsMap();
+	}
+
 	/**
 	 * Returns the product purchase ID of this product purchase.
 	 *

@@ -247,6 +247,25 @@ public class ProductConsumptionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+				getAccountProductConsumptions(
+					long accountId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.getAccountProductConsumptions(
+			accountId, start, end);
+	}
+
+	@Override
+	public int getAccountProductConsumptionsCount(long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.
+			getAccountProductConsumptionsCount(accountId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -362,6 +381,25 @@ public class ProductConsumptionLocalServiceWrapper
 	@Override
 	public int getProductConsumptionsCount() {
 		return _productConsumptionLocalService.getProductConsumptionsCount();
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+				getProjectProductConsumptions(
+					long projectId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.getProjectProductConsumptions(
+			projectId, start, end);
+	}
+
+	@Override
+	public int getProjectProductConsumptionsCount(long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.
+			getProjectProductConsumptionsCount(projectId);
 	}
 
 	/**

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.Date;
@@ -60,12 +61,34 @@ public interface ProductPurchaseService extends BaseService {
 	public ProductPurchase deleteProductPurchase(long productPurchaseId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductPurchase> getAccountProductPurchases(
+			long accountId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountProductPurchasesCount(long accountId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ProductPurchase getProductPurchase(long productPurchaseId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductPurchase> getProjectProductPurchases(
+			long projectId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProjectProductPurchasesCount(long projectId)
+		throws PortalException;
 
 	public ProductPurchase updateProductPurchase(
 			long productPurchaseId, Date startDate, Date endDate, int quantity,

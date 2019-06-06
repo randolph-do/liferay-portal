@@ -19,6 +19,9 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.AuditEntry;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Product;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumption;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole;
@@ -27,6 +30,9 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductPurchaseResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
@@ -92,6 +98,30 @@ public class Query {
 
 		_externalLinkResourceComponentServiceObjects =
 			externalLinkResourceComponentServiceObjects;
+	}
+
+	public static void setProductResourceComponentServiceObjects(
+		ComponentServiceObjects<ProductResource>
+			productResourceComponentServiceObjects) {
+
+		_productResourceComponentServiceObjects =
+			productResourceComponentServiceObjects;
+	}
+
+	public static void setProductConsumptionResourceComponentServiceObjects(
+		ComponentServiceObjects<ProductConsumptionResource>
+			productConsumptionResourceComponentServiceObjects) {
+
+		_productConsumptionResourceComponentServiceObjects =
+			productConsumptionResourceComponentServiceObjects;
+	}
+
+	public static void setProductPurchaseResourceComponentServiceObjects(
+		ComponentServiceObjects<ProductPurchaseResource>
+			productPurchaseResourceComponentServiceObjects) {
+
+		_productPurchaseResourceComponentServiceObjects =
+			productPurchaseResourceComponentServiceObjects;
 	}
 
 	public static void setProjectResourceComponentServiceObjects(
@@ -419,6 +449,144 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<Product> getProductsPage(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productResource -> {
+				Page paginationPage = productResource.getProductsPage(
+					Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Product getProduct(@GraphQLName("productId") Long productId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productResource -> productResource.getProduct(productId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ProductConsumption> getAccountProductConsumptionsPage(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConsumptionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConsumptionResource -> {
+				Page paginationPage =
+					productConsumptionResource.
+						getAccountProductConsumptionsPage(
+							accountId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ProductConsumption getProductConsumption(
+			@GraphQLName("productConsumptionId") Long productConsumptionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConsumptionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConsumptionResource ->
+				productConsumptionResource.getProductConsumption(
+					productConsumptionId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ProductConsumption> getProjectProductConsumptionsPage(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConsumptionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConsumptionResource -> {
+				Page paginationPage =
+					productConsumptionResource.
+						getProjectProductConsumptionsPage(
+							projectId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ProductPurchase> getAccountProductPurchasesPage(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productPurchaseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productPurchaseResource -> {
+				Page paginationPage =
+					productPurchaseResource.getAccountProductPurchasesPage(
+						accountId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ProductPurchase getProductPurchase(
+			@GraphQLName("productPurchaseId") Long productPurchaseId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productPurchaseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productPurchaseResource ->
+				productPurchaseResource.getProductPurchase(productPurchaseId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ProductPurchase> getProjectProductPurchasesPage(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productPurchaseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productPurchaseResource -> {
+				Page paginationPage =
+					productPurchaseResource.getProjectProductPurchasesPage(
+						projectId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<Project> getAccountProjectsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -547,6 +715,32 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(ProductResource productResource)
+		throws Exception {
+
+		productResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			ProductConsumptionResource productConsumptionResource)
+		throws Exception {
+
+		productConsumptionResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			ProductPurchaseResource productPurchaseResource)
+		throws Exception {
+
+		productPurchaseResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(ProjectResource projectResource)
 		throws Exception {
 
@@ -581,6 +775,12 @@ public class Query {
 		_contactRoleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ExternalLinkResource>
 		_externalLinkResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProductResource>
+		_productResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProductConsumptionResource>
+		_productConsumptionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProductPurchaseResource>
+		_productPurchaseResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProjectResource>
 		_projectResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TeamResource>

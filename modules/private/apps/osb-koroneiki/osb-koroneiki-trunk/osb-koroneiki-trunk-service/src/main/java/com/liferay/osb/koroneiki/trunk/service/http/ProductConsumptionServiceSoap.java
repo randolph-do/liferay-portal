@@ -126,6 +126,104 @@ public class ProductConsumptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap[]
+			getAccountProductConsumptions(long accountId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+					returnValue =
+						ProductConsumptionServiceUtil.
+							getAccountProductConsumptions(
+								accountId, start, end);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getAccountProductConsumptionsCount(long accountId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				ProductConsumptionServiceUtil.
+					getAccountProductConsumptionsCount(accountId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
+			getProductConsumption(long productConsumptionId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+				returnValue =
+					ProductConsumptionServiceUtil.getProductConsumption(
+						productConsumptionId);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap[]
+			getProjectProductConsumptions(long projectId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+					returnValue =
+						ProductConsumptionServiceUtil.
+							getProjectProductConsumptions(
+								projectId, start, end);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getProjectProductConsumptionsCount(long projectId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				ProductConsumptionServiceUtil.
+					getProjectProductConsumptionsCount(projectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ProductConsumptionServiceSoap.class);
 

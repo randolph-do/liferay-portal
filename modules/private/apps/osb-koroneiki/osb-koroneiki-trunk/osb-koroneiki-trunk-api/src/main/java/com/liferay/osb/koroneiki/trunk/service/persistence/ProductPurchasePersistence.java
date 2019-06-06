@@ -474,6 +474,422 @@ public interface ProductPurchasePersistence
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the product purchases where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByAccountId(long accountId);
+
+	/**
+	 * Returns a range of all the product purchases where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @return the range of matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByAccountId(
+		long accountId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the product purchases where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByAccountId(
+		long accountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the product purchases where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByAccountId(
+		long accountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first product purchase in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product purchase
+	 * @throws NoSuchProductPurchaseException if a matching product purchase could not be found
+	 */
+	public ProductPurchase findByAccountId_First(
+			long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns the first product purchase in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public ProductPurchase fetchByAccountId_First(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns the last product purchase in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product purchase
+	 * @throws NoSuchProductPurchaseException if a matching product purchase could not be found
+	 */
+	public ProductPurchase findByAccountId_Last(
+			long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns the last product purchase in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public ProductPurchase fetchByAccountId_Last(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns the product purchases before and after the current product purchase in the ordered set where accountId = &#63;.
+	 *
+	 * @param productPurchaseId the primary key of the current product purchase
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next product purchase
+	 * @throws NoSuchProductPurchaseException if a product purchase with the primary key could not be found
+	 */
+	public ProductPurchase[] findByAccountId_PrevAndNext(
+			long productPurchaseId, long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns all the product purchases that the user has permission to view where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the matching product purchases that the user has permission to view
+	 */
+	public java.util.List<ProductPurchase> filterFindByAccountId(
+		long accountId);
+
+	/**
+	 * Returns a range of all the product purchases that the user has permission to view where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @return the range of matching product purchases that the user has permission to view
+	 */
+	public java.util.List<ProductPurchase> filterFindByAccountId(
+		long accountId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the product purchases that the user has permissions to view where accountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accountId the account ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching product purchases that the user has permission to view
+	 */
+	public java.util.List<ProductPurchase> filterFindByAccountId(
+		long accountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns the product purchases before and after the current product purchase in the ordered set of product purchases that the user has permission to view where accountId = &#63;.
+	 *
+	 * @param productPurchaseId the primary key of the current product purchase
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next product purchase
+	 * @throws NoSuchProductPurchaseException if a product purchase with the primary key could not be found
+	 */
+	public ProductPurchase[] filterFindByAccountId_PrevAndNext(
+			long productPurchaseId, long accountId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Removes all the product purchases where accountId = &#63; from the database.
+	 *
+	 * @param accountId the account ID
+	 */
+	public void removeByAccountId(long accountId);
+
+	/**
+	 * Returns the number of product purchases where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the number of matching product purchases
+	 */
+	public int countByAccountId(long accountId);
+
+	/**
+	 * Returns the number of product purchases that the user has permission to view where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @return the number of matching product purchases that the user has permission to view
+	 */
+	public int filterCountByAccountId(long accountId);
+
+	/**
+	 * Returns all the product purchases where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByProjectId(long projectId);
+
+	/**
+	 * Returns a range of all the product purchases where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @return the range of matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByProjectId(
+		long projectId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the product purchases where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByProjectId(
+		long projectId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the product purchases where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching product purchases
+	 */
+	public java.util.List<ProductPurchase> findByProjectId(
+		long projectId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first product purchase in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product purchase
+	 * @throws NoSuchProductPurchaseException if a matching product purchase could not be found
+	 */
+	public ProductPurchase findByProjectId_First(
+			long projectId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns the first product purchase in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public ProductPurchase fetchByProjectId_First(
+		long projectId,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns the last product purchase in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product purchase
+	 * @throws NoSuchProductPurchaseException if a matching product purchase could not be found
+	 */
+	public ProductPurchase findByProjectId_Last(
+			long projectId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns the last product purchase in the ordered set where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public ProductPurchase fetchByProjectId_Last(
+		long projectId,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns the product purchases before and after the current product purchase in the ordered set where projectId = &#63;.
+	 *
+	 * @param productPurchaseId the primary key of the current product purchase
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next product purchase
+	 * @throws NoSuchProductPurchaseException if a product purchase with the primary key could not be found
+	 */
+	public ProductPurchase[] findByProjectId_PrevAndNext(
+			long productPurchaseId, long projectId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns all the product purchases that the user has permission to view where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the matching product purchases that the user has permission to view
+	 */
+	public java.util.List<ProductPurchase> filterFindByProjectId(
+		long projectId);
+
+	/**
+	 * Returns a range of all the product purchases that the user has permission to view where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @return the range of matching product purchases that the user has permission to view
+	 */
+	public java.util.List<ProductPurchase> filterFindByProjectId(
+		long projectId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the product purchases that the user has permissions to view where projectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductPurchaseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param projectId the project ID
+	 * @param start the lower bound of the range of product purchases
+	 * @param end the upper bound of the range of product purchases (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching product purchases that the user has permission to view
+	 */
+	public java.util.List<ProductPurchase> filterFindByProjectId(
+		long projectId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+			orderByComparator);
+
+	/**
+	 * Returns the product purchases before and after the current product purchase in the ordered set of product purchases that the user has permission to view where projectId = &#63;.
+	 *
+	 * @param productPurchaseId the primary key of the current product purchase
+	 * @param projectId the project ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next product purchase
+	 * @throws NoSuchProductPurchaseException if a product purchase with the primary key could not be found
+	 */
+	public ProductPurchase[] filterFindByProjectId_PrevAndNext(
+			long productPurchaseId, long projectId,
+			com.liferay.portal.kernel.util.OrderByComparator<ProductPurchase>
+				orderByComparator)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Removes all the product purchases where projectId = &#63; from the database.
+	 *
+	 * @param projectId the project ID
+	 */
+	public void removeByProjectId(long projectId);
+
+	/**
+	 * Returns the number of product purchases where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the number of matching product purchases
+	 */
+	public int countByProjectId(long projectId);
+
+	/**
+	 * Returns the number of product purchases that the user has permission to view where projectId = &#63;.
+	 *
+	 * @param projectId the project ID
+	 * @return the number of matching product purchases that the user has permission to view
+	 */
+	public int filterCountByProjectId(long projectId);
+
+	/**
 	 * Caches the product purchase in the entity cache if it is enabled.
 	 *
 	 * @param productPurchase the product purchase

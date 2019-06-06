@@ -197,6 +197,13 @@ public interface ProductPurchaseLocalService
 		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductPurchase> getAccountProductPurchases(
+		long accountId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountProductPurchasesCount(long accountId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -263,6 +270,13 @@ public interface ProductPurchaseLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getProductPurchasesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductPurchase> getProjectProductPurchases(
+		long projectId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProjectProductPurchasesCount(long projectId);
 
 	public ProductPurchase updateProductPurchase(
 			long userId, long productPurchaseId, Date startDate, Date endDate,

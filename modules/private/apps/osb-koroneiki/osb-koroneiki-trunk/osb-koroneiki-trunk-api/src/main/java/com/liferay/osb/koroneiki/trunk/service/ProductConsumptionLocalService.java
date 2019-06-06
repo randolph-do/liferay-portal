@@ -201,6 +201,15 @@ public interface ProductConsumptionLocalService
 		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductConsumption> getAccountProductConsumptions(
+			long accountId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountProductConsumptionsCount(long accountId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -272,6 +281,15 @@ public interface ProductConsumptionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getProductConsumptionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductConsumption> getProjectProductConsumptions(
+			long projectId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProjectProductConsumptionsCount(long projectId)
+		throws PortalException;
 
 	/**
 	 * Updates the product consumption in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -240,6 +240,20 @@ public class ProductPurchaseLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+		getAccountProductPurchases(long accountId, int start, int end) {
+
+		return _productPurchaseLocalService.getAccountProductPurchases(
+			accountId, start, end);
+	}
+
+	@Override
+	public int getAccountProductPurchasesCount(long accountId) {
+		return _productPurchaseLocalService.getAccountProductPurchasesCount(
+			accountId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -341,6 +355,20 @@ public class ProductPurchaseLocalServiceWrapper
 	@Override
 	public int getProductPurchasesCount() {
 		return _productPurchaseLocalService.getProductPurchasesCount();
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+		getProjectProductPurchases(long projectId, int start, int end) {
+
+		return _productPurchaseLocalService.getProjectProductPurchases(
+			projectId, start, end);
+	}
+
+	@Override
+	public int getProjectProductPurchasesCount(long projectId) {
+		return _productPurchaseLocalService.getProjectProductPurchasesCount(
+			projectId);
 	}
 
 	@Override

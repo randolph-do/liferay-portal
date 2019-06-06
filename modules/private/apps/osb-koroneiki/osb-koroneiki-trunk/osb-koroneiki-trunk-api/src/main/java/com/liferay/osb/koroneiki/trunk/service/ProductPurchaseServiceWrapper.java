@@ -58,6 +58,23 @@ public class ProductPurchaseServiceWrapper
 		return _productPurchaseService.deleteProductPurchase(productPurchaseId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+			getAccountProductPurchases(long accountId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getAccountProductPurchases(
+			accountId, start, end);
+	}
+
+	@Override
+	public int getAccountProductPurchasesCount(long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getAccountProductPurchasesCount(
+			accountId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -66,6 +83,31 @@ public class ProductPurchaseServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _productPurchaseService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			getProductPurchase(long productPurchaseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getProductPurchase(productPurchaseId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+			getProjectProductPurchases(long projectId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getProjectProductPurchases(
+			projectId, start, end);
+	}
+
+	@Override
+	public int getProjectProductPurchasesCount(long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getProjectProductPurchasesCount(
+			projectId);
 	}
 
 	@Override

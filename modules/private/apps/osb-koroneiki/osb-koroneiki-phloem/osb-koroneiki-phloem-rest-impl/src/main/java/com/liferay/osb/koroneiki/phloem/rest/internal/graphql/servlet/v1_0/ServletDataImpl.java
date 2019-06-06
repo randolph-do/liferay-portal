@@ -21,6 +21,9 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductPurchaseResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
@@ -53,6 +56,12 @@ public class ServletDataImpl implements ServletData {
 			_contactRoleResourceComponentServiceObjects);
 		Mutation.setExternalLinkResourceComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects);
+		Mutation.setProductResourceComponentServiceObjects(
+			_productResourceComponentServiceObjects);
+		Mutation.setProductConsumptionResourceComponentServiceObjects(
+			_productConsumptionResourceComponentServiceObjects);
+		Mutation.setProductPurchaseResourceComponentServiceObjects(
+			_productPurchaseResourceComponentServiceObjects);
 		Mutation.setProjectResourceComponentServiceObjects(
 			_projectResourceComponentServiceObjects);
 		Mutation.setTeamResourceComponentServiceObjects(
@@ -70,6 +79,12 @@ public class ServletDataImpl implements ServletData {
 			_contactRoleResourceComponentServiceObjects);
 		Query.setExternalLinkResourceComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects);
+		Query.setProductResourceComponentServiceObjects(
+			_productResourceComponentServiceObjects);
+		Query.setProductConsumptionResourceComponentServiceObjects(
+			_productConsumptionResourceComponentServiceObjects);
+		Query.setProductPurchaseResourceComponentServiceObjects(
+			_productPurchaseResourceComponentServiceObjects);
 		Query.setProjectResourceComponentServiceObjects(
 			_projectResourceComponentServiceObjects);
 		Query.setTeamResourceComponentServiceObjects(
@@ -108,6 +123,18 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ExternalLinkResource>
 		_externalLinkResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductResource>
+		_productResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductConsumptionResource>
+		_productConsumptionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductPurchaseResource>
+		_productPurchaseResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProjectResource>

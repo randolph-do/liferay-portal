@@ -131,6 +131,121 @@ public class ProductEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductEntry> getProductEntries(
+				HttpPrincipal httpPrincipal, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductEntryServiceUtil.class, "getProductEntries",
+				_getProductEntriesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.osb.koroneiki.trunk.model.ProductEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getProductEntriesCount(HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductEntryServiceUtil.class, "getProductEntriesCount",
+				_getProductEntriesCountParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			getProductEntry(HttpPrincipal httpPrincipal, long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductEntryServiceUtil.class, "getProductEntry",
+				_getProductEntryParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, productEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.trunk.model.ProductEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
 			updateProductEntry(
 				HttpPrincipal httpPrincipal, long productEntryId, String name)
@@ -139,7 +254,7 @@ public class ProductEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProductEntryServiceUtil.class, "updateProductEntry",
-				_updateProductEntryParameterTypes2);
+				_updateProductEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, productEntryId, name);
@@ -178,7 +293,13 @@ public class ProductEntryServiceHttp {
 		new Class[] {String.class};
 	private static final Class<?>[] _deleteProductEntryParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateProductEntryParameterTypes2 =
+	private static final Class<?>[] _getProductEntriesParameterTypes2 =
+		new Class[] {int.class, int.class};
+	private static final Class<?>[] _getProductEntriesCountParameterTypes3 =
+		new Class[] {};
+	private static final Class<?>[] _getProductEntryParameterTypes4 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateProductEntryParameterTypes5 =
 		new Class[] {long.class, String.class};
 
 }

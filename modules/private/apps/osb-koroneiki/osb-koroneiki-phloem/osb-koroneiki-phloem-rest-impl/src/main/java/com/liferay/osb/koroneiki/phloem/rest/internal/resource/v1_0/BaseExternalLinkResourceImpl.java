@@ -168,6 +168,131 @@ public abstract class BaseExternalLinkResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the product purchase's external links.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "productConsumptionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/product-consumptions/{productConsumptionId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public Page<ExternalLink> getProductConsumptionExternalLinksPage(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("productConsumptionId") Long productConsumptionId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Adds an external link to the product consumption."
+	)
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "productConsumptionId")
+		}
+	)
+	@Path("/product-consumptions/{productConsumptionId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public ExternalLink postProductConsumptionExternalLink(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("productConsumptionId") Long productConsumptionId,
+			ExternalLink externalLink)
+		throws Exception {
+
+		return new ExternalLink();
+	}
+
+	@Override
+	@GET
+	@Operation(description = "Retrieves the product purchase's external links.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "productPurchaseId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/product-purchases/{productPurchaseId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public Page<ExternalLink> getProductPurchaseExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseId")
+				Long productPurchaseId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Adds an external link to the product purchase.")
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseId")}
+	)
+	@Path("/product-purchases/{productPurchaseId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public ExternalLink postProductPurchaseExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseId")
+				Long productPurchaseId,
+			ExternalLink externalLink)
+		throws Exception {
+
+		return new ExternalLink();
+	}
+
+	@Override
+	@GET
+	@Operation(description = "Retrieves the product's external links.")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "productId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/products/{productId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public Page<ExternalLink> getProductExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
+				productId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Adds an external link to the product.")
+	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "productId")})
+	@Path("/products/{productId}/external-links")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExternalLink")})
+	public ExternalLink postProductExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
+				productId,
+			ExternalLink externalLink)
+		throws Exception {
+
+		return new ExternalLink();
+	}
+
+	@Override
+	@GET
 	@Operation(description = "Retrieves the project's external links.")
 	@Parameters(
 		value = {

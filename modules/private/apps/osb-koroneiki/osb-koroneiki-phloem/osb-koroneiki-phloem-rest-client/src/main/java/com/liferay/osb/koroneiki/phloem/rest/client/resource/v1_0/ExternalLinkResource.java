@@ -283,6 +283,276 @@ public class ExternalLinkResource {
 		return httpInvoker.invoke();
 	}
 
+	public static Page<ExternalLink> getProductConsumptionExternalLinksPage(
+			Long productConsumptionId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getProductConsumptionExternalLinksPageHttpResponse(
+				productConsumptionId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ExternalLinkSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getProductConsumptionExternalLinksPageHttpResponse(
+				Long productConsumptionId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (pagination != null) {
+			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+			httpInvoker.parameter(
+				"pageSize", String.valueOf(pagination.getPageSize()));
+		}
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}/external-links",
+			productConsumptionId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static ExternalLink postProductConsumptionExternalLink(
+			Long productConsumptionId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postProductConsumptionExternalLinkHttpResponse(
+				productConsumptionId, externalLink);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return ExternalLinkSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			postProductConsumptionExternalLinkHttpResponse(
+				Long productConsumptionId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(externalLink.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}/external-links",
+			productConsumptionId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ExternalLink> getProductPurchaseExternalLinksPage(
+			Long productPurchaseId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getProductPurchaseExternalLinksPageHttpResponse(
+				productPurchaseId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ExternalLinkSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getProductPurchaseExternalLinksPageHttpResponse(
+				Long productPurchaseId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (pagination != null) {
+			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+			httpInvoker.parameter(
+				"pageSize", String.valueOf(pagination.getPageSize()));
+		}
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}/external-links",
+			productPurchaseId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static ExternalLink postProductPurchaseExternalLink(
+			Long productPurchaseId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postProductPurchaseExternalLinkHttpResponse(
+				productPurchaseId, externalLink);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return ExternalLinkSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			postProductPurchaseExternalLinkHttpResponse(
+				Long productPurchaseId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(externalLink.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}/external-links",
+			productPurchaseId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ExternalLink> getProductExternalLinksPage(
+			Long productId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getProductExternalLinksPageHttpResponse(productId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ExternalLinkSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getProductExternalLinksPageHttpResponse(
+				Long productId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (pagination != null) {
+			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+			httpInvoker.parameter(
+				"pageSize", String.valueOf(pagination.getPageSize()));
+		}
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/products/{productId}/external-links",
+			productId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static ExternalLink postProductExternalLink(
+			Long productId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postProductExternalLinkHttpResponse(productId, externalLink);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return ExternalLinkSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse postProductExternalLinkHttpResponse(
+			Long productId, ExternalLink externalLink)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(externalLink.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/koroneiki-rest/v1.0/products/{productId}/external-links",
+			productId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
 	public static Page<ExternalLink> getProjectExternalLinksPage(
 			Long projectId, Pagination pagination)
 		throws Exception {

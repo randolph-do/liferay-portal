@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
@@ -25,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -100,6 +102,29 @@ public class ProductPurchaseSerDes {
 				liferayToJSONDateFormat.format(productPurchase.getEndDate()));
 
 			sb.append("\"");
+		}
+
+		if (productPurchase.getExternalLinks() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < productPurchase.getExternalLinks().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(productPurchase.getExternalLinks()[i]));
+
+				if ((i + 1) < productPurchase.getExternalLinks().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (productPurchase.getId() != null) {
@@ -204,6 +229,15 @@ public class ProductPurchaseSerDes {
 		map.put(
 			"endDate",
 			liferayToJSONDateFormat.format(productPurchase.getEndDate()));
+
+		if (productPurchase.getExternalLinks() == null) {
+			map.put("externalLinks", null);
+		}
+		else {
+			map.put(
+				"externalLinks",
+				String.valueOf(productPurchase.getExternalLinks()));
+		}
 
 		if (productPurchase.getId() == null) {
 			map.put("id", null);
@@ -321,6 +355,18 @@ public class ProductPurchaseSerDes {
 				if (jsonParserFieldValue != null) {
 					productPurchase.setEndDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
+				if (jsonParserFieldValue != null) {
+					productPurchase.setExternalLinks(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ExternalLinkSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ExternalLink[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

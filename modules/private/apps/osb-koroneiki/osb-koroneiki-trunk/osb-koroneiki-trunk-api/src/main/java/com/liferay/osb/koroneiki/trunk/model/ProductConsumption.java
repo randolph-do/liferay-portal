@@ -63,6 +63,9 @@ public interface ProductConsumption
 	public com.liferay.osb.koroneiki.taproot.model.Account getAccount()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks();
+
 	public ProductEntry getProductEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

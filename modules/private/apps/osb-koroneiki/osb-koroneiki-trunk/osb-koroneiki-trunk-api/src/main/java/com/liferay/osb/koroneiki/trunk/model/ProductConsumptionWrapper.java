@@ -154,6 +154,13 @@ public class ProductConsumptionWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks() {
+
+		return model.getExternalLinks();
+	}
+
 	/**
 	 * Returns the modified date of this product consumption.
 	 *

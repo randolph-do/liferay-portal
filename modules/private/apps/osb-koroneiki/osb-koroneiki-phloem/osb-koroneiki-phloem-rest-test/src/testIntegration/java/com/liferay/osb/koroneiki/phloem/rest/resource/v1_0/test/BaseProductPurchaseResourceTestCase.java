@@ -600,6 +600,14 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (productPurchase.getExternalLinks() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productId", additionalAssertFieldName)) {
 				if (productPurchase.getProductId() == null) {
 					valid = false;
@@ -705,6 +713,17 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				if (!Objects.deepEquals(
 						productPurchase1.getEndDate(),
 						productPurchase2.getEndDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productPurchase1.getExternalLinks(),
+						productPurchase2.getExternalLinks())) {
 
 					return false;
 				}
@@ -899,6 +918,11 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("externalLinks")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {

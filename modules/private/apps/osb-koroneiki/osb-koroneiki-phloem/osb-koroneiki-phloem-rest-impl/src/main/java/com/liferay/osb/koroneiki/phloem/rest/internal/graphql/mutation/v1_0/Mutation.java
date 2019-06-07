@@ -324,6 +324,51 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public ExternalLink postProductConsumptionExternalLink(
+			@GraphQLName("productConsumptionId") Long productConsumptionId,
+			@GraphQLName("externalLink") ExternalLink externalLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource ->
+				externalLinkResource.postProductConsumptionExternalLink(
+					productConsumptionId, externalLink));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ExternalLink postProductPurchaseExternalLink(
+			@GraphQLName("productPurchaseId") Long productPurchaseId,
+			@GraphQLName("externalLink") ExternalLink externalLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource ->
+				externalLinkResource.postProductPurchaseExternalLink(
+					productPurchaseId, externalLink));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ExternalLink postProductExternalLink(
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("externalLink") ExternalLink externalLink)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource ->
+				externalLinkResource.postProductExternalLink(
+					productId, externalLink));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postProjectExternalLink(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("externalLink") ExternalLink externalLink)

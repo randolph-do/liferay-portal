@@ -58,4 +58,7 @@ public interface ProductEntry extends PersistedModel, ProductEntryModel {
 
 		};
 
+	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
+		getExternalLinks();
+
 }

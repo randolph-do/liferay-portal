@@ -52,6 +52,30 @@ public interface ExternalLinkResource {
 
 	public ExternalLink getExternalLink(Long externalLinkId) throws Exception;
 
+	public Page<ExternalLink> getProductConsumptionExternalLinksPage(
+			Long productConsumptionId, Pagination pagination)
+		throws Exception;
+
+	public ExternalLink postProductConsumptionExternalLink(
+			Long productConsumptionId, ExternalLink externalLink)
+		throws Exception;
+
+	public Page<ExternalLink> getProductPurchaseExternalLinksPage(
+			Long productPurchaseId, Pagination pagination)
+		throws Exception;
+
+	public ExternalLink postProductPurchaseExternalLink(
+			Long productPurchaseId, ExternalLink externalLink)
+		throws Exception;
+
+	public Page<ExternalLink> getProductExternalLinksPage(
+			Long productId, Pagination pagination)
+		throws Exception;
+
+	public ExternalLink postProductExternalLink(
+			Long productId, ExternalLink externalLink)
+		throws Exception;
+
 	public Page<ExternalLink> getProjectExternalLinksPage(
 			Long projectId, Pagination pagination)
 		throws Exception;

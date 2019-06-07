@@ -409,6 +409,66 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<ExternalLink> getProductConsumptionExternalLinksPage(
+			@GraphQLName("productConsumptionId") Long productConsumptionId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> {
+				Page paginationPage =
+					externalLinkResource.getProductConsumptionExternalLinksPage(
+						productConsumptionId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ExternalLink> getProductPurchaseExternalLinksPage(
+			@GraphQLName("productPurchaseId") Long productPurchaseId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> {
+				Page paginationPage =
+					externalLinkResource.getProductPurchaseExternalLinksPage(
+						productPurchaseId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ExternalLink> getProductExternalLinksPage(
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> {
+				Page paginationPage =
+					externalLinkResource.getProductExternalLinksPage(
+						productId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<ExternalLink> getProjectExternalLinksPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,

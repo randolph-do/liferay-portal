@@ -490,6 +490,419 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
+	public void testGetProductConsumptionExternalLinksPage() throws Exception {
+		Long productConsumptionId =
+			testGetProductConsumptionExternalLinksPage_getProductConsumptionId();
+		Long irrelevantProductConsumptionId =
+			testGetProductConsumptionExternalLinksPage_getIrrelevantProductConsumptionId();
+
+		if ((irrelevantProductConsumptionId != null)) {
+			ExternalLink irrelevantExternalLink =
+				testGetProductConsumptionExternalLinksPage_addExternalLink(
+					irrelevantProductConsumptionId,
+					randomIrrelevantExternalLink());
+
+			Page<ExternalLink> page =
+				ExternalLinkResource.getProductConsumptionExternalLinksPage(
+					irrelevantProductConsumptionId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantExternalLink),
+				(List<ExternalLink>)page.getItems());
+			assertValid(page);
+		}
+
+		ExternalLink externalLink1 =
+			testGetProductConsumptionExternalLinksPage_addExternalLink(
+				productConsumptionId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetProductConsumptionExternalLinksPage_addExternalLink(
+				productConsumptionId, randomExternalLink());
+
+		Page<ExternalLink> page =
+			ExternalLinkResource.getProductConsumptionExternalLinksPage(
+				productConsumptionId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2),
+			(List<ExternalLink>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetProductConsumptionExternalLinksPageWithPagination()
+		throws Exception {
+
+		Long productConsumptionId =
+			testGetProductConsumptionExternalLinksPage_getProductConsumptionId();
+
+		ExternalLink externalLink1 =
+			testGetProductConsumptionExternalLinksPage_addExternalLink(
+				productConsumptionId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetProductConsumptionExternalLinksPage_addExternalLink(
+				productConsumptionId, randomExternalLink());
+
+		ExternalLink externalLink3 =
+			testGetProductConsumptionExternalLinksPage_addExternalLink(
+				productConsumptionId, randomExternalLink());
+
+		Page<ExternalLink> page1 =
+			ExternalLinkResource.getProductConsumptionExternalLinksPage(
+				productConsumptionId, Pagination.of(1, 2));
+
+		List<ExternalLink> externalLinks1 =
+			(List<ExternalLink>)page1.getItems();
+
+		Assert.assertEquals(
+			externalLinks1.toString(), 2, externalLinks1.size());
+
+		Page<ExternalLink> page2 =
+			ExternalLinkResource.getProductConsumptionExternalLinksPage(
+				productConsumptionId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ExternalLink> externalLinks2 =
+			(List<ExternalLink>)page2.getItems();
+
+		Assert.assertEquals(
+			externalLinks2.toString(), 1, externalLinks2.size());
+
+		Page<ExternalLink> page3 =
+			ExternalLinkResource.getProductConsumptionExternalLinksPage(
+				productConsumptionId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2, externalLink3),
+			(List<ExternalLink>)page3.getItems());
+	}
+
+	protected ExternalLink
+			testGetProductConsumptionExternalLinksPage_addExternalLink(
+				Long productConsumptionId, ExternalLink externalLink)
+		throws Exception {
+
+		return ExternalLinkResource.postProductConsumptionExternalLink(
+			productConsumptionId, externalLink);
+	}
+
+	protected Long
+			testGetProductConsumptionExternalLinksPage_getProductConsumptionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetProductConsumptionExternalLinksPage_getIrrelevantProductConsumptionId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostProductConsumptionExternalLink() throws Exception {
+		ExternalLink randomExternalLink = randomExternalLink();
+
+		ExternalLink postExternalLink =
+			testPostProductConsumptionExternalLink_addExternalLink(
+				randomExternalLink);
+
+		assertEquals(randomExternalLink, postExternalLink);
+		assertValid(postExternalLink);
+	}
+
+	protected ExternalLink
+			testPostProductConsumptionExternalLink_addExternalLink(
+				ExternalLink externalLink)
+		throws Exception {
+
+		return ExternalLinkResource.postProductConsumptionExternalLink(
+			testGetProductConsumptionExternalLinksPage_getProductConsumptionId(),
+			externalLink);
+	}
+
+	@Test
+	public void testGetProductPurchaseExternalLinksPage() throws Exception {
+		Long productPurchaseId =
+			testGetProductPurchaseExternalLinksPage_getProductPurchaseId();
+		Long irrelevantProductPurchaseId =
+			testGetProductPurchaseExternalLinksPage_getIrrelevantProductPurchaseId();
+
+		if ((irrelevantProductPurchaseId != null)) {
+			ExternalLink irrelevantExternalLink =
+				testGetProductPurchaseExternalLinksPage_addExternalLink(
+					irrelevantProductPurchaseId,
+					randomIrrelevantExternalLink());
+
+			Page<ExternalLink> page =
+				ExternalLinkResource.getProductPurchaseExternalLinksPage(
+					irrelevantProductPurchaseId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantExternalLink),
+				(List<ExternalLink>)page.getItems());
+			assertValid(page);
+		}
+
+		ExternalLink externalLink1 =
+			testGetProductPurchaseExternalLinksPage_addExternalLink(
+				productPurchaseId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetProductPurchaseExternalLinksPage_addExternalLink(
+				productPurchaseId, randomExternalLink());
+
+		Page<ExternalLink> page =
+			ExternalLinkResource.getProductPurchaseExternalLinksPage(
+				productPurchaseId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2),
+			(List<ExternalLink>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetProductPurchaseExternalLinksPageWithPagination()
+		throws Exception {
+
+		Long productPurchaseId =
+			testGetProductPurchaseExternalLinksPage_getProductPurchaseId();
+
+		ExternalLink externalLink1 =
+			testGetProductPurchaseExternalLinksPage_addExternalLink(
+				productPurchaseId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetProductPurchaseExternalLinksPage_addExternalLink(
+				productPurchaseId, randomExternalLink());
+
+		ExternalLink externalLink3 =
+			testGetProductPurchaseExternalLinksPage_addExternalLink(
+				productPurchaseId, randomExternalLink());
+
+		Page<ExternalLink> page1 =
+			ExternalLinkResource.getProductPurchaseExternalLinksPage(
+				productPurchaseId, Pagination.of(1, 2));
+
+		List<ExternalLink> externalLinks1 =
+			(List<ExternalLink>)page1.getItems();
+
+		Assert.assertEquals(
+			externalLinks1.toString(), 2, externalLinks1.size());
+
+		Page<ExternalLink> page2 =
+			ExternalLinkResource.getProductPurchaseExternalLinksPage(
+				productPurchaseId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ExternalLink> externalLinks2 =
+			(List<ExternalLink>)page2.getItems();
+
+		Assert.assertEquals(
+			externalLinks2.toString(), 1, externalLinks2.size());
+
+		Page<ExternalLink> page3 =
+			ExternalLinkResource.getProductPurchaseExternalLinksPage(
+				productPurchaseId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2, externalLink3),
+			(List<ExternalLink>)page3.getItems());
+	}
+
+	protected ExternalLink
+			testGetProductPurchaseExternalLinksPage_addExternalLink(
+				Long productPurchaseId, ExternalLink externalLink)
+		throws Exception {
+
+		return ExternalLinkResource.postProductPurchaseExternalLink(
+			productPurchaseId, externalLink);
+	}
+
+	protected Long
+			testGetProductPurchaseExternalLinksPage_getProductPurchaseId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetProductPurchaseExternalLinksPage_getIrrelevantProductPurchaseId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostProductPurchaseExternalLink() throws Exception {
+		ExternalLink randomExternalLink = randomExternalLink();
+
+		ExternalLink postExternalLink =
+			testPostProductPurchaseExternalLink_addExternalLink(
+				randomExternalLink);
+
+		assertEquals(randomExternalLink, postExternalLink);
+		assertValid(postExternalLink);
+	}
+
+	protected ExternalLink testPostProductPurchaseExternalLink_addExternalLink(
+			ExternalLink externalLink)
+		throws Exception {
+
+		return ExternalLinkResource.postProductPurchaseExternalLink(
+			testGetProductPurchaseExternalLinksPage_getProductPurchaseId(),
+			externalLink);
+	}
+
+	@Test
+	public void testGetProductExternalLinksPage() throws Exception {
+		Long productId = testGetProductExternalLinksPage_getProductId();
+		Long irrelevantProductId =
+			testGetProductExternalLinksPage_getIrrelevantProductId();
+
+		if ((irrelevantProductId != null)) {
+			ExternalLink irrelevantExternalLink =
+				testGetProductExternalLinksPage_addExternalLink(
+					irrelevantProductId, randomIrrelevantExternalLink());
+
+			Page<ExternalLink> page =
+				ExternalLinkResource.getProductExternalLinksPage(
+					irrelevantProductId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantExternalLink),
+				(List<ExternalLink>)page.getItems());
+			assertValid(page);
+		}
+
+		ExternalLink externalLink1 =
+			testGetProductExternalLinksPage_addExternalLink(
+				productId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetProductExternalLinksPage_addExternalLink(
+				productId, randomExternalLink());
+
+		Page<ExternalLink> page =
+			ExternalLinkResource.getProductExternalLinksPage(
+				productId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2),
+			(List<ExternalLink>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetProductExternalLinksPageWithPagination()
+		throws Exception {
+
+		Long productId = testGetProductExternalLinksPage_getProductId();
+
+		ExternalLink externalLink1 =
+			testGetProductExternalLinksPage_addExternalLink(
+				productId, randomExternalLink());
+
+		ExternalLink externalLink2 =
+			testGetProductExternalLinksPage_addExternalLink(
+				productId, randomExternalLink());
+
+		ExternalLink externalLink3 =
+			testGetProductExternalLinksPage_addExternalLink(
+				productId, randomExternalLink());
+
+		Page<ExternalLink> page1 =
+			ExternalLinkResource.getProductExternalLinksPage(
+				productId, Pagination.of(1, 2));
+
+		List<ExternalLink> externalLinks1 =
+			(List<ExternalLink>)page1.getItems();
+
+		Assert.assertEquals(
+			externalLinks1.toString(), 2, externalLinks1.size());
+
+		Page<ExternalLink> page2 =
+			ExternalLinkResource.getProductExternalLinksPage(
+				productId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ExternalLink> externalLinks2 =
+			(List<ExternalLink>)page2.getItems();
+
+		Assert.assertEquals(
+			externalLinks2.toString(), 1, externalLinks2.size());
+
+		Page<ExternalLink> page3 =
+			ExternalLinkResource.getProductExternalLinksPage(
+				productId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(externalLink1, externalLink2, externalLink3),
+			(List<ExternalLink>)page3.getItems());
+	}
+
+	protected ExternalLink testGetProductExternalLinksPage_addExternalLink(
+			Long productId, ExternalLink externalLink)
+		throws Exception {
+
+		return ExternalLinkResource.postProductExternalLink(
+			productId, externalLink);
+	}
+
+	protected Long testGetProductExternalLinksPage_getProductId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProductExternalLinksPage_getIrrelevantProductId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostProductExternalLink() throws Exception {
+		ExternalLink randomExternalLink = randomExternalLink();
+
+		ExternalLink postExternalLink =
+			testPostProductExternalLink_addExternalLink(randomExternalLink);
+
+		assertEquals(randomExternalLink, postExternalLink);
+		assertValid(postExternalLink);
+	}
+
+	protected ExternalLink testPostProductExternalLink_addExternalLink(
+			ExternalLink externalLink)
+		throws Exception {
+
+		return ExternalLinkResource.postProductExternalLink(
+			testGetProductExternalLinksPage_getProductId(), externalLink);
+	}
+
+	@Test
 	public void testGetProjectExternalLinksPage() throws Exception {
 		Long projectId = testGetProjectExternalLinksPage_getProjectId();
 		Long irrelevantProjectId =

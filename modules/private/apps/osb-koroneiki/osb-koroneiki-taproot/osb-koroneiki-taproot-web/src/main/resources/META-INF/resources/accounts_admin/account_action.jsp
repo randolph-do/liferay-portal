@@ -40,6 +40,21 @@ Account koroneikiAccount = (Account)row.getObject();
 		url="<%= editURL %>"
 	/>
 
+	<liferay-security:permissionsURL
+		modelResource="<%= Account.class.getName() %>"
+		modelResourceDescription="<%= koroneikiAccount.getName() %>"
+		resourcePrimKey="<%= String.valueOf(koroneikiAccount.getAccountId()) %>"
+		var="permissionsURL"
+		windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	/>
+
+	<liferay-ui:icon
+		message="permissions"
+		method="get"
+		url="<%= permissionsURL %>"
+		useDialog="<%= true %>"
+	/>
+
 	<portlet:actionURL name="/accounts_admin/edit_account" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

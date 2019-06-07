@@ -40,6 +40,21 @@ ContactRole contactRole = (ContactRole)row.getObject();
 		url="<%= editURL %>"
 	/>
 
+	<liferay-security:permissionsURL
+		modelResource="<%= ContactRole.class.getName() %>"
+		modelResourceDescription="<%= contactRole.getName() %>"
+		resourcePrimKey="<%= String.valueOf(contactRole.getContactRoleId()) %>"
+		var="permissionsURL"
+		windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	/>
+
+	<liferay-ui:icon
+		message="permissions"
+		method="get"
+		url="<%= permissionsURL %>"
+		useDialog="<%= true %>"
+	/>
+
 	<portlet:actionURL name="/contact_roles_admin/edit_contact_role" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

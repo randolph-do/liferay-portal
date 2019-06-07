@@ -40,6 +40,21 @@ Project project = (Project)row.getObject();
 		url="<%= editURL %>"
 	/>
 
+	<liferay-security:permissionsURL
+		modelResource="<%= Project.class.getName() %>"
+		modelResourceDescription="<%= project.getName() %>"
+		resourcePrimKey="<%= String.valueOf(project.getProjectId()) %>"
+		var="permissionsURL"
+		windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	/>
+
+	<liferay-ui:icon
+		message="permissions"
+		method="get"
+		url="<%= permissionsURL %>"
+		useDialog="<%= true %>"
+	/>
+
 	<portlet:actionURL name="/projects_admin/edit_project" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

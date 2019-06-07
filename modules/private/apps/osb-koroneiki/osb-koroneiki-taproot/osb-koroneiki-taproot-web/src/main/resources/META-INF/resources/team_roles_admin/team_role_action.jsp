@@ -40,6 +40,21 @@ TeamRole teamRole = (TeamRole)row.getObject();
 		url="<%= editURL %>"
 	/>
 
+	<liferay-security:permissionsURL
+		modelResource="<%= TeamRole.class.getName() %>"
+		modelResourceDescription="<%= teamRole.getName() %>"
+		resourcePrimKey="<%= String.valueOf(teamRole.getTeamRoleId()) %>"
+		var="permissionsURL"
+		windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	/>
+
+	<liferay-ui:icon
+		message="permissions"
+		method="get"
+		url="<%= permissionsURL %>"
+		useDialog="<%= true %>"
+	/>
+
 	<portlet:actionURL name="/team_roles_admin/edit_team_role" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

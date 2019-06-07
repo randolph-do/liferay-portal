@@ -16,14 +16,18 @@ package com.liferay.osb.koroneiki.trunk.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalServiceUtil;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalServiceUtil;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalServiceUtil;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.model.ProductField;
+import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalServiceUtil;
 import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.HashMap;
@@ -41,6 +45,12 @@ public class ProductPurchaseImpl extends ProductPurchaseBaseImpl {
 
 	public Account getAccount() throws PortalException {
 		return AccountLocalServiceUtil.getAccount(getAccountId());
+	}
+
+	public List<ExternalLink> getExternalLinks() {
+		return ExternalLinkLocalServiceUtil.getExternalLinks(
+			ProductPurchase.class.getName(), getProductPurchaseId(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	public ProductEntry getProductEntry() throws PortalException {

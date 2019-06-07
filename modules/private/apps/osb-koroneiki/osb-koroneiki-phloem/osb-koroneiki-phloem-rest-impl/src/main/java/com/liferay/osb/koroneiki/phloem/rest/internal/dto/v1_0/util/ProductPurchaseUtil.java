@@ -14,7 +14,9 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
 
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductPurchase;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Amos Fong
@@ -30,6 +32,9 @@ public class ProductPurchaseUtil {
 			{
 				accountId = productPurchase.getAccountId();
 				dateCreated = productPurchase.getCreateDate();
+				externalLinks = TransformUtil.transformToArray(
+					productPurchase.getExternalLinks(),
+					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				id = productPurchase.getProductPurchaseId();
 				productId = productPurchase.getProductEntryId();
 				projectId = productPurchase.getProjectId();

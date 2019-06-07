@@ -16,6 +16,13 @@ package com.liferay.osb.koroneiki.trunk.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalServiceUtil;
+import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+
+import java.util.List;
+
 /**
  * @author Kyle Bischof
  */
@@ -23,6 +30,12 @@ import aQute.bnd.annotation.ProviderType;
 public class ProductEntryImpl extends ProductEntryBaseImpl {
 
 	public ProductEntryImpl() {
+	}
+
+	public List<ExternalLink> getExternalLinks() {
+		return ExternalLinkLocalServiceUtil.getExternalLinks(
+			ProductEntry.class.getName(), getProductEntryId(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 }

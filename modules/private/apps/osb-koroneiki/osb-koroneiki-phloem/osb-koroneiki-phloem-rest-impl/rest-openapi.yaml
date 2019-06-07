@@ -218,6 +218,12 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                externalLinks:
+                    description: The product's links to entities in external domains.
+                    items:
+                        $ref: "#/components/schemas/ExternalLink"
+                    readOnly: true
+                    type: array
                 id:
                     description: The product's ID.
                     format: int64
@@ -242,6 +248,12 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                externalLinks:
+                    description: The product consumption's links to entities in external domains.
+                    items:
+                        $ref: "#/components/schemas/ExternalLink"
+                    readOnly: true
+                    type: array
                 id:
                     description: The product consumption's ID.
                     format: int64
@@ -275,6 +287,12 @@ components:
                     description: The product purchase's end date.
                     format: date-time
                     type: string
+                externalLinks:
+                    description: The product purchase's links to entities in external domains.
+                    items:
+                        $ref: "#/components/schemas/ExternalLink"
+                    readOnly: true
+                    type: array
                 id:
                     description: The product purchase's ID.
                     format: int64
@@ -1407,6 +1425,70 @@ paths:
                                 $ref: "#/components/schemas/ProductConsumption"
                     description: ""
             tags: ["ProductConsumption"]
+    "/product-consumptions/{productConsumptionId}/external-links":
+        get:
+            description: Retrieves the product consumption's external links.
+            operationId: getProductConsumptionExternalLinksPage
+            parameters:
+                - in: path
+                  name: productConsumptionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                    description: ""
+            tags: ["ExternalLink"]
+        post:
+            description: Adds an external link to the product consumption.
+            operationId: postProductConsumptionExternalLink
+            parameters:
+                - in: path
+                  name: productConsumptionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]
     "/product-purchases/{productPurchaseId}":
         delete:
             operationId: deleteProductPurchase
@@ -1473,6 +1555,70 @@ paths:
                                 $ref: "#/components/schemas/ProductPurchase"
                     description: ""
             tags: ["ProductPurchase"]
+    "/product-purchases/{productPurchaseId}/external-links":
+        get:
+            description: Retrieves the product purchase's external links.
+            operationId: getProductPurchaseExternalLinksPage
+            parameters:
+                - in: path
+                  name: productPurchaseId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                    description: ""
+            tags: ["ExternalLink"]
+        post:
+            description: Adds an external link to the product purchase.
+            operationId: postProductPurchaseExternalLink
+            parameters:
+                - in: path
+                  name: productPurchaseId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]
     "/products":
         get:
             operationId: getProductsPage
@@ -1588,6 +1734,70 @@ paths:
                                 $ref: "#/components/schemas/Product"
                     description: ""
             tags: ["Product"]
+    "/products/{productId}/external-links":
+        get:
+            description: Retrieves the product's external links.
+            operationId: getProductExternalLinksPage
+            parameters:
+                - in: path
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExternalLink"
+                                type: array
+                    description: ""
+            tags: ["ExternalLink"]
+        post:
+            description: Adds an external link to the product.
+            operationId: postProductExternalLink
+            parameters:
+                - in: path
+                  name: productId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExternalLink"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExternalLink"
+                    description: ""
+            tags: ["ExternalLink"]
     "/projects/{projectId}":
         delete:
             operationId: deleteProject

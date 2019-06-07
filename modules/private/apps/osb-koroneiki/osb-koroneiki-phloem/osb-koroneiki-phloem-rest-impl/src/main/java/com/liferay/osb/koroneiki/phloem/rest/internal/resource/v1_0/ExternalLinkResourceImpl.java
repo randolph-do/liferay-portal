@@ -22,6 +22,9 @@ import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.model.Team;
+import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
+import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
+import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -85,6 +88,62 @@ public class ExternalLinkResourceImpl extends BaseExternalLinkResourceImpl {
 	}
 
 	@Override
+	public Page<ExternalLink> getProductConsumptionExternalLinksPage(
+			Long productConsumptionId, Pagination pagination)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			ProductConsumption.class);
+
+		return Page.of(
+			transform(
+				_externalLinkService.getExternalLinks(
+					classNameId, productConsumptionId,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				ExternalLinkUtil::toExternalLink),
+			pagination,
+			_externalLinkService.getExternalLinksCount(
+				classNameId, productConsumptionId));
+	}
+
+	@Override
+	public Page<ExternalLink> getProductExternalLinksPage(
+			Long productId, Pagination pagination)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			ProductEntry.class);
+
+		return Page.of(
+			transform(
+				_externalLinkService.getExternalLinks(
+					classNameId, productId, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				ExternalLinkUtil::toExternalLink),
+			pagination,
+			_externalLinkService.getExternalLinksCount(classNameId, productId));
+	}
+
+	@Override
+	public Page<ExternalLink> getProductPurchaseExternalLinksPage(
+			Long productPurchaseId, Pagination pagination)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			ProductPurchase.class);
+
+		return Page.of(
+			transform(
+				_externalLinkService.getExternalLinks(
+					classNameId, productPurchaseId,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				ExternalLinkUtil::toExternalLink),
+			pagination,
+			_externalLinkService.getExternalLinksCount(
+				classNameId, productPurchaseId));
+	}
+
+	@Override
 	public Page<ExternalLink> getProjectExternalLinksPage(
 			Long projectId, Pagination pagination)
 		throws Exception {
@@ -141,6 +200,48 @@ public class ExternalLinkResourceImpl extends BaseExternalLinkResourceImpl {
 		return ExternalLinkUtil.toExternalLink(
 			_externalLinkService.addExternalLink(
 				classNameId, contactId, externalLink.getDomain(),
+				externalLink.getEntityName(), externalLink.getEntityId()));
+	}
+
+	@Override
+	public ExternalLink postProductConsumptionExternalLink(
+			Long productConsumptionId, ExternalLink externalLink)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			ProductConsumption.class);
+
+		return ExternalLinkUtil.toExternalLink(
+			_externalLinkService.addExternalLink(
+				classNameId, productConsumptionId, externalLink.getDomain(),
+				externalLink.getEntityName(), externalLink.getEntityId()));
+	}
+
+	@Override
+	public ExternalLink postProductExternalLink(
+			Long productId, ExternalLink externalLink)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			ProductEntry.class);
+
+		return ExternalLinkUtil.toExternalLink(
+			_externalLinkService.addExternalLink(
+				classNameId, productId, externalLink.getDomain(),
+				externalLink.getEntityName(), externalLink.getEntityId()));
+	}
+
+	@Override
+	public ExternalLink postProductPurchaseExternalLink(
+			Long productPurchaseId, ExternalLink externalLink)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			ProductPurchase.class);
+
+		return ExternalLinkUtil.toExternalLink(
+			_externalLinkService.addExternalLink(
+				classNameId, productPurchaseId, externalLink.getDomain(),
 				externalLink.getEntityName(), externalLink.getEntityId()));
 	}
 

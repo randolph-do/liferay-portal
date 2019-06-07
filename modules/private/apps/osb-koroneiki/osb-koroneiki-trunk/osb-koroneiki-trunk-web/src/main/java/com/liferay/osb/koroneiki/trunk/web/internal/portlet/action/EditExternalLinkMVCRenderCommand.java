@@ -14,10 +14,10 @@
 
 package com.liferay.osb.koroneiki.trunk.web.internal.portlet.action;
 
+import com.liferay.osb.koroneiki.root.constants.RootWebKeys;
+import com.liferay.osb.koroneiki.root.model.ExternalLink;
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.trunk.constants.TrunkPortletKeys;
-import com.liferay.osb.koroneiki.trunk.constants.TrunkWebKeys;
-import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
-import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + TrunkPortletKeys.PRODUCTS_ADMIN,
-		"mvc.command.name=/products_admin/edit_product_entry"
+		"mvc.command.name=/edit_external_link"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditProductEntryMVCRenderCommand implements MVCRenderCommand {
+public class EditExternalLinkMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -47,33 +47,27 @@ public class EditProductEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			long productEntryId = ParamUtil.getLong(
-				renderRequest, "productEntryId");
+			long externalLinkId = ParamUtil.getLong(
+				renderRequest, "externalLinkId");
 
-			if (productEntryId > 0) {
-				ProductEntry productEntry =
-					_productEntryLocalService.getProductEntry(productEntryId);
+			if (externalLinkId > 0) {
+				ExternalLink externalLink =
+					_externalLinkLocalService.getExternalLink(externalLinkId);
 
 				renderRequest.setAttribute(
-					TrunkWebKeys.PRODUCT_ENTRY, productEntry);
+					RootWebKeys.EXTERNAL_LINK, externalLink);
 			}
 
-			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
-
-			if (tabs1.equals("external-links")) {
-				return "/products_admin/edit_product_entry_external_links.jsp";
-			}
-
-			return "/products_admin/edit_product_entry.jsp";
+			return "/edit_external_link.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/products_admin/error.jsp";
+			throw new PortletException(e);
 		}
 	}
 
 	@Reference
-	private ProductEntryLocalService _productEntryLocalService;
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 }

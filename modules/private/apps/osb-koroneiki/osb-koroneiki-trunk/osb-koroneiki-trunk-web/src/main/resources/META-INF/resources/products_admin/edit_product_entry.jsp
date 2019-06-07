@@ -26,6 +26,8 @@ long productEntryId = BeanParamUtil.getLong(productEntry, request, "productEntry
 renderResponse.setTitle((productEntry == null) ? LanguageUtil.get(request, "new-product") : productEntry.getName());
 %>
 
+<liferay-util:include page="/products_admin/edit_product_entry_tabs.jsp" servletContext="<%= application %>" />
+
 <portlet:actionURL name="/products_admin/edit_product_entry" var="editProductEntryURL" />
 
 <aui:form action="<%= editProductEntryURL %>" cssClass="container-fluid-1280" method="post" name="fm">

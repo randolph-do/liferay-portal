@@ -60,6 +60,13 @@ public class EditProductConsumptionMVCRenderCommand
 					TrunkWebKeys.PRODUCT_CONSUMPTION, productConsumption);
 			}
 
+			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
+
+			if (tabs1.equals("external-links")) {
+				return "/products_admin" +
+					"/edit_product_consumption_external_links.jsp";
+			}
+
 			return "/products_admin/edit_product_consumption.jsp";
 		}
 		catch (Exception e) {

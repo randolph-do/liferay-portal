@@ -24,8 +24,10 @@ ProductConsumption productConsumption = (ProductConsumption)request.getAttribute
 long accountId = ParamUtil.getLong(request, "accountId");
 long projectId = ParamUtil.getLong(request, "projectId");
 
-renderResponse.setTitle((productConsumption == null) ? LanguageUtil.get(request, "new-consumption") : "consumption");
+renderResponse.setTitle((productConsumption == null) ? LanguageUtil.get(request, "new-consumption") : LanguageUtil.get(request, "consumption"));
 %>
+
+<liferay-util:include page="/products_admin/edit_product_consumption_tabs.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="/products_admin/edit_product_consumption" var="editProductConsumptionURL" />
 

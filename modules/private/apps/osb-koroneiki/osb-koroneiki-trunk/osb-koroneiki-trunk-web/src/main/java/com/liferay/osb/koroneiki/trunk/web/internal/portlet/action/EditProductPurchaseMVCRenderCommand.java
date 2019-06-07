@@ -59,6 +59,13 @@ public class EditProductPurchaseMVCRenderCommand implements MVCRenderCommand {
 					TrunkWebKeys.PRODUCT_PURCHASE, productPurchase);
 			}
 
+			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
+
+			if (tabs1.equals("external-links")) {
+				return "/products_admin" +
+					"/edit_product_purchase_external_links.jsp";
+			}
+
 			return "/products_admin/edit_product_purchase.jsp";
 		}
 		catch (Exception e) {

@@ -29,6 +29,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
+page import="com.liferay.osb.koroneiki.root.constants.RootWebKeys" %><%@
+page import="com.liferay.osb.koroneiki.root.exception.ExternalLinkDomainException" %><%@
+page import="com.liferay.osb.koroneiki.root.exception.ExternalLinkEntityIdException" %><%@
+page import="com.liferay.osb.koroneiki.root.exception.ExternalLinkEntityNameException" %><%@
+page import="com.liferay.osb.koroneiki.root.model.ExternalLink" %><%@
 page import="com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys" %><%@
 page import="com.liferay.osb.koroneiki.taproot.exception.NoSuchAccountException" %><%@
 page import="com.liferay.osb.koroneiki.taproot.exception.NoSuchProjectException" %><%@

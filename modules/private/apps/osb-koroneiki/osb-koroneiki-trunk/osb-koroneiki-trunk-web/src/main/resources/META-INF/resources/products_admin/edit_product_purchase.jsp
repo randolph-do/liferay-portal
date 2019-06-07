@@ -38,6 +38,8 @@ boolean perpetual = ParamUtil.getBoolean(request, "perpetual", defaultPerpetual)
 renderResponse.setTitle((productPurchase == null) ? LanguageUtil.get(request, "new-purchase") : LanguageUtil.get(request, "edit-purchase"));
 %>
 
+<liferay-util:include page="/products_admin/edit_product_purchase_tabs.jsp" servletContext="<%= application %>" />
+
 <portlet:actionURL name="/products_admin/edit_product_purchase" var="editProductPurchaseURL" />
 
 <aui:form action="<%= editProductPurchaseURL %>" cssClass="container-fluid-1280" method="post" name="fm">

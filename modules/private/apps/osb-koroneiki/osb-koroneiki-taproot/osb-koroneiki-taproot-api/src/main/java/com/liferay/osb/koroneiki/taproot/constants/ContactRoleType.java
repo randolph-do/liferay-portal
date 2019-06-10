@@ -46,7 +46,7 @@ public class ContactRoleType {
 			return TEAM;
 		}
 
-		throw new IllegalArgumentException("Invalid label " + label);
+		throw new IllegalArgumentException("Invalid type label " + label);
 	}
 
 	public static String getLabel(int value) {

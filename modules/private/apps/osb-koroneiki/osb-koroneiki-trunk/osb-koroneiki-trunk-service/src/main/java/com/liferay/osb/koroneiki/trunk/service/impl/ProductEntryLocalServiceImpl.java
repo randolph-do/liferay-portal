@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.trunk.exception.ProductEntryNameException;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductEntryLocalServiceBaseImpl;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -70,6 +72,14 @@ public class ProductEntryLocalServiceImpl
 		ProductEntry productEntry = productEntryLocalService.getProductEntry(
 			productEntryId);
 
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductEntry.class);
+
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, productEntryId);
+
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -98,5 +108,8 @@ public class ProductEntryLocalServiceImpl
 			throw new ProductEntryNameException();
 		}
 	}
+
+	@Reference
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 }

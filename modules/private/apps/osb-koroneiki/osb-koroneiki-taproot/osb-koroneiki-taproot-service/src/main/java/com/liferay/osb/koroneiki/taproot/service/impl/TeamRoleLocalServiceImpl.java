@@ -80,6 +80,10 @@ public class TeamRoleLocalServiceImpl extends TeamRoleLocalServiceBaseImpl {
 			teamRole.getCompanyId(), TeamRole.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, teamRole.getTeamRoleId());
 
+		// Team project roles
+
+		teamProjectRolePersistence.removeByTeamRoleId(teamRoleId);
+
 		return teamRolePersistence.remove(teamRoleId);
 	}
 

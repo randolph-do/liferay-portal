@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
@@ -98,6 +99,18 @@ public class ProductPurchaseLocalServiceImpl
 
 		ProductPurchase productPurchase =
 			productPurchaseLocalService.getProductPurchase(productPurchaseId);
+
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductPurchase.class);
+
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, productPurchaseId);
+
+		// Product fields
+
+		productFieldPersistence.removeByProductPurchaseId(productPurchaseId);
 
 		// Resources
 
@@ -227,6 +240,9 @@ public class ProductPurchaseLocalServiceImpl
 
 	@Reference
 	private AccountLocalService _accountLocalService;
+
+	@Reference
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 	@Reference
 	private ProductFieldLocalService _productFieldLocalService;

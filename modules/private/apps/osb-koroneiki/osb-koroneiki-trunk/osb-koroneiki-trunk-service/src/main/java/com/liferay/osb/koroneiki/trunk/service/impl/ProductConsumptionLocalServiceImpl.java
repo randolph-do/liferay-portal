@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
+import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.osb.koroneiki.trunk.exception.NoSuchProductConsumptionException;
@@ -78,6 +79,14 @@ public class ProductConsumptionLocalServiceImpl
 		ProductConsumption productConsumption =
 			productConsumptionLocalService.getProductConsumption(
 				productConsumptionId);
+
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductConsumption.class);
+
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, productConsumptionId);
 
 		// Resources
 
@@ -164,6 +173,9 @@ public class ProductConsumptionLocalServiceImpl
 
 	@Reference
 	private AccountLocalService _accountLocalService;
+
+	@Reference
+	private ExternalLinkLocalService _externalLinkLocalService;
 
 	@Reference
 	private ProjectLocalService _projectLocalService;

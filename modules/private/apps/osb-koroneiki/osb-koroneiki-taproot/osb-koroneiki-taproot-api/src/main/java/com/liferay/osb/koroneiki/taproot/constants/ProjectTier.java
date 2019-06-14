@@ -27,6 +27,6 @@ public class ProjectTier {
 
 	public static final String STRATEGIC = "strategic";
 
-	public static final String[] TIERS = {OEM, PREMIER, REGULAR, STRATEGIC};
+	public static final String[] VALUES = {OEM, PREMIER, REGULAR, STRATEGIC};
 
 }

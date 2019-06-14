@@ -46,6 +46,18 @@ renderResponse.setTitle((koroneikiAccount == null) ? LanguageUtil.get(request, "
 
 			<aui:input name="name" />
 
+			<aui:input name="description" type="textarea" />
+
+			<aui:input name="contactEmailAddress" />
+
+			<aui:input name="profileEmailAddress" />
+
+			<aui:input name="phoneNumber" />
+
+			<aui:input name="faxNumber" />
+
+			<aui:input name="website" />
+
 			<aui:select name="status">
 				<aui:option value="" />
 
@@ -60,18 +72,6 @@ renderResponse.setTitle((koroneikiAccount == null) ? LanguageUtil.get(request, "
 				%>
 
 			</aui:select>
-
-			<aui:input name="description" type="textarea" />
-
-			<aui:input name="contactEmailAddress" />
-
-			<aui:input name="profileEmailAddress" />
-
-			<aui:input name="phoneNumber" />
-
-			<aui:input name="faxNumber" />
-
-			<aui:input name="website" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

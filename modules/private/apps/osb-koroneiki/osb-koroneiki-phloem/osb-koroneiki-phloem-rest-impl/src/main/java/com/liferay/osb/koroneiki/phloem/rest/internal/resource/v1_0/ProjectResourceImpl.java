@@ -18,13 +18,13 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ProjectUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
+import com.liferay.osb.koroneiki.taproot.constants.WorkflowConstants;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.service.ContactProjectRoleService;
 import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectService;
 import com.liferay.osb.koroneiki.taproot.service.TeamProjectRoleService;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -105,8 +105,9 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 
 		return ProjectUtil.toProject(
 			_projectService.addProject(
-				accountId, 0, project.getName(), project.getCode(), 0, 0,
-				project.getNotes(), status));
+				accountId, project.getName(), project.getCode(),
+				project.getTier(), project.getIndustry(), project.getNotes(),
+				project.getSoldBy(), status));
 	}
 
 	@Override
@@ -117,8 +118,9 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 
 		return ProjectUtil.toProject(
 			_projectService.updateProject(
-				projectId, 0, project.getName(), project.getCode(), 0, 0,
-				project.getNotes(), status));
+				projectId, project.getName(), project.getCode(),
+				project.getTier(), project.getIndustry(), project.getNotes(),
+				project.getSoldBy(), status));
 	}
 
 	@Override

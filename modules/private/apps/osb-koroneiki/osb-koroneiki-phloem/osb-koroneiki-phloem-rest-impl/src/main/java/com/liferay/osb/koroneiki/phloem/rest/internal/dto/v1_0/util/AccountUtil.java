@@ -29,14 +29,20 @@ public class AccountUtil {
 
 		return new Account() {
 			{
+				contactEmailAddress = account.getContactEmailAddress();
 				dateCreated = account.getCreateDate();
 				dateModified = account.getModifiedDate();
 				description = account.getDescription();
 				externalLinks = TransformUtil.transformToArray(
 					account.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
+				faxNumber = account.getFaxNumber();
 				id = account.getAccountId();
 				name = account.getName();
+				phoneNumber = account.getPhoneNumber();
+				profileEmailAddress = account.getProfileEmailAddress();
+				status = account.getStatusLabel();
+				website = account.getWebsite();
 			}
 		};
 	}

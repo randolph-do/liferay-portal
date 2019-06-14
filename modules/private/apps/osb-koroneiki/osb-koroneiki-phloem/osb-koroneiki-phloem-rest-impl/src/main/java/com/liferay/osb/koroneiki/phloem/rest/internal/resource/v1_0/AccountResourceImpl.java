@@ -18,14 +18,13 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.AccountUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
+import com.liferay.osb.koroneiki.taproot.constants.WorkflowConstants;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.service.AccountService;
 import com.liferay.osb.koroneiki.taproot.service.ContactAccountRoleService;
 import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectService;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,24 +72,28 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Override
 	public Account postAccount(Account account) throws Exception {
+		int status = WorkflowConstants.getLabelStatus(account.getStatus());
+
 		return AccountUtil.toAccount(
 			_accountService.addAccount(
 				account.getName(), account.getDescription(), 0, 0,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				WorkflowConstants.STATUS_APPROVED));
+				account.getContactEmailAddress(),
+				account.getProfileEmailAddress(), account.getPhoneNumber(),
+				account.getFaxNumber(), account.getWebsite(), status));
 	}
 
 	@Override
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
 
+		int status = WorkflowConstants.getLabelStatus(account.getStatus());
+
 		return AccountUtil.toAccount(
 			_accountService.updateAccount(
 				accountId, account.getName(), account.getDescription(), 0, 0,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				WorkflowConstants.STATUS_APPROVED));
+				account.getContactEmailAddress(),
+				account.getProfileEmailAddress(), account.getPhoneNumber(),
+				account.getFaxNumber(), account.getWebsite(), status));
 	}
 
 	@Override

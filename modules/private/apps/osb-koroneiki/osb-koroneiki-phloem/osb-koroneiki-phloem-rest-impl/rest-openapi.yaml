@@ -3,6 +3,9 @@ components:
         Account:
             description: Represents an account.
             properties:
+                contactEmailAddress:
+                    description: The account's contact email address.
+                    type: string
                 dateCreated:
                     description: The account's creation date.
                     format: date-time
@@ -22,6 +25,9 @@ components:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
                     type: array
+                faxNumber:
+                    description: The account's fax number.
+                    type: string
                 id:
                     description: The account's ID.
                     format: int64
@@ -29,6 +35,18 @@ components:
                     type: integer
                 name:
                     description: The name of the account.
+                    type: string
+                phoneNumber:
+                    description: The account's phone number.
+                    type: string
+                profileEmailAddress:
+                    description: The account's profile email address.
+                    type: string
+                status:
+                    description: The status of the account.
+                    type: string
+                website:
+                    description: The account's website.
                     type: string
             required:
                 - name
@@ -360,6 +378,9 @@ components:
                     type: string
                 notes:
                     description: The notes of the project.
+                    type: string
+                soldBy:
+                    description: The region which sold the salesforce opportunity.
                     type: string
                 status:
                     description: The status of the project.

@@ -37,9 +37,12 @@ public class ProjectUtil {
 					project.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				id = project.getProjectId();
+				industry = project.getIndustry();
 				name = project.getName();
 				notes = project.getNotes();
+				soldBy = project.getSoldBy();
 				status = project.getStatusLabel();
+				tier = project.getTier();
 			}
 		};
 	}

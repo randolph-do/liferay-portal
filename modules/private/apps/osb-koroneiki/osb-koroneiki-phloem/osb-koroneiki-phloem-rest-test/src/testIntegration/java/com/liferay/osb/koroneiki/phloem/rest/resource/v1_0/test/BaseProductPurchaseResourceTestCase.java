@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -49,9 +50,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -94,12 +93,18 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_productPurchaseResource.setContextCompany(testCompany);
+
+		ProductPurchaseResource.Builder builder =
+			ProductPurchaseResource.builder();
+
+		productPurchaseResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -186,7 +191,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 					irrelevantAccountId, randomIrrelevantProductPurchase());
 
 			Page<ProductPurchase> page =
-				ProductPurchaseResource.getAccountProductPurchasesPage(
+				productPurchaseResource.getAccountProductPurchasesPage(
 					irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -206,7 +211,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				accountId, randomProductPurchase());
 
 		Page<ProductPurchase> page =
-			ProductPurchaseResource.getAccountProductPurchasesPage(
+			productPurchaseResource.getAccountProductPurchasesPage(
 				accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -236,7 +241,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				accountId, randomProductPurchase());
 
 		Page<ProductPurchase> page1 =
-			ProductPurchaseResource.getAccountProductPurchasesPage(
+			productPurchaseResource.getAccountProductPurchasesPage(
 				accountId, Pagination.of(1, 2));
 
 		List<ProductPurchase> productPurchases1 =
@@ -246,7 +251,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			productPurchases1.toString(), 2, productPurchases1.size());
 
 		Page<ProductPurchase> page2 =
-			ProductPurchaseResource.getAccountProductPurchasesPage(
+			productPurchaseResource.getAccountProductPurchasesPage(
 				accountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -258,7 +263,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			productPurchases2.toString(), 1, productPurchases2.size());
 
 		Page<ProductPurchase> page3 =
-			ProductPurchaseResource.getAccountProductPurchasesPage(
+			productPurchaseResource.getAccountProductPurchasesPage(
 				accountId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
@@ -315,16 +320,16 @@ public abstract class BaseProductPurchaseResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			ProductPurchaseResource.deleteProductPurchaseHttpResponse(
+			productPurchaseResource.deleteProductPurchaseHttpResponse(
 				productPurchase.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			ProductPurchaseResource.getProductPurchaseHttpResponse(
+			productPurchaseResource.getProductPurchaseHttpResponse(
 				productPurchase.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ProductPurchaseResource.getProductPurchaseHttpResponse(0L));
+			404, productPurchaseResource.getProductPurchaseHttpResponse(0L));
 	}
 
 	protected ProductPurchase testDeleteProductPurchase_addProductPurchase()
@@ -340,7 +345,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			testGetProductPurchase_addProductPurchase();
 
 		ProductPurchase getProductPurchase =
-			ProductPurchaseResource.getProductPurchase(
+			productPurchaseResource.getProductPurchase(
 				postProductPurchase.getId());
 
 		assertEquals(postProductPurchase, getProductPurchase);
@@ -362,14 +367,14 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		ProductPurchase randomProductPurchase = randomProductPurchase();
 
 		ProductPurchase putProductPurchase =
-			ProductPurchaseResource.putProductPurchase(
+			productPurchaseResource.putProductPurchase(
 				postProductPurchase.getId(), randomProductPurchase);
 
 		assertEquals(randomProductPurchase, putProductPurchase);
 		assertValid(putProductPurchase);
 
 		ProductPurchase getProductPurchase =
-			ProductPurchaseResource.getProductPurchase(
+			productPurchaseResource.getProductPurchase(
 				putProductPurchase.getId());
 
 		assertEquals(randomProductPurchase, getProductPurchase);
@@ -395,7 +400,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 					irrelevantProjectId, randomIrrelevantProductPurchase());
 
 			Page<ProductPurchase> page =
-				ProductPurchaseResource.getProjectProductPurchasesPage(
+				productPurchaseResource.getProjectProductPurchasesPage(
 					irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -415,7 +420,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				projectId, randomProductPurchase());
 
 		Page<ProductPurchase> page =
-			ProductPurchaseResource.getProjectProductPurchasesPage(
+			productPurchaseResource.getProjectProductPurchasesPage(
 				projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -445,7 +450,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				projectId, randomProductPurchase());
 
 		Page<ProductPurchase> page1 =
-			ProductPurchaseResource.getProjectProductPurchasesPage(
+			productPurchaseResource.getProjectProductPurchasesPage(
 				projectId, Pagination.of(1, 2));
 
 		List<ProductPurchase> productPurchases1 =
@@ -455,7 +460,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			productPurchases1.toString(), 2, productPurchases1.size());
 
 		Page<ProductPurchase> page2 =
-			ProductPurchaseResource.getProjectProductPurchasesPage(
+			productPurchaseResource.getProjectProductPurchasesPage(
 				projectId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -467,7 +472,7 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			productPurchases2.toString(), 1, productPurchases2.size());
 
 		Page<ProductPurchase> page3 =
-			ProductPurchaseResource.getProjectProductPurchasesPage(
+			productPurchaseResource.getProjectProductPurchasesPage(
 				projectId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
@@ -659,7 +664,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	protected void assertValid(Page<ProductPurchase> page) {
 		boolean valid = false;
 
-		Collection<ProductPurchase> productPurchases = page.getItems();
+		java.util.Collection<ProductPurchase> productPurchases =
+			page.getItems();
 
 		int size = productPurchases.size();
 
@@ -674,6 +680,10 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
 
@@ -804,7 +814,9 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_productPurchaseResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -825,12 +837,15 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -1014,11 +1029,10 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		return randomProductPurchase();
 	}
 
+	protected ProductPurchaseResource productPurchaseResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseProductPurchaseResourceTestCase.class);

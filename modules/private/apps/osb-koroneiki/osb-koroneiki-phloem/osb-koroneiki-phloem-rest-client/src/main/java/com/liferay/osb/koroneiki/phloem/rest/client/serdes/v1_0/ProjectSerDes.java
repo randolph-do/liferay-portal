@@ -186,6 +186,20 @@ public class ProjectSerDes {
 			sb.append("\"");
 		}
 
+		if (project.getSoldBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"soldBy\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(project.getSoldBy()));
+
+			sb.append("\"");
+		}
+
 		if (project.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -291,6 +305,13 @@ public class ProjectSerDes {
 		}
 		else {
 			map.put("notes", String.valueOf(project.getNotes()));
+		}
+
+		if (project.getSoldBy() == null) {
+			map.put("soldBy", null);
+		}
+		else {
+			map.put("soldBy", String.valueOf(project.getSoldBy()));
 		}
 
 		if (project.getStatus() == null) {
@@ -417,6 +438,11 @@ public class ProjectSerDes {
 			else if (Objects.equals(jsonParserFieldName, "notes")) {
 				if (jsonParserFieldValue != null) {
 					project.setNotes((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "soldBy")) {
+				if (jsonParserFieldValue != null) {
+					project.setSoldBy((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

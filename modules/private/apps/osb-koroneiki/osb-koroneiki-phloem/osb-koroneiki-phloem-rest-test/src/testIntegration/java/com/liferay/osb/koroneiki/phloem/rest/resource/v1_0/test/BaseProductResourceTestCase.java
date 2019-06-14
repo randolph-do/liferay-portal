@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -47,9 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -92,12 +91,17 @@ public abstract class BaseProductResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_productResource.setContextCompany(testCompany);
+
+		ProductResource.Builder builder = ProductResource.builder();
+
+		productResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -203,13 +207,13 @@ public abstract class BaseProductResourceTestCase {
 		Product product = testDeleteProduct_addProduct();
 
 		assertHttpResponseStatusCode(
-			204, ProductResource.deleteProductHttpResponse(product.getId()));
+			204, productResource.deleteProductHttpResponse(product.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ProductResource.getProductHttpResponse(product.getId()));
+			404, productResource.getProductHttpResponse(product.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ProductResource.getProductHttpResponse(0L));
+			404, productResource.getProductHttpResponse(0L));
 	}
 
 	protected Product testDeleteProduct_addProduct() throws Exception {
@@ -221,7 +225,7 @@ public abstract class BaseProductResourceTestCase {
 	public void testGetProduct() throws Exception {
 		Product postProduct = testGetProduct_addProduct();
 
-		Product getProduct = ProductResource.getProduct(postProduct.getId());
+		Product getProduct = productResource.getProduct(postProduct.getId());
 
 		assertEquals(postProduct, getProduct);
 		assertValid(getProduct);
@@ -238,13 +242,13 @@ public abstract class BaseProductResourceTestCase {
 
 		Product randomProduct = randomProduct();
 
-		Product putProduct = ProductResource.putProduct(
+		Product putProduct = productResource.putProduct(
 			postProduct.getId(), randomProduct);
 
 		assertEquals(randomProduct, putProduct);
 		assertValid(putProduct);
 
-		Product getProduct = ProductResource.getProduct(putProduct.getId());
+		Product getProduct = productResource.getProduct(putProduct.getId());
 
 		assertEquals(randomProduct, getProduct);
 		assertValid(getProduct);
@@ -348,7 +352,7 @@ public abstract class BaseProductResourceTestCase {
 	protected void assertValid(Page<Product> page) {
 		boolean valid = false;
 
-		Collection<Product> products = page.getItems();
+		java.util.Collection<Product> products = page.getItems();
 
 		int size = products.size();
 
@@ -363,6 +367,10 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
 
@@ -432,7 +440,9 @@ public abstract class BaseProductResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_productResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -453,12 +463,15 @@ public abstract class BaseProductResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -582,11 +595,10 @@ public abstract class BaseProductResourceTestCase {
 		return randomProduct();
 	}
 
+	protected ProductResource productResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseProductResourceTestCase.class);

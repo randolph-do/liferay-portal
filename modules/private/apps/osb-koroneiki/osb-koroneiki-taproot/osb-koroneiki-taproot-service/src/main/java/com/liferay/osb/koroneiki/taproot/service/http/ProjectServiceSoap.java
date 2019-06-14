@@ -66,15 +66,15 @@ public class ProjectServiceSoap {
 
 	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
 			addProject(
-				long accountId, long supportRegionId, String name, String code,
-				int industry, int tier, String notes, int status)
+				long accountId, String name, String code, String industry,
+				String tier, String notes, String soldBy, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
 				ProjectServiceUtil.addProject(
-					accountId, supportRegionId, name, code, industry, tier,
-					notes, status);
+					accountId, name, code, industry, tier, notes, soldBy,
+					status);
 
 			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
 				toSoapModel(returnValue);
@@ -156,15 +156,15 @@ public class ProjectServiceSoap {
 
 	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
 			updateProject(
-				long projectId, long supportRegionId, String name, String code,
-				int industry, int tier, String notes, int status)
+				long projectId, String name, String code, String industry,
+				String tier, String notes, String soldBy, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
 				ProjectServiceUtil.updateProject(
-					projectId, supportRegionId, name, code, industry, tier,
-					notes, status);
+					projectId, name, code, industry, tier, notes, soldBy,
+					status);
 
 			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
 				toSoapModel(returnValue);

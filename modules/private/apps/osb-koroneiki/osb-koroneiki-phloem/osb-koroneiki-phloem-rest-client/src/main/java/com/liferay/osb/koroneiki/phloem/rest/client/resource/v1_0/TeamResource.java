@@ -20,6 +20,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.TeamSerDes;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,205 +31,325 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TeamResource {
+public interface TeamResource {
 
-	public static Page<Team> getAccountTeamsPage(
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public Page<Team> getAccountTeamsPage(Long accountId, Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getAccountTeamsPageHttpResponse(
 			Long accountId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse = getAccountTeamsPageHttpResponse(
-			accountId, pagination);
+	public Team postAccountTeam(Long accountId, Team team) throws Exception;
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, TeamSerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse getAccountTeamsPageHttpResponse(
-			Long accountId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Team postAccountTeam(Long accountId, Team team)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = postAccountTeamHttpResponse(
-			accountId, team);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return TeamSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse postAccountTeamHttpResponse(
+	public HttpInvoker.HttpResponse postAccountTeamHttpResponse(
 			Long accountId, Team team)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void deleteTeam(Long teamId) throws Exception;
 
-		httpInvoker.body(team.toString(), "application/json");
+	public HttpInvoker.HttpResponse deleteTeamHttpResponse(Long teamId)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+	public Team getTeam(Long teamId) throws Exception;
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
-			accountId);
+	public HttpInvoker.HttpResponse getTeamHttpResponse(Long teamId)
+		throws Exception;
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+	public Team putTeam(Long teamId, Team team) throws Exception;
 
-		return httpInvoker.invoke();
-	}
+	public HttpInvoker.HttpResponse putTeamHttpResponse(Long teamId, Team team)
+		throws Exception;
 
-	public static void deleteTeam(Long teamId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = deleteTeamHttpResponse(teamId);
+	public static class Builder {
 
-		String content = httpResponse.getContent();
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
 
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteTeamHttpResponse(Long teamId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}",
-			teamId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Team getTeam(Long teamId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = getTeamHttpResponse(teamId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return TeamSerDes.toDTO(content);
+			return this;
 		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
 
-			throw e;
+		public TeamResource build() {
+			return new TeamResourceImpl(this);
 		}
-	}
 
-	public static HttpInvoker.HttpResponse getTeamHttpResponse(Long teamId)
-		throws Exception {
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}",
-			teamId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Team putTeam(Long teamId, Team team) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = putTeamHttpResponse(
-			teamId, team);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return TeamSerDes.toDTO(content);
+			return this;
 		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
 
-			throw e;
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
 		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
 	}
 
-	public static HttpInvoker.HttpResponse putTeamHttpResponse(
-			Long teamId, Team team)
-		throws Exception {
+	public static class TeamResourceImpl implements TeamResource {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+		public Page<Team> getAccountTeamsPage(
+				Long accountId, Pagination pagination)
+			throws Exception {
 
-		httpInvoker.body(team.toString(), "application/json");
+			HttpInvoker.HttpResponse httpResponse =
+				getAccountTeamsPageHttpResponse(accountId, pagination);
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			String content = httpResponse.getContent();
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}",
-			teamId);
+			_logger.fine("HTTP response content: " + content);
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
 
-		return httpInvoker.invoke();
+			return Page.of(content, TeamSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getAccountTeamsPageHttpResponse(
+				Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Team postAccountTeam(Long accountId, Team team)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = postAccountTeamHttpResponse(
+				accountId, team);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return TeamSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse postAccountTeamHttpResponse(
+				Long accountId, Team team)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(team.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteTeam(Long teamId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = deleteTeamHttpResponse(
+				teamId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteTeamHttpResponse(Long teamId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamId}",
+				teamId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Team getTeam(Long teamId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getTeamHttpResponse(teamId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return TeamSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse getTeamHttpResponse(Long teamId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamId}",
+				teamId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Team putTeam(Long teamId, Team team) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = putTeamHttpResponse(
+				teamId, team);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return TeamSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse putTeamHttpResponse(
+				Long teamId, Team team)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(team.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamId}",
+				teamId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private TeamResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			TeamResource.class.getName());
+
+		private Builder _builder;
+
 	}
-
-	private static final Logger _logger = Logger.getLogger(
-		TeamResource.class.getName());
 
 }

@@ -181,20 +181,6 @@ public interface ProjectModel
 	public void setAccountId(long accountId);
 
 	/**
-	 * Returns the support region ID of this project.
-	 *
-	 * @return the support region ID of this project
-	 */
-	public long getSupportRegionId();
-
-	/**
-	 * Sets the support region ID of this project.
-	 *
-	 * @param supportRegionId the support region ID of this project
-	 */
-	public void setSupportRegionId(long supportRegionId);
-
-	/**
 	 * Returns the name of this project.
 	 *
 	 * @return the name of this project
@@ -229,28 +215,30 @@ public interface ProjectModel
 	 *
 	 * @return the industry of this project
 	 */
-	public int getIndustry();
+	@AutoEscape
+	public String getIndustry();
 
 	/**
 	 * Sets the industry of this project.
 	 *
 	 * @param industry the industry of this project
 	 */
-	public void setIndustry(int industry);
+	public void setIndustry(String industry);
 
 	/**
 	 * Returns the tier of this project.
 	 *
 	 * @return the tier of this project
 	 */
-	public int getTier();
+	@AutoEscape
+	public String getTier();
 
 	/**
 	 * Sets the tier of this project.
 	 *
 	 * @param tier the tier of this project
 	 */
-	public void setTier(int tier);
+	public void setTier(String tier);
 
 	/**
 	 * Returns the notes of this project.
@@ -266,6 +254,21 @@ public interface ProjectModel
 	 * @param notes the notes of this project
 	 */
 	public void setNotes(String notes);
+
+	/**
+	 * Returns the sold by of this project.
+	 *
+	 * @return the sold by of this project
+	 */
+	@AutoEscape
+	public String getSoldBy();
+
+	/**
+	 * Sets the sold by of this project.
+	 *
+	 * @param soldBy the sold by of this project
+	 */
+	public void setSoldBy(String soldBy);
 
 	/**
 	 * Returns the status of this project.

@@ -35,13 +35,14 @@ public class ProjectLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Project addProject(
-			long userId, long accountId, long supportRegionId, String name,
-			String code, int industry, int tier, String notes, int status)
+			long userId, long accountId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _projectLocalService.addProject(
-			userId, accountId, supportRegionId, name, code, industry, tier,
-			notes, status);
+			userId, accountId, name, code, industry, tier, notes, soldBy,
+			status);
 	}
 
 	/**
@@ -336,12 +337,13 @@ public class ProjectLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Project updateProject(
-			long projectId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long userId, long projectId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _projectLocalService.updateProject(
-			projectId, supportRegionId, name, code, industry, tier, notes,
+			userId, projectId, name, code, industry, tier, notes, soldBy,
 			status);
 	}
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -49,9 +50,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -94,12 +93,17 @@ public abstract class BaseProjectResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_projectResource.setContextCompany(testCompany);
+
+		ProjectResource.Builder builder = ProjectResource.builder();
+
+		projectResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -171,6 +175,7 @@ public abstract class BaseProjectResourceTestCase {
 		project.setIndustry(regex);
 		project.setName(regex);
 		project.setNotes(regex);
+		project.setSoldBy(regex);
 		project.setStatus(regex);
 		project.setTier(regex);
 
@@ -184,6 +189,7 @@ public abstract class BaseProjectResourceTestCase {
 		Assert.assertEquals(regex, project.getIndustry());
 		Assert.assertEquals(regex, project.getName());
 		Assert.assertEquals(regex, project.getNotes());
+		Assert.assertEquals(regex, project.getSoldBy());
 		Assert.assertEquals(regex, project.getStatus());
 		Assert.assertEquals(regex, project.getTier());
 	}
@@ -198,7 +204,7 @@ public abstract class BaseProjectResourceTestCase {
 			Project irrelevantProject = testGetAccountProjectsPage_addProject(
 				irrelevantAccountId, randomIrrelevantProject());
 
-			Page<Project> page = ProjectResource.getAccountProjectsPage(
+			Page<Project> page = projectResource.getAccountProjectsPage(
 				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -215,7 +221,7 @@ public abstract class BaseProjectResourceTestCase {
 		Project project2 = testGetAccountProjectsPage_addProject(
 			accountId, randomProject());
 
-		Page<Project> page = ProjectResource.getAccountProjectsPage(
+		Page<Project> page = projectResource.getAccountProjectsPage(
 			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -238,14 +244,14 @@ public abstract class BaseProjectResourceTestCase {
 		Project project3 = testGetAccountProjectsPage_addProject(
 			accountId, randomProject());
 
-		Page<Project> page1 = ProjectResource.getAccountProjectsPage(
+		Page<Project> page1 = projectResource.getAccountProjectsPage(
 			accountId, Pagination.of(1, 2));
 
 		List<Project> projects1 = (List<Project>)page1.getItems();
 
 		Assert.assertEquals(projects1.toString(), 2, projects1.size());
 
-		Page<Project> page2 = ProjectResource.getAccountProjectsPage(
+		Page<Project> page2 = projectResource.getAccountProjectsPage(
 			accountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -254,7 +260,7 @@ public abstract class BaseProjectResourceTestCase {
 
 		Assert.assertEquals(projects2.toString(), 1, projects2.size());
 
-		Page<Project> page3 = ProjectResource.getAccountProjectsPage(
+		Page<Project> page3 = projectResource.getAccountProjectsPage(
 			accountId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
@@ -266,7 +272,7 @@ public abstract class BaseProjectResourceTestCase {
 			Long accountId, Project project)
 		throws Exception {
 
-		return ProjectResource.postAccountProject(accountId, project);
+		return projectResource.postAccountProject(accountId, project);
 	}
 
 	protected Long testGetAccountProjectsPage_getAccountId() throws Exception {
@@ -293,7 +299,7 @@ public abstract class BaseProjectResourceTestCase {
 	protected Project testPostAccountProject_addProject(Project project)
 		throws Exception {
 
-		return ProjectResource.postAccountProject(
+		return projectResource.postAccountProject(
 			testGetAccountProjectsPage_getAccountId(), project);
 	}
 
@@ -302,13 +308,13 @@ public abstract class BaseProjectResourceTestCase {
 		Project project = testDeleteProject_addProject();
 
 		assertHttpResponseStatusCode(
-			204, ProjectResource.deleteProjectHttpResponse(project.getId()));
+			204, projectResource.deleteProjectHttpResponse(project.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ProjectResource.getProjectHttpResponse(project.getId()));
+			404, projectResource.getProjectHttpResponse(project.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ProjectResource.getProjectHttpResponse(0L));
+			404, projectResource.getProjectHttpResponse(0L));
 	}
 
 	protected Project testDeleteProject_addProject() throws Exception {
@@ -320,7 +326,7 @@ public abstract class BaseProjectResourceTestCase {
 	public void testGetProject() throws Exception {
 		Project postProject = testGetProject_addProject();
 
-		Project getProject = ProjectResource.getProject(postProject.getId());
+		Project getProject = projectResource.getProject(postProject.getId());
 
 		assertEquals(postProject, getProject);
 		assertValid(getProject);
@@ -337,13 +343,13 @@ public abstract class BaseProjectResourceTestCase {
 
 		Project randomProject = randomProject();
 
-		Project putProject = ProjectResource.putProject(
+		Project putProject = projectResource.putProject(
 			postProject.getId(), randomProject);
 
 		assertEquals(randomProject, putProject);
 		assertValid(putProject);
 
-		Project getProject = ProjectResource.getProject(putProject.getId());
+		Project getProject = projectResource.getProject(putProject.getId());
 
 		assertEquals(randomProject, getProject);
 		assertValid(getProject);
@@ -360,7 +366,7 @@ public abstract class BaseProjectResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			ProjectResource.deleteProjectContactHttpResponse(
+			projectResource.deleteProjectContactHttpResponse(
 				project.getId(), null));
 	}
 
@@ -380,7 +386,7 @@ public abstract class BaseProjectResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			ProjectResource.deleteProjectContactRoleHttpResponse(
+			projectResource.deleteProjectContactRoleHttpResponse(
 				project.getId(), null, null));
 	}
 
@@ -402,7 +408,7 @@ public abstract class BaseProjectResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			ProjectResource.deleteProjectTeamRoleHttpResponse(
+			projectResource.deleteProjectTeamRoleHttpResponse(
 				project.getId(), null, null));
 	}
 
@@ -530,6 +536,14 @@ public abstract class BaseProjectResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("soldBy", additionalAssertFieldName)) {
+				if (project.getSoldBy() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (project.getStatus() == null) {
 					valid = false;
@@ -557,7 +571,7 @@ public abstract class BaseProjectResourceTestCase {
 	protected void assertValid(Page<Project> page) {
 		boolean valid = false;
 
-		Collection<Project> projects = page.getItems();
+		java.util.Collection<Project> projects = page.getItems();
 
 		int size = projects.size();
 
@@ -572,6 +586,10 @@ public abstract class BaseProjectResourceTestCase {
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
 
@@ -673,6 +691,16 @@ public abstract class BaseProjectResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("soldBy", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						project1.getSoldBy(), project2.getSoldBy())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						project1.getStatus(), project2.getStatus())) {
@@ -701,7 +729,9 @@ public abstract class BaseProjectResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_projectResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -722,12 +752,15 @@ public abstract class BaseProjectResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -855,6 +888,14 @@ public abstract class BaseProjectResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("soldBy")) {
+			sb.append("'");
+			sb.append(String.valueOf(project.getSoldBy()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("status")) {
 			sb.append("'");
 			sb.append(String.valueOf(project.getStatus()));
@@ -886,6 +927,7 @@ public abstract class BaseProjectResourceTestCase {
 				industry = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				notes = RandomTestUtil.randomString();
+				soldBy = RandomTestUtil.randomString();
 				status = RandomTestUtil.randomString();
 				tier = RandomTestUtil.randomString();
 			}
@@ -902,11 +944,10 @@ public abstract class BaseProjectResourceTestCase {
 		return randomProject();
 	}
 
+	protected ProjectResource projectResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseProjectResourceTestCase.class);

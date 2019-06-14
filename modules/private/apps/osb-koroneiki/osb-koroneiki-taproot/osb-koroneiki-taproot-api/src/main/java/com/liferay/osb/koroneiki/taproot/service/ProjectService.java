@@ -52,8 +52,8 @@ public interface ProjectService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ProjectServiceUtil} to access the project remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.ProjectServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Project addProject(
-			long accountId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long accountId, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
 		throws PortalException;
 
 	public Project deleteProject(long projectId) throws PortalException;
@@ -76,8 +76,8 @@ public interface ProjectService extends BaseService {
 	public int getProjectsCount(long accountId) throws PortalException;
 
 	public Project updateProject(
-			long projectId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long projectId, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
 		throws PortalException;
 
 }

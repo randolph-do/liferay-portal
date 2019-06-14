@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -47,9 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -92,12 +91,17 @@ public abstract class BaseContactRoleResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_contactRoleResource.setContextCompany(testCompany);
+
+		ContactRoleResource.Builder builder = ContactRoleResource.builder();
+
+		contactRoleResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -205,16 +209,16 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			ContactRoleResource.deleteContactRoleHttpResponse(
+			contactRoleResource.deleteContactRoleHttpResponse(
 				contactRole.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			ContactRoleResource.getContactRoleHttpResponse(
+			contactRoleResource.getContactRoleHttpResponse(
 				contactRole.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ContactRoleResource.getContactRoleHttpResponse(0L));
+			404, contactRoleResource.getContactRoleHttpResponse(0L));
 	}
 
 	protected ContactRole testDeleteContactRole_addContactRole()
@@ -228,7 +232,7 @@ public abstract class BaseContactRoleResourceTestCase {
 	public void testGetContactRole() throws Exception {
 		ContactRole postContactRole = testGetContactRole_addContactRole();
 
-		ContactRole getContactRole = ContactRoleResource.getContactRole(
+		ContactRole getContactRole = contactRoleResource.getContactRole(
 			postContactRole.getId());
 
 		assertEquals(postContactRole, getContactRole);
@@ -246,13 +250,13 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		ContactRole randomContactRole = randomContactRole();
 
-		ContactRole putContactRole = ContactRoleResource.putContactRole(
+		ContactRole putContactRole = contactRoleResource.putContactRole(
 			postContactRole.getId(), randomContactRole);
 
 		assertEquals(randomContactRole, putContactRole);
 		assertValid(putContactRole);
 
-		ContactRole getContactRole = ContactRoleResource.getContactRole(
+		ContactRole getContactRole = contactRoleResource.getContactRole(
 			putContactRole.getId());
 
 		assertEquals(randomContactRole, getContactRole);
@@ -375,7 +379,7 @@ public abstract class BaseContactRoleResourceTestCase {
 	protected void assertValid(Page<ContactRole> page) {
 		boolean valid = false;
 
-		Collection<ContactRole> contactRoles = page.getItems();
+		java.util.Collection<ContactRole> contactRoles = page.getItems();
 
 		int size = contactRoles.size();
 
@@ -390,6 +394,10 @@ public abstract class BaseContactRoleResourceTestCase {
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
 
@@ -484,7 +492,9 @@ public abstract class BaseContactRoleResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_contactRoleResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -505,12 +515,15 @@ public abstract class BaseContactRoleResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -656,11 +669,10 @@ public abstract class BaseContactRoleResourceTestCase {
 		return randomContactRole();
 	}
 
+	protected ContactRoleResource contactRoleResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseContactRoleResourceTestCase.class);

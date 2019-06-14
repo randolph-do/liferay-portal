@@ -40,13 +40,14 @@ public class ProjectLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.ProjectLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Project addProject(
-			long userId, long accountId, long supportRegionId, String name,
-			String code, int industry, int tier, String notes, int status)
+			long userId, long accountId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addProject(
-			userId, accountId, supportRegionId, name, code, industry, tier,
-			notes, status);
+			userId, accountId, name, code, industry, tier, notes, soldBy,
+			status);
 	}
 
 	/**
@@ -319,12 +320,13 @@ public class ProjectLocalServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Project updateProject(
-			long projectId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long userId, long projectId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateProject(
-			projectId, supportRegionId, name, code, industry, tier, notes,
+			userId, projectId, name, code, industry, tier, notes, soldBy,
 			status);
 	}
 

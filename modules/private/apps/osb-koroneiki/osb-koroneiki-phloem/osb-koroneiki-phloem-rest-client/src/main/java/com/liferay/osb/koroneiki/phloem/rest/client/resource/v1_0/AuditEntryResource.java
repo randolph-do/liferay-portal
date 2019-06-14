@@ -20,6 +20,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AuditEntrySerDes;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,302 +31,466 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AuditEntryResource {
+public interface AuditEntryResource {
 
-	public static Page<AuditEntry> getAccountAuditEntriesPage(
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public Page<AuditEntry> getAccountAuditEntriesPage(
 			Long accountId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getAccountAuditEntriesPageHttpResponse(accountId, pagination);
+	public HttpInvoker.HttpResponse getAccountAuditEntriesPageHttpResponse(
+			Long accountId, Pagination pagination)
+		throws Exception;
 
-		String content = httpResponse.getContent();
+	public AuditEntry getAuditEntry(Long auditEntryId) throws Exception;
 
-		_logger.fine("HTTP response content: " + content);
+	public HttpInvoker.HttpResponse getAuditEntryHttpResponse(Long auditEntryId)
+		throws Exception;
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, AuditEntrySerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
-			getAccountAuditEntriesPageHttpResponse(
-				Long accountId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/audit-entries",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static AuditEntry getAuditEntry(Long auditEntryId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = getAuditEntryHttpResponse(
-			auditEntryId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return AuditEntrySerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse getAuditEntryHttpResponse(
-			Long auditEntryId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/audit-entries/{auditEntryId}",
-			auditEntryId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Page<AuditEntry> getContactRoleAuditEntriesPage(
+	public Page<AuditEntry> getContactRoleAuditEntriesPage(
 			Long contactRoleId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getContactRoleAuditEntriesPageHttpResponse(
-				contactRoleId, pagination);
+	public HttpInvoker.HttpResponse getContactRoleAuditEntriesPageHttpResponse(
+			Long contactRoleId, Pagination pagination)
+		throws Exception;
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, AuditEntrySerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
-			getContactRoleAuditEntriesPageHttpResponse(
-				Long contactRoleId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/contact-roles/{contactRoleId}/audit-entries",
-			contactRoleId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Page<AuditEntry> getContactAuditEntriesPage(
+	public Page<AuditEntry> getContactAuditEntriesPage(
 			Long contactId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getContactAuditEntriesPageHttpResponse(contactId, pagination);
+	public HttpInvoker.HttpResponse getContactAuditEntriesPageHttpResponse(
+			Long contactId, Pagination pagination)
+		throws Exception;
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, AuditEntrySerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
-			getContactAuditEntriesPageHttpResponse(
-				Long contactId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/contacts/{contactId}/audit-entries",
-			contactId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Page<AuditEntry> getProjectAuditEntriesPage(
+	public Page<AuditEntry> getProjectAuditEntriesPage(
 			Long projectId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getProjectAuditEntriesPageHttpResponse(projectId, pagination);
+	public HttpInvoker.HttpResponse getProjectAuditEntriesPageHttpResponse(
+			Long projectId, Pagination pagination)
+		throws Exception;
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, AuditEntrySerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
-			getProjectAuditEntriesPageHttpResponse(
-				Long projectId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/audit-entries",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Page<AuditEntry> getTeamRoleAuditEntriesPage(
+	public Page<AuditEntry> getTeamRoleAuditEntriesPage(
 			Long teamRoleId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getTeamRoleAuditEntriesPageHttpResponse(teamRoleId, pagination);
+	public HttpInvoker.HttpResponse getTeamRoleAuditEntriesPageHttpResponse(
+			Long teamRoleId, Pagination pagination)
+		throws Exception;
 
-		String content = httpResponse.getContent();
+	public Page<AuditEntry> getTeamAuditEntriesPage(
+			Long teamId, Pagination pagination)
+		throws Exception;
 
-		_logger.fine("HTTP response content: " + content);
+	public HttpInvoker.HttpResponse getTeamAuditEntriesPageHttpResponse(
+			Long teamId, Pagination pagination)
+		throws Exception;
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
+	public static class Builder {
 
-		return Page.of(content, AuditEntrySerDes::toDTO);
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
+
+			return this;
+		}
+
+		public AuditEntryResource build() {
+			return new AuditEntryResourceImpl(this);
+		}
+
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
+
+			return this;
+		}
+
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
 	}
 
-	public static HttpInvoker.HttpResponse
-			getTeamRoleAuditEntriesPageHttpResponse(
+	public static class AuditEntryResourceImpl implements AuditEntryResource {
+
+		public Page<AuditEntry> getAccountAuditEntriesPage(
+				Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getAccountAuditEntriesPageHttpResponse(accountId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, AuditEntrySerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getAccountAuditEntriesPageHttpResponse(
+				Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/audit-entries",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public AuditEntry getAuditEntry(Long auditEntryId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getAuditEntryHttpResponse(
+				auditEntryId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return AuditEntrySerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse getAuditEntryHttpResponse(
+				Long auditEntryId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/audit-entries/{auditEntryId}",
+				auditEntryId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<AuditEntry> getContactRoleAuditEntriesPage(
+				Long contactRoleId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getContactRoleAuditEntriesPageHttpResponse(
+					contactRoleId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, AuditEntrySerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getContactRoleAuditEntriesPageHttpResponse(
+					Long contactRoleId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleId}/audit-entries",
+				contactRoleId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<AuditEntry> getContactAuditEntriesPage(
+				Long contactId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getContactAuditEntriesPageHttpResponse(contactId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, AuditEntrySerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getContactAuditEntriesPageHttpResponse(
+				Long contactId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/contacts/{contactId}/audit-entries",
+				contactId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<AuditEntry> getProjectAuditEntriesPage(
+				Long projectId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProjectAuditEntriesPageHttpResponse(projectId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, AuditEntrySerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getProjectAuditEntriesPageHttpResponse(
+				Long projectId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/audit-entries",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<AuditEntry> getTeamRoleAuditEntriesPage(
 				Long teamRoleId, Pagination pagination)
-		throws Exception {
+			throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			HttpInvoker.HttpResponse httpResponse =
+				getTeamRoleAuditEntriesPageHttpResponse(teamRoleId, pagination);
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+			String content = httpResponse.getContent();
 
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, AuditEntrySerDes::toDTO);
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}/audit-entries",
-			teamRoleId);
+		public HttpInvoker.HttpResponse getTeamRoleAuditEntriesPageHttpResponse(
+				Long teamRoleId, Pagination pagination)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
-	}
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
 
-	public static Page<AuditEntry> getTeamAuditEntriesPage(
-			Long teamId, Pagination pagination)
-		throws Exception {
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-		HttpInvoker.HttpResponse httpResponse =
-			getTeamAuditEntriesPageHttpResponse(teamId, pagination);
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
 
-		String content = httpResponse.getContent();
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}/audit-entries",
+				teamRoleId);
 
-		_logger.fine("HTTP response content: " + content);
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, AuditEntrySerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse getTeamAuditEntriesPageHttpResponse(
-			Long teamId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
+			return httpInvoker.invoke();
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/teams/{teamId}/audit-entries",
-			teamId);
+		public Page<AuditEntry> getTeamAuditEntriesPage(
+				Long teamId, Pagination pagination)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker.HttpResponse httpResponse =
+				getTeamAuditEntriesPageHttpResponse(teamId, pagination);
 
-		return httpInvoker.invoke();
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, AuditEntrySerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getTeamAuditEntriesPageHttpResponse(
+				Long teamId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/teams/{teamId}/audit-entries",
+				teamId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private AuditEntryResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			AuditEntryResource.class.getName());
+
+		private Builder _builder;
+
 	}
-
-	private static final Logger _logger = Logger.getLogger(
-		AuditEntryResource.class.getName());
 
 }

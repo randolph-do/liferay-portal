@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import javax.annotation.Generated;
 
@@ -40,6 +41,10 @@ public interface ContactRoleResource {
 	public ContactRole putContactRole(
 			Long contactRoleId, ContactRole contactRole)
 		throws Exception;
+
+	public default void setContextAcceptLanguage(
+		AcceptLanguage contextAcceptLanguage) {
+	}
 
 	public void setContextCompany(Company contextCompany);
 

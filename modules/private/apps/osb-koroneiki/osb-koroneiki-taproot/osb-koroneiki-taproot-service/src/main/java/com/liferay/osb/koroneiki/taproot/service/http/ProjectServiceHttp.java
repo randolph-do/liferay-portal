@@ -55,9 +55,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public class ProjectServiceHttp {
 
 	public static com.liferay.osb.koroneiki.taproot.model.Project addProject(
-			HttpPrincipal httpPrincipal, long accountId, long supportRegionId,
-			String name, String code, int industry, int tier, String notes,
-			int status)
+			HttpPrincipal httpPrincipal, long accountId, String name,
+			String code, String industry, String tier, String notes,
+			String soldBy, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,8 +66,8 @@ public class ProjectServiceHttp {
 				_addProjectParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, accountId, supportRegionId, name, code, industry,
-				tier, notes, status);
+				methodKey, accountId, name, code, industry, tier, notes, soldBy,
+				status);
 
 			Object returnObj = null;
 
@@ -250,9 +250,9 @@ public class ProjectServiceHttp {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Project updateProject(
-			HttpPrincipal httpPrincipal, long projectId, long supportRegionId,
-			String name, String code, int industry, int tier, String notes,
-			int status)
+			HttpPrincipal httpPrincipal, long projectId, String name,
+			String code, String industry, String tier, String notes,
+			String soldBy, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -261,8 +261,8 @@ public class ProjectServiceHttp {
 				_updateProjectParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, projectId, supportRegionId, name, code, industry,
-				tier, notes, status);
+				methodKey, projectId, name, code, industry, tier, notes, soldBy,
+				status);
 
 			Object returnObj = null;
 
@@ -293,8 +293,8 @@ public class ProjectServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(ProjectServiceHttp.class);
 
 	private static final Class<?>[] _addProjectParameterTypes0 = new Class[] {
-		long.class, long.class, String.class, String.class, int.class,
-		int.class, String.class, int.class
+		long.class, String.class, String.class, String.class, String.class,
+		String.class, String.class, int.class
 	};
 	private static final Class<?>[] _deleteProjectParameterTypes1 =
 		new Class[] {long.class};
@@ -308,8 +308,8 @@ public class ProjectServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _updateProjectParameterTypes5 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, int.class,
-			int.class, String.class, int.class
+			long.class, String.class, String.class, String.class, String.class,
+			String.class, String.class, int.class
 		};
 
 }

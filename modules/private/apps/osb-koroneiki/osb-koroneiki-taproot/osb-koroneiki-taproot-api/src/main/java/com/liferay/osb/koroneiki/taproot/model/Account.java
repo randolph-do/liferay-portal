@@ -64,4 +64,6 @@ public interface Account extends AccountModel, PersistedModel {
 	public java.util.List<Project> getProjects()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getStatusLabel();
+
 }

@@ -389,6 +389,11 @@ public class AccountWrapper
 		return model.getStatusDate();
 	}
 
+	@Override
+	public String getStatusLabel() {
+		return model.getStatusLabel();
+	}
+
 	/**
 	 * Returns the status message of this account.
 	 *

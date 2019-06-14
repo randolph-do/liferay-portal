@@ -30,7 +30,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -168,7 +167,9 @@ public abstract class BaseExternalLinkResourceImpl
 
 	@Override
 	@GET
-	@Operation(description = "Retrieves the product purchase's external links.")
+	@Operation(
+		description = "Retrieves the product consumption's external links."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "productConsumptionId"),
@@ -367,6 +368,10 @@ public abstract class BaseExternalLinkResourceImpl
 		return new ExternalLink();
 	}
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
@@ -376,7 +381,7 @@ public abstract class BaseExternalLinkResourceImpl
 	}
 
 	protected <T, R> List<R> transform(
-		Collection<T> collection,
+		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {
 
 		return TransformUtil.transform(collection, unsafeFunction);
@@ -390,7 +395,7 @@ public abstract class BaseExternalLinkResourceImpl
 	}
 
 	protected <T, R> R[] transformToArray(
-		Collection<T> collection,
+		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction, Class<?> clazz) {
 
 		return TransformUtil.transformToArray(

@@ -29,6 +29,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class Account {
 
+	public String getContactEmailAddress() {
+		return contactEmailAddress;
+	}
+
+	public void setContactEmailAddress(String contactEmailAddress) {
+		this.contactEmailAddress = contactEmailAddress;
+	}
+
+	public void setContactEmailAddress(
+		UnsafeSupplier<String, Exception> contactEmailAddressUnsafeSupplier) {
+
+		try {
+			contactEmailAddress = contactEmailAddressUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String contactEmailAddress;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -113,6 +134,27 @@ public class Account {
 
 	protected ExternalLink[] externalLinks;
 
+	public String getFaxNumber() {
+		return faxNumber;
+	}
+
+	public void setFaxNumber(String faxNumber) {
+		this.faxNumber = faxNumber;
+	}
+
+	public void setFaxNumber(
+		UnsafeSupplier<String, Exception> faxNumberUnsafeSupplier) {
+
+		try {
+			faxNumber = faxNumberUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String faxNumber;
+
 	public Long getId() {
 		return id;
 	}
@@ -150,6 +192,90 @@ public class Account {
 	}
 
 	protected String name;
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setPhoneNumber(
+		UnsafeSupplier<String, Exception> phoneNumberUnsafeSupplier) {
+
+		try {
+			phoneNumber = phoneNumberUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String phoneNumber;
+
+	public String getProfileEmailAddress() {
+		return profileEmailAddress;
+	}
+
+	public void setProfileEmailAddress(String profileEmailAddress) {
+		this.profileEmailAddress = profileEmailAddress;
+	}
+
+	public void setProfileEmailAddress(
+		UnsafeSupplier<String, Exception> profileEmailAddressUnsafeSupplier) {
+
+		try {
+			profileEmailAddress = profileEmailAddressUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String profileEmailAddress;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String status;
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public void setWebsite(
+		UnsafeSupplier<String, Exception> websiteUnsafeSupplier) {
+
+		try {
+			website = websiteUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String website;
 
 	@Override
 	public boolean equals(Object object) {

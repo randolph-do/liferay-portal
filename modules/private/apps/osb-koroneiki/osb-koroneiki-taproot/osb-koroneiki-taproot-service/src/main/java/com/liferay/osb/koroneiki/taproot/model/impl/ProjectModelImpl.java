@@ -81,10 +81,10 @@ public class ProjectModelImpl
 		{"uuid_", Types.VARCHAR}, {"projectId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"supportRegionId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"code_", Types.VARCHAR},
-		{"industry", Types.INTEGER}, {"tier", Types.INTEGER},
-		{"notes", Types.VARCHAR}, {"status", Types.INTEGER},
+		{"accountId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"code_", Types.VARCHAR}, {"industry", Types.VARCHAR},
+		{"tier", Types.VARCHAR}, {"notes", Types.VARCHAR},
+		{"soldBy", Types.VARCHAR}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}, {"statusMessage", Types.VARCHAR}
 	};
@@ -100,12 +100,12 @@ public class ProjectModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("supportRegionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("code_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("industry", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("tier", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("industry", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("tier", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("notes", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("soldBy", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -114,7 +114,7 @@ public class ProjectModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_Project (uuid_ VARCHAR(75) null,projectId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,supportRegionId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,industry INTEGER,tier INTEGER,notes STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
+		"create table Koroneiki_Project (uuid_ VARCHAR(75) null,projectId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,industry VARCHAR(75) null,tier VARCHAR(75) null,notes STRING null,soldBy VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_Project";
 
@@ -166,12 +166,12 @@ public class ProjectModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setAccountId(soapModel.getAccountId());
-		model.setSupportRegionId(soapModel.getSupportRegionId());
 		model.setName(soapModel.getName());
 		model.setCode(soapModel.getCode());
 		model.setIndustry(soapModel.getIndustry());
 		model.setTier(soapModel.getTier());
 		model.setNotes(soapModel.getNotes());
+		model.setSoldBy(soapModel.getSoldBy());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -346,11 +346,6 @@ public class ProjectModelImpl
 		attributeGetterFunctions.put("accountId", Project::getAccountId);
 		attributeSetterBiConsumers.put(
 			"accountId", (BiConsumer<Project, Long>)Project::setAccountId);
-		attributeGetterFunctions.put(
-			"supportRegionId", Project::getSupportRegionId);
-		attributeSetterBiConsumers.put(
-			"supportRegionId",
-			(BiConsumer<Project, Long>)Project::setSupportRegionId);
 		attributeGetterFunctions.put("name", Project::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<Project, String>)Project::setName);
@@ -359,13 +354,16 @@ public class ProjectModelImpl
 			"code", (BiConsumer<Project, String>)Project::setCode);
 		attributeGetterFunctions.put("industry", Project::getIndustry);
 		attributeSetterBiConsumers.put(
-			"industry", (BiConsumer<Project, Integer>)Project::setIndustry);
+			"industry", (BiConsumer<Project, String>)Project::setIndustry);
 		attributeGetterFunctions.put("tier", Project::getTier);
 		attributeSetterBiConsumers.put(
-			"tier", (BiConsumer<Project, Integer>)Project::setTier);
+			"tier", (BiConsumer<Project, String>)Project::setTier);
 		attributeGetterFunctions.put("notes", Project::getNotes);
 		attributeSetterBiConsumers.put(
 			"notes", (BiConsumer<Project, String>)Project::setNotes);
+		attributeGetterFunctions.put("soldBy", Project::getSoldBy);
+		attributeSetterBiConsumers.put(
+			"soldBy", (BiConsumer<Project, String>)Project::setSoldBy);
 		attributeGetterFunctions.put("status", Project::getStatus);
 		attributeSetterBiConsumers.put(
 			"status", (BiConsumer<Project, Integer>)Project::setStatus);
@@ -534,17 +532,6 @@ public class ProjectModelImpl
 
 	@JSON
 	@Override
-	public long getSupportRegionId() {
-		return _supportRegionId;
-	}
-
-	@Override
-	public void setSupportRegionId(long supportRegionId) {
-		_supportRegionId = supportRegionId;
-	}
-
-	@JSON
-	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -577,23 +564,33 @@ public class ProjectModelImpl
 
 	@JSON
 	@Override
-	public int getIndustry() {
-		return _industry;
+	public String getIndustry() {
+		if (_industry == null) {
+			return "";
+		}
+		else {
+			return _industry;
+		}
 	}
 
 	@Override
-	public void setIndustry(int industry) {
+	public void setIndustry(String industry) {
 		_industry = industry;
 	}
 
 	@JSON
 	@Override
-	public int getTier() {
-		return _tier;
+	public String getTier() {
+		if (_tier == null) {
+			return "";
+		}
+		else {
+			return _tier;
+		}
 	}
 
 	@Override
-	public void setTier(int tier) {
+	public void setTier(String tier) {
 		_tier = tier;
 	}
 
@@ -611,6 +608,22 @@ public class ProjectModelImpl
 	@Override
 	public void setNotes(String notes) {
 		_notes = notes;
+	}
+
+	@JSON
+	@Override
+	public String getSoldBy() {
+		if (_soldBy == null) {
+			return "";
+		}
+		else {
+			return _soldBy;
+		}
+	}
+
+	@Override
+	public void setSoldBy(String soldBy) {
+		_soldBy = soldBy;
 	}
 
 	@JSON
@@ -823,12 +836,12 @@ public class ProjectModelImpl
 		projectImpl.setCreateDate(getCreateDate());
 		projectImpl.setModifiedDate(getModifiedDate());
 		projectImpl.setAccountId(getAccountId());
-		projectImpl.setSupportRegionId(getSupportRegionId());
 		projectImpl.setName(getName());
 		projectImpl.setCode(getCode());
 		projectImpl.setIndustry(getIndustry());
 		projectImpl.setTier(getTier());
 		projectImpl.setNotes(getNotes());
+		projectImpl.setSoldBy(getSoldBy());
 		projectImpl.setStatus(getStatus());
 		projectImpl.setStatusByUserId(getStatusByUserId());
 		projectImpl.setStatusByUserName(getStatusByUserName());
@@ -949,8 +962,6 @@ public class ProjectModelImpl
 
 		projectCacheModel.accountId = getAccountId();
 
-		projectCacheModel.supportRegionId = getSupportRegionId();
-
 		projectCacheModel.name = getName();
 
 		String name = projectCacheModel.name;
@@ -969,7 +980,19 @@ public class ProjectModelImpl
 
 		projectCacheModel.industry = getIndustry();
 
+		String industry = projectCacheModel.industry;
+
+		if ((industry != null) && (industry.length() == 0)) {
+			projectCacheModel.industry = null;
+		}
+
 		projectCacheModel.tier = getTier();
+
+		String tier = projectCacheModel.tier;
+
+		if ((tier != null) && (tier.length() == 0)) {
+			projectCacheModel.tier = null;
+		}
 
 		projectCacheModel.notes = getNotes();
 
@@ -977,6 +1000,14 @@ public class ProjectModelImpl
 
 		if ((notes != null) && (notes.length() == 0)) {
 			projectCacheModel.notes = null;
+		}
+
+		projectCacheModel.soldBy = getSoldBy();
+
+		String soldBy = projectCacheModel.soldBy;
+
+		if ((soldBy != null) && (soldBy.length() == 0)) {
+			projectCacheModel.soldBy = null;
 		}
 
 		projectCacheModel.status = getStatus();
@@ -1097,12 +1128,12 @@ public class ProjectModelImpl
 	private long _accountId;
 	private long _originalAccountId;
 	private boolean _setOriginalAccountId;
-	private long _supportRegionId;
 	private String _name;
 	private String _code;
-	private int _industry;
-	private int _tier;
+	private String _industry;
+	private String _tier;
 	private String _notes;
+	private String _soldBy;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -47,9 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -92,12 +91,17 @@ public abstract class BaseAccountResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_accountResource.setContextCompany(testCompany);
+
+		AccountResource.Builder builder = AccountResource.builder();
+
+		accountResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -165,8 +169,14 @@ public abstract class BaseAccountResourceTestCase {
 
 		Account account = randomAccount();
 
+		account.setContactEmailAddress(regex);
 		account.setDescription(regex);
+		account.setFaxNumber(regex);
 		account.setName(regex);
+		account.setPhoneNumber(regex);
+		account.setProfileEmailAddress(regex);
+		account.setStatus(regex);
+		account.setWebsite(regex);
 
 		String json = AccountSerDes.toJSON(account);
 
@@ -174,8 +184,14 @@ public abstract class BaseAccountResourceTestCase {
 
 		account = AccountSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, account.getContactEmailAddress());
 		Assert.assertEquals(regex, account.getDescription());
+		Assert.assertEquals(regex, account.getFaxNumber());
 		Assert.assertEquals(regex, account.getName());
+		Assert.assertEquals(regex, account.getPhoneNumber());
+		Assert.assertEquals(regex, account.getProfileEmailAddress());
+		Assert.assertEquals(regex, account.getStatus());
+		Assert.assertEquals(regex, account.getWebsite());
 	}
 
 	@Test
@@ -200,13 +216,13 @@ public abstract class BaseAccountResourceTestCase {
 		Account account = testDeleteAccount_addAccount();
 
 		assertHttpResponseStatusCode(
-			204, AccountResource.deleteAccountHttpResponse(account.getId()));
+			204, accountResource.deleteAccountHttpResponse(account.getId()));
 
 		assertHttpResponseStatusCode(
-			404, AccountResource.getAccountHttpResponse(account.getId()));
+			404, accountResource.getAccountHttpResponse(account.getId()));
 
 		assertHttpResponseStatusCode(
-			404, AccountResource.getAccountHttpResponse(0L));
+			404, accountResource.getAccountHttpResponse(0L));
 	}
 
 	protected Account testDeleteAccount_addAccount() throws Exception {
@@ -218,7 +234,7 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGetAccount() throws Exception {
 		Account postAccount = testGetAccount_addAccount();
 
-		Account getAccount = AccountResource.getAccount(postAccount.getId());
+		Account getAccount = accountResource.getAccount(postAccount.getId());
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
@@ -235,13 +251,13 @@ public abstract class BaseAccountResourceTestCase {
 
 		Account randomAccount = randomAccount();
 
-		Account putAccount = AccountResource.putAccount(
+		Account putAccount = accountResource.putAccount(
 			postAccount.getId(), randomAccount);
 
 		assertEquals(randomAccount, putAccount);
 		assertValid(putAccount);
 
-		Account getAccount = AccountResource.getAccount(putAccount.getId());
+		Account getAccount = accountResource.getAccount(putAccount.getId());
 
 		assertEquals(randomAccount, getAccount);
 		assertValid(getAccount);
@@ -258,7 +274,7 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			AccountResource.deleteAccountContactHttpResponse(
+			accountResource.deleteAccountContactHttpResponse(
 				account.getId(), null));
 	}
 
@@ -278,7 +294,7 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			AccountResource.deleteAccountContactRoleHttpResponse(
+			accountResource.deleteAccountContactRoleHttpResponse(
 				account.getId(), null, null));
 	}
 
@@ -360,6 +376,16 @@ public abstract class BaseAccountResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"contactEmailAddress", additionalAssertFieldName)) {
+
+				if (account.getContactEmailAddress() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (account.getDescription() == null) {
 					valid = false;
@@ -376,8 +402,50 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("faxNumber", additionalAssertFieldName)) {
+				if (account.getFaxNumber() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (account.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("phoneNumber", additionalAssertFieldName)) {
+				if (account.getPhoneNumber() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"profileEmailAddress", additionalAssertFieldName)) {
+
+				if (account.getProfileEmailAddress() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (account.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("website", additionalAssertFieldName)) {
+				if (account.getWebsite() == null) {
 					valid = false;
 				}
 
@@ -395,7 +463,7 @@ public abstract class BaseAccountResourceTestCase {
 	protected void assertValid(Page<Account> page) {
 		boolean valid = false;
 
-		Collection<Account> accounts = page.getItems();
+		java.util.Collection<Account> accounts = page.getItems();
 
 		int size = accounts.size();
 
@@ -413,6 +481,10 @@ public abstract class BaseAccountResourceTestCase {
 		return new String[0];
 	}
 
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Account account1, Account account2) {
 		if (account1 == account2) {
 			return true;
@@ -420,6 +492,19 @@ public abstract class BaseAccountResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"contactEmailAddress", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getContactEmailAddress(),
+						account2.getContactEmailAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -463,6 +548,16 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("faxNumber", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getFaxNumber(), account2.getFaxNumber())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(account1.getId(), account2.getId())) {
 					return false;
@@ -481,6 +576,49 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("phoneNumber", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getPhoneNumber(), account2.getPhoneNumber())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"profileEmailAddress", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getProfileEmailAddress(),
+						account2.getProfileEmailAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getStatus(), account2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("website", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getWebsite(), account2.getWebsite())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -489,7 +627,9 @@ public abstract class BaseAccountResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_accountResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -510,12 +650,15 @@ public abstract class BaseAccountResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -533,6 +676,14 @@ public abstract class BaseAccountResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("contactEmailAddress")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getContactEmailAddress()));
+			sb.append("'");
+
+			return sb.toString();
+		}
 
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
@@ -609,6 +760,14 @@ public abstract class BaseAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("faxNumber")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getFaxNumber()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -622,6 +781,38 @@ public abstract class BaseAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("phoneNumber")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getPhoneNumber()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("profileEmailAddress")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getProfileEmailAddress()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("status")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getStatus()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("website")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getWebsite()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -629,11 +820,17 @@ public abstract class BaseAccountResourceTestCase {
 	protected Account randomAccount() throws Exception {
 		return new Account() {
 			{
+				contactEmailAddress = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
+				faxNumber = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				phoneNumber = RandomTestUtil.randomString();
+				profileEmailAddress = RandomTestUtil.randomString();
+				status = RandomTestUtil.randomString();
+				website = RandomTestUtil.randomString();
 			}
 		};
 	}
@@ -648,11 +845,10 @@ public abstract class BaseAccountResourceTestCase {
 		return randomAccount();
 	}
 
+	protected AccountResource accountResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAccountResourceTestCase.class);

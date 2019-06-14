@@ -17,6 +17,7 @@ package com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.TeamRole;
 import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,170 +28,275 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TeamRoleResource {
+public interface TeamRoleResource {
 
-	public static TeamRole postTeamRole(TeamRole teamRole) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = postTeamRoleHttpResponse(
-			teamRole);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-				TeamRoleSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+	public static Builder builder() {
+		return new Builder();
 	}
 
-	public static HttpInvoker.HttpResponse postTeamRoleHttpResponse(
-			TeamRole teamRole)
-		throws Exception {
+	public TeamRole postTeamRole(TeamRole teamRole) throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public HttpInvoker.HttpResponse postTeamRoleHttpResponse(TeamRole teamRole)
+		throws Exception;
 
-		httpInvoker.body(teamRole.toString(), "application/json");
+	public void deleteTeamRole(Long teamRoleId) throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+	public HttpInvoker.HttpResponse deleteTeamRoleHttpResponse(Long teamRoleId)
+		throws Exception;
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/team-roles");
+	public TeamRole getTeamRole(Long teamRoleId) throws Exception;
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+	public HttpInvoker.HttpResponse getTeamRoleHttpResponse(Long teamRoleId)
+		throws Exception;
 
-		return httpInvoker.invoke();
-	}
+	public TeamRole putTeamRole(Long teamRoleId, TeamRole teamRole)
+		throws Exception;
 
-	public static void deleteTeamRole(Long teamRoleId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = deleteTeamRoleHttpResponse(
-			teamRoleId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteTeamRoleHttpResponse(
-			Long teamRoleId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
-			teamRoleId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static TeamRole getTeamRole(Long teamRoleId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = getTeamRoleHttpResponse(
-			teamRoleId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-				TeamRoleSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse getTeamRoleHttpResponse(
-			Long teamRoleId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
-			teamRoleId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static TeamRole putTeamRole(Long teamRoleId, TeamRole teamRole)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = putTeamRoleHttpResponse(
-			teamRoleId, teamRole);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-				TeamRoleSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse putTeamRoleHttpResponse(
+	public HttpInvoker.HttpResponse putTeamRoleHttpResponse(
 			Long teamRoleId, TeamRole teamRole)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public static class Builder {
 
-		httpInvoker.body(teamRole.toString(), "application/json");
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			return this;
+		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
-			teamRoleId);
+		public TeamRoleResource build() {
+			return new TeamRoleResourceImpl(this);
+		}
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
 
-		return httpInvoker.invoke();
+			return this;
+		}
+
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
 	}
 
-	private static final Logger _logger = Logger.getLogger(
-		TeamRoleResource.class.getName());
+	public static class TeamRoleResourceImpl implements TeamRoleResource {
+
+		public TeamRole postTeamRole(TeamRole teamRole) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = postTeamRoleHttpResponse(
+				teamRole);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+					TeamRoleSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse postTeamRoleHttpResponse(
+				TeamRole teamRole)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(teamRole.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/koroneiki-rest/v1.0/team-roles");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteTeamRole(Long teamRoleId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = deleteTeamRoleHttpResponse(
+				teamRoleId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteTeamRoleHttpResponse(
+				Long teamRoleId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
+				teamRoleId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public TeamRole getTeamRole(Long teamRoleId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getTeamRoleHttpResponse(
+				teamRoleId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+					TeamRoleSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse getTeamRoleHttpResponse(Long teamRoleId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
+				teamRoleId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public TeamRole putTeamRole(Long teamRoleId, TeamRole teamRole)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = putTeamRoleHttpResponse(
+				teamRoleId, teamRole);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+					TeamRoleSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse putTeamRoleHttpResponse(
+				Long teamRoleId, TeamRole teamRole)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(teamRole.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
+				teamRoleId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private TeamRoleResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			TeamRoleResource.class.getName());
+
+		private Builder _builder;
+
+	}
 
 }

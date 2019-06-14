@@ -20,6 +20,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ProjectSerDes;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,457 +31,676 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ProjectResource {
+public interface ProjectResource {
 
-	public static Page<Project> getAccountProjectsPage(
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public Page<Project> getAccountProjectsPage(
 			Long accountId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getAccountProjectsPageHttpResponse(accountId, pagination);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, ProjectSerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse getAccountProjectsPageHttpResponse(
+	public HttpInvoker.HttpResponse getAccountProjectsPageHttpResponse(
 			Long accountId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public Project postAccountProject(Long accountId, Project project)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Project postAccountProject(Long accountId, Project project)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = postAccountProjectHttpResponse(
-			accountId, project);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProjectSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse postAccountProjectHttpResponse(
+	public HttpInvoker.HttpResponse postAccountProjectHttpResponse(
 			Long accountId, Project project)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void deleteProject(Long projectId) throws Exception;
 
-		httpInvoker.body(project.toString(), "application/json");
+	public HttpInvoker.HttpResponse deleteProjectHttpResponse(Long projectId)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+	public Project getProject(Long projectId) throws Exception;
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
-			accountId);
+	public HttpInvoker.HttpResponse getProjectHttpResponse(Long projectId)
+		throws Exception;
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+	public Project putProject(Long projectId, Project project) throws Exception;
 
-		return httpInvoker.invoke();
-	}
-
-	public static void deleteProject(Long projectId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = deleteProjectHttpResponse(
-			projectId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteProjectHttpResponse(
-			Long projectId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Project getProject(Long projectId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = getProjectHttpResponse(
-			projectId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProjectSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse getProjectHttpResponse(
-			Long projectId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Project putProject(Long projectId, Project project)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = putProjectHttpResponse(
-			projectId, project);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProjectSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse putProjectHttpResponse(
+	public HttpInvoker.HttpResponse putProjectHttpResponse(
 			Long projectId, Project project)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void deleteProjectContact(Long projectId, Long[] contactIds)
+		throws Exception;
 
-		httpInvoker.body(project.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void deleteProjectContact(Long projectId, Long[] contactIds)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			deleteProjectContactHttpResponse(projectId, contactIds);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteProjectContactHttpResponse(
+	public HttpInvoker.HttpResponse deleteProjectContactHttpResponse(
 			Long projectId, Long[] contactIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void putProjectContact(Long projectId, Long[] contactIds)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		if (contactIds != null) {
-			for (int i = 0; i < contactIds.length; i++) {
-				httpInvoker.parameter(
-					"contactIds", String.valueOf(contactIds[i]));
-			}
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void putProjectContact(Long projectId, Long[] contactIds)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = putProjectContactHttpResponse(
-			projectId, contactIds);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse putProjectContactHttpResponse(
+	public HttpInvoker.HttpResponse putProjectContactHttpResponse(
 			Long projectId, Long[] contactIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(contactIds.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-		if (contactIds != null) {
-			for (int i = 0; i < contactIds.length; i++) {
-				httpInvoker.parameter(
-					"contactIds", String.valueOf(contactIds[i]));
-			}
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void deleteProjectContactRole(
+	public void deleteProjectContactRole(
 			Long projectId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			deleteProjectContactRoleHttpResponse(
-				projectId, contactId, contactRoleIds);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteProjectContactRoleHttpResponse(
+	public HttpInvoker.HttpResponse deleteProjectContactRoleHttpResponse(
 			Long projectId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		if (contactRoleIds != null) {
-			for (int i = 0; i < contactRoleIds.length; i++) {
-				httpInvoker.parameter(
-					"contactRoleIds", String.valueOf(contactRoleIds[i]));
-			}
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
-			projectId, contactId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void putProjectContactRole(
+	public void putProjectContactRole(
 			Long projectId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			putProjectContactRoleHttpResponse(
-				projectId, contactId, contactRoleIds);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse putProjectContactRoleHttpResponse(
+	public HttpInvoker.HttpResponse putProjectContactRoleHttpResponse(
 			Long projectId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void deleteProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception;
 
-		httpInvoker.body(contactRoleIds.toString(), "application/json");
+	public HttpInvoker.HttpResponse deleteProjectTeamRoleHttpResponse(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+	public void putProjectTeamRole(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception;
 
-		if (contactRoleIds != null) {
-			for (int i = 0; i < contactRoleIds.length; i++) {
+	public HttpInvoker.HttpResponse putProjectTeamRoleHttpResponse(
+			Long projectId, Long teamId, Long[] teamRoleIds)
+		throws Exception;
+
+	public static class Builder {
+
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
+
+			return this;
+		}
+
+		public ProjectResource build() {
+			return new ProjectResourceImpl(this);
+		}
+
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
+
+			return this;
+		}
+
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
+	}
+
+	public static class ProjectResourceImpl implements ProjectResource {
+
+		public Page<Project> getAccountProjectsPage(
+				Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getAccountProjectsPageHttpResponse(accountId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, ProjectSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getAccountProjectsPageHttpResponse(
+				Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
 				httpInvoker.parameter(
-					"contactRoleIds", String.valueOf(contactRoleIds[i]));
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Project postAccountProject(Long accountId, Project project)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountProjectHttpResponse(accountId, project);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProjectSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
 			}
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
-			projectId, contactId);
+		public HttpInvoker.HttpResponse postAccountProjectHttpResponse(
+				Long accountId, Project project)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
-	}
+			httpInvoker.body(project.toString(), "application/json");
 
-	public static void deleteProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
-		throws Exception {
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
 
-		HttpInvoker.HttpResponse httpResponse =
-			deleteProjectTeamRoleHttpResponse(projectId, teamId, teamRoleIds);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-		String content = httpResponse.getContent();
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
+				accountId);
 
-		_logger.fine("HTTP response content: " + content);
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
+			return httpInvoker.invoke();
+		}
 
-	public static HttpInvoker.HttpResponse deleteProjectTeamRoleHttpResponse(
-			Long projectId, Long teamId, Long[] teamRoleIds)
-		throws Exception {
+		public void deleteProject(Long projectId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = deleteProjectHttpResponse(
+				projectId);
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			String content = httpResponse.getContent();
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			_logger.fine("HTTP response content: " + content);
 
-		if (teamRoleIds != null) {
-			for (int i = 0; i < teamRoleIds.length; i++) {
-				httpInvoker.parameter(
-					"teamRoleIds", String.valueOf(teamRoleIds[i]));
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteProjectHttpResponse(
+				Long projectId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Project getProject(Long projectId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getProjectHttpResponse(
+				projectId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProjectSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
 			}
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
-			projectId, teamId);
+		public HttpInvoker.HttpResponse getProjectHttpResponse(Long projectId)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
-	}
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
 
-	public static void putProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
-		throws Exception {
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-		HttpInvoker.HttpResponse httpResponse = putProjectTeamRoleHttpResponse(
-			projectId, teamId, teamRoleIds);
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}",
+				projectId);
 
-		String content = httpResponse.getContent();
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
 
-		_logger.fine("HTTP response content: " + content);
+			return httpInvoker.invoke();
+		}
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
+		public Project putProject(Long projectId, Project project)
+			throws Exception {
 
-	public static HttpInvoker.HttpResponse putProjectTeamRoleHttpResponse(
-			Long projectId, Long teamId, Long[] teamRoleIds)
-		throws Exception {
+			HttpInvoker.HttpResponse httpResponse = putProjectHttpResponse(
+				projectId, project);
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			String content = httpResponse.getContent();
 
-		httpInvoker.body(teamRoleIds.toString(), "application/json");
+			_logger.fine("HTTP response content: " + content);
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
 
-		if (teamRoleIds != null) {
-			for (int i = 0; i < teamRoleIds.length; i++) {
-				httpInvoker.parameter(
-					"teamRoleIds", String.valueOf(teamRoleIds[i]));
+			try {
+				return ProjectSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
 			}
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
-			projectId, teamId);
+		public HttpInvoker.HttpResponse putProjectHttpResponse(
+				Long projectId, Project project)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
+			httpInvoker.body(project.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteProjectContact(Long projectId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteProjectContactHttpResponse(projectId, contactIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteProjectContactHttpResponse(
+				Long projectId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (contactIds != null) {
+				for (int i = 0; i < contactIds.length; i++) {
+					httpInvoker.parameter(
+						"contactIds", String.valueOf(contactIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putProjectContact(Long projectId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putProjectContactHttpResponse(projectId, contactIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putProjectContactHttpResponse(
+				Long projectId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(contactIds.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (contactIds != null) {
+				for (int i = 0; i < contactIds.length; i++) {
+					httpInvoker.parameter(
+						"contactIds", String.valueOf(contactIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteProjectContactRole(
+				Long projectId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteProjectContactRoleHttpResponse(
+					projectId, contactId, contactRoleIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteProjectContactRoleHttpResponse(
+				Long projectId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (contactRoleIds != null) {
+				for (int i = 0; i < contactRoleIds.length; i++) {
+					httpInvoker.parameter(
+						"contactRoleIds", String.valueOf(contactRoleIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
+				projectId, contactId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putProjectContactRole(
+				Long projectId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putProjectContactRoleHttpResponse(
+					projectId, contactId, contactRoleIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putProjectContactRoleHttpResponse(
+				Long projectId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(contactRoleIds.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (contactRoleIds != null) {
+				for (int i = 0; i < contactRoleIds.length; i++) {
+					httpInvoker.parameter(
+						"contactRoleIds", String.valueOf(contactRoleIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
+				projectId, contactId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteProjectTeamRole(
+				Long projectId, Long teamId, Long[] teamRoleIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteProjectTeamRoleHttpResponse(
+					projectId, teamId, teamRoleIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteProjectTeamRoleHttpResponse(
+				Long projectId, Long teamId, Long[] teamRoleIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (teamRoleIds != null) {
+				for (int i = 0; i < teamRoleIds.length; i++) {
+					httpInvoker.parameter(
+						"teamRoleIds", String.valueOf(teamRoleIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
+				projectId, teamId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putProjectTeamRole(
+				Long projectId, Long teamId, Long[] teamRoleIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putProjectTeamRoleHttpResponse(projectId, teamId, teamRoleIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putProjectTeamRoleHttpResponse(
+				Long projectId, Long teamId, Long[] teamRoleIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(teamRoleIds.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (teamRoleIds != null) {
+				for (int i = 0; i < teamRoleIds.length; i++) {
+					httpInvoker.parameter(
+						"teamRoleIds", String.valueOf(teamRoleIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
+				projectId, teamId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private ProjectResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			ProjectResource.class.getName());
+
+		private Builder _builder;
+
 	}
-
-	private static final Logger _logger = Logger.getLogger(
-		ProjectResource.class.getName());
 
 }

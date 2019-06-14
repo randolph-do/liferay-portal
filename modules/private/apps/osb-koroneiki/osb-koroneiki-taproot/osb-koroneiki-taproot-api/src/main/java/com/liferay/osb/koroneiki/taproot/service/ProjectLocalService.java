@@ -63,8 +63,9 @@ public interface ProjectLocalService
 	 * Never modify or reference this interface directly. Always use {@link ProjectLocalServiceUtil} to access the project local service. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.ProjectLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Project addProject(
-			long userId, long accountId, long supportRegionId, String name,
-			String code, int industry, int tier, String notes, int status)
+			long userId, long accountId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws PortalException;
 
 	/**
@@ -263,8 +264,9 @@ public interface ProjectLocalService
 	public int getProjectsCount(long accountId);
 
 	public Project updateProject(
-			long projectId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long userId, long projectId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws PortalException;
 
 	/**

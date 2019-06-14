@@ -303,6 +303,34 @@ public class Project {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String notes;
 
+	@Schema(description = "The region which sold the salesforce opportunity.")
+	public String getSoldBy() {
+		return soldBy;
+	}
+
+	public void setSoldBy(String soldBy) {
+		this.soldBy = soldBy;
+	}
+
+	@JsonIgnore
+	public void setSoldBy(
+		UnsafeSupplier<String, Exception> soldByUnsafeSupplier) {
+
+		try {
+			soldBy = soldByUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String soldBy;
+
 	@Schema(description = "The status of the project.")
 	public String getStatus() {
 		return status;
@@ -508,6 +536,20 @@ public class Project {
 			sb.append("\"");
 
 			sb.append(_escape(notes));
+
+			sb.append("\"");
+		}
+
+		if (soldBy != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"soldBy\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(soldBy));
 
 			sb.append("\"");
 		}

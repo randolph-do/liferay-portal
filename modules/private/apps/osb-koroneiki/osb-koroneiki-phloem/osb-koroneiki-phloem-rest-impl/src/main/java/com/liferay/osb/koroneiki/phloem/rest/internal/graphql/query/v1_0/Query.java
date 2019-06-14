@@ -38,16 +38,14 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
-
-import java.util.Collection;
 
 import javax.annotation.Generated;
 
@@ -161,7 +159,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<AuditEntry> getAccountAuditEntriesPage(
+	public java.util.Collection<AuditEntry> getAccountAuditEntriesPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -194,7 +192,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<AuditEntry> getContactRoleAuditEntriesPage(
+	public java.util.Collection<AuditEntry> getContactRoleAuditEntriesPage(
 			@GraphQLName("contactRoleId") Long contactRoleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -214,7 +212,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<AuditEntry> getContactAuditEntriesPage(
+	public java.util.Collection<AuditEntry> getContactAuditEntriesPage(
 			@GraphQLName("contactId") Long contactId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -234,7 +232,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<AuditEntry> getProjectAuditEntriesPage(
+	public java.util.Collection<AuditEntry> getProjectAuditEntriesPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -254,7 +252,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<AuditEntry> getTeamRoleAuditEntriesPage(
+	public java.util.Collection<AuditEntry> getTeamRoleAuditEntriesPage(
 			@GraphQLName("teamRoleId") Long teamRoleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -274,7 +272,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<AuditEntry> getTeamAuditEntriesPage(
+	public java.util.Collection<AuditEntry> getTeamAuditEntriesPage(
 			@GraphQLName("teamId") Long teamId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -294,7 +292,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Contact> getAccountContactsPage(
+	public java.util.Collection<Contact> getAccountContactsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -324,7 +322,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Contact> getProjectContactsPage(
+	public java.util.Collection<Contact> getProjectContactsPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -356,7 +354,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ExternalLink> getAccountExternalLinksPage(
+	public java.util.Collection<ExternalLink> getAccountExternalLinksPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -376,7 +374,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ExternalLink> getContactExternalLinksPage(
+	public java.util.Collection<ExternalLink> getContactExternalLinksPage(
 			@GraphQLName("contactId") Long contactId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -409,10 +407,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ExternalLink> getProductConsumptionExternalLinksPage(
-			@GraphQLName("productConsumptionId") Long productConsumptionId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+	public java.util.Collection<ExternalLink>
+			getProductConsumptionExternalLinksPage(
+				@GraphQLName("productConsumptionId") Long productConsumptionId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -429,10 +428,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ExternalLink> getProductPurchaseExternalLinksPage(
-			@GraphQLName("productPurchaseId") Long productPurchaseId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+	public java.util.Collection<ExternalLink>
+			getProductPurchaseExternalLinksPage(
+				@GraphQLName("productPurchaseId") Long productPurchaseId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -449,7 +449,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ExternalLink> getProductExternalLinksPage(
+	public java.util.Collection<ExternalLink> getProductExternalLinksPage(
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -469,7 +469,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ExternalLink> getProjectExternalLinksPage(
+	public java.util.Collection<ExternalLink> getProjectExternalLinksPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -489,7 +489,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ExternalLink> getTeamExternalLinksPage(
+	public java.util.Collection<ExternalLink> getTeamExternalLinksPage(
 			@GraphQLName("teamId") Long teamId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -509,7 +509,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Product> getProductsPage(
+	public java.util.Collection<Product> getProductsPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -538,10 +538,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ProductConsumption> getAccountProductConsumptionsPage(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+	public java.util.Collection<ProductConsumption>
+			getAccountProductConsumptionsPage(
+				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -573,10 +574,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ProductConsumption> getProjectProductConsumptionsPage(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+	public java.util.Collection<ProductConsumption>
+			getProjectProductConsumptionsPage(
+				@GraphQLName("projectId") Long projectId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -594,7 +596,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ProductPurchase> getAccountProductPurchasesPage(
+	public java.util.Collection<ProductPurchase> getAccountProductPurchasesPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -627,7 +629,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ProductPurchase> getProjectProductPurchasesPage(
+	public java.util.Collection<ProductPurchase> getProjectProductPurchasesPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -647,7 +649,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Project> getAccountProjectsPage(
+	public java.util.Collection<Project> getAccountProjectsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -677,7 +679,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Team> getAccountTeamsPage(
+	public java.util.Collection<Team> getAccountTeamsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -736,93 +738,82 @@ public class Query {
 	private void _populateResourceContext(AccountResource accountResource)
 		throws Exception {
 
-		accountResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		accountResource.setContextAcceptLanguage(_acceptLanguage);
+		accountResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(AuditEntryResource auditEntryResource)
 		throws Exception {
 
-		auditEntryResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		auditEntryResource.setContextAcceptLanguage(_acceptLanguage);
+		auditEntryResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(ContactResource contactResource)
 		throws Exception {
 
-		contactResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		contactResource.setContextAcceptLanguage(_acceptLanguage);
+		contactResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			ContactRoleResource contactRoleResource)
 		throws Exception {
 
-		contactRoleResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		contactRoleResource.setContextAcceptLanguage(_acceptLanguage);
+		contactRoleResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			ExternalLinkResource externalLinkResource)
 		throws Exception {
 
-		externalLinkResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		externalLinkResource.setContextAcceptLanguage(_acceptLanguage);
+		externalLinkResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(ProductResource productResource)
 		throws Exception {
 
-		productResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		productResource.setContextAcceptLanguage(_acceptLanguage);
+		productResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			ProductConsumptionResource productConsumptionResource)
 		throws Exception {
 
-		productConsumptionResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		productConsumptionResource.setContextAcceptLanguage(_acceptLanguage);
+		productConsumptionResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			ProductPurchaseResource productPurchaseResource)
 		throws Exception {
 
-		productPurchaseResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		productPurchaseResource.setContextAcceptLanguage(_acceptLanguage);
+		productPurchaseResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(ProjectResource projectResource)
 		throws Exception {
 
-		projectResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		projectResource.setContextAcceptLanguage(_acceptLanguage);
+		projectResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(TeamResource teamResource)
 		throws Exception {
 
-		teamResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		teamResource.setContextAcceptLanguage(_acceptLanguage);
+		teamResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(TeamRoleResource teamRoleResource)
 		throws Exception {
 
-		teamRoleResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		teamRoleResource.setContextAcceptLanguage(_acceptLanguage);
+		teamRoleResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<AccountResource>
@@ -847,5 +838,8 @@ public class Query {
 		_teamResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TeamRoleResource>
 		_teamRoleResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

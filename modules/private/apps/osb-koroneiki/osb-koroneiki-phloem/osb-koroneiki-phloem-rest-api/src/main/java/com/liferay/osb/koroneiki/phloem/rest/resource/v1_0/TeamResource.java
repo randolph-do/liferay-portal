@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -42,6 +43,10 @@ public interface TeamResource {
 	public Team getTeam(Long teamId) throws Exception;
 
 	public Team putTeam(Long teamId, Team team) throws Exception;
+
+	public default void setContextAcceptLanguage(
+		AcceptLanguage contextAcceptLanguage) {
+	}
 
 	public void setContextCompany(Company contextCompany);
 

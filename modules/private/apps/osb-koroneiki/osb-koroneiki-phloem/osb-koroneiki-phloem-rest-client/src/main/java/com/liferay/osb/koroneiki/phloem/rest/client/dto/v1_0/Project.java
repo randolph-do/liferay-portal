@@ -212,6 +212,27 @@ public class Project {
 
 	protected String notes;
 
+	public String getSoldBy() {
+		return soldBy;
+	}
+
+	public void setSoldBy(String soldBy) {
+		this.soldBy = soldBy;
+	}
+
+	public void setSoldBy(
+		UnsafeSupplier<String, Exception> soldByUnsafeSupplier) {
+
+		try {
+			soldBy = soldByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String soldBy;
+
 	public String getStatus() {
 		return status;
 	}

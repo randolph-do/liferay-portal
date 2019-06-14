@@ -20,6 +20,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ProductConsumptionSerDes;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,349 +31,533 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ProductConsumptionResource {
+public interface ProductConsumptionResource {
 
-	public static void deleteAccountProductConsumption(
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public void deleteAccountProductConsumption(Long accountId, Long productId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteAccountProductConsumptionHttpResponse(
 			Long accountId, Long productId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			deleteAccountProductConsumptionHttpResponse(accountId, productId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse
-			deleteAccountProductConsumptionHttpResponse(
-				Long accountId, Long productId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		if (productId != null) {
-			httpInvoker.parameter("productId", String.valueOf(productId));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/product-consumptions",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Page<ProductConsumption> getAccountProductConsumptionsPage(
+	public Page<ProductConsumption> getAccountProductConsumptionsPage(
 			Long accountId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getAccountProductConsumptionsPageHttpResponse(
-				accountId, pagination);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, ProductConsumptionSerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
+	public HttpInvoker.HttpResponse
 			getAccountProductConsumptionsPageHttpResponse(
 				Long accountId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/product-consumptions",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static ProductConsumption postAccountProductConsumption(
+	public ProductConsumption postAccountProductConsumption(
 			Long accountId, Long productId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			postAccountProductConsumptionHttpResponse(accountId, productId);
+	public HttpInvoker.HttpResponse postAccountProductConsumptionHttpResponse(
+			Long accountId, Long productId)
+		throws Exception;
 
-		String content = httpResponse.getContent();
+	public void deleteProductConsumption(Long productConsumptionId)
+		throws Exception;
 
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProductConsumptionSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse
-			postAccountProductConsumptionHttpResponse(
-				Long accountId, Long productId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(productId.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		if (productId != null) {
-			httpInvoker.parameter("productId", String.valueOf(productId));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/product-consumptions",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void deleteProductConsumption(Long productConsumptionId)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			deleteProductConsumptionHttpResponse(productConsumptionId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteProductConsumptionHttpResponse(
+	public HttpInvoker.HttpResponse deleteProductConsumptionHttpResponse(
 			Long productConsumptionId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public ProductConsumption getProductConsumption(Long productConsumptionId)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}",
-			productConsumptionId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static ProductConsumption getProductConsumption(
+	public HttpInvoker.HttpResponse getProductConsumptionHttpResponse(
 			Long productConsumptionId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getProductConsumptionHttpResponse(productConsumptionId);
+	public void deleteProjectProductConsumption(Long projectId, Long productId)
+		throws Exception;
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProductConsumptionSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse getProductConsumptionHttpResponse(
-			Long productConsumptionId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}",
-			productConsumptionId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void deleteProjectProductConsumption(
+	public HttpInvoker.HttpResponse deleteProjectProductConsumptionHttpResponse(
 			Long projectId, Long productId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			deleteProjectProductConsumptionHttpResponse(projectId, productId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse
-			deleteProjectProductConsumptionHttpResponse(
-				Long projectId, Long productId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		if (productId != null) {
-			httpInvoker.parameter("productId", String.valueOf(productId));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/product-consumptions",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Page<ProductConsumption> getProjectProductConsumptionsPage(
+	public Page<ProductConsumption> getProjectProductConsumptionsPage(
 			Long projectId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getProjectProductConsumptionsPageHttpResponse(
-				projectId, pagination);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, ProductConsumptionSerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
+	public HttpInvoker.HttpResponse
 			getProjectProductConsumptionsPageHttpResponse(
 				Long projectId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/product-consumptions",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static ProductConsumption postProjectProductConsumption(
+	public ProductConsumption postProjectProductConsumption(
 			Long projectId, Long productId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			postProjectProductConsumptionHttpResponse(projectId, productId);
+	public HttpInvoker.HttpResponse postProjectProductConsumptionHttpResponse(
+			Long projectId, Long productId)
+		throws Exception;
 
-		String content = httpResponse.getContent();
+	public static class Builder {
 
-		_logger.fine("HTTP response content: " + content);
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProductConsumptionSerDes.toDTO(content);
+			return this;
 		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
 
-			throw e;
+		public ProductConsumptionResource build() {
+			return new ProductConsumptionResourceImpl(this);
 		}
+
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
+
+			return this;
+		}
+
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
 	}
 
-	public static HttpInvoker.HttpResponse
-			postProjectProductConsumptionHttpResponse(
+	public static class ProductConsumptionResourceImpl
+		implements ProductConsumptionResource {
+
+		public void deleteAccountProductConsumption(
+				Long accountId, Long productId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAccountProductConsumptionHttpResponse(
+					accountId, productId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteAccountProductConsumptionHttpResponse(
+					Long accountId, Long productId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (productId != null) {
+				httpInvoker.parameter("productId", String.valueOf(productId));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-consumptions",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<ProductConsumption> getAccountProductConsumptionsPage(
+				Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getAccountProductConsumptionsPageHttpResponse(
+					accountId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, ProductConsumptionSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getAccountProductConsumptionsPageHttpResponse(
+					Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-consumptions",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProductConsumption postAccountProductConsumption(
+				Long accountId, Long productId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountProductConsumptionHttpResponse(accountId, productId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductConsumptionSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postAccountProductConsumptionHttpResponse(
+					Long accountId, Long productId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(productId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (productId != null) {
+				httpInvoker.parameter("productId", String.valueOf(productId));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-consumptions",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteProductConsumption(Long productConsumptionId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteProductConsumptionHttpResponse(productConsumptionId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteProductConsumptionHttpResponse(
+				Long productConsumptionId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}",
+				productConsumptionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProductConsumption getProductConsumption(
+				Long productConsumptionId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProductConsumptionHttpResponse(productConsumptionId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductConsumptionSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse getProductConsumptionHttpResponse(
+				Long productConsumptionId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}",
+				productConsumptionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteProjectProductConsumption(
 				Long projectId, Long productId)
-		throws Exception {
+			throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			HttpInvoker.HttpResponse httpResponse =
+				deleteProjectProductConsumptionHttpResponse(
+					projectId, productId);
 
-		httpInvoker.body(productId.toString(), "application/json");
+			String content = httpResponse.getContent();
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+			_logger.fine("HTTP response content: " + content);
 
-		if (productId != null) {
-			httpInvoker.parameter("productId", String.valueOf(productId));
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/product-consumptions",
-			projectId);
+		public HttpInvoker.HttpResponse
+				deleteProjectProductConsumptionHttpResponse(
+					Long projectId, Long productId)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (productId != null) {
+				httpInvoker.parameter("productId", String.valueOf(productId));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-consumptions",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<ProductConsumption> getProjectProductConsumptionsPage(
+				Long projectId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProjectProductConsumptionsPageHttpResponse(
+					projectId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, ProductConsumptionSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getProjectProductConsumptionsPageHttpResponse(
+					Long projectId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-consumptions",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProductConsumption postProjectProductConsumption(
+				Long projectId, Long productId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postProjectProductConsumptionHttpResponse(projectId, productId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductConsumptionSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postProjectProductConsumptionHttpResponse(
+					Long projectId, Long productId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(productId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (productId != null) {
+				httpInvoker.parameter("productId", String.valueOf(productId));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-consumptions",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private ProductConsumptionResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			ProductConsumptionResource.class.getName());
+
+		private Builder _builder;
+
 	}
-
-	private static final Logger _logger = Logger.getLogger(
-		ProductConsumptionResource.class.getName());
 
 }

@@ -41,12 +41,12 @@ public class ProjectSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAccountId(model.getAccountId());
-		soapModel.setSupportRegionId(model.getSupportRegionId());
 		soapModel.setName(model.getName());
 		soapModel.setCode(model.getCode());
 		soapModel.setIndustry(model.getIndustry());
 		soapModel.setTier(model.getTier());
 		soapModel.setNotes(model.getNotes());
+		soapModel.setSoldBy(model.getSoldBy());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -161,14 +161,6 @@ public class ProjectSoap implements Serializable {
 		_accountId = accountId;
 	}
 
-	public long getSupportRegionId() {
-		return _supportRegionId;
-	}
-
-	public void setSupportRegionId(long supportRegionId) {
-		_supportRegionId = supportRegionId;
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -185,19 +177,19 @@ public class ProjectSoap implements Serializable {
 		_code = code;
 	}
 
-	public int getIndustry() {
+	public String getIndustry() {
 		return _industry;
 	}
 
-	public void setIndustry(int industry) {
+	public void setIndustry(String industry) {
 		_industry = industry;
 	}
 
-	public int getTier() {
+	public String getTier() {
 		return _tier;
 	}
 
-	public void setTier(int tier) {
+	public void setTier(String tier) {
 		_tier = tier;
 	}
 
@@ -207,6 +199,14 @@ public class ProjectSoap implements Serializable {
 
 	public void setNotes(String notes) {
 		_notes = notes;
+	}
+
+	public String getSoldBy() {
+		return _soldBy;
+	}
+
+	public void setSoldBy(String soldBy) {
+		_soldBy = soldBy;
 	}
 
 	public int getStatus() {
@@ -256,12 +256,12 @@ public class ProjectSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _accountId;
-	private long _supportRegionId;
 	private String _name;
 	private String _code;
-	private int _industry;
-	private int _tier;
+	private String _industry;
+	private String _tier;
 	private String _notes;
+	private String _soldBy;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

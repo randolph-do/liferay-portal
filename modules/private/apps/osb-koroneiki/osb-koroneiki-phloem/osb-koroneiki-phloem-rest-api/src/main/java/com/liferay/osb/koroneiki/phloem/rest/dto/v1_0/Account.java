@@ -52,6 +52,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Account")
 public class Account {
 
+	@Schema(description = "The account's contact email address.")
+	public String getContactEmailAddress() {
+		return contactEmailAddress;
+	}
+
+	public void setContactEmailAddress(String contactEmailAddress) {
+		this.contactEmailAddress = contactEmailAddress;
+	}
+
+	@JsonIgnore
+	public void setContactEmailAddress(
+		UnsafeSupplier<String, Exception> contactEmailAddressUnsafeSupplier) {
+
+		try {
+			contactEmailAddress = contactEmailAddressUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String contactEmailAddress;
+
 	@Schema(description = "The account's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
@@ -168,6 +196,34 @@ public class Account {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ExternalLink[] externalLinks;
 
+	@Schema(description = "The account's fax number.")
+	public String getFaxNumber() {
+		return faxNumber;
+	}
+
+	public void setFaxNumber(String faxNumber) {
+		this.faxNumber = faxNumber;
+	}
+
+	@JsonIgnore
+	public void setFaxNumber(
+		UnsafeSupplier<String, Exception> faxNumberUnsafeSupplier) {
+
+		try {
+			faxNumber = faxNumberUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String faxNumber;
+
 	@Schema(description = "The account's ID.")
 	public Long getId() {
 		return id;
@@ -221,6 +277,118 @@ public class Account {
 	@NotEmpty
 	protected String name;
 
+	@Schema(description = "The account's phone number.")
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	@JsonIgnore
+	public void setPhoneNumber(
+		UnsafeSupplier<String, Exception> phoneNumberUnsafeSupplier) {
+
+		try {
+			phoneNumber = phoneNumberUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String phoneNumber;
+
+	@Schema(description = "The account's profile email address.")
+	public String getProfileEmailAddress() {
+		return profileEmailAddress;
+	}
+
+	public void setProfileEmailAddress(String profileEmailAddress) {
+		this.profileEmailAddress = profileEmailAddress;
+	}
+
+	@JsonIgnore
+	public void setProfileEmailAddress(
+		UnsafeSupplier<String, Exception> profileEmailAddressUnsafeSupplier) {
+
+		try {
+			profileEmailAddress = profileEmailAddressUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String profileEmailAddress;
+
+	@Schema(description = "The status of the account.")
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String status;
+
+	@Schema(description = "The account's website.")
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	@JsonIgnore
+	public void setWebsite(
+		UnsafeSupplier<String, Exception> websiteUnsafeSupplier) {
+
+		try {
+			website = websiteUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String website;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -250,6 +418,20 @@ public class Account {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (contactEmailAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contactEmailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contactEmailAddress));
+
+			sb.append("\"");
+		}
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -313,6 +495,20 @@ public class Account {
 			sb.append("]");
 		}
 
+		if (faxNumber != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"faxNumber\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(faxNumber));
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -333,6 +529,62 @@ public class Account {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		if (phoneNumber != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"phoneNumber\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(phoneNumber));
+
+			sb.append("\"");
+		}
+
+		if (profileEmailAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"profileEmailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(profileEmailAddress));
+
+			sb.append("\"");
+		}
+
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(status));
+
+			sb.append("\"");
+		}
+
+		if (website != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"website\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(website));
 
 			sb.append("\"");
 		}

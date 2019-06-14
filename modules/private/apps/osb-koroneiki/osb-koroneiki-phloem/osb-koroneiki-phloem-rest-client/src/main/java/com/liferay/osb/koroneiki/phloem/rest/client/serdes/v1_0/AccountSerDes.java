@@ -61,6 +61,20 @@ public class AccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (account.getContactEmailAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contactEmailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getContactEmailAddress()));
+
+			sb.append("\"");
+		}
+
 		if (account.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -124,6 +138,20 @@ public class AccountSerDes {
 			sb.append("]");
 		}
 
+		if (account.getFaxNumber() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"faxNumber\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getFaxNumber()));
+
+			sb.append("\"");
+		}
+
 		if (account.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -144,6 +172,62 @@ public class AccountSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(account.getName()));
+
+			sb.append("\"");
+		}
+
+		if (account.getPhoneNumber() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"phoneNumber\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getPhoneNumber()));
+
+			sb.append("\"");
+		}
+
+		if (account.getProfileEmailAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"profileEmailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getProfileEmailAddress()));
+
+			sb.append("\"");
+		}
+
+		if (account.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getStatus()));
+
+			sb.append("\"");
+		}
+
+		if (account.getWebsite() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"website\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getWebsite()));
 
 			sb.append("\"");
 		}
@@ -169,6 +253,15 @@ public class AccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (account.getContactEmailAddress() == null) {
+			map.put("contactEmailAddress", null);
+		}
+		else {
+			map.put(
+				"contactEmailAddress",
+				String.valueOf(account.getContactEmailAddress()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(account.getDateCreated()));
@@ -192,6 +285,13 @@ public class AccountSerDes {
 				"externalLinks", String.valueOf(account.getExternalLinks()));
 		}
 
+		if (account.getFaxNumber() == null) {
+			map.put("faxNumber", null);
+		}
+		else {
+			map.put("faxNumber", String.valueOf(account.getFaxNumber()));
+		}
+
 		if (account.getId() == null) {
 			map.put("id", null);
 		}
@@ -204,6 +304,36 @@ public class AccountSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(account.getName()));
+		}
+
+		if (account.getPhoneNumber() == null) {
+			map.put("phoneNumber", null);
+		}
+		else {
+			map.put("phoneNumber", String.valueOf(account.getPhoneNumber()));
+		}
+
+		if (account.getProfileEmailAddress() == null) {
+			map.put("profileEmailAddress", null);
+		}
+		else {
+			map.put(
+				"profileEmailAddress",
+				String.valueOf(account.getProfileEmailAddress()));
+		}
+
+		if (account.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(account.getStatus()));
+		}
+
+		if (account.getWebsite() == null) {
+			map.put("website", null);
+		}
+		else {
+			map.put("website", String.valueOf(account.getWebsite()));
 		}
 
 		return map;
@@ -263,7 +393,13 @@ public class AccountSerDes {
 			Account account, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "contactEmailAddress")) {
+				if (jsonParserFieldValue != null) {
+					account.setContactEmailAddress(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					account.setDateCreated(
 						toDate((String)jsonParserFieldValue));
@@ -292,6 +428,11 @@ public class AccountSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "faxNumber")) {
+				if (jsonParserFieldValue != null) {
+					account.setFaxNumber((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					account.setId(Long.valueOf((String)jsonParserFieldValue));
@@ -300,6 +441,29 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					account.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "phoneNumber")) {
+				if (jsonParserFieldValue != null) {
+					account.setPhoneNumber((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "profileEmailAddress")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setProfileEmailAddress(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					account.setStatus((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "website")) {
+				if (jsonParserFieldValue != null) {
+					account.setWebsite((String)jsonParserFieldValue);
 				}
 			}
 			else {

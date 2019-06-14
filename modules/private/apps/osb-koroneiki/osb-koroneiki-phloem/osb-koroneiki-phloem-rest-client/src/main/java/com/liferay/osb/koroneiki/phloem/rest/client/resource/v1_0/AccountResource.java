@@ -17,6 +17,7 @@ package com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,334 +28,499 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AccountResource {
+public interface AccountResource {
 
-	public static Account postAccount(Account account) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = postAccountHttpResponse(
-			account);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-				AccountSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+	public static Builder builder() {
+		return new Builder();
 	}
 
-	public static HttpInvoker.HttpResponse postAccountHttpResponse(
-			Account account)
-		throws Exception {
+	public Account postAccount(Account account) throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public HttpInvoker.HttpResponse postAccountHttpResponse(Account account)
+		throws Exception;
 
-		httpInvoker.body(account.toString(), "application/json");
+	public void deleteAccount(Long accountId) throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+	public HttpInvoker.HttpResponse deleteAccountHttpResponse(Long accountId)
+		throws Exception;
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts");
+	public Account getAccount(Long accountId) throws Exception;
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+	public HttpInvoker.HttpResponse getAccountHttpResponse(Long accountId)
+		throws Exception;
 
-		return httpInvoker.invoke();
-	}
+	public Account putAccount(Long accountId, Account account) throws Exception;
 
-	public static void deleteAccount(Long accountId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = deleteAccountHttpResponse(
-			accountId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteAccountHttpResponse(
-			Long accountId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Account getAccount(Long accountId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse = getAccountHttpResponse(
-			accountId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-				AccountSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse getAccountHttpResponse(
-			Long accountId)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Account putAccount(Long accountId, Account account)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = putAccountHttpResponse(
-			accountId, account);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-				AccountSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse putAccountHttpResponse(
+	public HttpInvoker.HttpResponse putAccountHttpResponse(
 			Long accountId, Account account)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void deleteAccountContact(Long accountId, Long[] contactIds)
+		throws Exception;
 
-		httpInvoker.body(account.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void deleteAccountContact(Long accountId, Long[] contactIds)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			deleteAccountContactHttpResponse(accountId, contactIds);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteAccountContactHttpResponse(
+	public HttpInvoker.HttpResponse deleteAccountContactHttpResponse(
 			Long accountId, Long[] contactIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void putAccountContact(Long accountId, Long[] contactIds)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		if (contactIds != null) {
-			for (int i = 0; i < contactIds.length; i++) {
-				httpInvoker.parameter(
-					"contactIds", String.valueOf(contactIds[i]));
-			}
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void putAccountContact(Long accountId, Long[] contactIds)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = putAccountContactHttpResponse(
-			accountId, contactIds);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse putAccountContactHttpResponse(
+	public HttpInvoker.HttpResponse putAccountContactHttpResponse(
 			Long accountId, Long[] contactIds)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public void deleteAccountContactRole(
+			Long accountId, Long contactId, Long[] contactRoleIds)
+		throws Exception;
 
-		httpInvoker.body(contactIds.toString(), "application/json");
+	public HttpInvoker.HttpResponse deleteAccountContactRoleHttpResponse(
+			Long accountId, Long contactId, Long[] contactRoleIds)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+	public void putAccountContactRole(
+			Long accountId, Long contactId, Long[] contactRoleIds)
+		throws Exception;
 
-		if (contactIds != null) {
-			for (int i = 0; i < contactIds.length; i++) {
-				httpInvoker.parameter(
-					"contactIds", String.valueOf(contactIds[i]));
+	public HttpInvoker.HttpResponse putAccountContactRoleHttpResponse(
+			Long accountId, Long contactId, Long[] contactRoleIds)
+		throws Exception;
+
+	public static class Builder {
+
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
+
+			return this;
+		}
+
+		public AccountResource build() {
+			return new AccountResourceImpl(this);
+		}
+
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
+
+			return this;
+		}
+
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
+	}
+
+	public static class AccountResourceImpl implements AccountResource {
+
+		public Account postAccount(Account account) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = postAccountHttpResponse(
+				account);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+					AccountSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
 			}
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts",
-			accountId);
+		public HttpInvoker.HttpResponse postAccountHttpResponse(Account account)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
-	}
+			httpInvoker.body(account.toString(), "application/json");
 
-	public static void deleteAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
 
-		HttpInvoker.HttpResponse httpResponse =
-			deleteAccountContactRoleHttpResponse(
-				accountId, contactId, contactRoleIds);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-		String content = httpResponse.getContent();
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/koroneiki-rest/v1.0/accounts");
 
-		_logger.fine("HTTP response content: " + content);
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
+			return httpInvoker.invoke();
+		}
 
-	public static HttpInvoker.HttpResponse deleteAccountContactRoleHttpResponse(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+		public void deleteAccount(Long accountId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = deleteAccountHttpResponse(
+				accountId);
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			String content = httpResponse.getContent();
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			_logger.fine("HTTP response content: " + content);
 
-		if (contactRoleIds != null) {
-			for (int i = 0; i < contactRoleIds.length; i++) {
-				httpInvoker.parameter(
-					"contactRoleIds", String.valueOf(contactRoleIds[i]));
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteAccountHttpResponse(
+				Long accountId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Account getAccount(Long accountId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getAccountHttpResponse(
+				accountId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+					AccountSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
 			}
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts/{contactId}/roles",
-			accountId, contactId);
+		public HttpInvoker.HttpResponse getAccountHttpResponse(Long accountId)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
-	}
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
 
-	public static void putAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-		HttpInvoker.HttpResponse httpResponse =
-			putAccountContactRoleHttpResponse(
-				accountId, contactId, contactRoleIds);
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}",
+				accountId);
 
-		String content = httpResponse.getContent();
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
 
-		_logger.fine("HTTP response content: " + content);
+			return httpInvoker.invoke();
+		}
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
+		public Account putAccount(Long accountId, Account account)
+			throws Exception {
 
-	public static HttpInvoker.HttpResponse putAccountContactRoleHttpResponse(
-			Long accountId, Long contactId, Long[] contactRoleIds)
-		throws Exception {
+			HttpInvoker.HttpResponse httpResponse = putAccountHttpResponse(
+				accountId, account);
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			String content = httpResponse.getContent();
 
-		httpInvoker.body(contactRoleIds.toString(), "application/json");
+			_logger.fine("HTTP response content: " + content);
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
 
-		if (contactRoleIds != null) {
-			for (int i = 0; i < contactRoleIds.length; i++) {
-				httpInvoker.parameter(
-					"contactRoleIds", String.valueOf(contactRoleIds[i]));
+			try {
+				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
+					AccountSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
 			}
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts/{contactId}/roles",
-			accountId, contactId);
+		public HttpInvoker.HttpResponse putAccountHttpResponse(
+				Long accountId, Account account)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
+			httpInvoker.body(account.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteAccountContact(Long accountId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAccountContactHttpResponse(accountId, contactIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteAccountContactHttpResponse(
+				Long accountId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (contactIds != null) {
+				for (int i = 0; i < contactIds.length; i++) {
+					httpInvoker.parameter(
+						"contactIds", String.valueOf(contactIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putAccountContact(Long accountId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putAccountContactHttpResponse(accountId, contactIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putAccountContactHttpResponse(
+				Long accountId, Long[] contactIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(contactIds.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (contactIds != null) {
+				for (int i = 0; i < contactIds.length; i++) {
+					httpInvoker.parameter(
+						"contactIds", String.valueOf(contactIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteAccountContactRole(
+				Long accountId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAccountContactRoleHttpResponse(
+					accountId, contactId, contactRoleIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteAccountContactRoleHttpResponse(
+				Long accountId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (contactRoleIds != null) {
+				for (int i = 0; i < contactRoleIds.length; i++) {
+					httpInvoker.parameter(
+						"contactRoleIds", String.valueOf(contactRoleIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts/{contactId}/roles",
+				accountId, contactId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putAccountContactRole(
+				Long accountId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putAccountContactRoleHttpResponse(
+					accountId, contactId, contactRoleIds);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putAccountContactRoleHttpResponse(
+				Long accountId, Long contactId, Long[] contactRoleIds)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(contactRoleIds.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (contactRoleIds != null) {
+				for (int i = 0; i < contactRoleIds.length; i++) {
+					httpInvoker.parameter(
+						"contactRoleIds", String.valueOf(contactRoleIds[i]));
+				}
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts/{contactId}/roles",
+				accountId, contactId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private AccountResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			AccountResource.class.getName());
+
+		private Builder _builder;
+
 	}
-
-	private static final Logger _logger = Logger.getLogger(
-		AccountResource.class.getName());
 
 }

@@ -20,6 +20,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ProductPurchaseSerDes;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,318 +31,484 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ProductPurchaseResource {
+public interface ProductPurchaseResource {
 
-	public static Page<ProductPurchase> getAccountProductPurchasesPage(
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public Page<ProductPurchase> getAccountProductPurchasesPage(
 			Long accountId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getAccountProductPurchasesPageHttpResponse(accountId, pagination);
+	public HttpInvoker.HttpResponse getAccountProductPurchasesPageHttpResponse(
+			Long accountId, Pagination pagination)
+		throws Exception;
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, ProductPurchaseSerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
-			getAccountProductPurchasesPageHttpResponse(
-				Long accountId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/product-purchases",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static ProductPurchase postAccountProductPurchase(
+	public ProductPurchase postAccountProductPurchase(
 			Long accountId, Long productId, ProductPurchase productPurchase)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			postAccountProductPurchaseHttpResponse(
-				accountId, productId, productPurchase);
+	public HttpInvoker.HttpResponse postAccountProductPurchaseHttpResponse(
+			Long accountId, Long productId, ProductPurchase productPurchase)
+		throws Exception;
 
-		String content = httpResponse.getContent();
+	public void deleteProductPurchase(Long productPurchaseId) throws Exception;
 
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProductPurchaseSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse
-			postAccountProductPurchaseHttpResponse(
-				Long accountId, Long productId, ProductPurchase productPurchase)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(productPurchase.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		if (productId != null) {
-			httpInvoker.parameter("productId", String.valueOf(productId));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/accounts/{accountId}/product-purchases",
-			accountId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static void deleteProductPurchase(Long productPurchaseId)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			deleteProductPurchaseHttpResponse(productPurchaseId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-	}
-
-	public static HttpInvoker.HttpResponse deleteProductPurchaseHttpResponse(
+	public HttpInvoker.HttpResponse deleteProductPurchaseHttpResponse(
 			Long productPurchaseId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public ProductPurchase getProductPurchase(Long productPurchaseId)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
-			productPurchaseId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static ProductPurchase getProductPurchase(Long productPurchaseId)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = getProductPurchaseHttpResponse(
-			productPurchaseId);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProductPurchaseSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse getProductPurchaseHttpResponse(
+	public HttpInvoker.HttpResponse getProductPurchaseHttpResponse(
 			Long productPurchaseId)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
-			productPurchaseId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static ProductPurchase putProductPurchase(
+	public ProductPurchase putProductPurchase(
 			Long productPurchaseId, ProductPurchase productPurchase)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse = putProductPurchaseHttpResponse(
-			productPurchaseId, productPurchase);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProductPurchaseSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
-	}
-
-	public static HttpInvoker.HttpResponse putProductPurchaseHttpResponse(
+	public HttpInvoker.HttpResponse putProductPurchaseHttpResponse(
 			Long productPurchaseId, ProductPurchase productPurchase)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(productPurchase.toString(), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
-			productPurchaseId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static Page<ProductPurchase> getProjectProductPurchasesPage(
+	public Page<ProductPurchase> getProjectProductPurchasesPage(
 			Long projectId, Pagination pagination)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			getProjectProductPurchasesPageHttpResponse(projectId, pagination);
+	public HttpInvoker.HttpResponse getProjectProductPurchasesPageHttpResponse(
+			Long projectId, Pagination pagination)
+		throws Exception;
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, ProductPurchaseSerDes::toDTO);
-	}
-
-	public static HttpInvoker.HttpResponse
-			getProjectProductPurchasesPageHttpResponse(
-				Long projectId, Pagination pagination)
-		throws Exception {
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
-		}
-
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/product-purchases",
-			projectId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		return httpInvoker.invoke();
-	}
-
-	public static ProductPurchase postProjectProductPurchase(
+	public ProductPurchase postProjectProductPurchase(
 			Long projectId, Long productId, ProductPurchase productPurchase)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker.HttpResponse httpResponse =
-			postProjectProductPurchaseHttpResponse(
-				projectId, productId, productPurchase);
+	public HttpInvoker.HttpResponse postProjectProductPurchaseHttpResponse(
+			Long projectId, Long productId, ProductPurchase productPurchase)
+		throws Exception;
 
-		String content = httpResponse.getContent();
+	public static class Builder {
 
-		_logger.fine("HTTP response content: " + content);
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
 
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		try {
-			return ProductPurchaseSerDes.toDTO(content);
+			return this;
 		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
 
-			throw e;
+		public ProductPurchaseResource build() {
+			return new ProductPurchaseResourceImpl(this);
 		}
+
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
+
+			return this;
+		}
+
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
 	}
 
-	public static HttpInvoker.HttpResponse
-			postProjectProductPurchaseHttpResponse(
+	public static class ProductPurchaseResourceImpl
+		implements ProductPurchaseResource {
+
+		public Page<ProductPurchase> getAccountProductPurchasesPage(
+				Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getAccountProductPurchasesPageHttpResponse(
+					accountId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, ProductPurchaseSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getAccountProductPurchasesPageHttpResponse(
+					Long accountId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-purchases",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProductPurchase postAccountProductPurchase(
+				Long accountId, Long productId, ProductPurchase productPurchase)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountProductPurchaseHttpResponse(
+					accountId, productId, productPurchase);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductPurchaseSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse postAccountProductPurchaseHttpResponse(
+				Long accountId, Long productId, ProductPurchase productPurchase)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(productPurchase.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (productId != null) {
+				httpInvoker.parameter("productId", String.valueOf(productId));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-purchases",
+				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteProductPurchase(Long productPurchaseId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteProductPurchaseHttpResponse(productPurchaseId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteProductPurchaseHttpResponse(
+				Long productPurchaseId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
+				productPurchaseId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProductPurchase getProductPurchase(Long productPurchaseId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProductPurchaseHttpResponse(productPurchaseId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductPurchaseSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse getProductPurchaseHttpResponse(
+				Long productPurchaseId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
+				productPurchaseId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProductPurchase putProductPurchase(
+				Long productPurchaseId, ProductPurchase productPurchase)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putProductPurchaseHttpResponse(
+					productPurchaseId, productPurchase);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductPurchaseSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse putProductPurchaseHttpResponse(
+				Long productPurchaseId, ProductPurchase productPurchase)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(productPurchase.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
+				productPurchaseId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<ProductPurchase> getProjectProductPurchasesPage(
+				Long projectId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProjectProductPurchasesPageHttpResponse(
+					projectId, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, ProductPurchaseSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getProjectProductPurchasesPageHttpResponse(
+					Long projectId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-purchases",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProductPurchase postProjectProductPurchase(
 				Long projectId, Long productId, ProductPurchase productPurchase)
-		throws Exception {
+			throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			HttpInvoker.HttpResponse httpResponse =
+				postProjectProductPurchaseHttpResponse(
+					projectId, productId, productPurchase);
 
-		httpInvoker.body(productPurchase.toString(), "application/json");
+			String content = httpResponse.getContent();
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+			_logger.fine("HTTP response content: " + content);
 
-		if (productId != null) {
-			httpInvoker.parameter("productId", String.valueOf(productId));
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductPurchaseSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/koroneiki-rest/v1.0/projects/{projectId}/product-purchases",
-			projectId);
+		public HttpInvoker.HttpResponse postProjectProductPurchaseHttpResponse(
+				Long projectId, Long productId, ProductPurchase productPurchase)
+			throws Exception {
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		return httpInvoker.invoke();
+			httpInvoker.body(productPurchase.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (productId != null) {
+				httpInvoker.parameter("productId", String.valueOf(productId));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-purchases",
+				projectId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private ProductPurchaseResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			ProductPurchaseResource.class.getName());
+
+		private Builder _builder;
+
 	}
-
-	private static final Logger _logger = Logger.getLogger(
-		ProductPurchaseResource.class.getName());
 
 }

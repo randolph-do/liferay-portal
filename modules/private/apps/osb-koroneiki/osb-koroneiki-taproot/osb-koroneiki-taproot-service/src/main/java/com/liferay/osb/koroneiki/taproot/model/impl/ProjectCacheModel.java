@@ -79,8 +79,6 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		sb.append(modifiedDate);
 		sb.append(", accountId=");
 		sb.append(accountId);
-		sb.append(", supportRegionId=");
-		sb.append(supportRegionId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", code=");
@@ -91,6 +89,8 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		sb.append(tier);
 		sb.append(", notes=");
 		sb.append(notes);
+		sb.append(", soldBy=");
+		sb.append(soldBy);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -136,7 +136,6 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		}
 
 		projectImpl.setAccountId(accountId);
-		projectImpl.setSupportRegionId(supportRegionId);
 
 		if (name == null) {
 			projectImpl.setName("");
@@ -152,14 +151,32 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 			projectImpl.setCode(code);
 		}
 
-		projectImpl.setIndustry(industry);
-		projectImpl.setTier(tier);
+		if (industry == null) {
+			projectImpl.setIndustry("");
+		}
+		else {
+			projectImpl.setIndustry(industry);
+		}
+
+		if (tier == null) {
+			projectImpl.setTier("");
+		}
+		else {
+			projectImpl.setTier(tier);
+		}
 
 		if (notes == null) {
 			projectImpl.setNotes("");
 		}
 		else {
 			projectImpl.setNotes(notes);
+		}
+
+		if (soldBy == null) {
+			projectImpl.setSoldBy("");
+		}
+		else {
+			projectImpl.setSoldBy(soldBy);
 		}
 
 		projectImpl.setStatus(status);
@@ -204,15 +221,12 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		modifiedDate = objectInput.readLong();
 
 		accountId = objectInput.readLong();
-
-		supportRegionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		code = objectInput.readUTF();
-
-		industry = objectInput.readInt();
-
-		tier = objectInput.readInt();
+		industry = objectInput.readUTF();
+		tier = objectInput.readUTF();
 		notes = objectInput.readUTF();
+		soldBy = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -241,8 +255,6 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 
 		objectOutput.writeLong(accountId);
 
-		objectOutput.writeLong(supportRegionId);
-
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -257,15 +269,32 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 			objectOutput.writeUTF(code);
 		}
 
-		objectOutput.writeInt(industry);
+		if (industry == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(industry);
+		}
 
-		objectOutput.writeInt(tier);
+		if (tier == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(tier);
+		}
 
 		if (notes == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(notes);
+		}
+
+		if (soldBy == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(soldBy);
 		}
 
 		objectOutput.writeInt(status);
@@ -296,12 +325,12 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	public long createDate;
 	public long modifiedDate;
 	public long accountId;
-	public long supportRegionId;
 	public String name;
 	public String code;
-	public int industry;
-	public int tier;
+	public String industry;
+	public String tier;
 	public String notes;
+	public String soldBy;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

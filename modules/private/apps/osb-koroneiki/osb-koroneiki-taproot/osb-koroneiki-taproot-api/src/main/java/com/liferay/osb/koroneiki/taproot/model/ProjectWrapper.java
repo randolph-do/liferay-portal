@@ -53,12 +53,12 @@ public class ProjectWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("accountId", getAccountId());
-		attributes.put("supportRegionId", getSupportRegionId());
 		attributes.put("name", getName());
 		attributes.put("code", getCode());
 		attributes.put("industry", getIndustry());
 		attributes.put("tier", getTier());
 		attributes.put("notes", getNotes());
+		attributes.put("soldBy", getSoldBy());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -112,12 +112,6 @@ public class ProjectWrapper
 			setAccountId(accountId);
 		}
 
-		Long supportRegionId = (Long)attributes.get("supportRegionId");
-
-		if (supportRegionId != null) {
-			setSupportRegionId(supportRegionId);
-		}
-
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -130,13 +124,13 @@ public class ProjectWrapper
 			setCode(code);
 		}
 
-		Integer industry = (Integer)attributes.get("industry");
+		String industry = (String)attributes.get("industry");
 
 		if (industry != null) {
 			setIndustry(industry);
 		}
 
-		Integer tier = (Integer)attributes.get("tier");
+		String tier = (String)attributes.get("tier");
 
 		if (tier != null) {
 			setTier(tier);
@@ -146,6 +140,12 @@ public class ProjectWrapper
 
 		if (notes != null) {
 			setNotes(notes);
+		}
+
+		String soldBy = (String)attributes.get("soldBy");
+
+		if (soldBy != null) {
+			setSoldBy(soldBy);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -239,7 +239,7 @@ public class ProjectWrapper
 	 * @return the industry of this project
 	 */
 	@Override
-	public int getIndustry() {
+	public String getIndustry() {
 		return model.getIndustry();
 	}
 
@@ -291,6 +291,16 @@ public class ProjectWrapper
 	@Override
 	public long getProjectId() {
 		return model.getProjectId();
+	}
+
+	/**
+	 * Returns the sold by of this project.
+	 *
+	 * @return the sold by of this project
+	 */
+	@Override
+	public String getSoldBy() {
+		return model.getSoldBy();
 	}
 
 	/**
@@ -359,22 +369,12 @@ public class ProjectWrapper
 	}
 
 	/**
-	 * Returns the support region ID of this project.
-	 *
-	 * @return the support region ID of this project
-	 */
-	@Override
-	public long getSupportRegionId() {
-		return model.getSupportRegionId();
-	}
-
-	/**
 	 * Returns the tier of this project.
 	 *
 	 * @return the tier of this project
 	 */
 	@Override
-	public int getTier() {
+	public String getTier() {
 		return model.getTier();
 	}
 
@@ -539,7 +539,7 @@ public class ProjectWrapper
 	 * @param industry the industry of this project
 	 */
 	@Override
-	public void setIndustry(int industry) {
+	public void setIndustry(String industry) {
 		model.setIndustry(industry);
 	}
 
@@ -591,6 +591,16 @@ public class ProjectWrapper
 	@Override
 	public void setProjectId(long projectId) {
 		model.setProjectId(projectId);
+	}
+
+	/**
+	 * Sets the sold by of this project.
+	 *
+	 * @param soldBy the sold by of this project
+	 */
+	@Override
+	public void setSoldBy(String soldBy) {
+		model.setSoldBy(soldBy);
 	}
 
 	/**
@@ -654,22 +664,12 @@ public class ProjectWrapper
 	}
 
 	/**
-	 * Sets the support region ID of this project.
-	 *
-	 * @param supportRegionId the support region ID of this project
-	 */
-	@Override
-	public void setSupportRegionId(long supportRegionId) {
-		model.setSupportRegionId(supportRegionId);
-	}
-
-	/**
 	 * Sets the tier of this project.
 	 *
 	 * @param tier the tier of this project
 	 */
 	@Override
-	public void setTier(int tier) {
+	public void setTier(String tier) {
 		model.setTier(tier);
 	}
 

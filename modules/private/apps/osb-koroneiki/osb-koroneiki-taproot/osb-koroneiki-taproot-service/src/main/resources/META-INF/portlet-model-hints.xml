@@ -73,14 +73,14 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="accountId" type="long" />
-		<field name="supportRegionId" type="long" />
 		<field name="name" type="String" />
 		<field name="code" type="String" />
-		<field name="industry" type="int" />
-		<field name="tier" type="int" />
+		<field name="industry" type="String" />
+		<field name="tier" type="String" />
 		<field name="notes" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="soldBy" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

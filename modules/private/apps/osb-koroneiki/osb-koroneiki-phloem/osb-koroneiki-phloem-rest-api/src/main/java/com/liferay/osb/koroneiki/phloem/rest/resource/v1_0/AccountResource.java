@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import javax.annotation.Generated;
 
@@ -51,6 +52,10 @@ public interface AccountResource {
 	public void putAccountContactRole(
 			Long accountId, Long contactId, Long[] contactRoleIds)
 		throws Exception;
+
+	public default void setContextAcceptLanguage(
+		AcceptLanguage contextAcceptLanguage) {
+	}
 
 	public void setContextCompany(Company contextCompany);
 

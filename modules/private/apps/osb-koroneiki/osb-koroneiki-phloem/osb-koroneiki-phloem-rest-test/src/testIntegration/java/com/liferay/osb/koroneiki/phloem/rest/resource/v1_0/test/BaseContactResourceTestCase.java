@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -49,9 +50,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -94,12 +93,17 @@ public abstract class BaseContactResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_contactResource.setContextCompany(testCompany);
+
+		ContactResource.Builder builder = ContactResource.builder();
+
+		contactResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -196,7 +200,7 @@ public abstract class BaseContactResourceTestCase {
 			Contact irrelevantContact = testGetAccountContactsPage_addContact(
 				irrelevantAccountId, randomIrrelevantContact());
 
-			Page<Contact> page = ContactResource.getAccountContactsPage(
+			Page<Contact> page = contactResource.getAccountContactsPage(
 				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -213,7 +217,7 @@ public abstract class BaseContactResourceTestCase {
 		Contact contact2 = testGetAccountContactsPage_addContact(
 			accountId, randomContact());
 
-		Page<Contact> page = ContactResource.getAccountContactsPage(
+		Page<Contact> page = contactResource.getAccountContactsPage(
 			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -236,14 +240,14 @@ public abstract class BaseContactResourceTestCase {
 		Contact contact3 = testGetAccountContactsPage_addContact(
 			accountId, randomContact());
 
-		Page<Contact> page1 = ContactResource.getAccountContactsPage(
+		Page<Contact> page1 = contactResource.getAccountContactsPage(
 			accountId, Pagination.of(1, 2));
 
 		List<Contact> contacts1 = (List<Contact>)page1.getItems();
 
 		Assert.assertEquals(contacts1.toString(), 2, contacts1.size());
 
-		Page<Contact> page2 = ContactResource.getAccountContactsPage(
+		Page<Contact> page2 = contactResource.getAccountContactsPage(
 			accountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -252,7 +256,7 @@ public abstract class BaseContactResourceTestCase {
 
 		Assert.assertEquals(contacts2.toString(), 1, contacts2.size());
 
-		Page<Contact> page3 = ContactResource.getAccountContactsPage(
+		Page<Contact> page3 = contactResource.getAccountContactsPage(
 			accountId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
@@ -301,13 +305,13 @@ public abstract class BaseContactResourceTestCase {
 		Contact contact = testDeleteContact_addContact();
 
 		assertHttpResponseStatusCode(
-			204, ContactResource.deleteContactHttpResponse(contact.getId()));
+			204, contactResource.deleteContactHttpResponse(contact.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ContactResource.getContactHttpResponse(contact.getId()));
+			404, contactResource.getContactHttpResponse(contact.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ContactResource.getContactHttpResponse(0L));
+			404, contactResource.getContactHttpResponse(0L));
 	}
 
 	protected Contact testDeleteContact_addContact() throws Exception {
@@ -319,7 +323,7 @@ public abstract class BaseContactResourceTestCase {
 	public void testGetContact() throws Exception {
 		Contact postContact = testGetContact_addContact();
 
-		Contact getContact = ContactResource.getContact(postContact.getId());
+		Contact getContact = contactResource.getContact(postContact.getId());
 
 		assertEquals(postContact, getContact);
 		assertValid(getContact);
@@ -340,7 +344,7 @@ public abstract class BaseContactResourceTestCase {
 			Contact irrelevantContact = testGetProjectContactsPage_addContact(
 				irrelevantProjectId, randomIrrelevantContact());
 
-			Page<Contact> page = ContactResource.getProjectContactsPage(
+			Page<Contact> page = contactResource.getProjectContactsPage(
 				irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -357,7 +361,7 @@ public abstract class BaseContactResourceTestCase {
 		Contact contact2 = testGetProjectContactsPage_addContact(
 			projectId, randomContact());
 
-		Page<Contact> page = ContactResource.getProjectContactsPage(
+		Page<Contact> page = contactResource.getProjectContactsPage(
 			projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -380,14 +384,14 @@ public abstract class BaseContactResourceTestCase {
 		Contact contact3 = testGetProjectContactsPage_addContact(
 			projectId, randomContact());
 
-		Page<Contact> page1 = ContactResource.getProjectContactsPage(
+		Page<Contact> page1 = contactResource.getProjectContactsPage(
 			projectId, Pagination.of(1, 2));
 
 		List<Contact> contacts1 = (List<Contact>)page1.getItems();
 
 		Assert.assertEquals(contacts1.toString(), 2, contacts1.size());
 
-		Page<Contact> page2 = ContactResource.getProjectContactsPage(
+		Page<Contact> page2 = contactResource.getProjectContactsPage(
 			projectId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -396,7 +400,7 @@ public abstract class BaseContactResourceTestCase {
 
 		Assert.assertEquals(contacts2.toString(), 1, contacts2.size());
 
-		Page<Contact> page3 = ContactResource.getProjectContactsPage(
+		Page<Contact> page3 = contactResource.getProjectContactsPage(
 			projectId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
@@ -548,7 +552,7 @@ public abstract class BaseContactResourceTestCase {
 	protected void assertValid(Page<Contact> page) {
 		boolean valid = false;
 
-		Collection<Contact> contacts = page.getItems();
+		java.util.Collection<Contact> contacts = page.getItems();
 
 		int size = contacts.size();
 
@@ -563,6 +567,10 @@ public abstract class BaseContactResourceTestCase {
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
 
@@ -673,7 +681,9 @@ public abstract class BaseContactResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_contactResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -694,12 +704,15 @@ public abstract class BaseContactResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -859,11 +872,10 @@ public abstract class BaseContactResourceTestCase {
 		return randomContact();
 	}
 
+	protected ContactResource contactResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseContactResourceTestCase.class);

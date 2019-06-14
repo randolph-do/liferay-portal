@@ -181,12 +181,12 @@
 		<!-- Other fields -->
 
 		<column name="accountId" type="long" />
-		<column name="supportRegionId" type="long" />
 		<column name="name" type="String" />
 		<column name="code" type="String" />
-		<column name="industry" type="int" />
-		<column name="tier" type="int" />
+		<column name="industry" type="String" />
+		<column name="tier" type="String" />
 		<column name="notes" type="String" />
+		<column name="soldBy" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

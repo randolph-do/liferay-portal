@@ -41,16 +41,16 @@ import org.osgi.service.component.annotations.Reference;
 public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 
 	public Project addProject(
-			long accountId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long accountId, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
 		throws PortalException {
 
 		_projectPermission.check(
 			getPermissionChecker(), TaprootActionKeys.ADD_PROJECT);
 
 		return projectLocalService.addProject(
-			getUserId(), accountId, supportRegionId, name, code, industry, tier,
-			notes, status);
+			getUserId(), accountId, name, code, industry, tier, notes, soldBy,
+			status);
 	}
 
 	public Project deleteProject(long projectId) throws PortalException {
@@ -84,15 +84,15 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	}
 
 	public Project updateProject(
-			long projectId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long projectId, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
 		throws PortalException {
 
 		_projectPermission.check(
 			getPermissionChecker(), projectId, ActionKeys.UPDATE);
 
 		return projectLocalService.updateProject(
-			projectId, supportRegionId, name, code, industry, tier, notes,
+			getUserId(), projectId, name, code, industry, tier, notes, soldBy,
 			status);
 	}
 

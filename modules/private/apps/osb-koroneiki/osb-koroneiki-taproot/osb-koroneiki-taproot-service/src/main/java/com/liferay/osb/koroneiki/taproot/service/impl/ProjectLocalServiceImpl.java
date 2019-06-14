@@ -18,12 +18,14 @@ import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.exception.ProjectNameException;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.base.ProjectLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,8 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 	public Project addProject(
-			long userId, long accountId, long supportRegionId, String name,
-			String code, int industry, int tier, String notes, int status)
+			long userId, long accountId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -56,13 +59,17 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		project.setCompanyId(user.getCompanyId());
 		project.setUserId(userId);
 		project.setAccountId(accountId);
-		project.setSupportRegionId(supportRegionId);
 		project.setName(name);
 		project.setCode(code);
 		project.setIndustry(industry);
 		project.setTier(tier);
 		project.setNotes(notes);
+		project.setSoldBy(soldBy);
 		project.setStatus(status);
+		project.setStatusByUserId(userId);
+		project.setStatusByUserName(user.getFullName());
+		project.setStatusDate(new Date());
+		project.setStatusMessage(StringPool.BLANK);
 
 		projectPersistence.update(project);
 
@@ -111,21 +118,28 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	}
 
 	public Project updateProject(
-			long projectId, long supportRegionId, String name, String code,
-			int industry, int tier, String notes, int status)
+			long userId, long projectId, String name, String code,
+			String industry, String tier, String notes, String soldBy,
+			int status)
 		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
 
 		validate(name);
 
 		Project project = projectPersistence.findByPrimaryKey(projectId);
 
-		project.setSupportRegionId(supportRegionId);
 		project.setName(name);
 		project.setCode(code);
 		project.setIndustry(industry);
 		project.setTier(tier);
 		project.setNotes(notes);
+		project.setSoldBy(soldBy);
 		project.setStatus(status);
+		project.setStatusByUserId(userId);
+		project.setStatusByUserName(user.getFullName());
+		project.setStatusDate(new Date());
+		project.setStatusMessage(StringPool.BLANK);
 
 		return projectPersistence.update(project);
 	}

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -93,16 +92,18 @@ public class EditProjectMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String code = ParamUtil.getString(actionRequest, "code");
 		String notes = ParamUtil.getString(actionRequest, "notes");
+		String industry = ParamUtil.getString(actionRequest, "industry");
+		String tier = ParamUtil.getString(actionRequest, "tier");
+		String soldBy = ParamUtil.getString(actionRequest, "soldBy");
+		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		if (projectId <= 0) {
 			_projectService.addProject(
-				accountId, 0, name, code, 0, 0, notes,
-				WorkflowConstants.STATUS_APPROVED);
+				accountId, name, code, industry, tier, notes, soldBy, status);
 		}
 		else {
 			_projectService.updateProject(
-				projectId, 0, name, code, 0, 0, notes,
-				WorkflowConstants.STATUS_APPROVED);
+				projectId, name, code, industry, tier, notes, soldBy, status);
 		}
 	}
 

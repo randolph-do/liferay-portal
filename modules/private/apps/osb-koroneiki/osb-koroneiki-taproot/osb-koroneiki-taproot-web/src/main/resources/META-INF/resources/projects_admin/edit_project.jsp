@@ -83,6 +83,53 @@ renderResponse.setTitle((project == null) ? LanguageUtil.get(request, "new-proje
 
 			<aui:input name="code" />
 
+			<aui:select name="status">
+				<aui:option value="" />
+
+				<%
+				for (int status : WorkflowConstants.VALUES) {
+				%>
+
+					<aui:option label="<%= WorkflowConstants.getStatusLabel(status) %>" value="<%= status %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:select name="industry">
+				<aui:option value="" />
+
+				<%
+				for (String industry : ProjectIndustry.INDUSTRIES) {
+				%>
+
+					<aui:option label="<%= industry %>" value="<%= industry %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:select name="tier">
+				<aui:option value="" />
+
+				<%
+				for (String tier : ProjectTier.TIERS) {
+				%>
+
+					<aui:option label="<%= tier %>" value="<%= tier %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:input name="soldBy" />
+
 			<aui:input name="notes" type="textarea" />
 		</aui:fieldset>
 	</aui:fieldset-group>

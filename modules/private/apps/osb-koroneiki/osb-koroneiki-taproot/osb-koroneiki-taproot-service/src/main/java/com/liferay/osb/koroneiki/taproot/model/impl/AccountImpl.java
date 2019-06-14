@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.constants.WorkflowConstants;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalServiceUtil;
@@ -44,6 +45,10 @@ public class AccountImpl extends AccountBaseImpl {
 	public List<Project> getProjects() throws PortalException {
 		return ProjectLocalServiceUtil.getProjects(
 			getAccountId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public String getStatusLabel() {
+		return WorkflowConstants.getStatusLabel(getStatus());
 	}
 
 }

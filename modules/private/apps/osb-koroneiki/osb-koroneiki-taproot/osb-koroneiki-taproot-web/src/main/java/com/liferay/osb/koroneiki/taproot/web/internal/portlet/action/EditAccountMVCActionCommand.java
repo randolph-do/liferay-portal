@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -93,18 +91,24 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+		String contactEmailAddress = ParamUtil.getString(
+			actionRequest, "contactEmailAddress");
+		String profileEmailAddress = ParamUtil.getString(
+			actionRequest, "profileEmailAddress");
+		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
+		String faxNumber = ParamUtil.getString(actionRequest, "faxNumber");
+		String website = ParamUtil.getString(actionRequest, "website");
+		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		if (accountId <= 0) {
 			_accountService.addAccount(
-				name, description, 0, 0, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				WorkflowConstants.STATUS_APPROVED);
+				name, description, 0, 0, contactEmailAddress,
+				profileEmailAddress, phoneNumber, faxNumber, website, status);
 		}
 		else {
 			_accountService.updateAccount(
-				accountId, name, description, 0, 0, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, WorkflowConstants.STATUS_APPROVED);
+				accountId, name, description, 0, 0, contactEmailAddress,
+				profileEmailAddress, phoneNumber, faxNumber, website, status);
 		}
 	}
 

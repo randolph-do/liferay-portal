@@ -46,11 +46,11 @@ public interface ProductPurchaseResource {
 		throws Exception;
 
 	public ProductPurchase postAccountProductPurchase(
-			Long accountId, Long productId, ProductPurchase productPurchase)
+			Long accountId, ProductPurchase productPurchase)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAccountProductPurchaseHttpResponse(
-			Long accountId, Long productId, ProductPurchase productPurchase)
+			Long accountId, ProductPurchase productPurchase)
 		throws Exception;
 
 	public void deleteProductPurchase(Long productPurchaseId) throws Exception;
@@ -83,11 +83,11 @@ public interface ProductPurchaseResource {
 		throws Exception;
 
 	public ProductPurchase postProjectProductPurchase(
-			Long projectId, Long productId, ProductPurchase productPurchase)
+			Long projectId, ProductPurchase productPurchase)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProjectProductPurchaseHttpResponse(
-			Long projectId, Long productId, ProductPurchase productPurchase)
+			Long projectId, ProductPurchase productPurchase)
 		throws Exception;
 
 	public static class Builder {
@@ -185,12 +185,12 @@ public interface ProductPurchaseResource {
 		}
 
 		public ProductPurchase postAccountProductPurchase(
-				Long accountId, Long productId, ProductPurchase productPurchase)
+				Long accountId, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAccountProductPurchaseHttpResponse(
-					accountId, productId, productPurchase);
+					accountId, productPurchase);
 
 			String content = httpResponse.getContent();
 
@@ -213,7 +213,7 @@ public interface ProductPurchaseResource {
 		}
 
 		public HttpInvoker.HttpResponse postAccountProductPurchaseHttpResponse(
-				Long accountId, Long productId, ProductPurchase productPurchase)
+				Long accountId, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -226,10 +226,6 @@ public interface ProductPurchaseResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (productId != null) {
-				httpInvoker.parameter("productId", String.valueOf(productId));
-			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -442,12 +438,12 @@ public interface ProductPurchaseResource {
 		}
 
 		public ProductPurchase postProjectProductPurchase(
-				Long projectId, Long productId, ProductPurchase productPurchase)
+				Long projectId, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postProjectProductPurchaseHttpResponse(
-					projectId, productId, productPurchase);
+					projectId, productPurchase);
 
 			String content = httpResponse.getContent();
 
@@ -470,7 +466,7 @@ public interface ProductPurchaseResource {
 		}
 
 		public HttpInvoker.HttpResponse postProjectProductPurchaseHttpResponse(
-				Long projectId, Long productId, ProductPurchase productPurchase)
+				Long projectId, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -483,10 +479,6 @@ public interface ProductPurchaseResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (productId != null) {
-				httpInvoker.parameter("productId", String.valueOf(productId));
-			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

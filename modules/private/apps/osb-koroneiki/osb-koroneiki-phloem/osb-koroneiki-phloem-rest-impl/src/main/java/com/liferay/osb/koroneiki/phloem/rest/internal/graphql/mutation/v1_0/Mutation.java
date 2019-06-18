@@ -429,25 +429,12 @@ public class Mutation {
 			productResource -> productResource.putProduct(productId, product));
 	}
 
-	@GraphQLInvokeDetached
-	public void deleteAccountProductConsumption(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("productId") Long productId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_productConsumptionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			productConsumptionResource ->
-				productConsumptionResource.deleteAccountProductConsumption(
-					accountId, productId));
-	}
-
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public ProductConsumption postAccountProductConsumption(
 			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("productId") Long productId)
+			@GraphQLName("productConsumption") ProductConsumption
+				productConsumption)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -455,7 +442,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			productConsumptionResource ->
 				productConsumptionResource.postAccountProductConsumption(
-					accountId, productId));
+					accountId, productConsumption));
 	}
 
 	@GraphQLInvokeDetached
@@ -471,25 +458,12 @@ public class Mutation {
 					productConsumptionId));
 	}
 
-	@GraphQLInvokeDetached
-	public void deleteProjectProductConsumption(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("productId") Long productId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_productConsumptionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			productConsumptionResource ->
-				productConsumptionResource.deleteProjectProductConsumption(
-					projectId, productId));
-	}
-
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public ProductConsumption postProjectProductConsumption(
 			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("productId") Long productId)
+			@GraphQLName("productConsumption") ProductConsumption
+				productConsumption)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -497,14 +471,13 @@ public class Mutation {
 			this::_populateResourceContext,
 			productConsumptionResource ->
 				productConsumptionResource.postProjectProductConsumption(
-					projectId, productId));
+					projectId, productConsumption));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public ProductPurchase postAccountProductPurchase(
 			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("productId") Long productId,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
 		throws Exception {
 
@@ -513,7 +486,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			productPurchaseResource ->
 				productPurchaseResource.postAccountProductPurchase(
-					accountId, productId, productPurchase));
+					accountId, productPurchase));
 	}
 
 	@GraphQLInvokeDetached
@@ -547,7 +520,6 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public ProductPurchase postProjectProductPurchase(
 			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("productId") Long productId,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
 		throws Exception {
 
@@ -556,7 +528,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			productPurchaseResource ->
 				productPurchaseResource.postProjectProductPurchase(
-					projectId, productId, productPurchase));
+					projectId, productPurchase));
 	}
 
 	@GraphQLField

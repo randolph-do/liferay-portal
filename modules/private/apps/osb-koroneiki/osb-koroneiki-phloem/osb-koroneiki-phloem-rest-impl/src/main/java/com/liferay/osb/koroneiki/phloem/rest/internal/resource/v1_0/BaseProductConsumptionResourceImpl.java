@@ -37,13 +37,13 @@ import javax.annotation.Generated;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -55,25 +55,6 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseProductConsumptionResourceImpl
 	implements ProductConsumptionResource {
-
-	@Override
-	@DELETE
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.QUERY, name = "productId")
-		}
-	)
-	@Path("/accounts/{accountId}/product-consumptions")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "ProductConsumption")})
-	public void deleteAccountProductConsumption(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@NotNull @Parameter(hidden = true) @QueryParam("productId") Long
-				productId)
-		throws Exception {
-	}
 
 	@Override
 	@GET
@@ -98,21 +79,16 @@ public abstract class BaseProductConsumptionResourceImpl
 	}
 
 	@Override
+	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.QUERY, name = "productId")
-		}
-	)
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
 	@Path("/accounts/{accountId}/product-consumptions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConsumption")})
 	public ProductConsumption postAccountProductConsumption(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
-			@NotNull @Parameter(hidden = true) @QueryParam("productId") Long
-				productId)
+			ProductConsumption productConsumption)
 		throws Exception {
 
 		return new ProductConsumption();
@@ -154,25 +130,6 @@ public abstract class BaseProductConsumptionResourceImpl
 	}
 
 	@Override
-	@DELETE
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.QUERY, name = "productId")
-		}
-	)
-	@Path("/projects/{projectId}/product-consumptions")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "ProductConsumption")})
-	public void deleteProjectProductConsumption(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@NotNull @Parameter(hidden = true) @QueryParam("productId") Long
-				productId)
-		throws Exception {
-	}
-
-	@Override
 	@GET
 	@Operation(description = "Retrieves the project's product consumptions.")
 	@Parameters(
@@ -195,21 +152,16 @@ public abstract class BaseProductConsumptionResourceImpl
 	}
 
 	@Override
+	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.QUERY, name = "productId")
-		}
-	)
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
 	@Path("/projects/{projectId}/product-consumptions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConsumption")})
 	public ProductConsumption postProjectProductConsumption(
 			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
 				projectId,
-			@NotNull @Parameter(hidden = true) @QueryParam("productId") Long
-				productId)
+			ProductConsumption productConsumption)
 		throws Exception {
 
 		return new ProductConsumption();

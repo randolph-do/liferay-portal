@@ -33,15 +33,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ProductConsumptionResource {
 
-	public void deleteAccountProductConsumption(Long accountId, Long productId)
-		throws Exception;
-
 	public Page<ProductConsumption> getAccountProductConsumptionsPage(
 			Long accountId, Pagination pagination)
 		throws Exception;
 
 	public ProductConsumption postAccountProductConsumption(
-			Long accountId, Long productId)
+			Long accountId, ProductConsumption productConsumption)
 		throws Exception;
 
 	public void deleteProductConsumption(Long productConsumptionId)
@@ -50,15 +47,12 @@ public interface ProductConsumptionResource {
 	public ProductConsumption getProductConsumption(Long productConsumptionId)
 		throws Exception;
 
-	public void deleteProjectProductConsumption(Long projectId, Long productId)
-		throws Exception;
-
 	public Page<ProductConsumption> getProjectProductConsumptionsPage(
 			Long projectId, Pagination pagination)
 		throws Exception;
 
 	public ProductConsumption postProjectProductConsumption(
-			Long projectId, Long productId)
+			Long projectId, ProductConsumption productConsumption)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

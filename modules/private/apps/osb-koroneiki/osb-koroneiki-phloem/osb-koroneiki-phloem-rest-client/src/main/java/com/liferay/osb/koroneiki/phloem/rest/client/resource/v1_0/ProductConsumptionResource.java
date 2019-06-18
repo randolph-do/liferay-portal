@@ -37,13 +37,6 @@ public interface ProductConsumptionResource {
 		return new Builder();
 	}
 
-	public void deleteAccountProductConsumption(Long accountId, Long productId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteAccountProductConsumptionHttpResponse(
-			Long accountId, Long productId)
-		throws Exception;
-
 	public Page<ProductConsumption> getAccountProductConsumptionsPage(
 			Long accountId, Pagination pagination)
 		throws Exception;
@@ -54,11 +47,11 @@ public interface ProductConsumptionResource {
 		throws Exception;
 
 	public ProductConsumption postAccountProductConsumption(
-			Long accountId, Long productId)
+			Long accountId, ProductConsumption productConsumption)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAccountProductConsumptionHttpResponse(
-			Long accountId, Long productId)
+			Long accountId, ProductConsumption productConsumption)
 		throws Exception;
 
 	public void deleteProductConsumption(Long productConsumptionId)
@@ -75,13 +68,6 @@ public interface ProductConsumptionResource {
 			Long productConsumptionId)
 		throws Exception;
 
-	public void deleteProjectProductConsumption(Long projectId, Long productId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteProjectProductConsumptionHttpResponse(
-			Long projectId, Long productId)
-		throws Exception;
-
 	public Page<ProductConsumption> getProjectProductConsumptionsPage(
 			Long projectId, Pagination pagination)
 		throws Exception;
@@ -92,11 +78,11 @@ public interface ProductConsumptionResource {
 		throws Exception;
 
 	public ProductConsumption postProjectProductConsumption(
-			Long projectId, Long productId)
+			Long projectId, ProductConsumption productConsumption)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProjectProductConsumptionHttpResponse(
-			Long projectId, Long productId)
+			Long projectId, ProductConsumption productConsumption)
 		throws Exception;
 
 	public static class Builder {
@@ -140,53 +126,6 @@ public interface ProductConsumptionResource {
 
 	public static class ProductConsumptionResourceImpl
 		implements ProductConsumptionResource {
-
-		public void deleteAccountProductConsumption(
-				Long accountId, Long productId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountProductConsumptionHttpResponse(
-					accountId, productId);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteAccountProductConsumptionHttpResponse(
-					Long accountId, Long productId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (productId != null) {
-				httpInvoker.parameter("productId", String.valueOf(productId));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-consumptions",
-				accountId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
 
 		public Page<ProductConsumption> getAccountProductConsumptionsPage(
 				Long accountId, Pagination pagination)
@@ -241,11 +180,12 @@ public interface ProductConsumptionResource {
 		}
 
 		public ProductConsumption postAccountProductConsumption(
-				Long accountId, Long productId)
+				Long accountId, ProductConsumption productConsumption)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountProductConsumptionHttpResponse(accountId, productId);
+				postAccountProductConsumptionHttpResponse(
+					accountId, productConsumption);
 
 			String content = httpResponse.getContent();
 
@@ -269,12 +209,12 @@ public interface ProductConsumptionResource {
 
 		public HttpInvoker.HttpResponse
 				postAccountProductConsumptionHttpResponse(
-					Long accountId, Long productId)
+					Long accountId, ProductConsumption productConsumption)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(productId.toString(), "application/json");
+			httpInvoker.body(productConsumption.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -282,10 +222,6 @@ public interface ProductConsumptionResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (productId != null) {
-				httpInvoker.parameter("productId", String.valueOf(productId));
-			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -391,53 +327,6 @@ public interface ProductConsumptionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteProjectProductConsumption(
-				Long projectId, Long productId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteProjectProductConsumptionHttpResponse(
-					projectId, productId);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteProjectProductConsumptionHttpResponse(
-					Long projectId, Long productId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (productId != null) {
-				httpInvoker.parameter("productId", String.valueOf(productId));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-consumptions",
-				projectId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
 		public Page<ProductConsumption> getProjectProductConsumptionsPage(
 				Long projectId, Pagination pagination)
 			throws Exception {
@@ -491,11 +380,12 @@ public interface ProductConsumptionResource {
 		}
 
 		public ProductConsumption postProjectProductConsumption(
-				Long projectId, Long productId)
+				Long projectId, ProductConsumption productConsumption)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProjectProductConsumptionHttpResponse(projectId, productId);
+				postProjectProductConsumptionHttpResponse(
+					projectId, productConsumption);
 
 			String content = httpResponse.getContent();
 
@@ -519,12 +409,12 @@ public interface ProductConsumptionResource {
 
 		public HttpInvoker.HttpResponse
 				postProjectProductConsumptionHttpResponse(
-					Long projectId, Long productId)
+					Long projectId, ProductConsumption productConsumption)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(productId.toString(), "application/json");
+			httpInvoker.body(productConsumption.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -532,10 +422,6 @@ public interface ProductConsumptionResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (productId != null) {
-				httpInvoker.parameter("productId", String.valueOf(productId));
-			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

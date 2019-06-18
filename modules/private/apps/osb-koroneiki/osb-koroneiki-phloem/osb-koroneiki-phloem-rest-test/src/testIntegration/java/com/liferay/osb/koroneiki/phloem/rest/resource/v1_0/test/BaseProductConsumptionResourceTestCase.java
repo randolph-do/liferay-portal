@@ -181,25 +181,6 @@ public abstract class BaseProductConsumptionResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountProductConsumption() throws Exception {
-		ProductConsumption productConsumption =
-			testDeleteAccountProductConsumption_addProductConsumption();
-
-		assertHttpResponseStatusCode(
-			204,
-			productConsumptionResource.
-				deleteAccountProductConsumptionHttpResponse(null, null));
-	}
-
-	protected ProductConsumption
-			testDeleteAccountProductConsumption_addProductConsumption()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetAccountProductConsumptionsPage() throws Exception {
 		Long accountId = testGetAccountProductConsumptionsPage_getAccountId();
 		Long irrelevantAccountId =
@@ -297,8 +278,8 @@ public abstract class BaseProductConsumptionResourceTestCase {
 				Long accountId, ProductConsumption productConsumption)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productConsumptionResource.postAccountProductConsumption(
+			accountId, productConsumption);
 	}
 
 	protected Long testGetAccountProductConsumptionsPage_getAccountId()
@@ -333,8 +314,9 @@ public abstract class BaseProductConsumptionResourceTestCase {
 				ProductConsumption productConsumption)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productConsumptionResource.postAccountProductConsumption(
+			testGetAccountProductConsumptionsPage_getAccountId(),
+			productConsumption);
 	}
 
 	@Test
@@ -380,25 +362,6 @@ public abstract class BaseProductConsumptionResourceTestCase {
 
 	protected ProductConsumption
 			testGetProductConsumption_addProductConsumption()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteProjectProductConsumption() throws Exception {
-		ProductConsumption productConsumption =
-			testDeleteProjectProductConsumption_addProductConsumption();
-
-		assertHttpResponseStatusCode(
-			204,
-			productConsumptionResource.
-				deleteProjectProductConsumptionHttpResponse(null, null));
-	}
-
-	protected ProductConsumption
-			testDeleteProjectProductConsumption_addProductConsumption()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -503,8 +466,8 @@ public abstract class BaseProductConsumptionResourceTestCase {
 				Long projectId, ProductConsumption productConsumption)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productConsumptionResource.postProjectProductConsumption(
+			projectId, productConsumption);
 	}
 
 	protected Long testGetProjectProductConsumptionsPage_getProjectId()
@@ -539,8 +502,9 @@ public abstract class BaseProductConsumptionResourceTestCase {
 				ProductConsumption productConsumption)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productConsumptionResource.postProjectProductConsumption(
+			testGetProjectProductConsumptionsPage_getProjectId(),
+			productConsumption);
 	}
 
 	protected void assertHttpResponseStatusCode(

@@ -37,6 +37,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,6 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("ProductConsumption")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"productId"})
 @XmlRootElement(name = "ProductConsumption")
 public class ProductConsumption {
 
@@ -186,7 +189,8 @@ public class ProductConsumption {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected Long productId;
 
 	@Schema(description = "The ID of the project consuming the product.")

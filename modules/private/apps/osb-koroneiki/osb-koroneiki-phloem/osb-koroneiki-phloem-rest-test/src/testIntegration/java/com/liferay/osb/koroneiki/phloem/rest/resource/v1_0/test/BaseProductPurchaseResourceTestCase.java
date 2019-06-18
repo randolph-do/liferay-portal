@@ -276,8 +276,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				Long accountId, ProductPurchase productPurchase)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productPurchaseResource.postAccountProductPurchase(
+			accountId, productPurchase);
 	}
 
 	protected Long testGetAccountProductPurchasesPage_getAccountId()
@@ -309,8 +309,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			ProductPurchase productPurchase)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productPurchaseResource.postAccountProductPurchase(
+			testGetAccountProductPurchasesPage_getAccountId(), productPurchase);
 	}
 
 	@Test
@@ -485,8 +485,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				Long projectId, ProductPurchase productPurchase)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productPurchaseResource.postProjectProductPurchase(
+			projectId, productPurchase);
 	}
 
 	protected Long testGetProjectProductPurchasesPage_getProjectId()
@@ -518,8 +518,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			ProductPurchase productPurchase)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return productPurchaseResource.postProjectProductPurchase(
+			testGetProjectProductPurchasesPage_getProjectId(), productPurchase);
 	}
 
 	protected void assertHttpResponseStatusCode(

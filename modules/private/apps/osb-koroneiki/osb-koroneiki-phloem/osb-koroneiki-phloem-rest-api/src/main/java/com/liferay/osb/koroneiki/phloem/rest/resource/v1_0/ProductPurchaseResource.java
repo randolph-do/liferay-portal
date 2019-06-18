@@ -38,7 +38,7 @@ public interface ProductPurchaseResource {
 		throws Exception;
 
 	public ProductPurchase postAccountProductPurchase(
-			Long accountId, Long productId, ProductPurchase productPurchase)
+			Long accountId, ProductPurchase productPurchase)
 		throws Exception;
 
 	public void deleteProductPurchase(Long productPurchaseId) throws Exception;
@@ -55,7 +55,7 @@ public interface ProductPurchaseResource {
 		throws Exception;
 
 	public ProductPurchase postProjectProductPurchase(
-			Long projectId, Long productId, ProductPurchase productPurchase)
+			Long projectId, ProductPurchase productPurchase)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

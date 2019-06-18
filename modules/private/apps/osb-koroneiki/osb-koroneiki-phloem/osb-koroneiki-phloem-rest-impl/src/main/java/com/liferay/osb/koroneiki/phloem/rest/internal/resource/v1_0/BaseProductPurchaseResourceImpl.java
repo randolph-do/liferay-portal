@@ -45,7 +45,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -83,20 +82,13 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.QUERY, name = "productId")
-		}
-	)
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
 	@Path("/accounts/{accountId}/product-purchases")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
 	public ProductPurchase postAccountProductPurchase(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
-			@NotNull @Parameter(hidden = true) @QueryParam("productId") Long
-				productId,
 			ProductPurchase productPurchase)
 		throws Exception {
 
@@ -177,20 +169,13 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.QUERY, name = "productId")
-		}
-	)
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
 	@Path("/projects/{projectId}/product-purchases")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
 	public ProductPurchase postProjectProductPurchase(
 			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
 				projectId,
-			@NotNull @Parameter(hidden = true) @QueryParam("productId") Long
-				productId,
 			ProductPurchase productPurchase)
 		throws Exception {
 

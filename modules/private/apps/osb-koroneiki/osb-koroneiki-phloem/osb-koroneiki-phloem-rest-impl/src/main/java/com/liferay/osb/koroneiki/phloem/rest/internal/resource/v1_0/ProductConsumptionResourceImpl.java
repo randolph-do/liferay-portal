@@ -38,29 +38,11 @@ public class ProductConsumptionResourceImpl
 	extends BaseProductConsumptionResourceImpl {
 
 	@Override
-	public void deleteAccountProductConsumption(Long accountId, Long productId)
-		throws Exception {
-
-		_productConsumptionService.deleteProductConsumption(
-			accountId, 0, productId);
-	}
-
-	@Override
 	public void deleteProductConsumption(Long productConsumptionId)
 		throws Exception {
 
 		_productConsumptionService.deleteProductConsumption(
 			productConsumptionId);
-	}
-
-	@Override
-	public void deleteProjectProductConsumption(Long projectId, Long productId)
-		throws Exception {
-
-		Project project = _projectLocalService.getProject(projectId);
-
-		_productConsumptionService.deleteProductConsumption(
-			project.getAccountId(), projectId, productId);
 	}
 
 	@Override
@@ -106,24 +88,25 @@ public class ProductConsumptionResourceImpl
 
 	@Override
 	public ProductConsumption postAccountProductConsumption(
-			Long accountId, Long productId)
+			Long accountId, ProductConsumption productConsumption)
 		throws Exception {
 
 		return ProductConsumptionUtil.toProductConsumption(
 			_productConsumptionService.addProductConsumption(
-				accountId, 0, productId));
+				accountId, 0, productConsumption.getProductId()));
 	}
 
 	@Override
 	public ProductConsumption postProjectProductConsumption(
-			Long projectId, Long productId)
+			Long projectId, ProductConsumption productConsumption)
 		throws Exception {
 
 		Project project = _projectLocalService.getProject(projectId);
 
 		return ProductConsumptionUtil.toProductConsumption(
 			_productConsumptionService.addProductConsumption(
-				project.getAccountId(), projectId, productId));
+				project.getAccountId(), projectId,
+				productConsumption.getProductId()));
 	}
 
 	@Reference

@@ -280,13 +280,14 @@ components:
                 productId:
                     description: The ID of the product being consumed.
                     format: int64
-                    readOnly: true
                     type: integer
                 projectId:
                     description: The ID of the project consuming the product.
                     format: int64
                     readOnly: true
                     type: integer
+            required:
+                - productId
             type: object
         ProductPurchase:
             description: Represents a product purchase.
@@ -319,7 +320,6 @@ components:
                 productId:
                     description: The ID of the product being purchased.
                     format: int64
-                    readOnly: true
                     type: integer
                 projectId:
                     description: The ID of the project purchasing the product.
@@ -331,12 +331,15 @@ components:
                         type: string
                     type: object
                 quantity:
-                    description: The quantity of the product purchased. Defaults to 1.
+                    default: 1
+                    description: The quantity of the product purchased.
                     type: integer
                 startDate:
                     description: The product purchase's start date.
                     format: date-time
                     type: string
+            required:
+                - productId
             type: object
         Project:
             description: Represents a project.
@@ -795,27 +798,6 @@ paths:
                     description: ""
             tags: ["ExternalLink"]
     "/accounts/{accountId}/product-consumptions":
-        delete:
-            operationId: deleteAccountProductConsumption
-            parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: productId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["ProductConsumption"]
         get:
             description: Retrieves the account's product consumptions.
             operationId: getAccountProductConsumptionsPage
@@ -858,12 +840,15 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: productId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductConsumption"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductConsumption"
+                required: true
             responses:
                 200:
                     content:
@@ -918,12 +903,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: productId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -932,6 +911,7 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/ProductPurchase"
+                required: true
             responses:
                 200:
                     content:
@@ -2127,27 +2107,6 @@ paths:
                     description: ""
             tags: ["ExternalLink"]
     "/projects/{projectId}/product-consumptions":
-        delete:
-            operationId: deleteProjectProductConsumption
-            parameters:
-                - in: path
-                  name: projectId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: productId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["ProductConsumption"]
         get:
             description: Retrieves the project's product consumptions.
             operationId: getProjectProductConsumptionsPage
@@ -2190,12 +2149,15 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: productId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductConsumption"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductConsumption"
+                required: true
             responses:
                 200:
                     content:
@@ -2250,12 +2212,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: productId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -2264,6 +2220,7 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/ProductPurchase"
+                required: true
             responses:
                 200:
                     content:

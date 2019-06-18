@@ -88,7 +88,7 @@ public class ProductPurchaseResourceImpl
 
 	@Override
 	public ProductPurchase postAccountProductPurchase(
-			Long accountId, Long productId, ProductPurchase productPurchase)
+			Long accountId, ProductPurchase productPurchase)
 		throws Exception {
 
 		int quantity = getQuantity(productPurchase.getQuantity());
@@ -98,13 +98,14 @@ public class ProductPurchaseResourceImpl
 
 		return ProductPurchaseUtil.toProductPurchase(
 			_productPurchaseService.addProductPurchase(
-				accountId, 0, productId, productPurchase.getStartDate(),
-				productPurchase.getEndDate(), quantity, productFields));
+				accountId, 0, productPurchase.getProductId(),
+				productPurchase.getStartDate(), productPurchase.getEndDate(),
+				quantity, productFields));
 	}
 
 	@Override
 	public ProductPurchase postProjectProductPurchase(
-			Long projectId, Long productId, ProductPurchase productPurchase)
+			Long projectId, ProductPurchase productPurchase)
 		throws Exception {
 
 		Project project = _projectLocalService.getProject(projectId);
@@ -116,9 +117,9 @@ public class ProductPurchaseResourceImpl
 
 		return ProductPurchaseUtil.toProductPurchase(
 			_productPurchaseService.addProductPurchase(
-				project.getAccountId(), projectId, productId,
-				productPurchase.getStartDate(), productPurchase.getEndDate(),
-				quantity, productFields));
+				project.getAccountId(), projectId,
+				productPurchase.getProductId(), productPurchase.getStartDate(),
+				productPurchase.getEndDate(), quantity, productFields));
 	}
 
 	@Override

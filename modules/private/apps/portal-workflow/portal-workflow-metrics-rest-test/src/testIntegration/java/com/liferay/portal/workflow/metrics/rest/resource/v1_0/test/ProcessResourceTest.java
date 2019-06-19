@@ -58,12 +58,11 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_documents = _workflowMetricsRESTTestHelper.getDocuments(
-			testGroup.getCompanyId());
+		_singleApproverDocument =
+			_workflowMetricsRESTTestHelper.getSingleApproverDocument(
+				testGroup.getCompanyId());
 
-		for (Document document : _documents) {
-			_workflowMetricsRESTTestHelper.deleteProcess(document);
-		}
+		_workflowMetricsRESTTestHelper.deleteProcess(_singleApproverDocument);
 	}
 
 	@After
@@ -71,9 +70,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		for (Document document : _documents) {
-			_workflowMetricsRESTTestHelper.restoreProcess(document);
-		}
+		_workflowMetricsRESTTestHelper.restoreProcess(_singleApproverDocument);
 
 		_deleteProcesses();
 	}
@@ -223,14 +220,13 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		unsafeTriConsumer.accept(postProcess, getProcess);
 	}
 
-	private static Document[] _documents;
-
 	@Inject
 	private static Queries _queries;
 
 	@Inject
 	private static SearchEngineAdapter _searchEngineAdapter;
 
+	private static Document _singleApproverDocument;
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
 	private final List<Process> _processes = new ArrayList<>();

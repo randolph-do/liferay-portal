@@ -24,6 +24,8 @@ import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 
 import java.util.List;
 
@@ -34,6 +36,11 @@ import java.util.List;
 public class AccountImpl extends AccountBaseImpl {
 
 	public AccountImpl() {
+	}
+
+	public List<Address> getAddresses() {
+		return AddressLocalServiceUtil.getAddresses(
+			getCompanyId(), Account.class.getName(), getAccountId());
 	}
 
 	public List<ExternalLink> getExternalLinks() {

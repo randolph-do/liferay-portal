@@ -3,6 +3,12 @@ components:
         Account:
             description: Represents an account.
             properties:
+                addresses:
+                    description: The account's addresses.
+                    items:
+                        $ref: "#/components/schemas/Address"
+                    readOnly: true
+                    type: array
                 contactEmailAddress:
                     description: The account's contact email address.
                     type: string
@@ -50,6 +56,59 @@ components:
                     type: string
             required:
                 - name
+            type: object
+        Address:
+            description: Represents a mailing address.
+            properties:
+                city:
+                    description: The address's city.
+                    type: string
+                className:
+                    description: The className of the address.
+                    readOnly: true
+                    type: string
+                classPK:
+                    description: The primaryKey of the addresses object.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                country:
+                    description: The address's country.
+                    type: string
+                id:
+                    description: The address's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                mailing:
+                    description: A flag that identifies whether this is a mailing address.
+                    type: boolean
+                primary:
+                    description: A flag that identifies whether this is the main address of the Account.
+                    type: boolean
+                region:
+                    description: The address's region.
+                    type: string
+                street1:
+                    description: The street address's first line.
+                    type: string
+                street2:
+                    description: The street address's second line.
+                    type: string
+                street3:
+                    description: The street address's third line.
+                    type: string
+                type:
+                    description: The address's type.
+                    type: string
+                userId:
+                    description: The userId of the user who created the address.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                zip:
+                    description: The address's zip code.
+                    type: string
             type: object
         AuditEntry:
             description: An audit log that records changes to objects.
@@ -556,6 +615,40 @@ paths:
                                 $ref: "#/components/schemas/Account"
                     description: ""
             tags: ["Account"]
+    "/accounts/{accountId}/addresses":
+        get:
+            description: Retrieves the accounts's addresses.
+            operationId: getAccountAddressesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Address"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Address"
+                                type: array
+                    description: ""
+            tags: ["Address"]
     "/accounts/{accountId}/audit-entries":
         get:
             description: Retrieves the account's audit history.
@@ -1049,6 +1142,95 @@ paths:
                                 $ref: "#/components/schemas/Team"
                     description: ""
             tags: ["Team"]
+    "/address":
+        post:
+            operationId: postAddress
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Address"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Address"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Address"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Address"
+                    description: ""
+            tags: ["Address"]
+    "/addresses/{addressId}":
+        delete:
+            operationId: deleteAddress
+            parameters:
+                - in: path
+                  name: addressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Address"]
+        get:
+            description: Retrieves the address.
+            operationId: getAddress
+            parameters:
+                - in: path
+                  name: addressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Address"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Address"
+                    description: ""
+            tags: ["Address"]
+        put:
+            operationId: putAddress
+            parameters:
+                - in: path
+                  name: addressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Address"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Address"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Address"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Address"
+                    description: ""
+            tags: ["Address"]
     "/audit-entries/{auditEntryId}":
         get:
             description: Retrieves the audit entry.

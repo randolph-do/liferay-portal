@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Address;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -29,6 +30,9 @@ public class AccountUtil {
 
 		return new Account() {
 			{
+				addresses = TransformUtil.transformToArray(
+					account.getAddresses(), AddressUtil::toAddress,
+					Address.class);
 				contactEmailAddress = account.getContactEmailAddress();
 				dateCreated = account.getCreateDate();
 				dateModified = account.getModifiedDate();

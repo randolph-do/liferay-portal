@@ -21,7 +21,6 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="logoId" type="long" />
-		<column name="addressId" type="long" />
 		<column name="contactEmailAddress" type="String" />
 		<column name="profileEmailAddress" type="String" />
 		<column name="phoneNumber" type="String" />

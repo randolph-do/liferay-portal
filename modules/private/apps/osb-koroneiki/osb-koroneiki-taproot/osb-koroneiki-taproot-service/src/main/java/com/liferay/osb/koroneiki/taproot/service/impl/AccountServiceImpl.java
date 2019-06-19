@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AccountServiceImpl extends AccountServiceBaseImpl {
 
 	public Account addAccount(
-			String name, String description, long logoId, long addressId,
+			String name, String description, long logoId,
 			String contactEmailAddress, String profileEmailAddress,
 			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException {
@@ -47,9 +47,8 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 			getPermissionChecker(), TaprootActionKeys.ADD_ACCOUNT);
 
 		return accountLocalService.addAccount(
-			getUserId(), name, description, logoId, addressId,
-			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
-			website, status);
+			getUserId(), name, description, logoId, contactEmailAddress,
+			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 
 	public Account deleteAccount(long accountId) throws PortalException {
@@ -68,16 +67,15 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 
 	public Account updateAccount(
 			long accountId, String name, String description, long logoId,
-			long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException {
 
 		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.UPDATE);
 
 		return accountLocalService.updateAccount(
-			getUserId(), accountId, name, description, logoId, addressId,
+			getUserId(), accountId, name, description, logoId,
 			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
 			website, status);
 	}

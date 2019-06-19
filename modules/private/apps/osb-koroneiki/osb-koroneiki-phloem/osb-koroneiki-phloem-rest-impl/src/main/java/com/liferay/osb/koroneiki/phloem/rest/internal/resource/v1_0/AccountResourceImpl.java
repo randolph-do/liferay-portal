@@ -76,7 +76,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		return AccountUtil.toAccount(
 			_accountService.addAccount(
-				account.getName(), account.getDescription(), 0, 0,
+				account.getName(), account.getDescription(), 0,
 				account.getContactEmailAddress(),
 				account.getProfileEmailAddress(), account.getPhoneNumber(),
 				account.getFaxNumber(), account.getWebsite(), status));
@@ -90,7 +90,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		return AccountUtil.toAccount(
 			_accountService.updateAccount(
-				accountId, account.getName(), account.getDescription(), 0, 0,
+				accountId, account.getName(), account.getDescription(), 0,
 				account.getContactEmailAddress(),
 				account.getProfileEmailAddress(), account.getPhoneNumber(),
 				account.getFaxNumber(), account.getWebsite(), status));

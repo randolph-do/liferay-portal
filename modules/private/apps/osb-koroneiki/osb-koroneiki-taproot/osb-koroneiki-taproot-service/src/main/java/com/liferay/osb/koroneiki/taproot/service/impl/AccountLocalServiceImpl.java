@@ -42,9 +42,8 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 	public Account addAccount(
 			long userId, String name, String description, long logoId,
-			long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -60,7 +59,6 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		account.setName(name);
 		account.setDescription(description);
 		account.setLogoId(logoId);
-		account.setAddressId(addressId);
 		account.setContactEmailAddress(contactEmailAddress);
 		account.setProfileEmailAddress(profileEmailAddress);
 		account.setPhoneNumber(phoneNumber);
@@ -116,9 +114,8 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 	public Account updateAccount(
 			long userId, long accountId, String name, String description,
-			long logoId, long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			long logoId, String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -130,7 +127,6 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		account.setName(name);
 		account.setDescription(description);
 		account.setLogoId(logoId);
-		account.setAddressId(addressId);
 		account.setContactEmailAddress(contactEmailAddress);
 		account.setProfileEmailAddress(profileEmailAddress);
 		account.setPhoneNumber(phoneNumber);

@@ -102,12 +102,12 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		if (accountId <= 0) {
 			_accountService.addAccount(
-				name, description, 0, 0, contactEmailAddress,
+				name, description, 0, contactEmailAddress,
 				profileEmailAddress, phoneNumber, faxNumber, website, status);
 		}
 		else {
 			_accountService.updateAccount(
-				accountId, name, description, 0, 0, contactEmailAddress,
+				accountId, name, description, 0, contactEmailAddress,
 				profileEmailAddress, phoneNumber, faxNumber, website, status);
 		}
 	}

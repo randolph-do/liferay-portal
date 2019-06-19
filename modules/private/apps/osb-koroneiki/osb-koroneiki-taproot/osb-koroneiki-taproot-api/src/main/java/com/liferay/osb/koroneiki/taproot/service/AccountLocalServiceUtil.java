@@ -54,13 +54,12 @@ public class AccountLocalServiceUtil {
 
 	public static com.liferay.osb.koroneiki.taproot.model.Account addAccount(
 			long userId, String name, String description, long logoId,
-			long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAccount(
-			userId, name, description, logoId, addressId, contactEmailAddress,
+			userId, name, description, logoId, contactEmailAddress,
 			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 
@@ -324,15 +323,13 @@ public class AccountLocalServiceUtil {
 
 	public static com.liferay.osb.koroneiki.taproot.model.Account updateAccount(
 			long userId, long accountId, String name, String description,
-			long logoId, long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			long logoId, String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAccount(
-			userId, accountId, name, description, logoId, addressId,
-			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
-			website, status);
+			userId, accountId, name, description, logoId, contactEmailAddress,
+			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 
 	public static AccountLocalService getService() {

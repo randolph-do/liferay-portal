@@ -74,9 +74,8 @@ public interface AccountLocalService
 
 	public Account addAccount(
 			long userId, String name, String description, long logoId,
-			long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException;
 
 	/**
@@ -270,9 +269,8 @@ public interface AccountLocalService
 
 	public Account updateAccount(
 			long userId, long accountId, String name, String description,
-			long logoId, long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			long logoId, String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException;
 
 }

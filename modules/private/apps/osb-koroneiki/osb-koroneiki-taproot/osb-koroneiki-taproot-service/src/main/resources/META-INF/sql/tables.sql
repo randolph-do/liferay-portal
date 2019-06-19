@@ -8,7 +8,6 @@ create table Koroneiki_Account (
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
 	logoId LONG,
-	addressId LONG,
 	contactEmailAddress VARCHAR(75) null,
 	profileEmailAddress VARCHAR(75) null,
 	phoneNumber VARCHAR(75) null,

@@ -50,7 +50,7 @@ public interface AccountService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AccountServiceUtil} to access the account remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.AccountServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Account addAccount(
-			String name, String description, long logoId, long addressId,
+			String name, String description, long logoId,
 			String contactEmailAddress, String profileEmailAddress,
 			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException;
@@ -69,9 +69,8 @@ public interface AccountService extends BaseService {
 
 	public Account updateAccount(
 			long accountId, String name, String description, long logoId,
-			long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException;
 
 }

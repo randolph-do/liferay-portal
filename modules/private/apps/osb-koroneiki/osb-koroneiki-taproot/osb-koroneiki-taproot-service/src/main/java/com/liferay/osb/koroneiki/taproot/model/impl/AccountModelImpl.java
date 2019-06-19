@@ -82,8 +82,7 @@ public class AccountModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"logoId", Types.BIGINT}, {"addressId", Types.BIGINT},
-		{"contactEmailAddress", Types.VARCHAR},
+		{"logoId", Types.BIGINT}, {"contactEmailAddress", Types.VARCHAR},
 		{"profileEmailAddress", Types.VARCHAR}, {"phoneNumber", Types.VARCHAR},
 		{"faxNumber", Types.VARCHAR}, {"website", Types.VARCHAR},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
@@ -104,7 +103,6 @@ public class AccountModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("addressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contactEmailAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("profileEmailAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("phoneNumber", Types.VARCHAR);
@@ -118,7 +116,7 @@ public class AccountModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_Account (uuid_ VARCHAR(75) null,accountId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,logoId LONG,addressId LONG,contactEmailAddress VARCHAR(75) null,profileEmailAddress VARCHAR(75) null,phoneNumber VARCHAR(75) null,faxNumber VARCHAR(75) null,website VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
+		"create table Koroneiki_Account (uuid_ VARCHAR(75) null,accountId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,logoId LONG,contactEmailAddress VARCHAR(75) null,profileEmailAddress VARCHAR(75) null,phoneNumber VARCHAR(75) null,faxNumber VARCHAR(75) null,website VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_Account";
 
@@ -170,7 +168,6 @@ public class AccountModelImpl
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setLogoId(soapModel.getLogoId());
-		model.setAddressId(soapModel.getAddressId());
 		model.setContactEmailAddress(soapModel.getContactEmailAddress());
 		model.setProfileEmailAddress(soapModel.getProfileEmailAddress());
 		model.setPhoneNumber(soapModel.getPhoneNumber());
@@ -357,9 +354,6 @@ public class AccountModelImpl
 		attributeGetterFunctions.put("logoId", Account::getLogoId);
 		attributeSetterBiConsumers.put(
 			"logoId", (BiConsumer<Account, Long>)Account::setLogoId);
-		attributeGetterFunctions.put("addressId", Account::getAddressId);
-		attributeSetterBiConsumers.put(
-			"addressId", (BiConsumer<Account, Long>)Account::setAddressId);
 		attributeGetterFunctions.put(
 			"contactEmailAddress", Account::getContactEmailAddress);
 		attributeSetterBiConsumers.put(
@@ -564,17 +558,6 @@ public class AccountModelImpl
 	@Override
 	public void setLogoId(long logoId) {
 		_logoId = logoId;
-	}
-
-	@JSON
-	@Override
-	public long getAddressId() {
-		return _addressId;
-	}
-
-	@Override
-	public void setAddressId(long addressId) {
-		_addressId = addressId;
 	}
 
 	@JSON
@@ -869,7 +852,6 @@ public class AccountModelImpl
 		accountImpl.setName(getName());
 		accountImpl.setDescription(getDescription());
 		accountImpl.setLogoId(getLogoId());
-		accountImpl.setAddressId(getAddressId());
 		accountImpl.setContactEmailAddress(getContactEmailAddress());
 		accountImpl.setProfileEmailAddress(getProfileEmailAddress());
 		accountImpl.setPhoneNumber(getPhoneNumber());
@@ -1006,8 +988,6 @@ public class AccountModelImpl
 		}
 
 		accountCacheModel.logoId = getLogoId();
-
-		accountCacheModel.addressId = getAddressId();
 
 		accountCacheModel.contactEmailAddress = getContactEmailAddress();
 
@@ -1171,7 +1151,6 @@ public class AccountModelImpl
 	private String _name;
 	private String _description;
 	private long _logoId;
-	private long _addressId;
 	private String _contactEmailAddress;
 	private String _profileEmailAddress;
 	private String _phoneNumber;

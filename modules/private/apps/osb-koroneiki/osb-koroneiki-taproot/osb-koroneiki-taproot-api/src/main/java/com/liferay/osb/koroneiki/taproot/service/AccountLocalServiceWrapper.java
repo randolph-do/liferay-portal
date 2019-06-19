@@ -49,13 +49,12 @@ public class AccountLocalServiceWrapper
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Account addAccount(
 			long userId, String name, String description, long logoId,
-			long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountLocalService.addAccount(
-			userId, name, description, logoId, addressId, contactEmailAddress,
+			userId, name, description, logoId, contactEmailAddress,
 			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 
@@ -340,15 +339,13 @@ public class AccountLocalServiceWrapper
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Account updateAccount(
 			long userId, long accountId, String name, String description,
-			long logoId, long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			long logoId, String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountLocalService.updateAccount(
-			userId, accountId, name, description, logoId, addressId,
-			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
-			website, status);
+			userId, accountId, name, description, logoId, contactEmailAddress,
+			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,8 +83,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		sb.append(description);
 		sb.append(", logoId=");
 		sb.append(logoId);
-		sb.append(", addressId=");
-		sb.append(addressId);
 		sb.append(", contactEmailAddress=");
 		sb.append(contactEmailAddress);
 		sb.append(", profileEmailAddress=");
@@ -154,7 +152,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		}
 
 		accountImpl.setLogoId(logoId);
-		accountImpl.setAddressId(addressId);
 
 		if (contactEmailAddress == null) {
 			accountImpl.setContactEmailAddress("");
@@ -235,8 +232,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		description = objectInput.readUTF();
 
 		logoId = objectInput.readLong();
-
-		addressId = objectInput.readLong();
 		contactEmailAddress = objectInput.readUTF();
 		profileEmailAddress = objectInput.readUTF();
 		phoneNumber = objectInput.readUTF();
@@ -283,8 +278,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		}
 
 		objectOutput.writeLong(logoId);
-
-		objectOutput.writeLong(addressId);
 
 		if (contactEmailAddress == null) {
 			objectOutput.writeUTF("");
@@ -351,7 +344,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	public String name;
 	public String description;
 	public long logoId;
-	public long addressId;
 	public String contactEmailAddress;
 	public String profileEmailAddress;
 	public String phoneNumber;

@@ -211,20 +211,6 @@ public interface AccountModel
 	public void setLogoId(long logoId);
 
 	/**
-	 * Returns the address ID of this account.
-	 *
-	 * @return the address ID of this account
-	 */
-	public long getAddressId();
-
-	/**
-	 * Sets the address ID of this account.
-	 *
-	 * @param addressId the address ID of this account
-	 */
-	public void setAddressId(long addressId);
-
-	/**
 	 * Returns the contact email address of this account.
 	 *
 	 * @return the contact email address of this account

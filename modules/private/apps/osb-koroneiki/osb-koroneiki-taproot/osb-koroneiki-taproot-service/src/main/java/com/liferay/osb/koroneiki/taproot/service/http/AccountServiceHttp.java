@@ -56,9 +56,8 @@ public class AccountServiceHttp {
 
 	public static com.liferay.osb.koroneiki.taproot.model.Account addAccount(
 			HttpPrincipal httpPrincipal, String name, String description,
-			long logoId, long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			long logoId, String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -67,9 +66,8 @@ public class AccountServiceHttp {
 				_addAccountParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, name, description, logoId, addressId,
-				contactEmailAddress, profileEmailAddress, phoneNumber,
-				faxNumber, website, status);
+				methodKey, name, description, logoId, contactEmailAddress,
+				profileEmailAddress, phoneNumber, faxNumber, website, status);
 
 			Object returnObj = null;
 
@@ -175,9 +173,9 @@ public class AccountServiceHttp {
 
 	public static com.liferay.osb.koroneiki.taproot.model.Account updateAccount(
 			HttpPrincipal httpPrincipal, long accountId, String name,
-			String description, long logoId, long addressId,
-			String contactEmailAddress, String profileEmailAddress,
-			String phoneNumber, String faxNumber, String website, int status)
+			String description, long logoId, String contactEmailAddress,
+			String profileEmailAddress, String phoneNumber, String faxNumber,
+			String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -186,7 +184,7 @@ public class AccountServiceHttp {
 				_updateAccountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, accountId, name, description, logoId, addressId,
+				methodKey, accountId, name, description, logoId,
 				contactEmailAddress, profileEmailAddress, phoneNumber,
 				faxNumber, website, status);
 
@@ -219,8 +217,8 @@ public class AccountServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(AccountServiceHttp.class);
 
 	private static final Class<?>[] _addAccountParameterTypes0 = new Class[] {
-		String.class, String.class, long.class, long.class, String.class,
-		String.class, String.class, String.class, String.class, int.class
+		String.class, String.class, long.class, String.class, String.class,
+		String.class, String.class, String.class, int.class
 	};
 	private static final Class<?>[] _deleteAccountParameterTypes1 =
 		new Class[] {long.class};
@@ -229,9 +227,8 @@ public class AccountServiceHttp {
 	};
 	private static final Class<?>[] _updateAccountParameterTypes3 =
 		new Class[] {
-			long.class, String.class, String.class, long.class, long.class,
-			String.class, String.class, String.class, String.class,
-			String.class, int.class
+			long.class, String.class, String.class, long.class, String.class,
+			String.class, String.class, String.class, String.class, int.class
 		};
 
 }

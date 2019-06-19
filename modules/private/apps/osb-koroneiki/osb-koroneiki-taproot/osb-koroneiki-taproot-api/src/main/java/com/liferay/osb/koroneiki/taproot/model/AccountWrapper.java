@@ -55,7 +55,6 @@ public class AccountWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("logoId", getLogoId());
-		attributes.put("addressId", getAddressId());
 		attributes.put("contactEmailAddress", getContactEmailAddress());
 		attributes.put("profileEmailAddress", getProfileEmailAddress());
 		attributes.put("phoneNumber", getPhoneNumber());
@@ -124,12 +123,6 @@ public class AccountWrapper
 
 		if (logoId != null) {
 			setLogoId(logoId);
-		}
-
-		Long addressId = (Long)attributes.get("addressId");
-
-		if (addressId != null) {
-			setAddressId(addressId);
 		}
 
 		String contactEmailAddress = (String)attributes.get(
@@ -203,16 +196,6 @@ public class AccountWrapper
 	@Override
 	public long getAccountId() {
 		return model.getAccountId();
-	}
-
-	/**
-	 * Returns the address ID of this account.
-	 *
-	 * @return the address ID of this account
-	 */
-	@Override
-	public long getAddressId() {
-		return model.getAddressId();
 	}
 
 	/**
@@ -537,16 +520,6 @@ public class AccountWrapper
 	@Override
 	public void setAccountId(long accountId) {
 		model.setAccountId(accountId);
-	}
-
-	/**
-	 * Sets the address ID of this account.
-	 *
-	 * @param addressId the address ID of this account
-	 */
-	@Override
-	public void setAddressId(long addressId) {
-		model.setAddressId(addressId);
 	}
 
 	/**

@@ -40,14 +40,14 @@ public class AccountServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.AccountServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Account addAccount(
-			String name, String description, long logoId, long addressId,
+			String name, String description, long logoId,
 			String contactEmailAddress, String profileEmailAddress,
 			String phoneNumber, String faxNumber, String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAccount(
-			name, description, logoId, addressId, contactEmailAddress,
-			profileEmailAddress, phoneNumber, faxNumber, website, status);
+			name, description, logoId, contactEmailAddress, profileEmailAddress,
+			phoneNumber, faxNumber, website, status);
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Account deleteAccount(
@@ -75,15 +75,13 @@ public class AccountServiceUtil {
 
 	public static com.liferay.osb.koroneiki.taproot.model.Account updateAccount(
 			long accountId, String name, String description, long logoId,
-			long addressId, String contactEmailAddress,
-			String profileEmailAddress, String phoneNumber, String faxNumber,
-			String website, int status)
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAccount(
-			accountId, name, description, logoId, addressId,
-			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
-			website, status);
+			accountId, name, description, logoId, contactEmailAddress,
+			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 
 	public static AccountService getService() {

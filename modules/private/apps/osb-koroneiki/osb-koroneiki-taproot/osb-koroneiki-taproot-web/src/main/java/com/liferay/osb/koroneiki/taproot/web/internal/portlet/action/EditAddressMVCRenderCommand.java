@@ -18,9 +18,12 @@ import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -30,16 +33,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Amos Fong
+ * @author Kyle Bischof
  */
 @Component(
 	property = {
 		"javax.portlet.name=" + TaprootPortletKeys.ACCOUNTS_ADMIN,
-		"mvc.command.name=/accounts_admin/edit_account"
+		"mvc.command.name=/accounts_admin/edit_address"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditAccountMVCRenderCommand implements MVCRenderCommand {
+public class EditAddressMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -48,6 +51,7 @@ public class EditAccountMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			long accountId = ParamUtil.getLong(renderRequest, "accountId");
+			long addressId = ParamUtil.getLong(renderRequest, "addressId");
 
 			if (accountId > 0) {
 				Account account = _accountLocalService.getAccount(accountId);
@@ -55,33 +59,25 @@ public class EditAccountMVCRenderCommand implements MVCRenderCommand {
 				renderRequest.setAttribute(TaprootWebKeys.ACCOUNT, account);
 			}
 
-			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
+			if (addressId > 0) {
+				Address address = _addressLocalService.getAddress(addressId);
 
-			if (tabs1.equals("addresses")) {
-				return "/accounts_admin/edit_account_addresses.jsp";
+				renderRequest.setAttribute(WebKeys.ADDRESS, address);
 			}
 
-			if (tabs1.equals("contact-roles")) {
-				return "/accounts_admin/edit_account_contact_roles.jsp";
-			}
-			else if (tabs1.equals("external-links")) {
-				return "/accounts_admin/edit_account_external_links.jsp";
-			}
-			else if (tabs1.equals("projects")) {
-				return "/accounts_admin/edit_account_projects.jsp";
-			}
-			else {
-				return "/accounts_admin/edit_account.jsp";
-			}
+			return "/accounts_admin/edit_address.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/accounts_admin/error.jsp";
+			throw new PortletException(e);
 		}
 	}
 
 	@Reference
 	private AccountLocalService _accountLocalService;
+
+	@Reference
+	private AddressLocalService _addressLocalService;
 
 }

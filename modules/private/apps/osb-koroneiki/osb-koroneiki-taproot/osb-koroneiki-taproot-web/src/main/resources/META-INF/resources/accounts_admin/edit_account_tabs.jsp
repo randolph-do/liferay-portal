@@ -49,6 +49,17 @@ long accountId = BeanParamUtil.getLong(koroneikiAccount, request, "accountId");
 
 				add(
 					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("addresses"));
+
+						if (koroneikiAccount != null) {
+							navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/accounts_admin/edit_account", "tabs1", "addresses", "accountId", accountId);
+						}
+
+						navigationItem.setLabel(LanguageUtil.get(request, "addresses"));
+					});
+
+				add(
+					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("contact-roles"));
 
 						if (koroneikiAccount != null) {

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay OSB Distributed Messaging Subscribing Router
+Bundle-SymbolicName: com.liferay.osb.distributed.messaging.subscribing.router
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.osb.distributed.messaging.subscribing.router.base

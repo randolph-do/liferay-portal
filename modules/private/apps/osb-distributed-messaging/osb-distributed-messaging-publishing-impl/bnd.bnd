@@ -1,0 +1,3 @@
+Bundle-Name: Liferay OSB Distributed Messaging Publishing Implementation
+Bundle-SymbolicName: com.liferay.osb.distributed.messaging.publishing.impl
+Bundle-Version: 1.0.0

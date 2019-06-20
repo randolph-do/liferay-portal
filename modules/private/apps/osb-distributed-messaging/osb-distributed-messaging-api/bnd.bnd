@@ -1,0 +1,4 @@
+Bundle-Name: Liferay OSB Distributed Messaging API
+Bundle-SymbolicName: com.liferay.osb.distributed.messaging.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.osb.distributed.messaging

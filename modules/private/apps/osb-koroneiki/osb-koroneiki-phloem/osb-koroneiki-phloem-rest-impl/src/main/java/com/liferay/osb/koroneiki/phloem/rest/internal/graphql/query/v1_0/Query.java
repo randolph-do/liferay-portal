@@ -42,12 +42,10 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -157,7 +155,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Account getAccount(@GraphQLName("accountId") Long accountId)
 		throws Exception {
 
@@ -168,7 +165,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<AuditEntry> getAccountAuditEntriesPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -188,7 +184,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public AuditEntry getAuditEntry(
 			@GraphQLName("auditEntryId") Long auditEntryId)
 		throws Exception {
@@ -201,7 +196,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<AuditEntry> getContactRoleAuditEntriesPage(
 			@GraphQLName("contactRoleId") Long contactRoleId,
 			@GraphQLName("pageSize") int pageSize,
@@ -221,7 +215,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<AuditEntry> getContactAuditEntriesPage(
 			@GraphQLName("contactId") Long contactId,
 			@GraphQLName("pageSize") int pageSize,
@@ -241,7 +234,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<AuditEntry> getProjectAuditEntriesPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
@@ -261,7 +253,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<AuditEntry> getTeamRoleAuditEntriesPage(
 			@GraphQLName("teamRoleId") Long teamRoleId,
 			@GraphQLName("pageSize") int pageSize,
@@ -281,7 +272,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<AuditEntry> getTeamAuditEntriesPage(
 			@GraphQLName("teamId") Long teamId,
 			@GraphQLName("pageSize") int pageSize,
@@ -301,7 +291,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Contact> getAccountContactsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -320,7 +309,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Contact getContact(@GraphQLName("contactId") Long contactId)
 		throws Exception {
 
@@ -331,7 +319,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Contact> getProjectContactsPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
@@ -350,7 +337,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public ContactRole getContactRole(
 			@GraphQLName("contactRoleId") Long contactRoleId)
 		throws Exception {
@@ -363,7 +349,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ExternalLink> getAccountExternalLinksPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -383,7 +368,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ExternalLink> getContactExternalLinksPage(
 			@GraphQLName("contactId") Long contactId,
 			@GraphQLName("pageSize") int pageSize,
@@ -403,7 +387,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public ExternalLink getExternalLink(
 			@GraphQLName("externalLinkId") Long externalLinkId)
 		throws Exception {
@@ -416,7 +399,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ExternalLink>
 			getProductConsumptionExternalLinksPage(
 				@GraphQLName("productConsumptionId") Long productConsumptionId,
@@ -437,7 +419,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ExternalLink>
 			getProductPurchaseExternalLinksPage(
 				@GraphQLName("productPurchaseId") Long productPurchaseId,
@@ -458,7 +439,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ExternalLink> getProductExternalLinksPage(
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("pageSize") int pageSize,
@@ -478,7 +458,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ExternalLink> getProjectExternalLinksPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
@@ -498,7 +477,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ExternalLink> getTeamExternalLinksPage(
 			@GraphQLName("teamId") Long teamId,
 			@GraphQLName("pageSize") int pageSize,
@@ -518,7 +496,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<PostalAddress> getAccountPostalAddressesPage(
 			@GraphQLName("accountId") Long accountId)
 		throws Exception {
@@ -536,7 +513,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public PostalAddress getPostalAddress(
 			@GraphQLName("postalAddressId") Long postalAddressId)
 		throws Exception {
@@ -549,7 +525,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Product> getProductsPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -567,7 +542,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Product getProduct(@GraphQLName("productId") Long productId)
 		throws Exception {
 
@@ -578,7 +552,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ProductConsumption>
 			getAccountProductConsumptionsPage(
 				@GraphQLName("accountId") Long accountId,
@@ -600,7 +573,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public ProductConsumption getProductConsumption(
 			@GraphQLName("productConsumptionId") Long productConsumptionId)
 		throws Exception {
@@ -614,7 +586,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ProductConsumption>
 			getProjectProductConsumptionsPage(
 				@GraphQLName("projectId") Long projectId,
@@ -636,7 +607,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ProductPurchase> getAccountProductPurchasesPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -656,7 +626,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public ProductPurchase getProductPurchase(
 			@GraphQLName("productPurchaseId") Long productPurchaseId)
 		throws Exception {
@@ -669,7 +638,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ProductPurchase> getProjectProductPurchasesPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
@@ -689,7 +657,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Project> getAccountProjectsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -708,7 +675,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Project getProject(@GraphQLName("projectId") Long projectId)
 		throws Exception {
 
@@ -719,7 +685,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Team> getAccountTeamsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -738,7 +703,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Team getTeam(@GraphQLName("teamId") Long teamId) throws Exception {
 		return _applyComponentServiceObjects(
 			_teamResourceComponentServiceObjects,
@@ -747,7 +711,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public TeamRole getTeamRole(@GraphQLName("teamRoleId") Long teamRoleId)
 		throws Exception {
 

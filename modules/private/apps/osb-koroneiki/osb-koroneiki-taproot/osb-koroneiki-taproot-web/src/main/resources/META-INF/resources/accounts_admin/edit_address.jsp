@@ -20,10 +20,9 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 Account koroneikiAccount = (Account)request.getAttribute(TaprootWebKeys.ACCOUNT);
+Address address = (Address)request.getAttribute(WebKeys.ADDRESS);
 
 long addressId = ParamUtil.getLong(request, "addressId");
-
-Address address = (Address)request.getAttribute(WebKeys.ADDRESS);
 
 long countryId = 0L;
 long regionId = 0L;
@@ -32,11 +31,13 @@ if (address != null) {
 	countryId = address.getCountryId();
 	regionId = address.getRegionId();
 }
+
+renderResponse.setTitle(koroneikiAccount.getName());
 %>
 
 <portlet:actionURL name="/accounts_admin/edit_address" var="editAddressURL" />
 
-<aui:form action="<%= editAddressURL %>" method="post" name="fm">
+<aui:form action="<%= editAddressURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="className" type="hidden" value="<%= Account.class.getName() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(koroneikiAccount.getAccountId()) %>" />

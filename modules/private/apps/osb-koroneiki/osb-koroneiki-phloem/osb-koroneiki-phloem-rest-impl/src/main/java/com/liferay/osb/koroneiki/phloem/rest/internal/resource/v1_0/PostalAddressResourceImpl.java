@@ -20,6 +20,7 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.PostalAddressResource
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountService;
 import com.liferay.osb.koroneiki.taproot.service.AddressService;
+import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -76,15 +79,38 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			Long accountId, PostalAddress postalAddress)
 		throws Exception {
 
-		Country country = _countryService.getCountryByName(
-			postalAddress.getAddressCountry());
+		long countryId = 0;
+		long regionId = 0;
 
-		Region region = _regionService.getRegion(
-			country.getCountryId(), postalAddress.getAddressRegion());
+		if (Validator.isNotNull(postalAddress.getAddressCountry())) {
+			Country country = _countryService.getCountryByName(
+				postalAddress.getAddressCountry());
 
-		ListType listType = _listTypeService.getListType(
-			postalAddress.getAddressType(),
-			Contact.class.getName() + ".address");
+			countryId = country.getCountryId();
+
+			if (Validator.isNotNull(postalAddress.getAddressRegion())) {
+				Region region = _regionService.getRegion(
+					countryId, postalAddress.getAddressRegion());
+
+				regionId = region.getRegionId();
+			}
+		}
+
+		long listTypeId = 0;
+
+		if (Validator.isNotNull(postalAddress.getAddressType())) {
+			ListType listType = _listTypeService.getListType(
+				postalAddress.getAddressType(),
+				Contact.class.getName() + ".address");
+
+			if (listType == null) {
+				throw new NoSuchListTypeException(
+					"Address type " + postalAddress.getAddressType() +
+						" is not valid");
+			}
+
+			listTypeId = listType.getListTypeId();
+		}
 
 		return PostalAddressUtil.toPostalAddress(
 			_addressService.addAddress(
@@ -93,9 +119,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 				postalAddress.getStreetAddressLine2(),
 				postalAddress.getStreetAddressLine2(),
 				postalAddress.getAddressLocality(),
-				postalAddress.getPostalCode(), region.getRegionId(),
-				country.getCountryId(), listType.getListTypeId(),
-				postalAddress.getMailing(), postalAddress.getPrimary(),
+				postalAddress.getPostalCode(), regionId, countryId, listTypeId,
+				GetterUtil.getBoolean(postalAddress.getMailing()),
+				GetterUtil.getBoolean(postalAddress.getPrimary()),
 				new ServiceContext()),
 			contextAcceptLanguage.getPreferredLocale());
 	}
@@ -105,15 +131,38 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
-		Country country = _countryService.getCountryByName(
-			postalAddress.getAddressCountry());
+		long countryId = 0;
+		long regionId = 0;
 
-		Region region = _regionService.getRegion(
-			country.getCountryId(), postalAddress.getAddressRegion());
+		if (Validator.isNotNull(postalAddress.getAddressCountry())) {
+			Country country = _countryService.getCountryByName(
+				postalAddress.getAddressCountry());
 
-		ListType listType = _listTypeService.getListType(
-			postalAddress.getAddressType(),
-			Contact.class.getName() + ".address");
+			countryId = country.getCountryId();
+
+			if (Validator.isNotNull(postalAddress.getAddressRegion())) {
+				Region region = _regionService.getRegion(
+					countryId, postalAddress.getAddressRegion());
+
+				regionId = region.getRegionId();
+			}
+		}
+
+		long listTypeId = 0;
+
+		if (Validator.isNotNull(postalAddress.getAddressType())) {
+			ListType listType = _listTypeService.getListType(
+				postalAddress.getAddressType(),
+				Contact.class.getName() + ".address");
+
+			if (listType == null) {
+				throw new NoSuchListTypeException(
+					"Address type " + postalAddress.getAddressType() +
+						" is not valid");
+			}
+
+			listTypeId = listType.getListTypeId();
+		}
 
 		return PostalAddressUtil.toPostalAddress(
 			_addressService.updateAddress(
@@ -121,9 +170,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 				postalAddress.getStreetAddressLine2(),
 				postalAddress.getStreetAddressLine2(),
 				postalAddress.getAddressLocality(),
-				postalAddress.getPostalCode(), region.getRegionId(),
-				country.getCountryId(), listType.getListTypeId(),
-				postalAddress.getMailing(), postalAddress.getPrimary()),
+				postalAddress.getPostalCode(), regionId, countryId, listTypeId,
+				GetterUtil.getBoolean(postalAddress.getMailing()),
+				GetterUtil.getBoolean(postalAddress.getPrimary())),
 			contextAcceptLanguage.getPreferredLocale());
 	}
 

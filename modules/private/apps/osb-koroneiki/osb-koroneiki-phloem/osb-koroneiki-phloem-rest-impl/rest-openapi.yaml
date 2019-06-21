@@ -250,12 +250,14 @@ components:
                     readOnly: true
                     type: integer
                 mailing:
+                    default: false
                     description: A flag that identifies whether this is a mailing addrress.
                     type: boolean
                 postalCode:
                     description: The address's postal code (e.g., zip code).
                     type: string
                 primary:
+                    default: false
                     description: A flag that identifies whether this is the main address of the user/organization.
                     type: boolean
                 streetAddressLine1:

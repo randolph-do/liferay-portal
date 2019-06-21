@@ -198,6 +198,13 @@ public class AccountWrapper
 		return model.getAccountId();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Address>
+		getAddresses() {
+
+		return model.getAddresses();
+	}
+
 	/**
 	 * Returns the company ID of this account.
 	 *

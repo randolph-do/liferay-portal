@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import javax.annotation.Generated;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * To access this resource, run:
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Generated("")
-@ProviderType
 public interface TeamRoleResource {
 
 	public TeamRole postTeamRole(TeamRole teamRole) throws Exception;

@@ -376,6 +376,14 @@ public abstract class BaseAccountResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("addresses", additionalAssertFieldName)) {
+				if (account.getAddresses() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"contactEmailAddress", additionalAssertFieldName)) {
 
@@ -492,6 +500,16 @@ public abstract class BaseAccountResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("addresses", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getAddresses(), account2.getAddresses())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"contactEmailAddress", additionalAssertFieldName)) {
@@ -676,6 +694,11 @@ public abstract class BaseAccountResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("addresses")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("contactEmailAddress")) {
 			sb.append("'");

@@ -58,6 +58,9 @@ public interface Account extends AccountModel, PersistedModel {
 
 		};
 
+	public java.util.List<com.liferay.portal.kernel.model.Address>
+		getAddresses();
+
 	public java.util.List<com.liferay.osb.koroneiki.root.model.ExternalLink>
 		getExternalLinks();
 

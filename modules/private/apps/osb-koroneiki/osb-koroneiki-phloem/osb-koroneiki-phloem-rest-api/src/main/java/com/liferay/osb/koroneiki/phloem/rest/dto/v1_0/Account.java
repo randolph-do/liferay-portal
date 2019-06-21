@@ -20,8 +20,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -50,6 +51,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Schema(requiredProperties = {"name"})
 @XmlRootElement(name = "Account")
 public class Account {
+
+	@Schema(description = "The account's postal addresses.")
+	public PostalAddress[] getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(PostalAddress[] addresses) {
+		this.addresses = addresses;
+	}
+
+	@JsonIgnore
+	public void setAddresses(
+		UnsafeSupplier<PostalAddress[], Exception> addressesUnsafeSupplier) {
+
+		try {
+			addresses = addressesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected PostalAddress[] addresses;
 
 	@Schema(description = "The account's contact email address.")
 	public String getContactEmailAddress() {
@@ -417,6 +446,26 @@ public class Account {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (addresses != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addresses\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < addresses.length; i++) {
+				sb.append(String.valueOf(addresses[i]));
+
+				if ((i + 1) < addresses.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (contactEmailAddress != null) {
 			if (sb.length() > 1) {

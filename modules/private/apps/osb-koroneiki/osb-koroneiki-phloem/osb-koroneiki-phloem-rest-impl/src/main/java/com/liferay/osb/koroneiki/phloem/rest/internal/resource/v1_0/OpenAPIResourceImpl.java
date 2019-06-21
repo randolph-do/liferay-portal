@@ -86,6 +86,8 @@ public class OpenAPIResourceImpl {
 
 			add(ExternalLinkResourceImpl.class);
 
+			add(PostalAddressResourceImpl.class);
+
 			add(ProductResourceImpl.class);
 
 			add(ProductConsumptionResourceImpl.class);

@@ -29,6 +29,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class Account {
 
+	public PostalAddress[] getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(PostalAddress[] addresses) {
+		this.addresses = addresses;
+	}
+
+	public void setAddresses(
+		UnsafeSupplier<PostalAddress[], Exception> addressesUnsafeSupplier) {
+
+		try {
+			addresses = addressesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PostalAddress[] addresses;
+
 	public String getContactEmailAddress() {
 		return contactEmailAddress;
 	}

@@ -21,6 +21,7 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.PostalAddressResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductResource;
@@ -56,6 +57,8 @@ public class ServletDataImpl implements ServletData {
 			_contactRoleResourceComponentServiceObjects);
 		Mutation.setExternalLinkResourceComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects);
+		Mutation.setPostalAddressResourceComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects);
 		Mutation.setProductResourceComponentServiceObjects(
 			_productResourceComponentServiceObjects);
 		Mutation.setProductConsumptionResourceComponentServiceObjects(
@@ -79,6 +82,8 @@ public class ServletDataImpl implements ServletData {
 			_contactRoleResourceComponentServiceObjects);
 		Query.setExternalLinkResourceComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects);
+		Query.setPostalAddressResourceComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects);
 		Query.setProductResourceComponentServiceObjects(
 			_productResourceComponentServiceObjects);
 		Query.setProductConsumptionResourceComponentServiceObjects(
@@ -98,11 +103,7 @@ public class ServletDataImpl implements ServletData {
 		return new Mutation();
 	}
 
-	/**
-	 * @deprecated
-	 */
 	@Override
-	@Deprecated
 	public String getPath() {
 		return "/koroneiki-rest-graphql/v1_0";
 	}
@@ -127,6 +128,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ExternalLinkResource>
 		_externalLinkResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PostalAddressResource>
+		_postalAddressResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductResource>

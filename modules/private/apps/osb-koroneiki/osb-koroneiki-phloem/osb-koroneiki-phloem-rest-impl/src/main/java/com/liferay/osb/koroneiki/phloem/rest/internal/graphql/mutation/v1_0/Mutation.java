@@ -18,6 +18,7 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.PostalAddress;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductPurchase;
@@ -28,6 +29,7 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.PostalAddressResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductResource;
@@ -38,8 +40,10 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
+import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -82,6 +86,14 @@ public class Mutation {
 
 		_externalLinkResourceComponentServiceObjects =
 			externalLinkResourceComponentServiceObjects;
+	}
+
+	public static void setPostalAddressResourceComponentServiceObjects(
+		ComponentServiceObjects<PostalAddressResource>
+			postalAddressResourceComponentServiceObjects) {
+
+		_postalAddressResourceComponentServiceObjects =
+			postalAddressResourceComponentServiceObjects;
 	}
 
 	public static void setProductResourceComponentServiceObjects(
@@ -133,6 +145,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public Account postAccount(@GraphQLName("account") Account account)
 		throws Exception {
 
@@ -142,6 +155,7 @@ public class Mutation {
 			accountResource -> accountResource.postAccount(account));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteAccount(@GraphQLName("accountId") Long accountId)
 		throws Exception {
 
@@ -151,6 +165,7 @@ public class Mutation {
 			accountResource -> accountResource.deleteAccount(accountId));
 	}
 
+	@GraphQLInvokeDetached
 	public Account putAccount(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("account") Account account)
@@ -162,6 +177,7 @@ public class Mutation {
 			accountResource -> accountResource.putAccount(accountId, account));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteAccountContact(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("contactIds") Long[] contactIds)
@@ -174,6 +190,7 @@ public class Mutation {
 				accountId, contactIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void putAccountContact(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("contactIds") Long[] contactIds)
@@ -186,6 +203,7 @@ public class Mutation {
 				accountId, contactIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteAccountContactRole(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("contactId") Long contactId,
@@ -199,6 +217,7 @@ public class Mutation {
 				accountId, contactId, contactRoleIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void putAccountContactRole(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("contactId") Long contactId,
@@ -213,6 +232,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public Contact postContact(@GraphQLName("contact") Contact contact)
 		throws Exception {
 
@@ -222,6 +242,7 @@ public class Mutation {
 			contactResource -> contactResource.postContact(contact));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteContact(@GraphQLName("contactId") Long contactId)
 		throws Exception {
 
@@ -232,6 +253,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ContactRole postContactRole(
 			@GraphQLName("contactRole") ContactRole contactRole)
 		throws Exception {
@@ -243,6 +265,7 @@ public class Mutation {
 				contactRole));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteContactRole(
 			@GraphQLName("contactRoleId") Long contactRoleId)
 		throws Exception {
@@ -254,6 +277,7 @@ public class Mutation {
 				contactRoleId));
 	}
 
+	@GraphQLInvokeDetached
 	public ContactRole putContactRole(
 			@GraphQLName("contactRoleId") Long contactRoleId,
 			@GraphQLName("contactRole") ContactRole contactRole)
@@ -267,6 +291,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postAccountExternalLink(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("externalLink") ExternalLink externalLink)
@@ -281,6 +306,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postContactExternalLink(
 			@GraphQLName("contactId") Long contactId,
 			@GraphQLName("externalLink") ExternalLink externalLink)
@@ -294,6 +320,7 @@ public class Mutation {
 					contactId, externalLink));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteExternalLink(
 			@GraphQLName("externalLinkId") Long externalLinkId)
 		throws Exception {
@@ -306,6 +333,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postProductConsumptionExternalLink(
 			@GraphQLName("productConsumptionId") Long productConsumptionId,
 			@GraphQLName("externalLink") ExternalLink externalLink)
@@ -320,6 +348,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postProductPurchaseExternalLink(
 			@GraphQLName("productPurchaseId") Long productPurchaseId,
 			@GraphQLName("externalLink") ExternalLink externalLink)
@@ -334,6 +363,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postProductExternalLink(
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("externalLink") ExternalLink externalLink)
@@ -348,6 +378,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postProjectExternalLink(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("externalLink") ExternalLink externalLink)
@@ -362,6 +393,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ExternalLink postTeamExternalLink(
 			@GraphQLName("teamId") Long teamId,
 			@GraphQLName("externalLink") ExternalLink externalLink)
@@ -375,6 +407,47 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
+	public PostalAddress postAccountPostalAddress(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("postalAddress") PostalAddress postalAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.postAccountPostalAddress(
+					accountId, postalAddress));
+	}
+
+	@GraphQLInvokeDetached
+	public void deletePostalAddress(
+			@GraphQLName("postalAddressId") Long postalAddressId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource -> postalAddressResource.deletePostalAddress(
+				postalAddressId));
+	}
+
+	@GraphQLInvokeDetached
+	public PostalAddress putPostalAddress(
+			@GraphQLName("postalAddressId") Long postalAddressId,
+			@GraphQLName("postalAddress") PostalAddress postalAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource -> postalAddressResource.putPostalAddress(
+				postalAddressId, postalAddress));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Product postProduct(@GraphQLName("product") Product product)
 		throws Exception {
 
@@ -384,6 +457,7 @@ public class Mutation {
 			productResource -> productResource.postProduct(product));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteProduct(@GraphQLName("productId") Long productId)
 		throws Exception {
 
@@ -393,6 +467,7 @@ public class Mutation {
 			productResource -> productResource.deleteProduct(productId));
 	}
 
+	@GraphQLInvokeDetached
 	public Product putProduct(
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("product") Product product)
@@ -405,6 +480,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ProductConsumption postAccountProductConsumption(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("productConsumption") ProductConsumption
@@ -419,6 +495,7 @@ public class Mutation {
 					accountId, productConsumption));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteProductConsumption(
 			@GraphQLName("productConsumptionId") Long productConsumptionId)
 		throws Exception {
@@ -432,6 +509,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ProductConsumption postProjectProductConsumption(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("productConsumption") ProductConsumption
@@ -447,6 +525,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ProductPurchase postAccountProductPurchase(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
@@ -460,6 +539,7 @@ public class Mutation {
 					accountId, productPurchase));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteProductPurchase(
 			@GraphQLName("productPurchaseId") Long productPurchaseId)
 		throws Exception {
@@ -472,6 +552,7 @@ public class Mutation {
 					productPurchaseId));
 	}
 
+	@GraphQLInvokeDetached
 	public ProductPurchase putProductPurchase(
 			@GraphQLName("productPurchaseId") Long productPurchaseId,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
@@ -486,6 +567,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public ProductPurchase postProjectProductPurchase(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
@@ -500,6 +582,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public Project postAccountProject(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("project") Project project)
@@ -512,6 +595,7 @@ public class Mutation {
 				accountId, project));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteProject(@GraphQLName("projectId") Long projectId)
 		throws Exception {
 
@@ -521,6 +605,7 @@ public class Mutation {
 			projectResource -> projectResource.deleteProject(projectId));
 	}
 
+	@GraphQLInvokeDetached
 	public Project putProject(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("project") Project project)
@@ -532,6 +617,7 @@ public class Mutation {
 			projectResource -> projectResource.putProject(projectId, project));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteProjectContact(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("contactIds") Long[] contactIds)
@@ -544,6 +630,7 @@ public class Mutation {
 				projectId, contactIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void putProjectContact(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("contactIds") Long[] contactIds)
@@ -556,6 +643,7 @@ public class Mutation {
 				projectId, contactIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteProjectContactRole(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("contactId") Long contactId,
@@ -569,6 +657,7 @@ public class Mutation {
 				projectId, contactId, contactRoleIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void putProjectContactRole(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("contactId") Long contactId,
@@ -582,6 +671,7 @@ public class Mutation {
 				projectId, contactId, contactRoleIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteProjectTeamRole(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("teamId") Long teamId,
@@ -595,6 +685,7 @@ public class Mutation {
 				projectId, teamId, teamRoleIds));
 	}
 
+	@GraphQLInvokeDetached
 	public void putProjectTeamRole(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("teamId") Long teamId,
@@ -609,6 +700,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public Team postAccountTeam(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("team") Team team)
@@ -620,6 +712,7 @@ public class Mutation {
 			teamResource -> teamResource.postAccountTeam(accountId, team));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteTeam(@GraphQLName("teamId") Long teamId)
 		throws Exception {
 
@@ -629,6 +722,7 @@ public class Mutation {
 			teamResource -> teamResource.deleteTeam(teamId));
 	}
 
+	@GraphQLInvokeDetached
 	public Team putTeam(
 			@GraphQLName("teamId") Long teamId, @GraphQLName("team") Team team)
 		throws Exception {
@@ -640,6 +734,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLInvokeDetached
 	public TeamRole postTeamRole(@GraphQLName("teamRole") TeamRole teamRole)
 		throws Exception {
 
@@ -649,6 +744,7 @@ public class Mutation {
 			teamRoleResource -> teamRoleResource.postTeamRole(teamRole));
 	}
 
+	@GraphQLInvokeDetached
 	public void deleteTeamRole(@GraphQLName("teamRoleId") Long teamRoleId)
 		throws Exception {
 
@@ -658,6 +754,7 @@ public class Mutation {
 			teamRoleResource -> teamRoleResource.deleteTeamRole(teamRoleId));
 	}
 
+	@GraphQLInvokeDetached
 	public TeamRole putTeamRole(
 			@GraphQLName("teamRoleId") Long teamRoleId,
 			@GraphQLName("teamRole") TeamRole teamRole)
@@ -738,6 +835,14 @@ public class Mutation {
 		externalLinkResource.setContextCompany(_company);
 	}
 
+	private void _populateResourceContext(
+			PostalAddressResource postalAddressResource)
+		throws Exception {
+
+		postalAddressResource.setContextAcceptLanguage(_acceptLanguage);
+		postalAddressResource.setContextCompany(_company);
+	}
+
 	private void _populateResourceContext(ProductResource productResource)
 		throws Exception {
 
@@ -790,6 +895,8 @@ public class Mutation {
 		_contactRoleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ExternalLinkResource>
 		_externalLinkResourceComponentServiceObjects;
+	private static ComponentServiceObjects<PostalAddressResource>
+		_postalAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductResource>
 		_productResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductConsumptionResource>

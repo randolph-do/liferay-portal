@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -60,6 +61,26 @@ public class AccountSerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (account.getAddresses() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addresses\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getAddresses().length; i++) {
+				sb.append(String.valueOf(account.getAddresses()[i]));
+
+				if ((i + 1) < account.getAddresses().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (account.getContactEmailAddress() != null) {
 			if (sb.length() > 1) {
@@ -253,6 +274,13 @@ public class AccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (account.getAddresses() == null) {
+			map.put("addresses", null);
+		}
+		else {
+			map.put("addresses", String.valueOf(account.getAddresses()));
+		}
+
 		if (account.getContactEmailAddress() == null) {
 			map.put("contactEmailAddress", null);
 		}
@@ -393,7 +421,21 @@ public class AccountSerDes {
 			Account account, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "contactEmailAddress")) {
+			if (Objects.equals(jsonParserFieldName, "addresses")) {
+				if (jsonParserFieldValue != null) {
+					account.setAddresses(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> PostalAddressSerDes.toDTO((String)object)
+						).toArray(
+							size -> new PostalAddress[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "contactEmailAddress")) {
+
 				if (jsonParserFieldValue != null) {
 					account.setContactEmailAddress(
 						(String)jsonParserFieldValue);

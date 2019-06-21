@@ -67,7 +67,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Override
 	public Account getAccount(Long accountId) throws Exception {
-		return AccountUtil.toAccount(_accountService.getAccount(accountId));
+		return AccountUtil.toAccount(
+			_accountService.getAccount(accountId),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override
@@ -79,7 +81,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				account.getName(), account.getDescription(), 0,
 				account.getContactEmailAddress(),
 				account.getProfileEmailAddress(), account.getPhoneNumber(),
-				account.getFaxNumber(), account.getWebsite(), status));
+				account.getFaxNumber(), account.getWebsite(), status),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override
@@ -93,7 +96,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				accountId, account.getName(), account.getDescription(), 0,
 				account.getContactEmailAddress(),
 				account.getProfileEmailAddress(), account.getPhoneNumber(),
-				account.getFaxNumber(), account.getWebsite(), status));
+				account.getFaxNumber(), account.getWebsite(), status),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override

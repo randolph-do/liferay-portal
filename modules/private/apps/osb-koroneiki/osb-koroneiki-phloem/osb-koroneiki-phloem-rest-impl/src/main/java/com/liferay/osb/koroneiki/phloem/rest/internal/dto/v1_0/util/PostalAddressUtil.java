@@ -14,34 +14,37 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
 
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Address;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.PostalAddress;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
 
+import java.util.Locale;
+
 /**
  * @author Kyle Bischof
  */
-public class AddressUtil {
+public class PostalAddressUtil {
 
-	public static Address toAddress(
-			com.liferay.portal.kernel.model.Address address)
-		throws Exception {
+	public static PostalAddress toPostalAddress(
+		Address address, Locale locale) {
 
-		return new Address() {
+		ListType listType = address.getType();
+
+		return new PostalAddress() {
 			{
-				city = address.getCity();
-				className = address.getClassName();
-				classPK = address.getClassPK();
-				mailing = address.getMailing();
-				primary = address.getPrimary();
-				street1 = address.getStreet1();
-				street2 = address.getStreet2();
-				street3 = address.getStreet3();
-				userId = address.getUserId();
-				zip = address.getZip();
+				addressLocality = address.getCity();
+				addressType = listType.getName();
+				id = address.getAddressId();
+				mailing = address.isMailing();
+				postalCode = address.getZip();
+				primary = address.isPrimary();
+				streetAddressLine1 = address.getStreet1();
+				streetAddressLine2 = address.getStreet2();
+				streetAddressLine3 = address.getStreet3();
 
-				setCountry(
+				setAddressCountry(
 					() -> {
 						if (address.getCountryId() <= 0) {
 							return null;
@@ -49,9 +52,9 @@ public class AddressUtil {
 
 						Country country = address.getCountry();
 
-						return country.getName();
+						return country.getName(locale);
 					});
-				setRegion(
+				setAddressRegion(
 					() -> {
 						if (address.getRegionId() <= 0) {
 							return null;
@@ -60,16 +63,6 @@ public class AddressUtil {
 						Region region = address.getRegion();
 
 						return region.getName();
-					});
-				setType(
-					() -> {
-						if (address.getTypeId() <= 0) {
-							return null;
-						}
-
-						ListType type = address.getType();
-
-						return type.getName();
 					});
 			}
 		};

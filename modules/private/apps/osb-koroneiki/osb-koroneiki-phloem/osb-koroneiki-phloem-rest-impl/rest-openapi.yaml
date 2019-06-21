@@ -4,9 +4,9 @@ components:
             description: Represents an account.
             properties:
                 addresses:
-                    description: The account's addresses.
+                    description: The account's postal addresses.
                     items:
-                        $ref: "#/components/schemas/Address"
+                        $ref: "#/components/schemas/PostalAddress"
                     readOnly: true
                     type: array
                 contactEmailAddress:
@@ -56,59 +56,6 @@ components:
                     type: string
             required:
                 - name
-            type: object
-        Address:
-            description: Represents a mailing address.
-            properties:
-                city:
-                    description: The address's city.
-                    type: string
-                className:
-                    description: The className of the address.
-                    readOnly: true
-                    type: string
-                classPK:
-                    description: The primaryKey of the addresses object.
-                    format: int64
-                    readOnly: true
-                    type: integer
-                country:
-                    description: The address's country.
-                    type: string
-                id:
-                    description: The address's ID.
-                    format: int64
-                    readOnly: true
-                    type: integer
-                mailing:
-                    description: A flag that identifies whether this is a mailing address.
-                    type: boolean
-                primary:
-                    description: A flag that identifies whether this is the main address of the Account.
-                    type: boolean
-                region:
-                    description: The address's region.
-                    type: string
-                street1:
-                    description: The street address's first line.
-                    type: string
-                street2:
-                    description: The street address's second line.
-                    type: string
-                street3:
-                    description: The street address's third line.
-                    type: string
-                type:
-                    description: The address's type.
-                    type: string
-                userId:
-                    description: The userId of the user who created the address.
-                    format: int64
-                    readOnly: true
-                    type: integer
-                zip:
-                    description: The address's zip code.
-                    type: string
             type: object
         AuditEntry:
             description: An audit log that records changes to objects.
@@ -281,6 +228,45 @@ components:
                 - domain
                 - entityId
                 - entityName
+            type: object
+        PostalAddress:
+            description: Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress) specification.
+            properties:
+                addressCountry:
+                    description: The address's country (e.g., USA).
+                    type: string
+                addressLocality:
+                    description: The address's locality (e.g., city).
+                    type: string
+                addressRegion:
+                    description: The address's region (e.g., state).
+                    type: string
+                addressType:
+                    description: The address's type.
+                    type: string
+                id:
+                    description: The address's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                mailing:
+                    description: A flag that identifies whether this is a mailing addrress.
+                    type: boolean
+                postalCode:
+                    description: The address's postal code (e.g., zip code).
+                    type: string
+                primary:
+                    description: A flag that identifies whether this is the main address of the user/organization.
+                    type: boolean
+                streetAddressLine1:
+                    description: The street address's first line (e.g., 1600 Amphitheatre Pkwy.).
+                    type: string
+                streetAddressLine2:
+                    description: The street address's second line.
+                    type: string
+                streetAddressLine3:
+                    description: The street address's third line.
+                    type: string
             type: object
         Product:
             description: Represents a product.
@@ -615,40 +601,6 @@ paths:
                                 $ref: "#/components/schemas/Account"
                     description: ""
             tags: ["Account"]
-    "/accounts/{accountId}/addresses":
-        get:
-            description: Retrieves the accounts's addresses.
-            operationId: getAccountAddressesPage
-            parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Address"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Address"
-                                type: array
-                    description: ""
-            tags: ["Address"]
     "/accounts/{accountId}/audit-entries":
         get:
             description: Retrieves the account's audit history.
@@ -890,6 +842,61 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
+    "/accounts/{accountId}/postal-addresses":
+        get:
+            description: Retrieves the accounts's postal addresses.
+            operationId: getAccountPostalAddressesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                    description: ""
+            tags: ["PostalAddress"]
+        post:
+            operationId: postAccountPostalAddress
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                    description: ""
+            tags: ["PostalAddress"]
     "/accounts/{accountId}/product-consumptions":
         get:
             description: Retrieves the account's product consumptions.
@@ -1142,95 +1149,6 @@ paths:
                                 $ref: "#/components/schemas/Team"
                     description: ""
             tags: ["Team"]
-    "/address":
-        post:
-            operationId: postAddress
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Address"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Address"
-                required: true
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Address"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Address"
-                    description: ""
-            tags: ["Address"]
-    "/addresses/{addressId}":
-        delete:
-            operationId: deleteAddress
-            parameters:
-                - in: path
-                  name: addressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["Address"]
-        get:
-            description: Retrieves the address.
-            operationId: getAddress
-            parameters:
-                - in: path
-                  name: addressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Address"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Address"
-                    description: ""
-            tags: ["Address"]
-        put:
-            operationId: putAddress
-            parameters:
-                - in: path
-                  name: addressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Address"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/Address"
-                required: true
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Address"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Address"
-                    description: ""
-            tags: ["Address"]
     "/audit-entries/{auditEntryId}":
         get:
             description: Retrieves the audit entry.
@@ -1571,6 +1489,72 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
+    "/postal-addresses/{postalAddressId}":
+        delete:
+            operationId: deletePostalAddress
+            parameters:
+                - in: path
+                  name: postalAddressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["PostalAddress"]
+        get:
+            description: Retrieves the postal address.
+            operationId: getPostalAddress
+            parameters:
+                - in: path
+                  name: postalAddressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                    description: ""
+            tags: ["PostalAddress"]
+        put:
+            operationId: putPostalAddress
+            parameters:
+                - in: path
+                  name: postalAddressId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                    description: ""
+            tags: ["PostalAddress"]
     "/product-consumptions/{productConsumptionId}":
         delete:
             operationId: deleteProductConsumption

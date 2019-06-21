@@ -15,9 +15,11 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Address;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.PostalAddress;
 import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.Locale;
 
 /**
  * @author Amos Fong
@@ -25,14 +27,17 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 public class AccountUtil {
 
 	public static Account toAccount(
-			com.liferay.osb.koroneiki.taproot.model.Account account)
+			com.liferay.osb.koroneiki.taproot.model.Account account,
+			Locale locale)
 		throws Exception {
 
 		return new Account() {
 			{
 				addresses = TransformUtil.transformToArray(
-					account.getAddresses(), AddressUtil::toAddress,
-					Address.class);
+					account.getAddresses(),
+					address -> PostalAddressUtil.toPostalAddress(
+						address, locale),
+					PostalAddress.class);
 				contactEmailAddress = account.getContactEmailAddress();
 				dateCreated = account.getCreateDate();
 				dateModified = account.getModifiedDate();

@@ -32,7 +32,6 @@
 		<column name="statusDate" type="Date" />
 		<column name="statusMessage" type="String" />
 	</entity>
-	<entity local-service="false" name="Address" remote-service="true" />
 	<entity local-service="true" name="Contact" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

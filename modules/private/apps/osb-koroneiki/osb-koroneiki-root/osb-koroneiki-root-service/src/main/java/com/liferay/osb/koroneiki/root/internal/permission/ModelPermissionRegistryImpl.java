@@ -66,8 +66,7 @@ public class ModelPermissionRegistryImpl implements ModelPermissionRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterModelPermission"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void registerModelPermission(ModelPermission modelPermission) {
 		long classNameId = _classNameLocalService.getClassNameId(

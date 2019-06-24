@@ -78,10 +78,11 @@ public class ServiceProducerAuthVerifier implements AuthVerifier {
 				_log.debug(ae, ae);
 			}
 
-			HttpServletResponse response = accessControlContext.getResponse();
+			HttpServletResponse httpServletResponse =
+				accessControlContext.getResponse();
 
 			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					response.getOutputStream())) {
+					httpServletResponse.getOutputStream())) {
 
 				objectOutputStream.writeObject(ae);
 
@@ -98,8 +99,10 @@ public class ServiceProducerAuthVerifier implements AuthVerifier {
 		return authVerifierResult;
 	}
 
-	protected String[] verify(HttpServletRequest request) throws AuthException {
-		String apiToken = request.getHeader("API_Token");
+	protected String[] verify(HttpServletRequest httpServletRequest)
+		throws AuthException {
+
+		String apiToken = httpServletRequest.getHeader("API_Token");
 
 		if (Validator.isNull(apiToken)) {
 			return null;

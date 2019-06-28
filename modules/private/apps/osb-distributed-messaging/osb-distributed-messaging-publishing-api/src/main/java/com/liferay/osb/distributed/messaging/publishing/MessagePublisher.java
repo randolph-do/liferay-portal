@@ -23,8 +23,8 @@ import java.util.List;
  */
 public interface MessagePublisher {
 
-	public void publish(List<Message> messages) throws Exception;
+	public void publish(String topic, List<Message> messages) throws Exception;
 
-	public void publish(Message message) throws Exception;
+	public void publish(String topic, Message message) throws Exception;
 
 }

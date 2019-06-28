@@ -12,19 +12,23 @@
  *
  */
 
-package com.liferay.osb.distributed.messaging.publishing.broker;
+package com.liferay.osb.distributed.messaging.rabbitmq.connector;
 
-import com.liferay.osb.distributed.messaging.Message;
+import com.rabbitmq.client.Channel;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * @author Amos Fong
  */
-public interface MessageBroker {
+public interface Connection {
 
-	public void publish(String topic, List<Message> messages) throws Exception;
+	public void connect() throws IOException;
 
-	public void publish(String topic, Message message) throws Exception;
+	public Channel createChannel() throws IOException;
+
+	public Channel createChannel(int prefetchCount) throws IOException;
+
+	public void disconnect();
 
 }

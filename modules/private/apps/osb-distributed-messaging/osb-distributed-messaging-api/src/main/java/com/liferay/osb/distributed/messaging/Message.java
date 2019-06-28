@@ -24,16 +24,12 @@ import java.util.Map;
  */
 public class Message extends com.liferay.portal.kernel.messaging.Message {
 
-	public Message(
-		String topic, Map<String, Object> attributes, Object payload) {
-
-		setTopic(topic);
+	public Message(Map<String, Object> attributes, Object payload) {
 		setAttributes(attributes);
 		setPayload(payload);
 	}
 
-	public Message(String topic, Object payload) {
-		setTopic(topic);
+	public Message(Object payload) {
 		setPayload(payload);
 	}
 

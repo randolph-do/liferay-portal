@@ -48,7 +48,9 @@ public class ContactRoleResourceImpl extends BaseContactRoleResourceImpl {
 	public ContactRole postContactRole(ContactRole contactRole)
 		throws Exception {
 
-		int type = ContactRoleType.fromLabel(contactRole.getType());
+		ContactRole.Type contactRoleType = contactRole.getType();
+
+		int type = ContactRoleType.fromLabel(contactRoleType.toString());
 
 		return ContactRoleUtil.toContactRole(
 			_contactRoleService.addContactRole(

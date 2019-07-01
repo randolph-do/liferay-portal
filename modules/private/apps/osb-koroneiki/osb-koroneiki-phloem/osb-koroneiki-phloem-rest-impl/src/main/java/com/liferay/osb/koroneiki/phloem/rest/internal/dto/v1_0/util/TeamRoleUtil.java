@@ -32,7 +32,7 @@ public class TeamRoleUtil {
 				description = teamRole.getDescription();
 				id = teamRole.getTeamRoleId();
 				name = teamRole.getName();
-				type = teamRole.getTypeLabel();
+				type = Type.create(teamRole.getTypeLabel());
 			}
 		};
 	}

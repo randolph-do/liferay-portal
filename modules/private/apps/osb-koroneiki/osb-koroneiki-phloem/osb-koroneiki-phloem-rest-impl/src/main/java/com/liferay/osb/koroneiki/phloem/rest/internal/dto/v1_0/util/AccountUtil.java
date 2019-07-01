@@ -50,7 +50,7 @@ public class AccountUtil {
 				name = account.getName();
 				phoneNumber = account.getPhoneNumber();
 				profileEmailAddress = account.getProfileEmailAddress();
-				status = account.getStatusLabel();
+				status = Status.create(account.getStatusLabel());
 				website = account.getWebsite();
 			}
 		};

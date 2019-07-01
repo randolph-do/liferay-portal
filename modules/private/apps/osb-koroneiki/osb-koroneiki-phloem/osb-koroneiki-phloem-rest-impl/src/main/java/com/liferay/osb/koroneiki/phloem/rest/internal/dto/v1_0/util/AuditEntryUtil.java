@@ -28,7 +28,7 @@ public class AuditEntryUtil {
 
 		return new AuditEntry() {
 			{
-				action = auditEntry.getAction();
+				action = Action.create(auditEntry.getAction());
 				auditSetId = auditEntry.getAuditSetId();
 				className = auditEntry.getClassName();
 				classPK = auditEntry.getClassPK();

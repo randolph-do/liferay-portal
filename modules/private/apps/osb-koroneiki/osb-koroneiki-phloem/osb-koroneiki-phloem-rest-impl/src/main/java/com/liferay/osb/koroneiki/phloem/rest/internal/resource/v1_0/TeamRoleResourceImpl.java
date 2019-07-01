@@ -46,7 +46,9 @@ public class TeamRoleResourceImpl extends BaseTeamRoleResourceImpl {
 
 	@Override
 	public TeamRole postTeamRole(TeamRole teamRole) throws Exception {
-		int type = TeamRoleType.fromLabel(teamRole.getType());
+		TeamRole.Type teamRoleType = teamRole.getType();
+
+		int type = TeamRoleType.fromLabel(teamRoleType.toString());
 
 		return TeamRoleUtil.toTeamRole(
 			_teamRoleService.addTeamRole(

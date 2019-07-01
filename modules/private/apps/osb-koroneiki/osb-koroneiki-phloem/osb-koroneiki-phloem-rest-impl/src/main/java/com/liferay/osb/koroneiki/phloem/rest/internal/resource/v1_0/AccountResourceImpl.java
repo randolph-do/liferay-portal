@@ -74,7 +74,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Override
 	public Account postAccount(Account account) throws Exception {
-		int status = WorkflowConstants.getLabelStatus(account.getStatus());
+		Account.Status accountStatus = account.getStatus();
+
+		int status = WorkflowConstants.getLabelStatus(accountStatus.toString());
 
 		return AccountUtil.toAccount(
 			_accountService.addAccount(
@@ -89,7 +91,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
 
-		int status = WorkflowConstants.getLabelStatus(account.getStatus());
+		Account.Status accountStatus = account.getStatus();
+
+		int status = WorkflowConstants.getLabelStatus(accountStatus.toString());
 
 		return AccountUtil.toAccount(
 			_accountService.updateAccount(

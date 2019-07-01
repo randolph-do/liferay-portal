@@ -101,26 +101,38 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 	public Project postAccountProject(Long accountId, Project project)
 		throws Exception {
 
-		int status = WorkflowConstants.getLabelStatus(project.getStatus());
+		Project.Industry projectIndustry = project.getIndustry();
+
+		Project.Status projectStatus = project.getStatus();
+
+		int status = WorkflowConstants.getLabelStatus(projectStatus.toString());
+
+		Project.Tier projectTier = project.getTier();
 
 		return ProjectUtil.toProject(
 			_projectService.addProject(
 				accountId, project.getName(), project.getCode(),
-				project.getTier(), project.getIndustry(), project.getNotes(),
-				project.getSoldBy(), status));
+				projectTier.toString(), projectIndustry.toString(),
+				project.getNotes(), project.getSoldBy(), status));
 	}
 
 	@Override
 	public Project putProject(Long projectId, Project project)
 		throws Exception {
 
-		int status = WorkflowConstants.getLabelStatus(project.getStatus());
+		Project.Industry projectIndustry = project.getIndustry();
+
+		Project.Status projectStatus = project.getStatus();
+
+		int status = WorkflowConstants.getLabelStatus(projectStatus.toString());
+
+		Project.Tier projectTier = project.getTier();
 
 		return ProjectUtil.toProject(
 			_projectService.updateProject(
 				projectId, project.getName(), project.getCode(),
-				project.getTier(), project.getIndustry(), project.getNotes(),
-				project.getSoldBy(), status));
+				projectTier.toString(), projectIndustry.toString(),
+				project.getNotes(), project.getSoldBy(), status));
 	}
 
 	@Override

@@ -50,6 +50,7 @@ components:
                     type: string
                 status:
                     description: The status of the account.
+                    enum: ["approved", "closed", "expired", "inactive", "pending", "pending-validation", "rejected"]
                     type: string
                 website:
                     description: The account's website.
@@ -62,6 +63,7 @@ components:
             properties:
                 action:
                     description: The action performed on the object.
+                    enum: ["add", "delete", "update"]
                     readOnly: true
                     type: string
                 auditSetId:
@@ -197,6 +199,7 @@ components:
                     type: boolean
                 type:
                     description: The contact role's type.
+                    enum: ["account", "project", "team"]
                     type: string
             required:
                 - name
@@ -422,6 +425,7 @@ components:
                     type: integer
                 industry:
                     description: The industry of the project.
+                    enum: ["aerospace-and-defense", "agriculture", "automotive", "consulting-market-research", "education", "energy", "engineering", "financial-services", "food-services", "government-federal", "government-state-local", "healthcare", "hospitality-leisure", "insurance", "manufacturing", "media-entertainment", "not-for-profit-ngo", "other", "pharmaceuticals", "professional-services-agency-business", "professional-services-technical-web-it", "retail-consumer-products", "technology", "telecommunication", "transportation", "utilities"]
                     type: string
                 name:
                     description: The name of the project.
@@ -434,9 +438,11 @@ components:
                     type: string
                 status:
                     description: The status of the project.
+                    enum: ["approved", "closed", "expired", "inactive", "pending", "pending-validation", "rejected"]
                     type: string
                 tier:
                     description: The tier of the project.
+                    enum: ["oem", "premier", "regular", "strategic"]
                     type: string
             required:
                 - name
@@ -503,6 +509,7 @@ components:
                     type: string
                 type:
                     description: The team role's type.
+                    enum: ["regular", "project"]
                     type: string
             required:
                 - name

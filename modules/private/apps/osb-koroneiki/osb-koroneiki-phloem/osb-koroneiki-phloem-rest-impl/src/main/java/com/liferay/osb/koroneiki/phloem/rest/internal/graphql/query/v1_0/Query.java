@@ -41,6 +41,7 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -165,7 +166,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<AuditEntry> getAccountAuditEntriesPage(
+	public AuditEntryPage getAccountAuditEntriesPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -174,13 +175,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			auditEntryResource -> {
-				Page paginationPage =
-					auditEntryResource.getAccountAuditEntriesPage(
-						accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			auditEntryResource -> new AuditEntryPage(
+				auditEntryResource.getAccountAuditEntriesPage(
+					accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -196,7 +193,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<AuditEntry> getContactRoleAuditEntriesPage(
+	public AuditEntryPage getContactRoleAuditEntriesPage(
 			@GraphQLName("contactRoleId") Long contactRoleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -205,17 +202,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			auditEntryResource -> {
-				Page paginationPage =
-					auditEntryResource.getContactRoleAuditEntriesPage(
-						contactRoleId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			auditEntryResource -> new AuditEntryPage(
+				auditEntryResource.getContactRoleAuditEntriesPage(
+					contactRoleId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<AuditEntry> getContactAuditEntriesPage(
+	public AuditEntryPage getContactAuditEntriesPage(
 			@GraphQLName("contactId") Long contactId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -224,17 +217,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			auditEntryResource -> {
-				Page paginationPage =
-					auditEntryResource.getContactAuditEntriesPage(
-						contactId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			auditEntryResource -> new AuditEntryPage(
+				auditEntryResource.getContactAuditEntriesPage(
+					contactId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<AuditEntry> getProjectAuditEntriesPage(
+	public AuditEntryPage getProjectAuditEntriesPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -243,17 +232,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			auditEntryResource -> {
-				Page paginationPage =
-					auditEntryResource.getProjectAuditEntriesPage(
-						projectId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			auditEntryResource -> new AuditEntryPage(
+				auditEntryResource.getProjectAuditEntriesPage(
+					projectId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<AuditEntry> getTeamRoleAuditEntriesPage(
+	public AuditEntryPage getTeamRoleAuditEntriesPage(
 			@GraphQLName("teamRoleId") Long teamRoleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -262,17 +247,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			auditEntryResource -> {
-				Page paginationPage =
-					auditEntryResource.getTeamRoleAuditEntriesPage(
-						teamRoleId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			auditEntryResource -> new AuditEntryPage(
+				auditEntryResource.getTeamRoleAuditEntriesPage(
+					teamRoleId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<AuditEntry> getTeamAuditEntriesPage(
+	public AuditEntryPage getTeamAuditEntriesPage(
 			@GraphQLName("teamId") Long teamId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -281,17 +262,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			auditEntryResource -> {
-				Page paginationPage =
-					auditEntryResource.getTeamAuditEntriesPage(
-						teamId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			auditEntryResource -> new AuditEntryPage(
+				auditEntryResource.getTeamAuditEntriesPage(
+					teamId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Contact> getAccountContactsPage(
+	public ContactPage getAccountContactsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -300,12 +277,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			contactResource -> {
-				Page paginationPage = contactResource.getAccountContactsPage(
-					accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			contactResource -> new ContactPage(
+				contactResource.getAccountContactsPage(
+					accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -319,7 +293,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Contact> getProjectContactsPage(
+	public ContactPage getProjectContactsPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -328,12 +302,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			contactResource -> {
-				Page paginationPage = contactResource.getProjectContactsPage(
-					projectId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			contactResource -> new ContactPage(
+				contactResource.getProjectContactsPage(
+					projectId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -349,7 +320,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<ExternalLink> getAccountExternalLinksPage(
+	public ExternalLinkPage getAccountExternalLinksPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -358,17 +329,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> {
-				Page paginationPage =
-					externalLinkResource.getAccountExternalLinksPage(
-						accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.getAccountExternalLinksPage(
+					accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<ExternalLink> getContactExternalLinksPage(
+	public ExternalLinkPage getContactExternalLinksPage(
 			@GraphQLName("contactId") Long contactId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -377,13 +344,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> {
-				Page paginationPage =
-					externalLinkResource.getContactExternalLinksPage(
-						contactId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.getContactExternalLinksPage(
+					contactId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -399,47 +362,37 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<ExternalLink>
-			getProductConsumptionExternalLinksPage(
-				@GraphQLName("productConsumptionId") Long productConsumptionId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public ExternalLinkPage getProductConsumptionExternalLinksPage(
+			@GraphQLName("productConsumptionId") Long productConsumptionId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> {
-				Page paginationPage =
-					externalLinkResource.getProductConsumptionExternalLinksPage(
-						productConsumptionId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.getProductConsumptionExternalLinksPage(
+					productConsumptionId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<ExternalLink>
-			getProductPurchaseExternalLinksPage(
-				@GraphQLName("productPurchaseId") Long productPurchaseId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public ExternalLinkPage getProductPurchaseExternalLinksPage(
+			@GraphQLName("productPurchaseId") Long productPurchaseId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> {
-				Page paginationPage =
-					externalLinkResource.getProductPurchaseExternalLinksPage(
-						productPurchaseId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.getProductPurchaseExternalLinksPage(
+					productPurchaseId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<ExternalLink> getProductExternalLinksPage(
+	public ExternalLinkPage getProductExternalLinksPage(
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -448,17 +401,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> {
-				Page paginationPage =
-					externalLinkResource.getProductExternalLinksPage(
-						productId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.getProductExternalLinksPage(
+					productId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<ExternalLink> getProjectExternalLinksPage(
+	public ExternalLinkPage getProjectExternalLinksPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -467,17 +416,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> {
-				Page paginationPage =
-					externalLinkResource.getProjectExternalLinksPage(
-						projectId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.getProjectExternalLinksPage(
+					projectId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<ExternalLink> getTeamExternalLinksPage(
+	public ExternalLinkPage getTeamExternalLinksPage(
 			@GraphQLName("teamId") Long teamId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -486,30 +431,22 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> {
-				Page paginationPage =
-					externalLinkResource.getTeamExternalLinksPage(
-						teamId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.getTeamExternalLinksPage(
+					teamId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<PostalAddress> getAccountPostalAddressesPage(
+	public PostalAddressPage getAccountPostalAddressesPage(
 			@GraphQLName("accountId") Long accountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			postalAddressResource -> {
-				Page paginationPage =
-					postalAddressResource.getAccountPostalAddressesPage(
-						accountId);
-
-				return paginationPage.getItems();
-			});
+			postalAddressResource -> new PostalAddressPage(
+				postalAddressResource.getAccountPostalAddressesPage(
+					accountId)));
 	}
 
 	@GraphQLField
@@ -525,7 +462,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Product> getProductsPage(
+	public ProductPage getProductsPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -533,12 +470,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productResource -> {
-				Page paginationPage = productResource.getProductsPage(
-					Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			productResource -> new ProductPage(
+				productResource.getProductsPage(
+					Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -552,24 +486,18 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<ProductConsumption>
-			getAccountProductConsumptionsPage(
-				@GraphQLName("accountId") Long accountId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public ProductConsumptionPage getAccountProductConsumptionsPage(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_productConsumptionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productConsumptionResource -> {
-				Page paginationPage =
-					productConsumptionResource.
-						getAccountProductConsumptionsPage(
-							accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			productConsumptionResource -> new ProductConsumptionPage(
+				productConsumptionResource.getAccountProductConsumptionsPage(
+					accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -586,28 +514,22 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<ProductConsumption>
-			getProjectProductConsumptionsPage(
-				@GraphQLName("projectId") Long projectId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public ProductConsumptionPage getProjectProductConsumptionsPage(
+			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_productConsumptionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productConsumptionResource -> {
-				Page paginationPage =
-					productConsumptionResource.
-						getProjectProductConsumptionsPage(
-							projectId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			productConsumptionResource -> new ProductConsumptionPage(
+				productConsumptionResource.getProjectProductConsumptionsPage(
+					projectId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<ProductPurchase> getAccountProductPurchasesPage(
+	public ProductPurchasePage getAccountProductPurchasesPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -616,13 +538,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_productPurchaseResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productPurchaseResource -> {
-				Page paginationPage =
-					productPurchaseResource.getAccountProductPurchasesPage(
-						accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			productPurchaseResource -> new ProductPurchasePage(
+				productPurchaseResource.getAccountProductPurchasesPage(
+					accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -638,7 +556,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<ProductPurchase> getProjectProductPurchasesPage(
+	public ProductPurchasePage getProjectProductPurchasesPage(
 			@GraphQLName("projectId") Long projectId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -647,17 +565,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_productPurchaseResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productPurchaseResource -> {
-				Page paginationPage =
-					productPurchaseResource.getProjectProductPurchasesPage(
-						projectId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			productPurchaseResource -> new ProductPurchasePage(
+				productPurchaseResource.getProjectProductPurchasesPage(
+					projectId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Project> getAccountProjectsPage(
+	public ProjectPage getAccountProjectsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -666,12 +580,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> {
-				Page paginationPage = projectResource.getAccountProjectsPage(
-					accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			projectResource -> new ProjectPage(
+				projectResource.getAccountProjectsPage(
+					accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -685,7 +596,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Team> getAccountTeamsPage(
+	public TeamPage getAccountTeamsPage(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -694,12 +605,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_teamResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			teamResource -> {
-				Page paginationPage = teamResource.getAccountTeamsPage(
-					accountId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			teamResource -> new TeamPage(
+				teamResource.getAccountTeamsPage(
+					accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -718,6 +626,294 @@ public class Query {
 			_teamRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			teamRoleResource -> teamRoleResource.getTeamRole(teamRoleId));
+	}
+
+	@GraphQLName("AccountPage")
+	public class AccountPage {
+
+		public AccountPage(Page accountPage) {
+			items = accountPage.getItems();
+			page = accountPage.getPage();
+			pageSize = accountPage.getPageSize();
+			totalCount = accountPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Account> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("AuditEntryPage")
+	public class AuditEntryPage {
+
+		public AuditEntryPage(Page auditEntryPage) {
+			items = auditEntryPage.getItems();
+			page = auditEntryPage.getPage();
+			pageSize = auditEntryPage.getPageSize();
+			totalCount = auditEntryPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<AuditEntry> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ContactPage")
+	public class ContactPage {
+
+		public ContactPage(Page contactPage) {
+			items = contactPage.getItems();
+			page = contactPage.getPage();
+			pageSize = contactPage.getPageSize();
+			totalCount = contactPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Contact> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ContactRolePage")
+	public class ContactRolePage {
+
+		public ContactRolePage(Page contactRolePage) {
+			items = contactRolePage.getItems();
+			page = contactRolePage.getPage();
+			pageSize = contactRolePage.getPageSize();
+			totalCount = contactRolePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<ContactRole> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ExternalLinkPage")
+	public class ExternalLinkPage {
+
+		public ExternalLinkPage(Page externalLinkPage) {
+			items = externalLinkPage.getItems();
+			page = externalLinkPage.getPage();
+			pageSize = externalLinkPage.getPageSize();
+			totalCount = externalLinkPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<ExternalLink> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("PostalAddressPage")
+	public class PostalAddressPage {
+
+		public PostalAddressPage(Page postalAddressPage) {
+			items = postalAddressPage.getItems();
+			page = postalAddressPage.getPage();
+			pageSize = postalAddressPage.getPageSize();
+			totalCount = postalAddressPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<PostalAddress> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ProductPage")
+	public class ProductPage {
+
+		public ProductPage(Page productPage) {
+			items = productPage.getItems();
+			page = productPage.getPage();
+			pageSize = productPage.getPageSize();
+			totalCount = productPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Product> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ProductConsumptionPage")
+	public class ProductConsumptionPage {
+
+		public ProductConsumptionPage(Page productConsumptionPage) {
+			items = productConsumptionPage.getItems();
+			page = productConsumptionPage.getPage();
+			pageSize = productConsumptionPage.getPageSize();
+			totalCount = productConsumptionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<ProductConsumption> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ProductPurchasePage")
+	public class ProductPurchasePage {
+
+		public ProductPurchasePage(Page productPurchasePage) {
+			items = productPurchasePage.getItems();
+			page = productPurchasePage.getPage();
+			pageSize = productPurchasePage.getPageSize();
+			totalCount = productPurchasePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<ProductPurchase> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ProjectPage")
+	public class ProjectPage {
+
+		public ProjectPage(Page projectPage) {
+			items = projectPage.getItems();
+			page = projectPage.getPage();
+			pageSize = projectPage.getPageSize();
+			totalCount = projectPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Project> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("TeamPage")
+	public class TeamPage {
+
+		public TeamPage(Page teamPage) {
+			items = teamPage.getItems();
+			page = teamPage.getPage();
+			pageSize = teamPage.getPageSize();
+			totalCount = teamPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Team> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("TeamRolePage")
+	public class TeamRolePage {
+
+		public TeamRolePage(Page teamRolePage) {
+			items = teamRolePage.getItems();
+			page = teamRolePage.getPage();
+			pageSize = teamRolePage.getPageSize();
+			totalCount = teamRolePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<TeamRole> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -744,6 +940,7 @@ public class Query {
 
 		accountResource.setContextAcceptLanguage(_acceptLanguage);
 		accountResource.setContextCompany(_company);
+		accountResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(AuditEntryResource auditEntryResource)
@@ -751,6 +948,7 @@ public class Query {
 
 		auditEntryResource.setContextAcceptLanguage(_acceptLanguage);
 		auditEntryResource.setContextCompany(_company);
+		auditEntryResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(ContactResource contactResource)
@@ -758,6 +956,7 @@ public class Query {
 
 		contactResource.setContextAcceptLanguage(_acceptLanguage);
 		contactResource.setContextCompany(_company);
+		contactResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -766,6 +965,7 @@ public class Query {
 
 		contactRoleResource.setContextAcceptLanguage(_acceptLanguage);
 		contactRoleResource.setContextCompany(_company);
+		contactRoleResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -774,6 +974,7 @@ public class Query {
 
 		externalLinkResource.setContextAcceptLanguage(_acceptLanguage);
 		externalLinkResource.setContextCompany(_company);
+		externalLinkResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -782,6 +983,7 @@ public class Query {
 
 		postalAddressResource.setContextAcceptLanguage(_acceptLanguage);
 		postalAddressResource.setContextCompany(_company);
+		postalAddressResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(ProductResource productResource)
@@ -789,6 +991,7 @@ public class Query {
 
 		productResource.setContextAcceptLanguage(_acceptLanguage);
 		productResource.setContextCompany(_company);
+		productResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -797,6 +1000,7 @@ public class Query {
 
 		productConsumptionResource.setContextAcceptLanguage(_acceptLanguage);
 		productConsumptionResource.setContextCompany(_company);
+		productConsumptionResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -805,6 +1009,7 @@ public class Query {
 
 		productPurchaseResource.setContextAcceptLanguage(_acceptLanguage);
 		productPurchaseResource.setContextCompany(_company);
+		productPurchaseResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(ProjectResource projectResource)
@@ -812,6 +1017,7 @@ public class Query {
 
 		projectResource.setContextAcceptLanguage(_acceptLanguage);
 		projectResource.setContextCompany(_company);
+		projectResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(TeamResource teamResource)
@@ -819,6 +1025,7 @@ public class Query {
 
 		teamResource.setContextAcceptLanguage(_acceptLanguage);
 		teamResource.setContextCompany(_company);
+		teamResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(TeamRoleResource teamRoleResource)
@@ -826,6 +1033,7 @@ public class Query {
 
 		teamRoleResource.setContextAcceptLanguage(_acceptLanguage);
 		teamRoleResource.setContextCompany(_company);
+		teamRoleResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<AccountResource>
@@ -855,5 +1063,6 @@ public class Query {
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;
+	private User _user;
 
 }

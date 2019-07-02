@@ -14,9 +14,11 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -48,18 +50,60 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "AuditEntry")
 public class AuditEntry {
 
+	public static enum Action {
+
+		ADD("add"), DELETE("delete"), UPDATE("update");
+
+		@JsonCreator
+		public static Action create(String value) {
+			for (Action action : values()) {
+				if (Objects.equals(action.getValue(), value)) {
+					return action;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Action(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	@Schema(description = "The action performed on the object.")
-	public String getAction() {
+	public Action getAction() {
 		return action;
 	}
 
-	public void setAction(String action) {
+	@JsonIgnore
+	public String getActionAsString() {
+		if (action == null) {
+			return null;
+		}
+
+		return action.toString();
+	}
+
+	public void setAction(Action action) {
 		this.action = action;
 	}
 
 	@JsonIgnore
 	public void setAction(
-		UnsafeSupplier<String, Exception> actionUnsafeSupplier) {
+		UnsafeSupplier<Action, Exception> actionUnsafeSupplier) {
 
 		try {
 			action = actionUnsafeSupplier.get();
@@ -74,7 +118,7 @@ public class AuditEntry {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String action;
+	protected Action action;
 
 	@Schema(description = "The id of related audit entries.")
 	public Long getAuditSetId() {
@@ -483,7 +527,7 @@ public class AuditEntry {
 
 			sb.append("\"");
 
-			sb.append(_escape(action));
+			sb.append(action);
 
 			sb.append("\"");
 		}

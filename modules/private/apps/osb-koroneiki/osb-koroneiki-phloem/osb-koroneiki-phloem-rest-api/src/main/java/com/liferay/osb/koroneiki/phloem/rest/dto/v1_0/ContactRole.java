@@ -14,9 +14,11 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -37,6 +39,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -50,6 +53,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Schema(requiredProperties = {"name", "type"})
 @XmlRootElement(name = "ContactRole")
 public class ContactRole {
+
+	public static enum Type {
+
+		ACCOUNT("account"), PROJECT("project"), TEAM("team");
+
+		@JsonCreator
+		public static Type create(String value) {
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@Schema(description = "The contact role's creation date.")
 	public Date getDateCreated() {
@@ -221,16 +257,25 @@ public class ContactRole {
 	protected Boolean system;
 
 	@Schema(description = "The contact role's type.")
-	public String getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	@JsonIgnore
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
 		this.type = type;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -244,8 +289,8 @@ public class ContactRole {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String type;
+	@NotNull
+	protected Type type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -362,7 +407,7 @@ public class ContactRole {
 
 			sb.append("\"");
 
-			sb.append(_escape(type));
+			sb.append(type);
 
 			sb.append("\"");
 		}

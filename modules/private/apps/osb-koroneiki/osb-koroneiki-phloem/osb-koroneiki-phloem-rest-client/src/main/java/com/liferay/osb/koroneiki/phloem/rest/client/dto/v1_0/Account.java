@@ -29,6 +29,39 @@ import javax.annotation.Generated;
 @Generated("")
 public class Account {
 
+	public static enum Status {
+
+		APPROVED("approved"), CLOSED("closed"), EXPIRED("expired"),
+		INACTIVE("inactive"), PENDING("pending"),
+		PENDING_VALIDATION("pending-validation"), REJECTED("rejected");
+
+		public static Status create(String value) {
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value)) {
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	public PostalAddress[] getAddresses() {
 		return addresses;
 	}
@@ -256,16 +289,24 @@ public class Account {
 
 	protected String profileEmailAddress;
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public String getStatusAsString() {
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
 	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
 		try {
 			status = statusUnsafeSupplier.get();
@@ -275,7 +316,7 @@ public class Account {
 		}
 	}
 
-	protected String status;
+	protected Status status;
 
 	public String getWebsite() {
 		return website;

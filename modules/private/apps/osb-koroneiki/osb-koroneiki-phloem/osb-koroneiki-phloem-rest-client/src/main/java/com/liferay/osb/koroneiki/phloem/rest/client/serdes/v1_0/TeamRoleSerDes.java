@@ -136,7 +136,7 @@ public class TeamRoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(teamRole.getType()));
+			sb.append(teamRole.getType());
 
 			sb.append("\"");
 		}
@@ -284,7 +284,8 @@ public class TeamRoleSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					teamRole.setType((String)jsonParserFieldValue);
+					teamRole.setType(
+						TeamRole.Type.create((String)jsonParserFieldValue));
 				}
 			}
 			else {

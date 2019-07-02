@@ -182,6 +182,13 @@ public abstract class BaseProductConsumptionResourceTestCase {
 
 	@Test
 	public void testGetAccountProductConsumptionsPage() throws Exception {
+		Page<ProductConsumption> page =
+			productConsumptionResource.getAccountProductConsumptionsPage(
+				testGetAccountProductConsumptionsPage_getAccountId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long accountId = testGetAccountProductConsumptionsPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetAccountProductConsumptionsPage_getIrrelevantAccountId();
@@ -191,9 +198,8 @@ public abstract class BaseProductConsumptionResourceTestCase {
 				testGetAccountProductConsumptionsPage_addProductConsumption(
 					irrelevantAccountId, randomIrrelevantProductConsumption());
 
-			Page<ProductConsumption> page =
-				productConsumptionResource.getAccountProductConsumptionsPage(
-					irrelevantAccountId, Pagination.of(1, 2));
+			page = productConsumptionResource.getAccountProductConsumptionsPage(
+				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -211,9 +217,8 @@ public abstract class BaseProductConsumptionResourceTestCase {
 			testGetAccountProductConsumptionsPage_addProductConsumption(
 				accountId, randomProductConsumption());
 
-		Page<ProductConsumption> page =
-			productConsumptionResource.getAccountProductConsumptionsPage(
-				accountId, Pagination.of(1, 2));
+		page = productConsumptionResource.getAccountProductConsumptionsPage(
+			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -370,6 +375,13 @@ public abstract class BaseProductConsumptionResourceTestCase {
 
 	@Test
 	public void testGetProjectProductConsumptionsPage() throws Exception {
+		Page<ProductConsumption> page =
+			productConsumptionResource.getProjectProductConsumptionsPage(
+				testGetProjectProductConsumptionsPage_getProjectId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long projectId = testGetProjectProductConsumptionsPage_getProjectId();
 		Long irrelevantProjectId =
 			testGetProjectProductConsumptionsPage_getIrrelevantProjectId();
@@ -379,9 +391,8 @@ public abstract class BaseProductConsumptionResourceTestCase {
 				testGetProjectProductConsumptionsPage_addProductConsumption(
 					irrelevantProjectId, randomIrrelevantProductConsumption());
 
-			Page<ProductConsumption> page =
-				productConsumptionResource.getProjectProductConsumptionsPage(
-					irrelevantProjectId, Pagination.of(1, 2));
+			page = productConsumptionResource.getProjectProductConsumptionsPage(
+				irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -399,9 +410,8 @@ public abstract class BaseProductConsumptionResourceTestCase {
 			testGetProjectProductConsumptionsPage_addProductConsumption(
 				projectId, randomProductConsumption());
 
-		Page<ProductConsumption> page =
-			productConsumptionResource.getProjectProductConsumptionsPage(
-				projectId, Pagination.of(1, 2));
+		page = productConsumptionResource.getProjectProductConsumptionsPage(
+			projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 

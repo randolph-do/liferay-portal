@@ -188,6 +188,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 	@Test
 	public void testGetAccountExternalLinksPage() throws Exception {
+		Page<ExternalLink> page =
+			externalLinkResource.getAccountExternalLinksPage(
+				testGetAccountExternalLinksPage_getAccountId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long accountId = testGetAccountExternalLinksPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetAccountExternalLinksPage_getIrrelevantAccountId();
@@ -197,9 +204,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetAccountExternalLinksPage_addExternalLink(
 					irrelevantAccountId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page =
-				externalLinkResource.getAccountExternalLinksPage(
-					irrelevantAccountId, Pagination.of(1, 2));
+			page = externalLinkResource.getAccountExternalLinksPage(
+				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -217,9 +223,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetAccountExternalLinksPage_addExternalLink(
 				accountId, randomExternalLink());
 
-		Page<ExternalLink> page =
-			externalLinkResource.getAccountExternalLinksPage(
-				accountId, Pagination.of(1, 2));
+		page = externalLinkResource.getAccountExternalLinksPage(
+			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -320,6 +325,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 	@Test
 	public void testGetContactExternalLinksPage() throws Exception {
+		Page<ExternalLink> page =
+			externalLinkResource.getContactExternalLinksPage(
+				testGetContactExternalLinksPage_getContactId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long contactId = testGetContactExternalLinksPage_getContactId();
 		Long irrelevantContactId =
 			testGetContactExternalLinksPage_getIrrelevantContactId();
@@ -329,9 +341,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetContactExternalLinksPage_addExternalLink(
 					irrelevantContactId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page =
-				externalLinkResource.getContactExternalLinksPage(
-					irrelevantContactId, Pagination.of(1, 2));
+			page = externalLinkResource.getContactExternalLinksPage(
+				irrelevantContactId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -349,9 +360,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetContactExternalLinksPage_addExternalLink(
 				contactId, randomExternalLink());
 
-		Page<ExternalLink> page =
-			externalLinkResource.getContactExternalLinksPage(
-				contactId, Pagination.of(1, 2));
+		page = externalLinkResource.getContactExternalLinksPage(
+			contactId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -495,6 +505,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 	@Test
 	public void testGetProductConsumptionExternalLinksPage() throws Exception {
+		Page<ExternalLink> page =
+			externalLinkResource.getProductConsumptionExternalLinksPage(
+				testGetProductConsumptionExternalLinksPage_getProductConsumptionId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long productConsumptionId =
 			testGetProductConsumptionExternalLinksPage_getProductConsumptionId();
 		Long irrelevantProductConsumptionId =
@@ -506,9 +523,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 					irrelevantProductConsumptionId,
 					randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page =
-				externalLinkResource.getProductConsumptionExternalLinksPage(
-					irrelevantProductConsumptionId, Pagination.of(1, 2));
+			page = externalLinkResource.getProductConsumptionExternalLinksPage(
+				irrelevantProductConsumptionId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -526,9 +542,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetProductConsumptionExternalLinksPage_addExternalLink(
 				productConsumptionId, randomExternalLink());
 
-		Page<ExternalLink> page =
-			externalLinkResource.getProductConsumptionExternalLinksPage(
-				productConsumptionId, Pagination.of(1, 2));
+		page = externalLinkResource.getProductConsumptionExternalLinksPage(
+			productConsumptionId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -636,6 +651,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 	@Test
 	public void testGetProductPurchaseExternalLinksPage() throws Exception {
+		Page<ExternalLink> page =
+			externalLinkResource.getProductPurchaseExternalLinksPage(
+				testGetProductPurchaseExternalLinksPage_getProductPurchaseId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long productPurchaseId =
 			testGetProductPurchaseExternalLinksPage_getProductPurchaseId();
 		Long irrelevantProductPurchaseId =
@@ -647,9 +669,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 					irrelevantProductPurchaseId,
 					randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page =
-				externalLinkResource.getProductPurchaseExternalLinksPage(
-					irrelevantProductPurchaseId, Pagination.of(1, 2));
+			page = externalLinkResource.getProductPurchaseExternalLinksPage(
+				irrelevantProductPurchaseId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -667,9 +688,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetProductPurchaseExternalLinksPage_addExternalLink(
 				productPurchaseId, randomExternalLink());
 
-		Page<ExternalLink> page =
-			externalLinkResource.getProductPurchaseExternalLinksPage(
-				productPurchaseId, Pagination.of(1, 2));
+		page = externalLinkResource.getProductPurchaseExternalLinksPage(
+			productPurchaseId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -776,6 +796,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 	@Test
 	public void testGetProductExternalLinksPage() throws Exception {
+		Page<ExternalLink> page =
+			externalLinkResource.getProductExternalLinksPage(
+				testGetProductExternalLinksPage_getProductId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long productId = testGetProductExternalLinksPage_getProductId();
 		Long irrelevantProductId =
 			testGetProductExternalLinksPage_getIrrelevantProductId();
@@ -785,9 +812,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetProductExternalLinksPage_addExternalLink(
 					irrelevantProductId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page =
-				externalLinkResource.getProductExternalLinksPage(
-					irrelevantProductId, Pagination.of(1, 2));
+			page = externalLinkResource.getProductExternalLinksPage(
+				irrelevantProductId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -805,9 +831,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetProductExternalLinksPage_addExternalLink(
 				productId, randomExternalLink());
 
-		Page<ExternalLink> page =
-			externalLinkResource.getProductExternalLinksPage(
-				productId, Pagination.of(1, 2));
+		page = externalLinkResource.getProductExternalLinksPage(
+			productId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -908,6 +933,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 	@Test
 	public void testGetProjectExternalLinksPage() throws Exception {
+		Page<ExternalLink> page =
+			externalLinkResource.getProjectExternalLinksPage(
+				testGetProjectExternalLinksPage_getProjectId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long projectId = testGetProjectExternalLinksPage_getProjectId();
 		Long irrelevantProjectId =
 			testGetProjectExternalLinksPage_getIrrelevantProjectId();
@@ -917,9 +949,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetProjectExternalLinksPage_addExternalLink(
 					irrelevantProjectId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page =
-				externalLinkResource.getProjectExternalLinksPage(
-					irrelevantProjectId, Pagination.of(1, 2));
+			page = externalLinkResource.getProjectExternalLinksPage(
+				irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -937,9 +968,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetProjectExternalLinksPage_addExternalLink(
 				projectId, randomExternalLink());
 
-		Page<ExternalLink> page =
-			externalLinkResource.getProjectExternalLinksPage(
-				projectId, Pagination.of(1, 2));
+		page = externalLinkResource.getProjectExternalLinksPage(
+			projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -1040,6 +1070,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 	@Test
 	public void testGetTeamExternalLinksPage() throws Exception {
+		Page<ExternalLink> page = externalLinkResource.getTeamExternalLinksPage(
+			testGetTeamExternalLinksPage_getTeamId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long teamId = testGetTeamExternalLinksPage_getTeamId();
 		Long irrelevantTeamId =
 			testGetTeamExternalLinksPage_getIrrelevantTeamId();
@@ -1049,9 +1084,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 				testGetTeamExternalLinksPage_addExternalLink(
 					irrelevantTeamId, randomIrrelevantExternalLink());
 
-			Page<ExternalLink> page =
-				externalLinkResource.getTeamExternalLinksPage(
-					irrelevantTeamId, Pagination.of(1, 2));
+			page = externalLinkResource.getTeamExternalLinksPage(
+				irrelevantTeamId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -1069,7 +1103,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 			testGetTeamExternalLinksPage_addExternalLink(
 				teamId, randomExternalLink());
 
-		Page<ExternalLink> page = externalLinkResource.getTeamExternalLinksPage(
+		page = externalLinkResource.getTeamExternalLinksPage(
 			teamId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());

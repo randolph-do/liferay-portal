@@ -148,7 +148,7 @@ public class ContactRoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contactRole.getType()));
+			sb.append(contactRole.getType());
 
 			sb.append("\"");
 		}
@@ -312,7 +312,8 @@ public class ContactRoleSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					contactRole.setType((String)jsonParserFieldValue);
+					contactRole.setType(
+						ContactRole.Type.create((String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -184,6 +184,11 @@ public abstract class BaseTeamResourceTestCase {
 
 	@Test
 	public void testGetAccountTeamsPage() throws Exception {
+		Page<Team> page = teamResource.getAccountTeamsPage(
+			testGetAccountTeamsPage_getAccountId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long accountId = testGetAccountTeamsPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetAccountTeamsPage_getIrrelevantAccountId();
@@ -192,7 +197,7 @@ public abstract class BaseTeamResourceTestCase {
 			Team irrelevantTeam = testGetAccountTeamsPage_addTeam(
 				irrelevantAccountId, randomIrrelevantTeam());
 
-			Page<Team> page = teamResource.getAccountTeamsPage(
+			page = teamResource.getAccountTeamsPage(
 				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -206,8 +211,7 @@ public abstract class BaseTeamResourceTestCase {
 
 		Team team2 = testGetAccountTeamsPage_addTeam(accountId, randomTeam());
 
-		Page<Team> page = teamResource.getAccountTeamsPage(
-			accountId, Pagination.of(1, 2));
+		page = teamResource.getAccountTeamsPage(accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 

@@ -234,7 +234,7 @@ public class AccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(account.getStatus()));
+			sb.append(account.getStatus());
 
 			sb.append("\"");
 		}
@@ -500,7 +500,8 @@ public class AccountSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
-					account.setStatus((String)jsonParserFieldValue);
+					account.setStatus(
+						Account.Status.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "website")) {

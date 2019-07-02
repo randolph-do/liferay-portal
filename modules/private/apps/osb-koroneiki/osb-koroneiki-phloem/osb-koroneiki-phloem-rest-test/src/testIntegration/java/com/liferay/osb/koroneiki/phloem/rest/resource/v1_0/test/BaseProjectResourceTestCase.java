@@ -172,12 +172,9 @@ public abstract class BaseProjectResourceTestCase {
 		Project project = randomProject();
 
 		project.setCode(regex);
-		project.setIndustry(regex);
 		project.setName(regex);
 		project.setNotes(regex);
 		project.setSoldBy(regex);
-		project.setStatus(regex);
-		project.setTier(regex);
 
 		String json = ProjectSerDes.toJSON(project);
 
@@ -186,16 +183,18 @@ public abstract class BaseProjectResourceTestCase {
 		project = ProjectSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, project.getCode());
-		Assert.assertEquals(regex, project.getIndustry());
 		Assert.assertEquals(regex, project.getName());
 		Assert.assertEquals(regex, project.getNotes());
 		Assert.assertEquals(regex, project.getSoldBy());
-		Assert.assertEquals(regex, project.getStatus());
-		Assert.assertEquals(regex, project.getTier());
 	}
 
 	@Test
 	public void testGetAccountProjectsPage() throws Exception {
+		Page<Project> page = projectResource.getAccountProjectsPage(
+			testGetAccountProjectsPage_getAccountId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long accountId = testGetAccountProjectsPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetAccountProjectsPage_getIrrelevantAccountId();
@@ -204,7 +203,7 @@ public abstract class BaseProjectResourceTestCase {
 			Project irrelevantProject = testGetAccountProjectsPage_addProject(
 				irrelevantAccountId, randomIrrelevantProject());
 
-			Page<Project> page = projectResource.getAccountProjectsPage(
+			page = projectResource.getAccountProjectsPage(
 				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -221,7 +220,7 @@ public abstract class BaseProjectResourceTestCase {
 		Project project2 = testGetAccountProjectsPage_addProject(
 			accountId, randomProject());
 
-		Page<Project> page = projectResource.getAccountProjectsPage(
+		page = projectResource.getAccountProjectsPage(
 			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -865,11 +864,8 @@ public abstract class BaseProjectResourceTestCase {
 		}
 
 		if (entityFieldName.equals("industry")) {
-			sb.append("'");
-			sb.append(String.valueOf(project.getIndustry()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -897,19 +893,13 @@ public abstract class BaseProjectResourceTestCase {
 		}
 
 		if (entityFieldName.equals("status")) {
-			sb.append("'");
-			sb.append(String.valueOf(project.getStatus()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("tier")) {
-			sb.append("'");
-			sb.append(String.valueOf(project.getTier()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -924,12 +914,9 @@ public abstract class BaseProjectResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
-				industry = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				notes = RandomTestUtil.randomString();
 				soldBy = RandomTestUtil.randomString();
-				status = RandomTestUtil.randomString();
-				tier = RandomTestUtil.randomString();
 			}
 		};
 	}

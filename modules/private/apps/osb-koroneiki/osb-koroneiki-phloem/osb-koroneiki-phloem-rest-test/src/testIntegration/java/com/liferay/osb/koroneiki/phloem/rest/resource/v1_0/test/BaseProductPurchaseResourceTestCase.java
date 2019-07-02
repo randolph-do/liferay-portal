@@ -181,6 +181,13 @@ public abstract class BaseProductPurchaseResourceTestCase {
 
 	@Test
 	public void testGetAccountProductPurchasesPage() throws Exception {
+		Page<ProductPurchase> page =
+			productPurchaseResource.getAccountProductPurchasesPage(
+				testGetAccountProductPurchasesPage_getAccountId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long accountId = testGetAccountProductPurchasesPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetAccountProductPurchasesPage_getIrrelevantAccountId();
@@ -190,9 +197,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				testGetAccountProductPurchasesPage_addProductPurchase(
 					irrelevantAccountId, randomIrrelevantProductPurchase());
 
-			Page<ProductPurchase> page =
-				productPurchaseResource.getAccountProductPurchasesPage(
-					irrelevantAccountId, Pagination.of(1, 2));
+			page = productPurchaseResource.getAccountProductPurchasesPage(
+				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -210,9 +216,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			testGetAccountProductPurchasesPage_addProductPurchase(
 				accountId, randomProductPurchase());
 
-		Page<ProductPurchase> page =
-			productPurchaseResource.getAccountProductPurchasesPage(
-				accountId, Pagination.of(1, 2));
+		page = productPurchaseResource.getAccountProductPurchasesPage(
+			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -390,6 +395,13 @@ public abstract class BaseProductPurchaseResourceTestCase {
 
 	@Test
 	public void testGetProjectProductPurchasesPage() throws Exception {
+		Page<ProductPurchase> page =
+			productPurchaseResource.getProjectProductPurchasesPage(
+				testGetProjectProductPurchasesPage_getProjectId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long projectId = testGetProjectProductPurchasesPage_getProjectId();
 		Long irrelevantProjectId =
 			testGetProjectProductPurchasesPage_getIrrelevantProjectId();
@@ -399,9 +411,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 				testGetProjectProductPurchasesPage_addProductPurchase(
 					irrelevantProjectId, randomIrrelevantProductPurchase());
 
-			Page<ProductPurchase> page =
-				productPurchaseResource.getProjectProductPurchasesPage(
-					irrelevantProjectId, Pagination.of(1, 2));
+			page = productPurchaseResource.getProjectProductPurchasesPage(
+				irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -419,9 +430,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			testGetProjectProductPurchasesPage_addProductPurchase(
 				projectId, randomProductPurchase());
 
-		Page<ProductPurchase> page =
-			productPurchaseResource.getProjectProductPurchasesPage(
-				projectId, Pagination.of(1, 2));
+		page = productPurchaseResource.getProjectProductPurchasesPage(
+			projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 

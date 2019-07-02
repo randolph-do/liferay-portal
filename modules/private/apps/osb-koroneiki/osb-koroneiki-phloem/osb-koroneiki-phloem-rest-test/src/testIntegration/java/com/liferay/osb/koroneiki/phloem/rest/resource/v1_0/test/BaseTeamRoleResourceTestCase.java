@@ -171,7 +171,6 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 		teamRole.setDescription(regex);
 		teamRole.setName(regex);
-		teamRole.setType(regex);
 
 		String json = TeamRoleSerDes.toJSON(teamRole);
 
@@ -181,7 +180,6 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 		Assert.assertEquals(regex, teamRole.getDescription());
 		Assert.assertEquals(regex, teamRole.getName());
-		Assert.assertEquals(regex, teamRole.getType());
 	}
 
 	@Test
@@ -594,11 +592,8 @@ public abstract class BaseTeamRoleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			sb.append("'");
-			sb.append(String.valueOf(teamRole.getType()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -613,7 +608,6 @@ public abstract class BaseTeamRoleResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
-				type = RandomTestUtil.randomString();
 			}
 		};
 	}

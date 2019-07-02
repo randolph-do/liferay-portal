@@ -153,7 +153,7 @@ public class ProjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(project.getIndustry()));
+			sb.append(project.getIndustry());
 
 			sb.append("\"");
 		}
@@ -209,7 +209,7 @@ public class ProjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(project.getStatus()));
+			sb.append(project.getStatus());
 
 			sb.append("\"");
 		}
@@ -223,7 +223,7 @@ public class ProjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(project.getTier()));
+			sb.append(project.getTier());
 
 			sb.append("\"");
 		}
@@ -427,7 +427,8 @@ public class ProjectSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "industry")) {
 				if (jsonParserFieldValue != null) {
-					project.setIndustry((String)jsonParserFieldValue);
+					project.setIndustry(
+						Project.Industry.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -447,12 +448,14 @@ public class ProjectSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
-					project.setStatus((String)jsonParserFieldValue);
+					project.setStatus(
+						Project.Status.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "tier")) {
 				if (jsonParserFieldValue != null) {
-					project.setTier((String)jsonParserFieldValue);
+					project.setTier(
+						Project.Tier.create((String)jsonParserFieldValue));
 				}
 			}
 			else {

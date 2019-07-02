@@ -68,7 +68,7 @@ public class AuditEntrySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(auditEntry.getAction()));
+			sb.append(auditEntry.getAction());
 
 			sb.append("\"");
 		}
@@ -415,7 +415,8 @@ public class AuditEntrySerDes {
 
 			if (Objects.equals(jsonParserFieldName, "action")) {
 				if (jsonParserFieldValue != null) {
-					auditEntry.setAction((String)jsonParserFieldValue);
+					auditEntry.setAction(
+						AuditEntry.Action.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "auditSetId")) {

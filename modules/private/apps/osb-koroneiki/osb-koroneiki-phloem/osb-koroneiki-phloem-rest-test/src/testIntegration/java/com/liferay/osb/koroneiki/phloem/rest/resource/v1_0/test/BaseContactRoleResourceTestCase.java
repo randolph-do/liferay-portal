@@ -171,7 +171,6 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		contactRole.setDescription(regex);
 		contactRole.setName(regex);
-		contactRole.setType(regex);
 
 		String json = ContactRoleSerDes.toJSON(contactRole);
 
@@ -181,7 +180,6 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		Assert.assertEquals(regex, contactRole.getDescription());
 		Assert.assertEquals(regex, contactRole.getName());
-		Assert.assertEquals(regex, contactRole.getType());
 	}
 
 	@Test
@@ -634,11 +632,8 @@ public abstract class BaseContactRoleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			sb.append("'");
-			sb.append(String.valueOf(contactRole.getType()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -654,7 +649,6 @@ public abstract class BaseContactRoleResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				system = RandomTestUtil.randomBoolean();
-				type = RandomTestUtil.randomString();
 			}
 		};
 	}

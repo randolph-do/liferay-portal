@@ -14,9 +14,11 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -50,6 +52,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Schema(requiredProperties = {"name"})
 @XmlRootElement(name = "Account")
 public class Account {
+
+	public static enum Status {
+
+		APPROVED("approved"), CLOSED("closed"), EXPIRED("expired"),
+		INACTIVE("inactive"), PENDING("pending"),
+		PENDING_VALIDATION("pending-validation"), REJECTED("rejected");
+
+		@JsonCreator
+		public static Status create(String value) {
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value)) {
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@Schema(description = "The account's postal addresses.")
 	public PostalAddress[] getAddresses() {
@@ -361,17 +398,26 @@ public class Account {
 	protected String profileEmailAddress;
 
 	@Schema(description = "The status of the account.")
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	@JsonIgnore
+	public String getStatusAsString() {
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
 	@JsonIgnore
 	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
 		try {
 			status = statusUnsafeSupplier.get();
@@ -386,7 +432,7 @@ public class Account {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String status;
+	protected Status status;
 
 	@Schema(description = "The account's website.")
 	public String getWebsite() {
@@ -617,7 +663,7 @@ public class Account {
 
 			sb.append("\"");
 
-			sb.append(_escape(status));
+			sb.append(status);
 
 			sb.append("\"");
 		}

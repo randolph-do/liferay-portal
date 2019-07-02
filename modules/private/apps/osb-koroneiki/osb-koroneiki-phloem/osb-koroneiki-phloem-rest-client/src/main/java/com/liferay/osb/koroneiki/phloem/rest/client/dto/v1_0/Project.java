@@ -29,6 +29,121 @@ import javax.annotation.Generated;
 @Generated("")
 public class Project {
 
+	public static enum Industry {
+
+		AEROSPACE_AND_DEFENSE("aerospace-and-defense"),
+		AGRICULTURE("agriculture"), AUTOMOTIVE("automotive"),
+		CONSULTING_MARKET_RESEARCH("consulting-market-research"),
+		EDUCATION("education"), ENERGY("energy"), ENGINEERING("engineering"),
+		FINANCIAL_SERVICES("financial-services"),
+		FOOD_SERVICES("food-services"),
+		GOVERNMENT_FEDERAL("government-federal"),
+		GOVERNMENT_STATE_LOCAL("government-state-local"),
+		HEALTHCARE("healthcare"), HOSPITALITY_LEISURE("hospitality-leisure"),
+		INSURANCE("insurance"), MANUFACTURING("manufacturing"),
+		MEDIA_ENTERTAINMENT("media-entertainment"),
+		NOT_FOR_PROFIT_NGO("not-for-profit-ngo"), OTHER("other"),
+		PHARMACEUTICALS("pharmaceuticals"),
+		PROFESSIONAL_SERVICES_AGENCY_BUSINESS(
+			"professional-services-agency-business"),
+		PROFESSIONAL_SERVICES_TECHNICAL_WEB_IT(
+			"professional-services-technical-web-it"),
+		RETAIL_CONSUMER_PRODUCTS("retail-consumer-products"),
+		TECHNOLOGY("technology"), TELECOMMUNICATION("telecommunication"),
+		TRANSPORTATION("transportation"), UTILITIES("utilities");
+
+		public static Industry create(String value) {
+			for (Industry industry : values()) {
+				if (Objects.equals(industry.getValue(), value)) {
+					return industry;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Industry(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Status {
+
+		APPROVED("approved"), CLOSED("closed"), EXPIRED("expired"),
+		INACTIVE("inactive"), PENDING("pending"),
+		PENDING_VALIDATION("pending-validation"), REJECTED("rejected");
+
+		public static Status create(String value) {
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value)) {
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Tier {
+
+		OEM("oem"), PREMIER("premier"), REGULAR("regular"),
+		STRATEGIC("strategic");
+
+		public static Tier create(String value) {
+			for (Tier tier : values()) {
+				if (Objects.equals(tier.getValue(), value)) {
+					return tier;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Tier(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -151,16 +266,24 @@ public class Project {
 
 	protected Long id;
 
-	public String getIndustry() {
+	public Industry getIndustry() {
 		return industry;
 	}
 
-	public void setIndustry(String industry) {
+	public String getIndustryAsString() {
+		if (industry == null) {
+			return null;
+		}
+
+		return industry.toString();
+	}
+
+	public void setIndustry(Industry industry) {
 		this.industry = industry;
 	}
 
 	public void setIndustry(
-		UnsafeSupplier<String, Exception> industryUnsafeSupplier) {
+		UnsafeSupplier<Industry, Exception> industryUnsafeSupplier) {
 
 		try {
 			industry = industryUnsafeSupplier.get();
@@ -170,7 +293,7 @@ public class Project {
 		}
 	}
 
-	protected String industry;
+	protected Industry industry;
 
 	public String getName() {
 		return name;
@@ -233,16 +356,24 @@ public class Project {
 
 	protected String soldBy;
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public String getStatusAsString() {
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
 	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
 		try {
 			status = statusUnsafeSupplier.get();
@@ -252,17 +383,25 @@ public class Project {
 		}
 	}
 
-	protected String status;
+	protected Status status;
 
-	public String getTier() {
+	public Tier getTier() {
 		return tier;
 	}
 
-	public void setTier(String tier) {
+	public String getTierAsString() {
+		if (tier == null) {
+			return null;
+		}
+
+		return tier.toString();
+	}
+
+	public void setTier(Tier tier) {
 		this.tier = tier;
 	}
 
-	public void setTier(UnsafeSupplier<String, Exception> tierUnsafeSupplier) {
+	public void setTier(UnsafeSupplier<Tier, Exception> tierUnsafeSupplier) {
 		try {
 			tier = tierUnsafeSupplier.get();
 		}
@@ -271,7 +410,7 @@ public class Project {
 		}
 	}
 
-	protected String tier;
+	protected Tier tier;
 
 	@Override
 	public boolean equals(Object object) {

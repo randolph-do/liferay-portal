@@ -175,7 +175,6 @@ public abstract class BaseAccountResourceTestCase {
 		account.setName(regex);
 		account.setPhoneNumber(regex);
 		account.setProfileEmailAddress(regex);
-		account.setStatus(regex);
 		account.setWebsite(regex);
 
 		String json = AccountSerDes.toJSON(account);
@@ -190,7 +189,6 @@ public abstract class BaseAccountResourceTestCase {
 		Assert.assertEquals(regex, account.getName());
 		Assert.assertEquals(regex, account.getPhoneNumber());
 		Assert.assertEquals(regex, account.getProfileEmailAddress());
-		Assert.assertEquals(regex, account.getStatus());
 		Assert.assertEquals(regex, account.getWebsite());
 	}
 
@@ -821,11 +819,8 @@ public abstract class BaseAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("status")) {
-			sb.append("'");
-			sb.append(String.valueOf(account.getStatus()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("website")) {
@@ -852,7 +847,6 @@ public abstract class BaseAccountResourceTestCase {
 				name = RandomTestUtil.randomString();
 				phoneNumber = RandomTestUtil.randomString();
 				profileEmailAddress = RandomTestUtil.randomString();
-				status = RandomTestUtil.randomString();
 				website = RandomTestUtil.randomString();
 			}
 		};

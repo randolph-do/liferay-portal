@@ -29,16 +29,55 @@ import javax.annotation.Generated;
 @Generated("")
 public class AuditEntry {
 
-	public String getAction() {
+	public static enum Action {
+
+		ADD("add"), DELETE("delete"), UPDATE("update");
+
+		public static Action create(String value) {
+			for (Action action : values()) {
+				if (Objects.equals(action.getValue(), value)) {
+					return action;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Action(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public Action getAction() {
 		return action;
 	}
 
-	public void setAction(String action) {
+	public String getActionAsString() {
+		if (action == null) {
+			return null;
+		}
+
+		return action.toString();
+	}
+
+	public void setAction(Action action) {
 		this.action = action;
 	}
 
 	public void setAction(
-		UnsafeSupplier<String, Exception> actionUnsafeSupplier) {
+		UnsafeSupplier<Action, Exception> actionUnsafeSupplier) {
 
 		try {
 			action = actionUnsafeSupplier.get();
@@ -48,7 +87,7 @@ public class AuditEntry {
 		}
 	}
 
-	protected String action;
+	protected Action action;
 
 	public Long getAuditSetId() {
 		return auditSetId;

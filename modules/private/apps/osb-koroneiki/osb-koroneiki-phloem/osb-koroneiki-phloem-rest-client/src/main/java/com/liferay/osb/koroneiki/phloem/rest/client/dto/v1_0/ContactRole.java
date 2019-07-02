@@ -29,6 +29,37 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContactRole {
 
+	public static enum Type {
+
+		ACCOUNT("account"), PROJECT("project"), TEAM("team");
+
+		public static Type create(String value) {
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -151,15 +182,23 @@ public class ContactRole {
 
 	protected Boolean system;
 
-	public String getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
 		this.type = type;
 	}
 
-	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -168,7 +207,7 @@ public class ContactRole {
 		}
 	}
 
-	protected String type;
+	protected Type type;
 
 	@Override
 	public boolean equals(Object object) {

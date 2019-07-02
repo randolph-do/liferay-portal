@@ -192,6 +192,11 @@ public abstract class BaseContactResourceTestCase {
 
 	@Test
 	public void testGetAccountContactsPage() throws Exception {
+		Page<Contact> page = contactResource.getAccountContactsPage(
+			testGetAccountContactsPage_getAccountId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long accountId = testGetAccountContactsPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetAccountContactsPage_getIrrelevantAccountId();
@@ -200,7 +205,7 @@ public abstract class BaseContactResourceTestCase {
 			Contact irrelevantContact = testGetAccountContactsPage_addContact(
 				irrelevantAccountId, randomIrrelevantContact());
 
-			Page<Contact> page = contactResource.getAccountContactsPage(
+			page = contactResource.getAccountContactsPage(
 				irrelevantAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -217,7 +222,7 @@ public abstract class BaseContactResourceTestCase {
 		Contact contact2 = testGetAccountContactsPage_addContact(
 			accountId, randomContact());
 
-		Page<Contact> page = contactResource.getAccountContactsPage(
+		page = contactResource.getAccountContactsPage(
 			accountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -336,6 +341,11 @@ public abstract class BaseContactResourceTestCase {
 
 	@Test
 	public void testGetProjectContactsPage() throws Exception {
+		Page<Contact> page = contactResource.getProjectContactsPage(
+			testGetProjectContactsPage_getProjectId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long projectId = testGetProjectContactsPage_getProjectId();
 		Long irrelevantProjectId =
 			testGetProjectContactsPage_getIrrelevantProjectId();
@@ -344,7 +354,7 @@ public abstract class BaseContactResourceTestCase {
 			Contact irrelevantContact = testGetProjectContactsPage_addContact(
 				irrelevantProjectId, randomIrrelevantContact());
 
-			Page<Contact> page = contactResource.getProjectContactsPage(
+			page = contactResource.getProjectContactsPage(
 				irrelevantProjectId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -361,7 +371,7 @@ public abstract class BaseContactResourceTestCase {
 		Contact contact2 = testGetProjectContactsPage_addContact(
 			projectId, randomContact());
 
-		Page<Contact> page = contactResource.getProjectContactsPage(
+		page = contactResource.getProjectContactsPage(
 			projectId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());

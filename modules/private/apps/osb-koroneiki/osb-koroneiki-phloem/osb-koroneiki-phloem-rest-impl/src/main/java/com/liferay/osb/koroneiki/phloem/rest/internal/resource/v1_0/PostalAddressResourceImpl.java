@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.PostalAddress;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.PostalAddressUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.PostalAddressResource;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountService;

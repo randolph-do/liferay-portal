@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumption;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ProductConsumptionUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductConsumptionUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;

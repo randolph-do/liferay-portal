@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Product;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ProductUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductResource;
 import com.liferay.osb.koroneiki.trunk.service.ProductEntryService;
 import com.liferay.portal.vulcan.pagination.Page;

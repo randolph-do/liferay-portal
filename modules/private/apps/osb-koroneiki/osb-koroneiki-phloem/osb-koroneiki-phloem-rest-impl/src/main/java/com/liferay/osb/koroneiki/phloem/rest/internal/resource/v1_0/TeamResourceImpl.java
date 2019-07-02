@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.TeamUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.TeamUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamResource;
 import com.liferay.osb.koroneiki.taproot.service.TeamService;
 import com.liferay.portal.vulcan.pagination.Page;

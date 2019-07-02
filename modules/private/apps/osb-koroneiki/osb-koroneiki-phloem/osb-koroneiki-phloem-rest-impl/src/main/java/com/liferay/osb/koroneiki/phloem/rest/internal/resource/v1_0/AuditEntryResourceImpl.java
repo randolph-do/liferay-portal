@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.AuditEntry;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.AuditEntryUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.AuditEntryUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.AuditEntryResource;
 import com.liferay.osb.koroneiki.root.service.AuditEntryService;
 import com.liferay.osb.koroneiki.taproot.model.Account;

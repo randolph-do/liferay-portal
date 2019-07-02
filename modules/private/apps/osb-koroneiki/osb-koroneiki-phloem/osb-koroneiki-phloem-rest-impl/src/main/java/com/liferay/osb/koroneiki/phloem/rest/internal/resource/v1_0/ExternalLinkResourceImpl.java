@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ExternalLinkUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ExternalLinkUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.root.service.ExternalLinkService;
 import com.liferay.osb.koroneiki.taproot.model.Account;

@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ContactUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
 import com.liferay.portal.vulcan.pagination.Page;

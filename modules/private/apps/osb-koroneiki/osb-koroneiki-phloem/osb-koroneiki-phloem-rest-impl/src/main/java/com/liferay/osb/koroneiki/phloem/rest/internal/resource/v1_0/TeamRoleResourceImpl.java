@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.TeamRoleUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.TeamRoleUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.TeamRoleResource;
 import com.liferay.osb.koroneiki.taproot.constants.TeamRoleType;
 import com.liferay.osb.koroneiki.taproot.service.TeamRoleService;

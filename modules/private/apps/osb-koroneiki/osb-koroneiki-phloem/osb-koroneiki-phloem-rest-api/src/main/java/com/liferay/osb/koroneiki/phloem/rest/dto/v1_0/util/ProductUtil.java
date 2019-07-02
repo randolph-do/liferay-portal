@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
+package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Product;

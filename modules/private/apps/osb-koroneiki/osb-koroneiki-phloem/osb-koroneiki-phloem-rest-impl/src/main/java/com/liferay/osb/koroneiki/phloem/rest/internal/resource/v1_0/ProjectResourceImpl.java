@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ProjectUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProjectUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.constants.WorkflowConstants;

@@ -12,33 +12,37 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
+package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductPurchase;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Amos Fong
  */
-public class ProductPurchaseUtil {
+public class ProjectUtil {
 
-	public static ProductPurchase toProductPurchase(
-			com.liferay.osb.koroneiki.trunk.model.ProductPurchase
-				productPurchase)
+	public static Project toProject(
+			com.liferay.osb.koroneiki.taproot.model.Project project)
 		throws Exception {
 
-		return new ProductPurchase() {
+		return new Project() {
 			{
-				accountId = productPurchase.getAccountId();
-				dateCreated = productPurchase.getCreateDate();
+				accountId = project.getAccountId();
+				code = project.getCode();
+				dateCreated = project.getCreateDate();
+				dateModified = project.getModifiedDate();
 				externalLinks = TransformUtil.transformToArray(
-					productPurchase.getExternalLinks(),
+					project.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = productPurchase.getProductPurchaseId();
-				productId = productPurchase.getProductEntryId();
-				projectId = productPurchase.getProjectId();
-				properties = productPurchase.getProductFieldsMap();
+				id = project.getProjectId();
+				industry = Industry.create(project.getIndustry());
+				name = project.getName();
+				notes = project.getNotes();
+				soldBy = project.getSoldBy();
+				status = Status.create(project.getStatusLabel());
+				tier = Tier.create(project.getTier());
 			}
 		};
 	}

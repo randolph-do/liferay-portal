@@ -12,32 +12,33 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
+package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util;
 
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumption;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Amos Fong
  */
-public class ProductConsumptionUtil {
+public class ContactUtil {
 
-	public static ProductConsumption toProductConsumption(
-			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
-				productConsumption)
+	public static Contact toContact(
+			com.liferay.osb.koroneiki.taproot.model.Contact contact)
 		throws Exception {
 
-		return new ProductConsumption() {
+		return new Contact() {
 			{
-				accountId = productConsumption.getAccountId();
-				dateCreated = productConsumption.getCreateDate();
+				dateCreated = contact.getCreateDate();
+				dateModified = contact.getModifiedDate();
+				emailAddress = contact.getEmailAddress();
 				externalLinks = TransformUtil.transformToArray(
-					productConsumption.getExternalLinks(),
+					contact.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = productConsumption.getProductConsumptionId();
-				productId = productConsumption.getProductEntryId();
-				projectId = productConsumption.getProjectId();
+				firstName = contact.getFirstName();
+				id = contact.getContactId();
+				languageId = contact.getLanguageId();
+				lastName = contact.getLastName();
 			}
 		};
 	}

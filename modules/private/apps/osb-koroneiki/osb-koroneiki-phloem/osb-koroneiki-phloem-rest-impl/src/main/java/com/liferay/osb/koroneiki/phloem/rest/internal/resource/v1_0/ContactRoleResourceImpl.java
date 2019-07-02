@@ -15,7 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
-import com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util.ContactRoleUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactRoleUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.service.ContactRoleService;

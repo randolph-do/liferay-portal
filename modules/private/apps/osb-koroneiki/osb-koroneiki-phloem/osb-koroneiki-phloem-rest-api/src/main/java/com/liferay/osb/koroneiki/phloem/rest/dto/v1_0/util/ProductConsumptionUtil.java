@@ -12,37 +12,32 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.rest.internal.dto.v1_0.util;
+package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumption;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Amos Fong
  */
-public class ProjectUtil {
+public class ProductConsumptionUtil {
 
-	public static Project toProject(
-			com.liferay.osb.koroneiki.taproot.model.Project project)
+	public static ProductConsumption toProductConsumption(
+			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+				productConsumption)
 		throws Exception {
 
-		return new Project() {
+		return new ProductConsumption() {
 			{
-				accountId = project.getAccountId();
-				code = project.getCode();
-				dateCreated = project.getCreateDate();
-				dateModified = project.getModifiedDate();
+				accountId = productConsumption.getAccountId();
+				dateCreated = productConsumption.getCreateDate();
 				externalLinks = TransformUtil.transformToArray(
-					project.getExternalLinks(),
+					productConsumption.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = project.getProjectId();
-				industry = Industry.create(project.getIndustry());
-				name = project.getName();
-				notes = project.getNotes();
-				soldBy = project.getSoldBy();
-				status = Status.create(project.getStatusLabel());
-				tier = Tier.create(project.getTier());
+				id = productConsumption.getProductConsumptionId();
+				productId = productConsumption.getProductEntryId();
+				projectId = productConsumption.getProjectId();
 			}
 		};
 	}

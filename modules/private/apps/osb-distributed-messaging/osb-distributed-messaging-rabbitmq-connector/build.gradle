@@ -8,6 +8,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":private:apps:osb-distributed-messaging:osb-distributed-messaging-api")
 	compileOnly project(":private:apps:osb-distributed-messaging:osb-distributed-messaging-publishing-api")
+	compileOnly project(":private:apps:osb-distributed-messaging:osb-distributed-messaging-subscribing-api")
 }
 
 deployDependencies {

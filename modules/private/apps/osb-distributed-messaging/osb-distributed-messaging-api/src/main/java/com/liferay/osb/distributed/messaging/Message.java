@@ -33,6 +33,14 @@ public class Message extends com.liferay.portal.kernel.messaging.Message {
 		setPayload(payload);
 	}
 
+	public Message(
+		String topic, Map<String, Object> attributes, Object payload) {
+
+		setTopic(topic);
+		setAttributes(attributes);
+		setPayload(payload);
+	}
+
 	public Map<String, Object> getAttributes() {
 		return getValues();
 	}

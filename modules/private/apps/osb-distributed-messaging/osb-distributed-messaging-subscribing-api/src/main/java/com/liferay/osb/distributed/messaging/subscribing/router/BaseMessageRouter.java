@@ -17,10 +17,8 @@ package com.liferay.osb.distributed.messaging.subscribing.router;
 import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.distributed.messaging.subscribing.MessageSubscriber;
 import com.liferay.osgi.util.StringPlus;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,24 +28,28 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Amos Fong
  */
-public abstract class BaseMessageRouter implements MessageRouter {
+public class BaseMessageRouter implements MessageRouter {
 
-	public void route(Message message) {
-		List<MessageSubscriber> messageSubscribers = _messageSubscriberMap.get(
-			message.getTopic());
+	public void route(String topic, Message message) {
+		List<MessageSubscriber> messageSubscribers = getMessageSubscribers(
+			topic);
 
-		route(messageSubscribers, message);
+		for (MessageSubscriber messageSubscriber : messageSubscribers) {
+			if (_log.isDebugEnabled()) {
+				Class<?> messageSubscriberClass = messageSubscriber.getClass();
 
-		List<MessageSubscriber> globalMessageSubscribers =
-			_messageSubscriberMap.get(StringPool.STAR);
+				_log.debug(
+					"Routing " + topic + " to " +
+						messageSubscriberClass.getName());
 
-		route(globalMessageSubscribers, message);
+				_log.debug("Message: " + message.toString());
+			}
 
-		if (_log.isDebugEnabled() && ListUtil.isEmpty(messageSubscribers) &&
-			ListUtil.isEmpty(globalMessageSubscribers)) {
+			messageSubscriber.receive(message);
+		}
 
-			_log.debug(
-				"No subscribers were found for topic " + message.getTopic());
+		if (_log.isDebugEnabled() && messageSubscribers.isEmpty()) {
+			_log.debug("No subscribers were found for topic " + topic);
 		}
 	}
 
@@ -55,49 +57,49 @@ public abstract class BaseMessageRouter implements MessageRouter {
 			MessageSubscriber messageSubscriber, Map<String, Object> properties)
 		throws Exception {
 
-		List<String> topics = StringPlus.asList(properties.get("topic"));
+		List<String> topicPatterns = StringPlus.asList(
+			properties.get("topic.pattern"));
 
-		if (topics.isEmpty()) {
-			throw new Exception("Topic is empty");
+		if (topicPatterns.isEmpty()) {
+			_log.error("Topic patterns are empty");
 		}
 
-		for (String topic : topics) {
-			List<MessageSubscriber> messageSubscribers =
-				_messageSubscriberMap.get(topic);
-
-			if (messageSubscribers == null) {
-				messageSubscribers = new ArrayList<>();
-
-				_messageSubscriberMap.put(topic, messageSubscribers);
-			}
-
-			messageSubscribers.add(messageSubscriber);
-		}
+		_messageSubscriberMap.put(messageSubscriber, topicPatterns);
 	}
 
-	protected void route(
-		List<MessageSubscriber> messageSubscribers, Message message) {
+	protected List<MessageSubscriber> getMessageSubscribers(String topic) {
+		List<MessageSubscriber> messageSubscribers =
+			_cachedMessageSubscriberMap.get(topic);
 
-		if (messageSubscribers == null) {
-			return;
+		if (messageSubscribers != null) {
+			return messageSubscribers;
 		}
 
-		for (MessageSubscriber messageSubscriber : messageSubscribers) {
-			if (_log.isDebugEnabled()) {
-				Class<?> messageSubscriberClass = messageSubscriber.getClass();
+		messageSubscribers = new ArrayList<>();
 
-				_log.debug(
-					"Routing message to " + messageSubscriberClass.getName());
+		for (Map.Entry<MessageSubscriber, List<String>> entry :
+				_messageSubscriberMap.entrySet()) {
+
+			for (String topicPattern : entry.getValue()) {
+				if (topic.matches(topicPattern)) {
+					messageSubscribers.add(entry.getKey());
+
+					break;
+				}
 			}
-
-			messageSubscriber.receive(message);
 		}
+
+		_cachedMessageSubscriberMap.put(topic, messageSubscribers);
+
+		return messageSubscribers;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseMessageRouter.class);
 
-	private final Map<String, List<MessageSubscriber>> _messageSubscriberMap =
+	private final Map<String, List<MessageSubscriber>>
+		_cachedMessageSubscriberMap = new ConcurrentHashMap<>();
+	private final Map<MessageSubscriber, List<String>> _messageSubscriberMap =
 		new ConcurrentHashMap<>();
 
 }

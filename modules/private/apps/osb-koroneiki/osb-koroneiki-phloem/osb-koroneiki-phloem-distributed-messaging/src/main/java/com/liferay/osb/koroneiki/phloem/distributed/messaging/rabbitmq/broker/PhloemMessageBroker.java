@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.phloem.distributed.messaging.rabbitmq.broker;
 
+import com.liferay.osb.distributed.messaging.rabbitmq.connector.Connection;
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.broker.BaseMessageBroker;
 import com.liferay.osb.koroneiki.phloem.distributed.messaging.rabbitmq.PhloemConnection;
 
@@ -29,9 +30,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PhloemMessageBroker extends BaseMessageBroker {
 
-	@Reference(unbind = "-")
-	protected void setPhloemConnection(PhloemConnection phloemConnection) {
-		setConnection(phloemConnection);
+	@Override
+	protected Connection getConnection() {
+		return _phloemConnection;
 	}
+
+	@Reference
+	private PhloemConnection _phloemConnection;
 
 }

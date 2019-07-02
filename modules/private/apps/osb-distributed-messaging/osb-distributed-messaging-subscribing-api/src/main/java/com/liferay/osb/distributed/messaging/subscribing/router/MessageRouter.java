@@ -21,6 +21,6 @@ import com.liferay.osb.distributed.messaging.Message;
  */
 public interface MessageRouter {
 
-	public void route(Message message);
+	public void route(String topic, Message message);
 
 }

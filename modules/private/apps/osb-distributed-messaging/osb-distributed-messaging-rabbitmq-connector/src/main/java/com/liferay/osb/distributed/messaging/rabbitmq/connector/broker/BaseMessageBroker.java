@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Amos Fong
  */
-public class BaseMessageBroker implements MessageBroker {
+public abstract class BaseMessageBroker implements MessageBroker {
 
 	@Override
 	public void publish(String topic, List<Message> messages)
@@ -78,7 +78,9 @@ public class BaseMessageBroker implements MessageBroker {
 		Channel channel = _channelThreadLocal.get();
 
 		if ((channel == null) || !channel.isOpen()) {
-			channel = _connection.createChannel();
+			Connection connection = getConnection();
+
+			channel = connection.createChannel();
 
 			_channelThreadLocal.set(channel);
 		}
@@ -86,14 +88,11 @@ public class BaseMessageBroker implements MessageBroker {
 		return channel;
 	}
 
-	protected void setConnection(Connection connection) {
-		_connection = connection;
-	}
+	protected abstract Connection getConnection();
 
 	private static final ThreadLocal<Channel> _channelThreadLocal =
 		new CentralizedThreadLocal<>(false);
 
-	private Connection _connection;
 	private String _exchange;
 
 }

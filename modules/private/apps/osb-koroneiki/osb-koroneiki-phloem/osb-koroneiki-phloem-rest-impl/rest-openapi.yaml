@@ -509,7 +509,7 @@ components:
                     type: string
                 type:
                     description: The team role's type.
-                    enum: ["regular", "project"]
+                    enum: ["project", "regular"]
                     type: string
             required:
                 - name

@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.taproot.constants.ContactRoleSystem;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleNameException;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleTypeException;
@@ -82,7 +83,7 @@ public class ContactRoleLocalServiceImpl
 
 		for (int type : ContactRoleType.VALUES) {
 			ContactRole contactRole = contactRolePersistence.fetchByN_T_S(
-				"Member", type, true);
+				ContactRoleSystem.NAME_MEMBER, type, true);
 
 			if (contactRole == null) {
 				String description =
@@ -90,7 +91,8 @@ public class ContactRoleLocalServiceImpl
 						ContactRoleType.getLabel(type) + " have this role.";
 
 				contactRole = addContactRole(
-					user.getUserId(), "Member", description, type);
+					user.getUserId(), ContactRoleSystem.NAME_MEMBER,
+					description, type);
 
 				contactRole.setSystem(true);
 

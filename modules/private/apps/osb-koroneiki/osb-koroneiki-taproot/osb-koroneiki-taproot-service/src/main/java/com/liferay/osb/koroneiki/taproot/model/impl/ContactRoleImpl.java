@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.taproot.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.koroneiki.taproot.constants.ContactRoleSystem;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 
 /**
@@ -29,6 +30,18 @@ public class ContactRoleImpl extends ContactRoleBaseImpl {
 
 	public String getTypeLabel() {
 		return ContactRoleType.getLabel(getType());
+	}
+
+	public boolean isMember() {
+		if (isSystem()) {
+			String name = getName();
+
+			if (name.equals(ContactRoleSystem.NAME_MEMBER)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

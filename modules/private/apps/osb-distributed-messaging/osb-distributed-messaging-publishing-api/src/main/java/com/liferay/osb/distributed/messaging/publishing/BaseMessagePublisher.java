@@ -19,6 +19,7 @@ import com.liferay.osb.distributed.messaging.publishing.broker.MessageBroker;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,16 @@ public class BaseMessagePublisher implements MessagePublisher {
 		List<MessageBroker> messageBrokers = getMessageBrokers(topic);
 
 		for (MessageBroker messageBroker : messageBrokers) {
+			if (_log.isDebugEnabled()) {
+				Class<?> messageBrokerClass = messageBroker.getClass();
+
+				_log.debug(
+					"Publishing messages for topic " + topic + " to " +
+						messageBrokerClass.getName());
+
+				_log.debug("Messages: " + StringUtil.merge(messages));
+			}
+
 			messageBroker.publish(topic, messages);
 		}
 
@@ -46,6 +57,16 @@ public class BaseMessagePublisher implements MessagePublisher {
 		List<MessageBroker> messageBrokers = getMessageBrokers(topic);
 
 		for (MessageBroker messageBroker : messageBrokers) {
+			if (_log.isDebugEnabled()) {
+				Class<?> messageBrokerClass = messageBroker.getClass();
+
+				_log.debug(
+					"Publishing message for topic " + topic + " to " +
+						messageBrokerClass.getName());
+
+				_log.debug("Message: " + message.toString());
+			}
+
 			messageBroker.publish(topic, message);
 		}
 

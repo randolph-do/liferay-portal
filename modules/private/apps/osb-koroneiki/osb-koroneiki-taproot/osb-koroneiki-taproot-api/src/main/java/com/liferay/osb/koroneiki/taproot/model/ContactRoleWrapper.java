@@ -248,6 +248,11 @@ public class ContactRoleWrapper
 		return model.getUuid();
 	}
 
+	@Override
+	public boolean isMember() {
+		return model.isMember();
+	}
+
 	/**
 	 * Returns <code>true</code> if this contact role is system.
 	 *

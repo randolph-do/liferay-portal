@@ -72,6 +72,13 @@ public class ContactAccountRoleWrapper
 		}
 	}
 
+	@Override
+	public Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAccount();
+	}
+
 	/**
 	 * Returns the account ID of this contact account role.
 	 *
@@ -82,6 +89,13 @@ public class ContactAccountRoleWrapper
 		return model.getAccountId();
 	}
 
+	@Override
+	public Contact getContact()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getContact();
+	}
+
 	/**
 	 * Returns the contact ID of this contact account role.
 	 *
@@ -90,6 +104,13 @@ public class ContactAccountRoleWrapper
 	@Override
 	public long getContactId() {
 		return model.getContactId();
+	}
+
+	@Override
+	public ContactRole getContactRole()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getContactRole();
 	}
 
 	/**

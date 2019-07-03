@@ -79,4 +79,6 @@ public interface ContactRole extends ContactRoleModel, PersistedModel {
 
 	public String getTypeLabel();
 
+	public boolean isMember();
+
 }

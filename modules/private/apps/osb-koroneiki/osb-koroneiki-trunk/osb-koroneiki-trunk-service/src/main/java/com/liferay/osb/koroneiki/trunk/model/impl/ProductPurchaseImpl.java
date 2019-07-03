@@ -29,6 +29,7 @@ import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalServiceUtil;
 import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,8 +60,11 @@ public class ProductPurchaseImpl extends ProductPurchaseBaseImpl {
 	}
 
 	public List<ProductField> getProductFields() {
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			ProductPurchase.class);
+
 		return ProductFieldLocalServiceUtil.getProductFields(
-			getProductPurchaseId());
+			classNameId, getProductPurchaseId());
 	}
 
 	public Map<String, String> getProductFieldsMap() {

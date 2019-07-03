@@ -24,11 +24,16 @@ import com.liferay.osb.koroneiki.taproot.service.AccountLocalServiceUtil;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalServiceUtil;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.service.ProductEntryLocalServiceUtil;
+import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Kyle Bischof
@@ -52,6 +57,27 @@ public class ProductConsumptionImpl extends ProductConsumptionBaseImpl {
 	public ProductEntry getProductEntry() throws PortalException {
 		return ProductEntryLocalServiceUtil.getProductEntry(
 			getProductEntryId());
+	}
+
+	public List<ProductField> getProductFields() {
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			ProductConsumption.class);
+
+		return ProductFieldLocalServiceUtil.getProductFields(
+			classNameId, getProductConsumptionId());
+	}
+
+	public Map<String, String> getProductFieldsMap() {
+		Map<String, String> productFieldsMap = new HashMap<>();
+
+		List<ProductField> productFields = getProductFields();
+
+		for (ProductField productField : productFields) {
+			productFieldsMap.put(
+				productField.getName(), productField.getValue());
+		}
+
+		return productFieldsMap;
 	}
 
 	public Project getProject() {

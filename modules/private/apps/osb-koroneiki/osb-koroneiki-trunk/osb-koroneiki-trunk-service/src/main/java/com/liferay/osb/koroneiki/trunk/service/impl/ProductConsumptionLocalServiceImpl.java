@@ -19,6 +19,8 @@ import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.osb.koroneiki.trunk.exception.NoSuchProductConsumptionException;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
+import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalService;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductConsumptionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +43,8 @@ public class ProductConsumptionLocalServiceImpl
 	extends ProductConsumptionLocalServiceBaseImpl {
 
 	public ProductConsumption addProductConsumption(
-			long userId, long accountId, long projectId, long productEntryId)
+			long userId, long accountId, long projectId, long productEntryId,
+			List<ProductField> productFields)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -67,6 +70,17 @@ public class ProductConsumptionLocalServiceImpl
 			productConsumption.getCompanyId(), 0, userId,
 			ProductConsumption.class.getName(),
 			productConsumption.getProductConsumptionId(), false, false, false);
+
+		// Product fields
+
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductConsumption.class);
+
+		for (ProductField productField : productFields) {
+			_productFieldLocalService.addProductField(
+				userId, classNameId, productConsumptionId,
+				productField.getName(), productField.getValue());
+		}
 
 		return productConsumption;
 	}
@@ -95,6 +109,11 @@ public class ProductConsumptionLocalServiceImpl
 			ProductConsumption.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			productConsumption.getProductConsumptionId());
+
+		// Product fields
+
+		productFieldPersistence.removeByCNI_CPK(
+			classNameId, productConsumptionId);
 
 		return productConsumptionPersistence.remove(productConsumptionId);
 	}
@@ -176,6 +195,9 @@ public class ProductConsumptionLocalServiceImpl
 
 	@Reference
 	private ExternalLinkLocalService _externalLinkLocalService;
+
+	@Reference
+	private ProductFieldLocalService _productFieldLocalService;
 
 	@Reference
 	private ProjectLocalService _projectLocalService;

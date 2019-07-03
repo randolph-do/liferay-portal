@@ -67,14 +67,16 @@
 
 		<!-- Other fields -->
 
-		<column name="productPurchaseId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="name" type="String" />
 		<column name="value" type="String" />
 
 		<!-- Finder methods -->
 
-		<finder name="ProductPurchaseId" return-type="Collection">
-			<finder-column name="productPurchaseId" />
+		<finder name="CNI_CPK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ProductPurchase" remote-service="true" uuid="true">

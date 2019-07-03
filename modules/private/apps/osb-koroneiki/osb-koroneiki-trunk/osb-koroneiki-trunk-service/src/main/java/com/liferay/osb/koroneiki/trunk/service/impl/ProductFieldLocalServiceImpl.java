@@ -35,7 +35,8 @@ public class ProductFieldLocalServiceImpl
 	extends ProductFieldLocalServiceBaseImpl {
 
 	public ProductField addProductField(
-			long userId, long productPurchaseId, String name, String value)
+			long userId, long classNameId, long classPK, String name,
+			String value)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -47,16 +48,16 @@ public class ProductFieldLocalServiceImpl
 
 		productField.setCompanyId(user.getCompanyId());
 		productField.setUserId(userId);
-		productField.setProductPurchaseId(productPurchaseId);
+		productField.setClassNameId(classNameId);
+		productField.setClassPK(classPK);
 		productField.setName(name);
 		productField.setValue(value);
 
 		return productFieldPersistence.update(productField);
 	}
 
-	public List<ProductField> getProductFields(long productPurchaseId) {
-		return productFieldPersistence.findByProductPurchaseId(
-			productPurchaseId);
+	public List<ProductField> getProductFields(long classNameId, long classPK) {
+		return productFieldPersistence.findByCNI_CPK(classNameId, classPK);
 	}
 
 	public ProductField updateProductField(long productFieldId, String value)

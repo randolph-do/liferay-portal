@@ -38,7 +38,7 @@ public class ProductFieldModelListener
 
 	@Override
 	protected long getClassPK(ProductField productField) {
-		return productField.getProductPurchaseId();
+		return productField.getClassPK();
 	}
 
 	@Override

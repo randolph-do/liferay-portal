@@ -84,9 +84,12 @@ public class ProductPurchaseLocalServiceImpl
 
 		// Product fields
 
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductPurchase.class);
+
 		for (ProductField productField : productFields) {
 			_productFieldLocalService.addProductField(
-				userId, productPurchaseId, productField.getName(),
+				userId, classNameId, productPurchaseId, productField.getName(),
 				productField.getValue());
 		}
 
@@ -110,7 +113,7 @@ public class ProductPurchaseLocalServiceImpl
 
 		// Product fields
 
-		productFieldPersistence.removeByProductPurchaseId(productPurchaseId);
+		productFieldPersistence.removeByCNI_CPK(classNameId, productPurchaseId);
 
 		// Resources
 
@@ -162,6 +165,9 @@ public class ProductPurchaseLocalServiceImpl
 
 		// Product fields
 
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductPurchase.class);
+
 		Map<String, ProductField> productFieldsMap = getProductFieldsMap(
 			productPurchaseId);
 
@@ -171,8 +177,8 @@ public class ProductPurchaseLocalServiceImpl
 
 			if (curProductField == null) {
 				_productFieldLocalService.addProductField(
-					userId, productPurchaseId, productField.getName(),
-					productField.getValue());
+					userId, classNameId, productPurchaseId,
+					productField.getName(), productField.getValue());
 			}
 			else {
 				_productFieldLocalService.updateProductField(
@@ -194,8 +200,12 @@ public class ProductPurchaseLocalServiceImpl
 
 		Map<String, ProductField> productFieldsMap = new HashMap<>();
 
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductPurchase.class);
+
 		List<ProductField> productFields =
-			_productFieldLocalService.getProductFields(productPurchaseId);
+			_productFieldLocalService.getProductFields(
+				classNameId, productPurchaseId);
 
 		for (ProductField productField : productFields) {
 			productFieldsMap.put(productField.getName(), productField);

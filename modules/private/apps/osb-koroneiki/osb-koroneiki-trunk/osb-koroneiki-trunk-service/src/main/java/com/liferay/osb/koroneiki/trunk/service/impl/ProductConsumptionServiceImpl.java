@@ -19,6 +19,7 @@ import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
 import com.liferay.osb.koroneiki.trunk.constants.TrunkActionKeys;
 import com.liferay.osb.koroneiki.trunk.exception.NoSuchProductConsumptionException;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.permission.ProductConsumptionPermission;
 import com.liferay.osb.koroneiki.trunk.permission.ProductEntryPermission;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductConsumptionServiceBaseImpl;
@@ -45,14 +46,15 @@ public class ProductConsumptionServiceImpl
 	extends ProductConsumptionServiceBaseImpl {
 
 	public ProductConsumption addProductConsumption(
-			long accountId, long projectId, long productEntryId)
+			long accountId, long projectId, long productEntryId,
+			List<ProductField> productFields)
 		throws PortalException {
 
 		_productEntryPermission.check(
 			getPermissionChecker(), productEntryId, TrunkActionKeys.CONSUME);
 
 		return productConsumptionLocalService.addProductConsumption(
-			getUserId(), accountId, projectId, productEntryId);
+			getUserId(), accountId, projectId, productEntryId, productFields);
 	}
 
 	public ProductConsumption deleteProductConsumption(

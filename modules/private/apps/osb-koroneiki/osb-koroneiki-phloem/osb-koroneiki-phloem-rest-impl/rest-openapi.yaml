@@ -336,6 +336,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                properties:
+                    additionalProperties:
+                        type: string
+                    type: object
             required:
                 - productId
             type: object

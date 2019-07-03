@@ -38,6 +38,7 @@ public class ProductConsumptionUtil {
 				id = productConsumption.getProductConsumptionId();
 				productId = productConsumption.getProductEntryId();
 				projectId = productConsumption.getProjectId();
+				properties = productConsumption.getProductFieldsMap();
 			}
 		};
 	}

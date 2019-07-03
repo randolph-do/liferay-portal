@@ -19,9 +19,15 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductConsumptionUti
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.osb.koroneiki.trunk.service.ProductConsumptionService;
+import com.liferay.osb.koroneiki.trunk.service.ProductFieldLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,9 +97,13 @@ public class ProductConsumptionResourceImpl
 			Long accountId, ProductConsumption productConsumption)
 		throws Exception {
 
+		List<ProductField> productFields = getProductFields(
+			productConsumption.getProperties());
+
 		return ProductConsumptionUtil.toProductConsumption(
 			_productConsumptionService.addProductConsumption(
-				accountId, 0, productConsumption.getProductId()));
+				accountId, 0, productConsumption.getProductId(),
+				productFields));
 	}
 
 	@Override
@@ -103,14 +113,42 @@ public class ProductConsumptionResourceImpl
 
 		Project project = _projectLocalService.getProject(projectId);
 
+		List<ProductField> productFields = getProductFields(
+			productConsumption.getProperties());
+
 		return ProductConsumptionUtil.toProductConsumption(
 			_productConsumptionService.addProductConsumption(
 				project.getAccountId(), projectId,
-				productConsumption.getProductId()));
+				productConsumption.getProductId(), productFields));
+	}
+
+	protected List<ProductField> getProductFields(
+		Map<String, String> properties) {
+
+		List<ProductField> productFields = new ArrayList<>();
+
+		if (properties == null) {
+			return productFields;
+		}
+
+		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			ProductField productField =
+				_productFieldLocalService.createProductField(0);
+
+			productField.setName(entry.getKey());
+			productField.setValue(entry.getValue());
+
+			productFields.add(productField);
+		}
+
+		return productFields;
 	}
 
 	@Reference
 	private ProductConsumptionService _productConsumptionService;
+
+	@Reference
+	private ProductFieldLocalService _productFieldLocalService;
 
 	@Reference
 	private ProjectLocalService _projectLocalService;

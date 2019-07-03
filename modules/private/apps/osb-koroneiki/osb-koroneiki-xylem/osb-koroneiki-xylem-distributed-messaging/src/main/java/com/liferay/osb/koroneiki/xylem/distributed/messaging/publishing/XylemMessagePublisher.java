@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.distributed.messaging.publishing;
+package com.liferay.osb.koroneiki.xylem.distributed.messaging.publishing;
 
 import com.liferay.osb.distributed.messaging.publishing.BaseMessagePublisher;
 import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
-import com.liferay.osb.koroneiki.phloem.distributed.messaging.rabbitmq.broker.PhloemMessageBroker;
+import com.liferay.osb.koroneiki.xylem.distributed.messaging.rabbitmq.broker.XylemMessageBroker;
 
 import java.util.Map;
 
@@ -27,14 +27,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Amos Fong
  */
 @Component(immediate = true, service = MessagePublisher.class)
-public class PhloemMessagePublisher extends BaseMessagePublisher {
+public class XylemMessagePublisher extends BaseMessagePublisher {
 
 	@Reference(unbind = "-")
-	protected void setPhloemMessageBroker(
-		PhloemMessageBroker phloemMessageBroker,
-		Map<String, Object> properties) {
+	protected void setXylemMessageBroker(
+		XylemMessageBroker xylemMessageBroker, Map<String, Object> properties) {
 
-		addMessageBroker(phloemMessageBroker, properties);
+		addMessageBroker(xylemMessageBroker, properties);
 	}
 
 }

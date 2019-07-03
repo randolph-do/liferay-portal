@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.distributed.messaging.factory;
+package com.liferay.osb.koroneiki.xylem.distributed.messaging.factory;
 
 import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.AccountUtil;

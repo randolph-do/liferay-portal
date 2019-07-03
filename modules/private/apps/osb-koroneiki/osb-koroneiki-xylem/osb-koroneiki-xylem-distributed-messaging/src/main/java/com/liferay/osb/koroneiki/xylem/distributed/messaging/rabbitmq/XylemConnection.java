@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.distributed.messaging.rabbitmq;
+package com.liferay.osb.koroneiki.xylem.distributed.messaging.rabbitmq;
 
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.BaseConnection;
 
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true, property = {"host=", "password=", "port=", "username="},
-	service = PhloemConnection.class
+	service = XylemConnection.class
 )
-public class PhloemConnection extends BaseConnection {
+public class XylemConnection extends BaseConnection {
 }

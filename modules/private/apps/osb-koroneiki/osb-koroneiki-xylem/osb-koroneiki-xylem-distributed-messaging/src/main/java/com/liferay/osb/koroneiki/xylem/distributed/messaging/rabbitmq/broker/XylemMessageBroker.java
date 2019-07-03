@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.distributed.messaging.rabbitmq.broker;
+package com.liferay.osb.koroneiki.xylem.distributed.messaging.rabbitmq.broker;
 
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.Connection;
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.broker.BaseMessageBroker;
-import com.liferay.osb.koroneiki.phloem.distributed.messaging.rabbitmq.PhloemConnection;
+import com.liferay.osb.koroneiki.xylem.distributed.messaging.rabbitmq.XylemConnection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,16 +26,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = {"exchange=", "publishing.topic.pattern=.*"},
-	service = PhloemMessageBroker.class
+	service = XylemMessageBroker.class
 )
-public class PhloemMessageBroker extends BaseMessageBroker {
+public class XylemMessageBroker extends BaseMessageBroker {
 
 	@Override
 	protected Connection getConnection() {
-		return _phloemConnection;
+		return _xylemConnection;
 	}
 
 	@Reference
-	private PhloemConnection _phloemConnection;
+	private XylemConnection _xylemConnection;
 
 }

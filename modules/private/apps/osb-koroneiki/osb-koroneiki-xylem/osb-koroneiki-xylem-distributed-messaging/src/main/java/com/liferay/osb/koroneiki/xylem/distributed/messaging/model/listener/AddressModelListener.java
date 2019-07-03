@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.distributed.messaging.model.listener;
+package com.liferay.osb.koroneiki.xylem.distributed.messaging.model.listener;
 
 import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
-import com.liferay.osb.koroneiki.phloem.distributed.messaging.factory.MessageFactory;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
+import com.liferay.osb.koroneiki.xylem.distributed.messaging.factory.MessageFactory;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

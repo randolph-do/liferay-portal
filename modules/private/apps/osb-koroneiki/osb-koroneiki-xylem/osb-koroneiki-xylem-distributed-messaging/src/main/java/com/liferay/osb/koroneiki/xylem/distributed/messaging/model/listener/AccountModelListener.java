@@ -12,19 +12,16 @@
  *
  */
 
-package com.liferay.osb.koroneiki.phloem.distributed.messaging.model.listener;
+package com.liferay.osb.koroneiki.xylem.distributed.messaging.model.listener;
 
 import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
-import com.liferay.osb.koroneiki.phloem.distributed.messaging.factory.MessageFactory;
-import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
+import com.liferay.osb.koroneiki.xylem.distributed.messaging.factory.MessageFactory;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,43 +30,28 @@ import org.osgi.service.component.annotations.Reference;
  * @author Amos Fong
  */
 @Component(immediate = true, service = ModelListener.class)
-public class ExternalLinkModelListener extends BaseModelListener<ExternalLink> {
+public class AccountModelListener extends BaseModelListener<Account> {
 
 	@Override
-	public void onAfterCreate(ExternalLink externalLink)
-		throws ModelListenerException {
-
-		publish(externalLink);
+	public void onAfterCreate(Account account) throws ModelListenerException {
+		publish("koroneiki.account.create", account);
 	}
 
 	@Override
-	public void onAfterRemove(ExternalLink externalLink)
-		throws ModelListenerException {
-
-		publish(externalLink);
+	public void onAfterRemove(Account account) throws ModelListenerException {
+		publish("koroneiki.account.delete", account);
 	}
 
 	@Override
-	public void onAfterUpdate(ExternalLink externalLink)
-		throws ModelListenerException {
-
-		publish(externalLink);
+	public void onAfterUpdate(Account account) throws ModelListenerException {
+		publish("koroneiki.account.update", account);
 	}
 
-	protected void publish(ExternalLink externalLink)
+	protected void publish(String topic, Account account)
 		throws ModelListenerException {
 
 		try {
-			if (externalLink.getClassNameId() ==
-					_classNameLocalService.getClassNameId(Account.class)) {
-
-				Account account = _accountLocalService.getAccount(
-					externalLink.getClassPK());
-
-				_messagePublisher.publish(
-					"koroneiki.account.update",
-					_messageFactory.create(account));
-			}
+			_messagePublisher.publish(topic, _messageFactory.create(account));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -79,13 +61,7 @@ public class ExternalLinkModelListener extends BaseModelListener<ExternalLink> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExternalLinkModelListener.class);
-
-	@Reference
-	private AccountLocalService _accountLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
+		AccountModelListener.class);
 
 	@Reference
 	private MessageFactory _messageFactory;

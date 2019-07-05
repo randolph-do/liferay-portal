@@ -57,7 +57,10 @@ public class ProductConsumptionServiceHttp {
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption
 			addProductConsumption(
 				HttpPrincipal httpPrincipal, long accountId, long projectId,
-				long productEntryId)
+				long productEntryId,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,7 +69,7 @@ public class ProductConsumptionServiceHttp {
 				_addProductConsumptionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, accountId, projectId, productEntryId);
+				methodKey, accountId, projectId, productEntryId, productFields);
 
 			Object returnObj = null;
 
@@ -386,7 +389,7 @@ public class ProductConsumptionServiceHttp {
 		ProductConsumptionServiceHttp.class);
 
 	private static final Class<?>[] _addProductConsumptionParameterTypes0 =
-		new Class[] {long.class, long.class, long.class};
+		new Class[] {long.class, long.class, long.class, java.util.List.class};
 	private static final Class<?>[] _deleteProductConsumptionParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteProductConsumptionParameterTypes2 =

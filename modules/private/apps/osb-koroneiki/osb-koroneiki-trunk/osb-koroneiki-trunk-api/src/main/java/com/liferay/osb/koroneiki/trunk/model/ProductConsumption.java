@@ -69,6 +69,10 @@ public interface ProductConsumption
 	public ProductEntry getProductEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<ProductField> getProductFields();
+
+	public java.util.Map<String, String> getProductFieldsMap();
+
 	public com.liferay.osb.koroneiki.taproot.model.Project getProject();
 
 }

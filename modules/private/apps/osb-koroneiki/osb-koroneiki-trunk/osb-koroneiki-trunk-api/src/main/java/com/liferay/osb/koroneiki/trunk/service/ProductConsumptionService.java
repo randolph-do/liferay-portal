@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.trunk.service;
 
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -52,7 +53,8 @@ public interface ProductConsumptionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ProductConsumptionServiceUtil} to access the product consumption remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.trunk.service.impl.ProductConsumptionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ProductConsumption addProductConsumption(
-			long accountId, long projectId, long productEntryId)
+			long accountId, long projectId, long productEntryId,
+			List<ProductField> productFields)
 		throws PortalException;
 
 	public ProductConsumption deleteProductConsumption(

@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -74,8 +76,9 @@ public class ProductFieldModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"productFieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"productPurchaseId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"value", Types.VARCHAR}
+		{"userId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,13 +88,14 @@ public class ProductFieldModelImpl
 		TABLE_COLUMNS_MAP.put("productFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("productPurchaseId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_ProductField (productFieldId LONG not null primary key,companyId LONG,userId LONG,productPurchaseId LONG,name VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table Koroneiki_ProductField (productFieldId LONG not null primary key,companyId LONG,userId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,value VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_ProductField";
@@ -108,9 +112,11 @@ public class ProductFieldModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long PRODUCTPURCHASEID_COLUMN_BITMASK = 1L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
-	public static final long PRODUCTFIELDID_COLUMN_BITMASK = 2L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
+	public static final long PRODUCTFIELDID_COLUMN_BITMASK = 4L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -136,7 +142,8 @@ public class ProductFieldModelImpl
 		model.setProductFieldId(soapModel.getProductFieldId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
-		model.setProductPurchaseId(soapModel.getProductPurchaseId());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
 		model.setName(soapModel.getName());
 		model.setValue(soapModel.getValue());
 
@@ -302,10 +309,14 @@ public class ProductFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"userId", (BiConsumer<ProductField, Long>)ProductField::setUserId);
 		attributeGetterFunctions.put(
-			"productPurchaseId", ProductField::getProductPurchaseId);
+			"classNameId", ProductField::getClassNameId);
 		attributeSetterBiConsumers.put(
-			"productPurchaseId",
-			(BiConsumer<ProductField, Long>)ProductField::setProductPurchaseId);
+			"classNameId",
+			(BiConsumer<ProductField, Long>)ProductField::setClassNameId);
+		attributeGetterFunctions.put("classPK", ProductField::getClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK",
+			(BiConsumer<ProductField, Long>)ProductField::setClassPK);
 		attributeGetterFunctions.put("name", ProductField::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<ProductField, String>)ProductField::setName);
@@ -368,27 +379,70 @@ public class ProductFieldModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
-	public long getProductPurchaseId() {
-		return _productPurchaseId;
-	}
-
-	@Override
-	public void setProductPurchaseId(long productPurchaseId) {
-		_columnBitmask |= PRODUCTPURCHASEID_COLUMN_BITMASK;
-
-		if (!_setOriginalProductPurchaseId) {
-			_setOriginalProductPurchaseId = true;
-
-			_originalProductPurchaseId = _productPurchaseId;
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
+			return "";
 		}
 
-		_productPurchaseId = productPurchaseId;
+		return PortalUtil.getClassName(getClassNameId());
 	}
 
-	public long getOriginalProductPurchaseId() {
-		return _originalProductPurchaseId;
+	@Override
+	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
+	}
+
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
+		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
+	}
+
+	@JSON
+	@Override
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	@Override
+	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
+		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -462,7 +516,8 @@ public class ProductFieldModelImpl
 		productFieldImpl.setProductFieldId(getProductFieldId());
 		productFieldImpl.setCompanyId(getCompanyId());
 		productFieldImpl.setUserId(getUserId());
-		productFieldImpl.setProductPurchaseId(getProductPurchaseId());
+		productFieldImpl.setClassNameId(getClassNameId());
+		productFieldImpl.setClassPK(getClassPK());
 		productFieldImpl.setName(getName());
 		productFieldImpl.setValue(getValue());
 
@@ -527,10 +582,14 @@ public class ProductFieldModelImpl
 	public void resetOriginalValues() {
 		ProductFieldModelImpl productFieldModelImpl = this;
 
-		productFieldModelImpl._originalProductPurchaseId =
-			productFieldModelImpl._productPurchaseId;
+		productFieldModelImpl._originalClassNameId =
+			productFieldModelImpl._classNameId;
 
-		productFieldModelImpl._setOriginalProductPurchaseId = false;
+		productFieldModelImpl._setOriginalClassNameId = false;
+
+		productFieldModelImpl._originalClassPK = productFieldModelImpl._classPK;
+
+		productFieldModelImpl._setOriginalClassPK = false;
 
 		productFieldModelImpl._columnBitmask = 0;
 	}
@@ -546,7 +605,9 @@ public class ProductFieldModelImpl
 
 		productFieldCacheModel.userId = getUserId();
 
-		productFieldCacheModel.productPurchaseId = getProductPurchaseId();
+		productFieldCacheModel.classNameId = getClassNameId();
+
+		productFieldCacheModel.classPK = getClassPK();
 
 		productFieldCacheModel.name = getName();
 
@@ -643,9 +704,12 @@ public class ProductFieldModelImpl
 	private long _productFieldId;
 	private long _companyId;
 	private long _userId;
-	private long _productPurchaseId;
-	private long _originalProductPurchaseId;
-	private boolean _setOriginalProductPurchaseId;
+	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
+	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _name;
 	private String _value;
 	private long _columnBitmask;

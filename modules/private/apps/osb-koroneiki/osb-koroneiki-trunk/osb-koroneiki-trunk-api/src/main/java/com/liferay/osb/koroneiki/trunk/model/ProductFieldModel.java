@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.trunk.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ProductFieldModel
-	extends BaseModel<ProductField>, ShardedModel {
+	extends AttachedModel, BaseModel<ProductField>, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -114,18 +115,46 @@ public interface ProductFieldModel
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the product purchase ID of this product field.
+	 * Returns the fully qualified class name of this product field.
 	 *
-	 * @return the product purchase ID of this product field
+	 * @return the fully qualified class name of this product field
 	 */
-	public long getProductPurchaseId();
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
 
 	/**
-	 * Sets the product purchase ID of this product field.
+	 * Returns the class name ID of this product field.
 	 *
-	 * @param productPurchaseId the product purchase ID of this product field
+	 * @return the class name ID of this product field
 	 */
-	public void setProductPurchaseId(long productPurchaseId);
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this product field.
+	 *
+	 * @param classNameId the class name ID of this product field
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the class pk of this product field.
+	 *
+	 * @return the class pk of this product field
+	 */
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this product field.
+	 *
+	 * @param classPK the class pk of this product field
+	 */
+	@Override
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the name of this product field.

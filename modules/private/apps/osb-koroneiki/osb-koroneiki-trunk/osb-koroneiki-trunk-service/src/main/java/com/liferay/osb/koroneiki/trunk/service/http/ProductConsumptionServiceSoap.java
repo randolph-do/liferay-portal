@@ -66,14 +66,18 @@ public class ProductConsumptionServiceSoap {
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
 			addProductConsumption(
-				long accountId, long projectId, long productEntryId)
+				long accountId, long projectId, long productEntryId,
+				com.liferay.osb.koroneiki.trunk.model.ProductFieldSoap[]
+					productFields)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
 				returnValue =
 					ProductConsumptionServiceUtil.addProductConsumption(
-						accountId, projectId, productEntryId);
+						accountId, projectId, productEntryId,
+						com.liferay.osb.koroneiki.trunk.model.impl.
+							ProductFieldModelImpl.toModels(productFields));
 
 			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
 				toSoapModel(returnValue);

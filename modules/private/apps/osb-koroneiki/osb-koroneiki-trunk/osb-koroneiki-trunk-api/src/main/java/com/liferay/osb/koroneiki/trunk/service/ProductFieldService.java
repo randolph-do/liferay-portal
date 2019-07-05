@@ -49,7 +49,7 @@ public interface ProductFieldService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ProductFieldServiceUtil} to access the product field remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.trunk.service.impl.ProductFieldServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ProductField addProductField(
-			long productPurchaseId, String name, String value)
+			long classNameId, long classPK, String name, String value)
 		throws PortalException;
 
 	public ProductField deleteProductField(long productFieldId)

@@ -39,11 +39,14 @@ public class ProductConsumptionServiceWrapper
 	@Override
 	public com.liferay.osb.koroneiki.trunk.model.ProductConsumption
 			addProductConsumption(
-				long accountId, long projectId, long productEntryId)
+				long accountId, long projectId, long productEntryId,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productConsumptionService.addProductConsumption(
-			accountId, projectId, productEntryId);
+			accountId, projectId, productEntryId, productFields);
 	}
 
 	@Override

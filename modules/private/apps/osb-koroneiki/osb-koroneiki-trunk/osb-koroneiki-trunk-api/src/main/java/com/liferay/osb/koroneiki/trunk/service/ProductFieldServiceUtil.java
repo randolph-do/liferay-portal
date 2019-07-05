@@ -40,10 +40,11 @@ public class ProductFieldServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.koroneiki.trunk.service.impl.ProductFieldServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.osb.koroneiki.trunk.model.ProductField
-			addProductField(long productPurchaseId, String name, String value)
+			addProductField(
+				long classNameId, long classPK, String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addProductField(productPurchaseId, name, value);
+		return getService().addProductField(classNameId, classPK, name, value);
 	}
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductField

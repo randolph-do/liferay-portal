@@ -209,6 +209,16 @@ public class ProductConsumptionWrapper
 	}
 
 	@Override
+	public java.util.List<ProductField> getProductFields() {
+		return model.getProductFields();
+	}
+
+	@Override
+	public Map<String, String> getProductFieldsMap() {
+		return model.getProductFieldsMap();
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Project getProject() {
 		return model.getProject();
 	}

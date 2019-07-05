@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.trunk.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
+import com.liferay.osb.koroneiki.trunk.model.ProductField;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -63,7 +64,8 @@ public interface ProductConsumptionLocalService
 	 * Never modify or reference this interface directly. Always use {@link ProductConsumptionLocalServiceUtil} to access the product consumption local service. Add custom service methods to <code>com.liferay.osb.koroneiki.trunk.service.impl.ProductConsumptionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ProductConsumption addProductConsumption(
-			long userId, long accountId, long projectId, long productEntryId)
+			long userId, long accountId, long projectId, long productEntryId,
+			List<ProductField> productFields)
 		throws PortalException;
 
 	/**

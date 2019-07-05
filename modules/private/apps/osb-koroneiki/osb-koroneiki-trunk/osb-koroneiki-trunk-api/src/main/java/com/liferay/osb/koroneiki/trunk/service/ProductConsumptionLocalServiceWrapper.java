@@ -40,11 +40,14 @@ public class ProductConsumptionLocalServiceWrapper
 	public com.liferay.osb.koroneiki.trunk.model.ProductConsumption
 			addProductConsumption(
 				long userId, long accountId, long projectId,
-				long productEntryId)
+				long productEntryId,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productConsumptionLocalService.addProductConsumption(
-			userId, accountId, projectId, productEntryId);
+			userId, accountId, projectId, productEntryId, productFields);
 	}
 
 	/**

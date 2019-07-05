@@ -63,7 +63,7 @@ public class ProductFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{productFieldId=");
 		sb.append(productFieldId);
@@ -71,8 +71,10 @@ public class ProductFieldCacheModel
 		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
-		sb.append(", productPurchaseId=");
-		sb.append(productPurchaseId);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", value=");
@@ -89,7 +91,8 @@ public class ProductFieldCacheModel
 		productFieldImpl.setProductFieldId(productFieldId);
 		productFieldImpl.setCompanyId(companyId);
 		productFieldImpl.setUserId(userId);
-		productFieldImpl.setProductPurchaseId(productPurchaseId);
+		productFieldImpl.setClassNameId(classNameId);
+		productFieldImpl.setClassPK(classPK);
 
 		if (name == null) {
 			productFieldImpl.setName("");
@@ -118,7 +121,9 @@ public class ProductFieldCacheModel
 
 		userId = objectInput.readLong();
 
-		productPurchaseId = objectInput.readLong();
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
 		value = objectInput.readUTF();
 	}
@@ -131,7 +136,9 @@ public class ProductFieldCacheModel
 
 		objectOutput.writeLong(userId);
 
-		objectOutput.writeLong(productPurchaseId);
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -151,7 +158,8 @@ public class ProductFieldCacheModel
 	public long productFieldId;
 	public long companyId;
 	public long userId;
-	public long productPurchaseId;
+	public long classNameId;
+	public long classPK;
 	public String name;
 	public String value;
 

@@ -24,7 +24,8 @@ create table Koroneiki_ProductField (
 	productFieldId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
-	productPurchaseId LONG,
+	classNameId LONG,
+	classPK LONG,
 	name VARCHAR(75) null,
 	value VARCHAR(75) null
 );

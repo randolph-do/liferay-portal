@@ -47,7 +47,8 @@ public class ProductFieldWrapper
 		attributes.put("productFieldId", getProductFieldId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("productPurchaseId", getProductPurchaseId());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
 		attributes.put("value", getValue());
 
@@ -74,10 +75,16 @@ public class ProductFieldWrapper
 			setUserId(userId);
 		}
 
-		Long productPurchaseId = (Long)attributes.get("productPurchaseId");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (productPurchaseId != null) {
-			setProductPurchaseId(productPurchaseId);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		String name = (String)attributes.get("name");
@@ -91,6 +98,36 @@ public class ProductFieldWrapper
 		if (value != null) {
 			setValue(value);
 		}
+	}
+
+	/**
+	 * Returns the fully qualified class name of this product field.
+	 *
+	 * @return the fully qualified class name of this product field
+	 */
+	@Override
+	public String getClassName() {
+		return model.getClassName();
+	}
+
+	/**
+	 * Returns the class name ID of this product field.
+	 *
+	 * @return the class name ID of this product field
+	 */
+	@Override
+	public long getClassNameId() {
+		return model.getClassNameId();
+	}
+
+	/**
+	 * Returns the class pk of this product field.
+	 *
+	 * @return the class pk of this product field
+	 */
+	@Override
+	public long getClassPK() {
+		return model.getClassPK();
 	}
 
 	/**
@@ -134,16 +171,6 @@ public class ProductFieldWrapper
 	}
 
 	/**
-	 * Returns the product purchase ID of this product field.
-	 *
-	 * @return the product purchase ID of this product field
-	 */
-	@Override
-	public long getProductPurchaseId() {
-		return model.getProductPurchaseId();
-	}
-
-	/**
 	 * Returns the user ID of this product field.
 	 *
 	 * @return the user ID of this product field
@@ -176,6 +203,31 @@ public class ProductFieldWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	@Override
+	public void setClassName(String className) {
+		model.setClassName(className);
+	}
+
+	/**
+	 * Sets the class name ID of this product field.
+	 *
+	 * @param classNameId the class name ID of this product field
+	 */
+	@Override
+	public void setClassNameId(long classNameId) {
+		model.setClassNameId(classNameId);
+	}
+
+	/**
+	 * Sets the class pk of this product field.
+	 *
+	 * @param classPK the class pk of this product field
+	 */
+	@Override
+	public void setClassPK(long classPK) {
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -216,16 +268,6 @@ public class ProductFieldWrapper
 	@Override
 	public void setProductFieldId(long productFieldId) {
 		model.setProductFieldId(productFieldId);
-	}
-
-	/**
-	 * Sets the product purchase ID of this product field.
-	 *
-	 * @param productPurchaseId the product purchase ID of this product field
-	 */
-	@Override
-	public void setProductPurchaseId(long productPurchaseId) {
-		model.setProductPurchaseId(productPurchaseId);
 	}
 
 	/**

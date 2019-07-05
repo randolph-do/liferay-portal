@@ -5,7 +5,7 @@ create index IX_D719E376 on Koroneiki_ProductConsumption (uuid_[$COLUMN_LENGTH:7
 
 create index IX_EBC2538D on Koroneiki_ProductEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 
-create index IX_CB83AD3A on Koroneiki_ProductField (productPurchaseId);
+create index IX_2BD84FF6 on Koroneiki_ProductField (classNameId, classPK);
 
 create index IX_E3929352 on Koroneiki_ProductPurchase (accountId);
 create index IX_77ECFE3E on Koroneiki_ProductPurchase (projectId);

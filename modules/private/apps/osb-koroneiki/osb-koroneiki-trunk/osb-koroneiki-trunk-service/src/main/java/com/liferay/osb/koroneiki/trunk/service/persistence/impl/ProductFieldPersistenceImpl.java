@@ -87,71 +87,75 @@ public class ProductFieldPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByProductPurchaseId;
-	private FinderPath _finderPathWithoutPaginationFindByProductPurchaseId;
-	private FinderPath _finderPathCountByProductPurchaseId;
+	private FinderPath _finderPathWithPaginationFindByC_C;
+	private FinderPath _finderPathWithoutPaginationFindByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
-	 * Returns all the product fields where productPurchaseId = &#63;.
+	 * Returns all the product fields where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @return the matching product fields
 	 */
 	@Override
-	public List<ProductField> findByProductPurchaseId(long productPurchaseId) {
-		return findByProductPurchaseId(
-			productPurchaseId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<ProductField> findByC_C(long classNameId, long classPK) {
+		return findByC_C(
+			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the product fields where productPurchaseId = &#63;.
+	 * Returns a range of all the product fields where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductFieldModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param start the lower bound of the range of product fields
 	 * @param end the upper bound of the range of product fields (not inclusive)
 	 * @return the range of matching product fields
 	 */
 	@Override
-	public List<ProductField> findByProductPurchaseId(
-		long productPurchaseId, int start, int end) {
+	public List<ProductField> findByC_C(
+		long classNameId, long classPK, int start, int end) {
 
-		return findByProductPurchaseId(productPurchaseId, start, end, null);
+		return findByC_C(classNameId, classPK, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the product fields where productPurchaseId = &#63;.
+	 * Returns an ordered range of all the product fields where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductFieldModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param start the lower bound of the range of product fields
 	 * @param end the upper bound of the range of product fields (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching product fields
 	 */
 	@Override
-	public List<ProductField> findByProductPurchaseId(
-		long productPurchaseId, int start, int end,
+	public List<ProductField> findByC_C(
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<ProductField> orderByComparator) {
 
-		return findByProductPurchaseId(
-			productPurchaseId, start, end, orderByComparator, true);
+		return findByC_C(
+			classNameId, classPK, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the product fields where productPurchaseId = &#63;.
+	 * Returns an ordered range of all the product fields where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProductFieldModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param start the lower bound of the range of product fields
 	 * @param end the upper bound of the range of product fields (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -159,8 +163,8 @@ public class ProductFieldPersistenceImpl
 	 * @return the ordered range of matching product fields
 	 */
 	@Override
-	public List<ProductField> findByProductPurchaseId(
-		long productPurchaseId, int start, int end,
+	public List<ProductField> findByC_C(
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<ProductField> orderByComparator,
 		boolean retrieveFromCache) {
 
@@ -172,13 +176,13 @@ public class ProductFieldPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByProductPurchaseId;
-			finderArgs = new Object[] {productPurchaseId};
+			finderPath = _finderPathWithoutPaginationFindByC_C;
+			finderArgs = new Object[] {classNameId, classPK};
 		}
 		else {
-			finderPath = _finderPathWithPaginationFindByProductPurchaseId;
+			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
-				productPurchaseId, start, end, orderByComparator
+				classNameId, classPK, start, end, orderByComparator
 			};
 		}
 
@@ -190,8 +194,8 @@ public class ProductFieldPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ProductField productField : list) {
-					if ((productPurchaseId !=
-							productField.getProductPurchaseId())) {
+					if ((classNameId != productField.getClassNameId()) ||
+						(classPK != productField.getClassPK())) {
 
 						list = null;
 
@@ -206,15 +210,17 @@ public class ProductFieldPersistenceImpl
 
 			if (orderByComparator != null) {
 				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_PRODUCTFIELD_WHERE);
 
-			query.append(_FINDER_COLUMN_PRODUCTPURCHASEID_PRODUCTPURCHASEID_2);
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -235,7 +241,9 @@ public class ProductFieldPersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(productPurchaseId);
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
 
 				if (!pagination) {
 					list = (List<ProductField>)QueryUtil.list(
@@ -268,32 +276,36 @@ public class ProductFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the first product field in the ordered set where productPurchaseId = &#63;.
+	 * Returns the first product field in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching product field
 	 * @throws NoSuchProductFieldException if a matching product field could not be found
 	 */
 	@Override
-	public ProductField findByProductPurchaseId_First(
-			long productPurchaseId,
+	public ProductField findByC_C_First(
+			long classNameId, long classPK,
 			OrderByComparator<ProductField> orderByComparator)
 		throws NoSuchProductFieldException {
 
-		ProductField productField = fetchByProductPurchaseId_First(
-			productPurchaseId, orderByComparator);
+		ProductField productField = fetchByC_C_First(
+			classNameId, classPK, orderByComparator);
 
 		if (productField != null) {
 			return productField;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("productPurchaseId=");
-		msg.append(productPurchaseId);
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
 
 		msg.append("}");
 
@@ -301,19 +313,20 @@ public class ProductFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the first product field in the ordered set where productPurchaseId = &#63;.
+	 * Returns the first product field in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching product field, or <code>null</code> if a matching product field could not be found
 	 */
 	@Override
-	public ProductField fetchByProductPurchaseId_First(
-		long productPurchaseId,
+	public ProductField fetchByC_C_First(
+		long classNameId, long classPK,
 		OrderByComparator<ProductField> orderByComparator) {
 
-		List<ProductField> list = findByProductPurchaseId(
-			productPurchaseId, 0, 1, orderByComparator);
+		List<ProductField> list = findByC_C(
+			classNameId, classPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -323,32 +336,36 @@ public class ProductFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last product field in the ordered set where productPurchaseId = &#63;.
+	 * Returns the last product field in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching product field
 	 * @throws NoSuchProductFieldException if a matching product field could not be found
 	 */
 	@Override
-	public ProductField findByProductPurchaseId_Last(
-			long productPurchaseId,
+	public ProductField findByC_C_Last(
+			long classNameId, long classPK,
 			OrderByComparator<ProductField> orderByComparator)
 		throws NoSuchProductFieldException {
 
-		ProductField productField = fetchByProductPurchaseId_Last(
-			productPurchaseId, orderByComparator);
+		ProductField productField = fetchByC_C_Last(
+			classNameId, classPK, orderByComparator);
 
 		if (productField != null) {
 			return productField;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("productPurchaseId=");
-		msg.append(productPurchaseId);
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
 
 		msg.append("}");
 
@@ -356,25 +373,26 @@ public class ProductFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the last product field in the ordered set where productPurchaseId = &#63;.
+	 * Returns the last product field in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching product field, or <code>null</code> if a matching product field could not be found
 	 */
 	@Override
-	public ProductField fetchByProductPurchaseId_Last(
-		long productPurchaseId,
+	public ProductField fetchByC_C_Last(
+		long classNameId, long classPK,
 		OrderByComparator<ProductField> orderByComparator) {
 
-		int count = countByProductPurchaseId(productPurchaseId);
+		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ProductField> list = findByProductPurchaseId(
-			productPurchaseId, count - 1, count, orderByComparator);
+		List<ProductField> list = findByC_C(
+			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -384,17 +402,18 @@ public class ProductFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the product fields before and after the current product field in the ordered set where productPurchaseId = &#63;.
+	 * Returns the product fields before and after the current product field in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param productFieldId the primary key of the current product field
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next product field
 	 * @throws NoSuchProductFieldException if a product field with the primary key could not be found
 	 */
 	@Override
-	public ProductField[] findByProductPurchaseId_PrevAndNext(
-			long productFieldId, long productPurchaseId,
+	public ProductField[] findByC_C_PrevAndNext(
+			long productFieldId, long classNameId, long classPK,
 			OrderByComparator<ProductField> orderByComparator)
 		throws NoSuchProductFieldException {
 
@@ -407,14 +426,14 @@ public class ProductFieldPersistenceImpl
 
 			ProductField[] array = new ProductFieldImpl[3];
 
-			array[0] = getByProductPurchaseId_PrevAndNext(
-				session, productField, productPurchaseId, orderByComparator,
+			array[0] = getByC_C_PrevAndNext(
+				session, productField, classNameId, classPK, orderByComparator,
 				true);
 
 			array[1] = productField;
 
-			array[2] = getByProductPurchaseId_PrevAndNext(
-				session, productField, productPurchaseId, orderByComparator,
+			array[2] = getByC_C_PrevAndNext(
+				session, productField, classNameId, classPK, orderByComparator,
 				false);
 
 			return array;
@@ -427,24 +446,27 @@ public class ProductFieldPersistenceImpl
 		}
 	}
 
-	protected ProductField getByProductPurchaseId_PrevAndNext(
-		Session session, ProductField productField, long productPurchaseId,
-		OrderByComparator<ProductField> orderByComparator, boolean previous) {
+	protected ProductField getByC_C_PrevAndNext(
+		Session session, ProductField productField, long classNameId,
+		long classPK, OrderByComparator<ProductField> orderByComparator,
+		boolean previous) {
 
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
 			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_PRODUCTFIELD_WHERE);
 
-		query.append(_FINDER_COLUMN_PRODUCTPURCHASEID_PRODUCTPURCHASEID_2);
+		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -515,7 +537,9 @@ public class ProductFieldPersistenceImpl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(productPurchaseId);
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -536,15 +560,16 @@ public class ProductFieldPersistenceImpl
 	}
 
 	/**
-	 * Removes all the product fields where productPurchaseId = &#63; from the database.
+	 * Removes all the product fields where classNameId = &#63; and classPK = &#63; from the database.
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 */
 	@Override
-	public void removeByProductPurchaseId(long productPurchaseId) {
+	public void removeByC_C(long classNameId, long classPK) {
 		for (ProductField productField :
-				findByProductPurchaseId(
-					productPurchaseId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				findByC_C(
+					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
 			remove(productField);
@@ -552,25 +577,28 @@ public class ProductFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of product fields where productPurchaseId = &#63;.
+	 * Returns the number of product fields where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param productPurchaseId the product purchase ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @return the number of matching product fields
 	 */
 	@Override
-	public int countByProductPurchaseId(long productPurchaseId) {
-		FinderPath finderPath = _finderPathCountByProductPurchaseId;
+	public int countByC_C(long classNameId, long classPK) {
+		FinderPath finderPath = _finderPathCountByC_C;
 
-		Object[] finderArgs = new Object[] {productPurchaseId};
+		Object[] finderArgs = new Object[] {classNameId, classPK};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_PRODUCTFIELD_WHERE);
 
-			query.append(_FINDER_COLUMN_PRODUCTPURCHASEID_PRODUCTPURCHASEID_2);
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 			String sql = query.toString();
 
@@ -583,7 +611,9 @@ public class ProductFieldPersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(productPurchaseId);
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
 
 				count = (Long)q.uniqueResult();
 
@@ -602,9 +632,11 @@ public class ProductFieldPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_PRODUCTPURCHASEID_PRODUCTPURCHASEID_2 =
-			"productField.productPurchaseId = ?";
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
+		"productField.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
+		"productField.classPK = ?";
 
 	public ProductFieldPersistenceImpl() {
 		setModelClass(ProductField.class);
@@ -847,12 +879,13 @@ public class ProductFieldPersistenceImpl
 		}
 		else if (isNew) {
 			Object[] args = new Object[] {
-				productFieldModelImpl.getProductPurchaseId()
+				productFieldModelImpl.getClassNameId(),
+				productFieldModelImpl.getClassPK()
 			};
 
-			finderCache.removeResult(_finderPathCountByProductPurchaseId, args);
+			finderCache.removeResult(_finderPathCountByC_C, args);
 			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByProductPurchaseId, args);
+				_finderPathWithoutPaginationFindByC_C, args);
 
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
@@ -860,26 +893,26 @@ public class ProductFieldPersistenceImpl
 		}
 		else {
 			if ((productFieldModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByProductPurchaseId.
-					 getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByC_C.getColumnBitmask()) !=
+					 0) {
 
 				Object[] args = new Object[] {
-					productFieldModelImpl.getOriginalProductPurchaseId()
+					productFieldModelImpl.getOriginalClassNameId(),
+					productFieldModelImpl.getOriginalClassPK()
 				};
 
+				finderCache.removeResult(_finderPathCountByC_C, args);
 				finderCache.removeResult(
-					_finderPathCountByProductPurchaseId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByProductPurchaseId, args);
+					_finderPathWithoutPaginationFindByC_C, args);
 
 				args = new Object[] {
-					productFieldModelImpl.getProductPurchaseId()
+					productFieldModelImpl.getClassNameId(),
+					productFieldModelImpl.getClassPK()
 				};
 
+				finderCache.removeResult(_finderPathCountByC_C, args);
 				finderCache.removeResult(
-					_finderPathCountByProductPurchaseId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByProductPurchaseId, args);
+					_finderPathWithoutPaginationFindByC_C, args);
 			}
 		}
 
@@ -1178,24 +1211,26 @@ public class ProductFieldPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
-		_finderPathWithPaginationFindByProductPurchaseId = new FinderPath(
+		_finderPathWithPaginationFindByC_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ProductFieldImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByProductPurchaseId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 
-		_finderPathWithoutPaginationFindByProductPurchaseId = new FinderPath(
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ProductFieldImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByProductPurchaseId", new String[] {Long.class.getName()},
-			ProductFieldModelImpl.PRODUCTPURCHASEID_COLUMN_BITMASK);
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			ProductFieldModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			ProductFieldModelImpl.CLASSPK_COLUMN_BITMASK);
 
-		_finderPathCountByProductPurchaseId = new FinderPath(
+		_finderPathCountByC_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByProductPurchaseId", new String[] {Long.class.getName()});
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
 	@Deactivate

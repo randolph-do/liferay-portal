@@ -65,13 +65,14 @@ import org.osgi.annotation.versioning.ProviderType;
 public class ProductFieldServiceSoap {
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductFieldSoap
-			addProductField(long productPurchaseId, String name, String value)
+			addProductField(
+				long classNameId, long classPK, String name, String value)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.trunk.model.ProductField returnValue =
 				ProductFieldServiceUtil.addProductField(
-					productPurchaseId, name, value);
+					classNameId, classPK, name, value);
 
 			return com.liferay.osb.koroneiki.trunk.model.ProductFieldSoap.
 				toSoapModel(returnValue);

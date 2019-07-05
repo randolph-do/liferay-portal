@@ -35,11 +35,11 @@ public class ProductFieldServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.trunk.model.ProductField addProductField(
-			long productPurchaseId, String name, String value)
+			long classNameId, long classPK, String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productFieldService.addProductField(
-			productPurchaseId, name, value);
+			classNameId, classPK, name, value);
 	}
 
 	@Override

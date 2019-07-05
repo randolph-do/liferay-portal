@@ -41,11 +41,22 @@ public class ProductFieldLocalServiceUtil {
 	 */
 	public static com.liferay.osb.koroneiki.trunk.model.ProductField
 			addProductField(
-				long userId, long productPurchaseId, String name, String value)
+				long userId, long classNameId, long classPK, String name,
+				String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addProductField(
-			userId, productPurchaseId, name, value);
+			userId, classNameId, classPK, name, value);
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductField
+			addProductField(
+				long userId, String className, long classPK, String name,
+				String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addProductField(
+			userId, className, classPK, name, value);
 	}
 
 	/**
@@ -265,9 +276,16 @@ public class ProductFieldLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.osb.koroneiki.trunk.model.ProductField> getProductFields(
-			long productPurchaseId) {
+			long classNameId, long classPK) {
 
-		return getService().getProductFields(productPurchaseId);
+		return getService().getProductFields(classNameId, classPK);
+	}
+
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductField> getProductFields(
+			String className, long classPK) {
+
+		return getService().getProductFields(className, classPK);
 	}
 
 	/**

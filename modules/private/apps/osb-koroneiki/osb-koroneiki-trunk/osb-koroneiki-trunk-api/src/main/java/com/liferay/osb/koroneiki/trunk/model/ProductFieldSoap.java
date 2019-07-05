@@ -36,7 +36,8 @@ public class ProductFieldSoap implements Serializable {
 		soapModel.setProductFieldId(model.getProductFieldId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
-		soapModel.setProductPurchaseId(model.getProductPurchaseId());
+		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
 		soapModel.setValue(model.getValue());
 
@@ -116,12 +117,20 @@ public class ProductFieldSoap implements Serializable {
 		_userId = userId;
 	}
 
-	public long getProductPurchaseId() {
-		return _productPurchaseId;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setProductPurchaseId(long productPurchaseId) {
-		_productPurchaseId = productPurchaseId;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	public String getName() {
@@ -143,7 +152,8 @@ public class ProductFieldSoap implements Serializable {
 	private long _productFieldId;
 	private long _companyId;
 	private long _userId;
-	private long _productPurchaseId;
+	private long _classNameId;
+	private long _classPK;
 	private String _name;
 	private String _value;
 

@@ -61,7 +61,13 @@ public interface ProductFieldLocalService
 	 * Never modify or reference this interface directly. Always use {@link ProductFieldLocalServiceUtil} to access the product field local service. Add custom service methods to <code>com.liferay.osb.koroneiki.trunk.service.impl.ProductFieldLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ProductField addProductField(
-			long userId, long productPurchaseId, String name, String value)
+			long userId, long classNameId, long classPK, String name,
+			String value)
+		throws PortalException;
+
+	public ProductField addProductField(
+			long userId, String className, long classPK, String name,
+			String value)
 		throws PortalException;
 
 	/**
@@ -222,7 +228,10 @@ public interface ProductFieldLocalService
 	public List<ProductField> getProductFields(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ProductField> getProductFields(long productPurchaseId);
+	public List<ProductField> getProductFields(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductField> getProductFields(String className, long classPK);
 
 	/**
 	 * Returns the number of product fields.

@@ -38,11 +38,22 @@ public class ProductFieldLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.trunk.model.ProductField addProductField(
-			long userId, long productPurchaseId, String name, String value)
+			long userId, long classNameId, long classPK, String name,
+			String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productFieldLocalService.addProductField(
-			userId, productPurchaseId, name, value);
+			userId, classNameId, classPK, name, value);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductField addProductField(
+			long userId, String className, long classPK, String name,
+			String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productFieldLocalService.addProductField(
+			userId, className, classPK, name, value);
 	}
 
 	/**
@@ -275,9 +286,16 @@ public class ProductFieldLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductField>
-		getProductFields(long productPurchaseId) {
+		getProductFields(long classNameId, long classPK) {
 
-		return _productFieldLocalService.getProductFields(productPurchaseId);
+		return _productFieldLocalService.getProductFields(classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductField>
+		getProductFields(String className, long classPK) {
+
+		return _productFieldLocalService.getProductFields(className, classPK);
 	}
 
 	/**

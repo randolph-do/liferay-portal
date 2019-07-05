@@ -41,11 +41,14 @@ public class ProductConsumptionServiceUtil {
 	 */
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption
 			addProductConsumption(
-				long accountId, long projectId, long productEntryId)
+				long accountId, long projectId, long productEntryId,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addProductConsumption(
-			accountId, projectId, productEntryId);
+			accountId, projectId, productEntryId, productFields);
 	}
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption

@@ -56,7 +56,7 @@ public class ProductFieldServiceHttp {
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductField
 			addProductField(
-				HttpPrincipal httpPrincipal, long productPurchaseId,
+				HttpPrincipal httpPrincipal, long classNameId, long classPK,
 				String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -66,7 +66,7 @@ public class ProductFieldServiceHttp {
 				_addProductFieldParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, productPurchaseId, name, value);
+				methodKey, classNameId, classPK, name, value);
 
 			Object returnObj = null;
 
@@ -178,7 +178,7 @@ public class ProductFieldServiceHttp {
 		ProductFieldServiceHttp.class);
 
 	private static final Class<?>[] _addProductFieldParameterTypes0 =
-		new Class[] {long.class, String.class, String.class};
+		new Class[] {long.class, long.class, String.class, String.class};
 	private static final Class<?>[] _deleteProductFieldParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateProductFieldParameterTypes2 =

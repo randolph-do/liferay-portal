@@ -73,13 +73,11 @@ public class ProductConsumptionLocalServiceImpl
 
 		// Product fields
 
-		long classNameId = classNameLocalService.getClassNameId(
-			ProductConsumption.class);
-
 		for (ProductField productField : productFields) {
 			_productFieldLocalService.addProductField(
-				userId, classNameId, productConsumptionId,
-				productField.getName(), productField.getValue());
+				userId, ProductConsumption.class.getName(),
+				productConsumptionId, productField.getName(),
+				productField.getValue());
 		}
 
 		return productConsumption;
@@ -112,8 +110,7 @@ public class ProductConsumptionLocalServiceImpl
 
 		// Product fields
 
-		productFieldPersistence.removeByCNI_CPK(
-			classNameId, productConsumptionId);
+		productFieldPersistence.removeByC_C(classNameId, productConsumptionId);
 
 		return productConsumptionPersistence.remove(productConsumptionId);
 	}

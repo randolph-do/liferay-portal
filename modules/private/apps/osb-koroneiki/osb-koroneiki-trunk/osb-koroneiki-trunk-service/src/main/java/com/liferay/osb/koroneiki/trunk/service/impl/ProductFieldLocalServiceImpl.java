@@ -56,8 +56,24 @@ public class ProductFieldLocalServiceImpl
 		return productFieldPersistence.update(productField);
 	}
 
+	public ProductField addProductField(
+			long userId, String className, long classPK, String name,
+			String value)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return addProductField(userId, classNameId, classPK, name, value);
+	}
+
 	public List<ProductField> getProductFields(long classNameId, long classPK) {
-		return productFieldPersistence.findByCNI_CPK(classNameId, classPK);
+		return productFieldPersistence.findByC_C(classNameId, classPK);
+	}
+
+	public List<ProductField> getProductFields(String className, long classPK) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return getProductFields(classNameId, classPK);
 	}
 
 	public ProductField updateProductField(long productFieldId, String value)

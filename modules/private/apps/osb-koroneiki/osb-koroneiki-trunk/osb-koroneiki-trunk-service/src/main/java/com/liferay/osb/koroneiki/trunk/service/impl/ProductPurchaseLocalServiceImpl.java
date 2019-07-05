@@ -84,13 +84,10 @@ public class ProductPurchaseLocalServiceImpl
 
 		// Product fields
 
-		long classNameId = classNameLocalService.getClassNameId(
-			ProductPurchase.class);
-
 		for (ProductField productField : productFields) {
 			_productFieldLocalService.addProductField(
-				userId, classNameId, productPurchaseId, productField.getName(),
-				productField.getValue());
+				userId, ProductPurchase.class.getName(), productPurchaseId,
+				productField.getName(), productField.getValue());
 		}
 
 		return productPurchase;
@@ -113,7 +110,7 @@ public class ProductPurchaseLocalServiceImpl
 
 		// Product fields
 
-		productFieldPersistence.removeByCNI_CPK(classNameId, productPurchaseId);
+		productFieldPersistence.removeByC_C(classNameId, productPurchaseId);
 
 		// Resources
 

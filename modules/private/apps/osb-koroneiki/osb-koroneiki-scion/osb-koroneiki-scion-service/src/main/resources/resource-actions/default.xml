@@ -23,7 +23,7 @@
 	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.scion.model.AuthenticationToken</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_AuthenticationTokenManagerPortlet</portlet-name>
+			<portlet-name>com_liferay_osb_koroneiki_scion_web_portlet_AuthenticationTokenManagerPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

@@ -33,7 +33,7 @@ public class AuthenticationTokenPermissionImpl
 	implements AuthenticationTokenPermission {
 
 	public static final String RESOURCE_NAME_AUTHENTICATION_TOKENS =
-		"com.liferay.osb.koroneiki.taproot.authentication.tokens";
+		"com.liferay.osb.koroneiki.scion.authentication.tokens";
 
 	@Override
 	public void check(

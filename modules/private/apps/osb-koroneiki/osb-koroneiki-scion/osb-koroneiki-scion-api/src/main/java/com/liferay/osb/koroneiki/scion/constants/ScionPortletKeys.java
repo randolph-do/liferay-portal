@@ -20,9 +20,11 @@ package com.liferay.osb.koroneiki.scion.constants;
 public class ScionPortletKeys {
 
 	public static final String AUTHENTICATION_TOKEN_MANAGER =
-		"com_liferay_osb_koroneiki_scion_web_AuthenticationTokenManagerPortlet";
+		"com_liferay_osb_koroneiki_scion_web_portlet_" +
+			"AuthenticationTokenManagerPortlet";
 
 	public static final String SERVICE_PRODUCERS_ADMIN =
-		"com_liferay_osb_koroneiki_scion_web_ServiceProducerAdminPortlet";
+		"com_liferay_osb_koroneiki_scion_web_portlet_" +
+			"ServiceProducerAdminPortlet";
 
 }

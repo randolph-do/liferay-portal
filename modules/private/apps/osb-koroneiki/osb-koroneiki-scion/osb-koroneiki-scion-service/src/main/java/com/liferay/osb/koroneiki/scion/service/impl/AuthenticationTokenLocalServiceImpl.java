@@ -60,7 +60,17 @@ public class AuthenticationTokenLocalServiceImpl
 
 		authenticationToken.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		return authenticationTokenPersistence.update(authenticationToken);
+		authenticationTokenPersistence.update(authenticationToken);
+
+		// Resources
+
+		resourceLocalService.addResources(
+			authenticationToken.getCompanyId(), 0, userId,
+			AuthenticationToken.class.getName(),
+			authenticationToken.getAuthenticationTokenId(), false, false,
+			false);
+
+		return authenticationToken;
 	}
 
 	public AuthenticationToken fetchAuthenticationToken(

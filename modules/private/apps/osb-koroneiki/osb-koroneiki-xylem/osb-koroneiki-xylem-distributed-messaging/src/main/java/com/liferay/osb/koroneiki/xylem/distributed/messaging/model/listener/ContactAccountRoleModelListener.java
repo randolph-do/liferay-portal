@@ -14,101 +14,52 @@
 
 package com.liferay.osb.koroneiki.xylem.distributed.messaging.model.listener;
 
-import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
-import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.koroneiki.taproot.model.ContactAccountRole;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.factory.MessageFactory;
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Amos Fong
  */
 @Component(immediate = true, service = ModelListener.class)
 public class ContactAccountRoleModelListener
-	extends BaseModelListener<ContactAccountRole> {
+	extends BaseXylemModelListener<ContactAccountRole> {
 
 	@Override
-	public void onAfterCreate(ContactAccountRole contactAccountRole)
-		throws ModelListenerException {
+	public Message createMessage(ContactAccountRole contactAccountRole)
+		throws Exception {
 
-		try {
-			ContactRole contactRole = contactAccountRole.getContactRole();
-
-			if (contactRole.isMember()) {
-				publish(
-					"koroneiki.account.assigned.contact",
-					contactAccountRole.getAccount(),
-					contactAccountRole.getContact());
-			}
-			else {
-				publish(
-					"koroneiki.account.assigned.contactrole",
-					contactAccountRole);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new ModelListenerException(e);
-		}
+		return messageFactory.create(contactAccountRole);
 	}
 
 	@Override
-	public void onAfterRemove(ContactAccountRole contactAccountRole)
-		throws ModelListenerException {
+	protected String getCreateTopic(ContactAccountRole contactAccountRole)
+		throws PortalException {
 
-		try {
-			ContactRole contactRole = contactAccountRole.getContactRole();
+		ContactRole contactRole = contactAccountRole.getContactRole();
 
-			if (contactRole.isMember()) {
-				publish(
-					"koroneiki.account.unassigned.contact",
-					contactAccountRole.getAccount(),
-					contactAccountRole.getContact());
-			}
-			else {
-				publish(
-					"koroneiki.account.unassigned.contactrole",
-					contactAccountRole);
-			}
+		if (contactRole.isMember()) {
+			return "koroneiki.account.assigned.contact";
 		}
-		catch (Exception e) {
-			_log.error(e, e);
 
-			throw new ModelListenerException(e);
+		return "koroneiki.account.assigned.contactrole";
+	}
+
+	@Override
+	protected String getRemoveTopic(ContactAccountRole contactAccountRole)
+		throws PortalException {
+
+		ContactRole contactRole = contactAccountRole.getContactRole();
+
+		if (contactRole.isMember()) {
+			return "koroneiki.account.unassigned.contact";
 		}
+
+		return "koroneiki.account.unassigned.contactrole";
 	}
-
-	protected void publish(String topic, Account account, Contact contact)
-		throws Exception {
-
-		_messagePublisher.publish(
-			topic, _messageFactory.create(account, contact));
-	}
-
-	protected void publish(String topic, ContactAccountRole contactAccountRole)
-		throws Exception {
-
-		_messagePublisher.publish(
-			topic, _messageFactory.create(contactAccountRole));
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContactAccountRoleModelListener.class);
-
-	@Reference
-	private MessageFactory _messageFactory;
-
-	@Reference
-	private MessagePublisher _messagePublisher;
 
 }

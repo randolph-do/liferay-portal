@@ -14,15 +14,10 @@
 
 package com.liferay.osb.koroneiki.xylem.distributed.messaging.model.listener;
 
-import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
+import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.factory.MessageFactory;
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
@@ -33,56 +28,51 @@ import org.osgi.service.component.annotations.Reference;
  * @author Amos Fong
  */
 @Component(immediate = true, service = ModelListener.class)
-public class AddressModelListener extends BaseModelListener<Address> {
+public class AddressModelListener extends BaseXylemModelListener<Address> {
 
 	@Override
-	public void onAfterCreate(Address address) throws ModelListenerException {
-		publish(address);
-	}
+	public Message createMessage(Address address) throws Exception {
+		if (address.getClassNameId() == _classNameLocalService.getClassNameId(
+				Account.class)) {
 
-	@Override
-	public void onAfterRemove(Address address) throws ModelListenerException {
-		publish(address);
-	}
+			Account account = _accountLocalService.getAccount(
+				address.getClassPK());
 
-	@Override
-	public void onAfterUpdate(Address address) throws ModelListenerException {
-		publish(address);
-	}
-
-	protected void publish(Address address) throws ModelListenerException {
-		try {
-			if (address.getClassNameId() ==
-					_classNameLocalService.getClassNameId(Account.class)) {
-
-				Account account = _accountLocalService.getAccount(
-					address.getClassPK());
-
-				_messagePublisher.publish(
-					"koroneiki.account.update",
-					_messageFactory.create(account));
-			}
+			return messageFactory.create(account);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
 
-			throw new ModelListenerException(e);
-		}
+		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddressModelListener.class);
+	@Override
+	protected String getCreateTopic(Address address) {
+		return _getTopic(address);
+	}
+
+	@Override
+	protected String getRemoveTopic(Address address) {
+		return _getTopic(address);
+	}
+
+	@Override
+	protected String getUpdateTopic(Address address) {
+		return _getTopic(address);
+	}
+
+	private String _getTopic(Address address) {
+		if (address.getClassNameId() == _classNameLocalService.getClassNameId(
+				Account.class)) {
+
+			return "koroneiki.account.update";
+		}
+
+		return null;
+	}
 
 	@Reference
 	private AccountLocalService _accountLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private MessageFactory _messageFactory;
-
-	@Reference
-	private MessagePublisher _messagePublisher;
 
 }

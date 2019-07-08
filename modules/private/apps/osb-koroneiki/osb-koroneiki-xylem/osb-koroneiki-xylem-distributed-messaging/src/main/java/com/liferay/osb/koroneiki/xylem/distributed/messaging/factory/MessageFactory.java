@@ -43,16 +43,6 @@ public class MessageFactory {
 		return new Message(dtoAccount.toString());
 	}
 
-	public Message create(Account account, Contact contact) throws Exception {
-		JSONObject jsonObject = JSONUtil.put(
-			"account", toJSONObject(account)
-		).put(
-			"contact", toJSONObject(contact)
-		);
-
-		return new Message(jsonObject.toString());
-	}
-
 	public Message create(ContactAccountRole contactAccountRole)
 		throws Exception {
 

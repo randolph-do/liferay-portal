@@ -14,59 +14,29 @@
 
 package com.liferay.osb.koroneiki.xylem.distributed.messaging.model.listener;
 
-import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
+import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.koroneiki.taproot.model.Account;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.factory.MessageFactory;
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Amos Fong
  */
-@Component(immediate = true, service = ModelListener.class)
-public class AccountModelListener extends BaseModelListener<Account> {
+@Component(
+	immediate = true,
+	property = {
+		"create.topic=koroneiki.account.create",
+		"remove.topic=koroneiki.account.delete",
+		"update.topic=koroneiki.account.update"
+	},
+	service = ModelListener.class
+)
+public class AccountModelListener extends BaseXylemModelListener<Account> {
 
 	@Override
-	public void onAfterCreate(Account account) throws ModelListenerException {
-		publish("koroneiki.account.create", account);
+	public Message createMessage(Account account) throws Exception {
+		return messageFactory.create(account);
 	}
-
-	@Override
-	public void onAfterRemove(Account account) throws ModelListenerException {
-		publish("koroneiki.account.delete", account);
-	}
-
-	@Override
-	public void onAfterUpdate(Account account) throws ModelListenerException {
-		publish("koroneiki.account.update", account);
-	}
-
-	protected void publish(String topic, Account account)
-		throws ModelListenerException {
-
-		try {
-			_messagePublisher.publish(topic, _messageFactory.create(account));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new ModelListenerException(e);
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountModelListener.class);
-
-	@Reference
-	private MessageFactory _messageFactory;
-
-	@Reference
-	private MessagePublisher _messagePublisher;
 
 }

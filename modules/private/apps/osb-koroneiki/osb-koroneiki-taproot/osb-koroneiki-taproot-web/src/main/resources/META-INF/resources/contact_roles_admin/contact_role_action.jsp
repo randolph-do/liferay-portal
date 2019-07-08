@@ -55,7 +55,7 @@ ContactRole contactRole = (ContactRole)row.getObject();
 		useDialog="<%= true %>"
 	/>
 
-	<c:if test="<%= !ArrayUtil.contains(ContactRoleSystem.VALUES, contactRole.getName()) %>">
+	<c:if test="<%= !contactRole.isSystem() %>">
 		<portlet:actionURL name="/contact_roles_admin/edit_contact_role" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

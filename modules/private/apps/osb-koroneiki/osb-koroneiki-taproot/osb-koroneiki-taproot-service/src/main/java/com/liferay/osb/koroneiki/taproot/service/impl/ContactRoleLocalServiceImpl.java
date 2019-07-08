@@ -111,7 +111,9 @@ public class ContactRoleLocalServiceImpl
 		ContactRole contactRole = contactRoleLocalService.getContactRole(
 			contactRoleId);
 
-		validate(contactRole.getName());
+		if (contactRole.isSystem()) {
+			throw new ContactRoleSystemException();
+		}
 
 		// Contact account roles
 
@@ -181,12 +183,6 @@ public class ContactRoleLocalServiceImpl
 		contactRole.setDescription(description);
 
 		return contactRolePersistence.update(contactRole);
-	}
-
-	protected void validate(String name) throws PortalException {
-		if (ArrayUtil.contains(ContactRoleSystem.VALUES, name)) {
-			throw new ContactRoleSystemException();
-		}
 	}
 
 	protected void validate(String name, int type) throws PortalException {

@@ -97,4 +97,13 @@ public interface ContactProjectRole
 
 		};
 
+	public Contact getContact()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public ContactRole getContactRole()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public Project getProject()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

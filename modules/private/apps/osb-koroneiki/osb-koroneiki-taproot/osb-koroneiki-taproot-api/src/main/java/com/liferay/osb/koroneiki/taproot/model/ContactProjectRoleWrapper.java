@@ -72,6 +72,13 @@ public class ContactProjectRoleWrapper
 		}
 	}
 
+	@Override
+	public Contact getContact()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getContact();
+	}
+
 	/**
 	 * Returns the contact ID of this contact project role.
 	 *
@@ -80,6 +87,13 @@ public class ContactProjectRoleWrapper
 	@Override
 	public long getContactId() {
 		return model.getContactId();
+	}
+
+	@Override
+	public ContactRole getContactRole()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getContactRole();
 	}
 
 	/**
@@ -103,6 +117,13 @@ public class ContactProjectRoleWrapper
 			ContactProjectRolePK getPrimaryKey() {
 
 		return model.getPrimaryKey();
+	}
+
+	@Override
+	public Project getProject()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getProject();
 	}
 
 	/**

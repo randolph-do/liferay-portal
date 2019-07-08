@@ -85,6 +85,13 @@ public class TeamProjectRoleWrapper
 		return model.getPrimaryKey();
 	}
 
+	@Override
+	public Project getProject()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getProject();
+	}
+
 	/**
 	 * Returns the project ID of this team project role.
 	 *
@@ -95,6 +102,13 @@ public class TeamProjectRoleWrapper
 		return model.getProjectId();
 	}
 
+	@Override
+	public Team getTeam()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getTeam();
+	}
+
 	/**
 	 * Returns the team ID of this team project role.
 	 *
@@ -103,6 +117,13 @@ public class TeamProjectRoleWrapper
 	@Override
 	public long getTeamId() {
 		return model.getTeamId();
+	}
+
+	@Override
+	public TeamRole getTeamRole()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getTeamRole();
 	}
 
 	/**

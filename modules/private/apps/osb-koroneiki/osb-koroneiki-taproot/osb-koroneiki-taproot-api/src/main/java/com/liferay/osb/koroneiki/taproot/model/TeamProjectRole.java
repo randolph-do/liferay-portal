@@ -96,4 +96,13 @@ public interface TeamProjectRole extends PersistedModel, TeamProjectRoleModel {
 
 		};
 
+	public Project getProject()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public Team getTeam()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public TeamRole getTeamRole()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

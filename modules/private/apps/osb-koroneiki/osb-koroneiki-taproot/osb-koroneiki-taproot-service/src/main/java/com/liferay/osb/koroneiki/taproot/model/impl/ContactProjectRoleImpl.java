@@ -16,6 +16,14 @@ package com.liferay.osb.koroneiki.taproot.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.osb.koroneiki.taproot.model.ContactRole;
+import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.service.ContactLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Kyle Bischof
  */
@@ -23,6 +31,18 @@ import aQute.bnd.annotation.ProviderType;
 public class ContactProjectRoleImpl extends ContactProjectRoleBaseImpl {
 
 	public ContactProjectRoleImpl() {
+	}
+
+	public Contact getContact() throws PortalException {
+		return ContactLocalServiceUtil.getContact(getContactId());
+	}
+
+	public ContactRole getContactRole() throws PortalException {
+		return ContactRoleLocalServiceUtil.getContactRole(getContactRoleId());
+	}
+
+	public Project getProject() throws PortalException {
+		return ProjectLocalServiceUtil.getProject(getProjectId());
 	}
 
 }

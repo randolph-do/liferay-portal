@@ -14,6 +14,14 @@
 
 package com.liferay.osb.koroneiki.taproot.model.impl;
 
+import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.model.Team;
+import com.liferay.osb.koroneiki.taproot.model.TeamRole;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.service.TeamLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -23,6 +31,18 @@ import org.osgi.annotation.versioning.ProviderType;
 public class TeamProjectRoleImpl extends TeamProjectRoleBaseImpl {
 
 	public TeamProjectRoleImpl() {
+	}
+
+	public Project getProject() throws PortalException {
+		return ProjectLocalServiceUtil.getProject(getProjectId());
+	}
+
+	public Team getTeam() throws PortalException {
+		return TeamLocalServiceUtil.getTeam(getTeamId());
+	}
+
+	public TeamRole getTeamRole() throws PortalException {
+		return TeamRoleLocalServiceUtil.getTeamRole(getTeamRoleId());
 	}
 
 }

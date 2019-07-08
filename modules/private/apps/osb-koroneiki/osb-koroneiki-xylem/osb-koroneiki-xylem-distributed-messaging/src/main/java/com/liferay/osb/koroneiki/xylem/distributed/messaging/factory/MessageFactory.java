@@ -15,13 +15,28 @@
 package com.liferay.osb.koroneiki.xylem.distributed.messaging.factory;
 
 import com.liferay.osb.distributed.messaging.Message;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.AccountUtil;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactRoleUtil;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductConsumptionUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductPurchaseUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProjectUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.TeamRoleUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.TeamUtil;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.model.ContactAccountRole;
+import com.liferay.osb.koroneiki.taproot.model.ContactProjectRole;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
+import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.model.Team;
+import com.liferay.osb.koroneiki.taproot.model.TeamProjectRole;
+import com.liferay.osb.koroneiki.taproot.model.TeamRole;
+import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
+import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
+import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -43,6 +58,13 @@ public class MessageFactory {
 		return new Message(dtoAccount.toString());
 	}
 
+	public Message create(Contact contact) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact dtoContact =
+			ContactUtil.toContact(contact);
+
+		return new Message(dtoContact.toString());
+	}
+
 	public Message create(ContactAccountRole contactAccountRole)
 		throws Exception {
 
@@ -55,6 +77,84 @@ public class MessageFactory {
 		);
 
 		return new Message(jsonObject.toString());
+	}
+
+	public Message create(ContactProjectRole contactProjectRole)
+		throws Exception {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"contact", toJSONObject(contactProjectRole.getContact())
+		).put(
+			"contactRole", toJSONObject(contactProjectRole.getContactRole())
+		).put(
+			"project", toJSONObject(contactProjectRole.getProject())
+		);
+
+		return new Message(jsonObject.toString());
+	}
+
+	public Message create(ContactRole contactRole) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole
+			dtoContactRole = ContactRoleUtil.toContactRole(contactRole);
+
+		return new Message(dtoContactRole.toString());
+	}
+
+	public Message create(ProductConsumption productConsumption)
+		throws Exception {
+
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumption
+			dtoProductConsumption = ProductConsumptionUtil.toProductConsumption(
+				productConsumption);
+
+		return new Message(dtoProductConsumption.toString());
+	}
+
+	public Message create(ProductEntry productEntry) throws Exception {
+		Product dtoProduct = ProductUtil.toProduct(productEntry);
+
+		return new Message(dtoProduct.toString());
+	}
+
+	public Message create(ProductPurchase productPurchase) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductPurchase
+			dtoProductPurchase = ProductPurchaseUtil.toProductPurchase(
+				productPurchase);
+
+		return new Message(dtoProductPurchase.toString());
+	}
+
+	public Message create(Project project) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project dtoProject =
+			ProjectUtil.toProject(project);
+
+		return new Message(dtoProject.toString());
+	}
+
+	public Message create(Team team) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team dtoTeam =
+			TeamUtil.toTeam(team);
+
+		return new Message(dtoTeam.toString());
+	}
+
+	public Message create(TeamProjectRole teamProjectRole) throws Exception {
+		JSONObject jsonObject = JSONUtil.put(
+			"project", toJSONObject(teamProjectRole.getProject())
+		).put(
+			"team", toJSONObject(teamProjectRole.getTeam())
+		).put(
+			"teamRole", toJSONObject(teamProjectRole.getTeamRole())
+		);
+
+		return new Message(jsonObject.toString());
+	}
+
+	public Message create(TeamRole teamRole) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole dtoTeamRole =
+			TeamRoleUtil.toTeamRole(teamRole);
+
+		return new Message(dtoTeamRole.toString());
 	}
 
 	protected JSONObject toJSONObject(Account account) throws Exception {
@@ -78,6 +178,27 @@ public class MessageFactory {
 			dtoContactRole = ContactRoleUtil.toContactRole(contactRole);
 
 		return _jsonFactory.createJSONObject(dtoContactRole.toString());
+	}
+
+	protected JSONObject toJSONObject(Project project) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project dtoProject =
+			ProjectUtil.toProject(project);
+
+		return _jsonFactory.createJSONObject(dtoProject.toString());
+	}
+
+	protected JSONObject toJSONObject(Team team) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team dtoTeam =
+			TeamUtil.toTeam(team);
+
+		return _jsonFactory.createJSONObject(dtoTeam.toString());
+	}
+
+	protected JSONObject toJSONObject(TeamRole teamRole) throws Exception {
+		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole dtoTeamRole =
+			TeamRoleUtil.toTeamRole(teamRole);
+
+		return _jsonFactory.createJSONObject(dtoTeamRole.toString());
 	}
 
 	@Reference

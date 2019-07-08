@@ -55,14 +55,16 @@ ContactRole contactRole = (ContactRole)row.getObject();
 		useDialog="<%= true %>"
 	/>
 
-	<portlet:actionURL name="/contact_roles_admin/edit_contact_role" var="deleteURL">
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="contactRoleId" value="<%= String.valueOf(contactRole.getContactRoleId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= !ArrayUtil.contains(ContactRoleSystem.VALUES, contactRole.getName()) %>">
+		<portlet:actionURL name="/contact_roles_admin/edit_contact_role" var="deleteURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="contactRoleId" value="<%= String.valueOf(contactRole.getContactRoleId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		confirmation="are-you-sure-you-want-to-delete-this-contact-role"
-		url="<%= deleteURL %>"
-	/>
+		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-delete-this-contact-role"
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

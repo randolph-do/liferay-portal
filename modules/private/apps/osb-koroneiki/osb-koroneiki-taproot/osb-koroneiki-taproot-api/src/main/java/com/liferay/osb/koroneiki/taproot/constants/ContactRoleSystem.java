@@ -21,4 +21,6 @@ public class ContactRoleSystem {
 
 	public static final String NAME_MEMBER = "Member";
 
+	public static final String[] VALUES = {NAME_MEMBER};
+
 }

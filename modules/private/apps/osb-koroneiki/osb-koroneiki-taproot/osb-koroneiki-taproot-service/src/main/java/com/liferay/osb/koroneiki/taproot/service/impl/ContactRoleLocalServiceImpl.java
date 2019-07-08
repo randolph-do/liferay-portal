@@ -17,6 +17,7 @@ package com.liferay.osb.koroneiki.taproot.service.impl;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleSystem;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleNameException;
+import com.liferay.osb.koroneiki.taproot.exception.ContactRoleSystemException;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleTypeException;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactRoleLocalServiceBaseImpl;
@@ -110,6 +111,8 @@ public class ContactRoleLocalServiceImpl
 		ContactRole contactRole = contactRoleLocalService.getContactRole(
 			contactRoleId);
 
+		validate(contactRole.getName());
+
 		// Contact account roles
 
 		contactAccountRolePersistence.removeByContactRoleId(contactRoleId);
@@ -178,6 +181,12 @@ public class ContactRoleLocalServiceImpl
 		contactRole.setDescription(description);
 
 		return contactRolePersistence.update(contactRole);
+	}
+
+	protected void validate(String name) throws PortalException {
+		if (ArrayUtil.contains(ContactRoleSystem.VALUES, name)) {
+			throw new ContactRoleSystemException();
+		}
 	}
 
 	protected void validate(String name, int type) throws PortalException {

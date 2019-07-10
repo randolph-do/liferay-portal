@@ -18,6 +18,7 @@ import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.Connection;
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.message.AttributeTranslator;
 import com.liferay.osb.distributed.messaging.subscribing.router.MessageRouter;
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,6 +32,7 @@ import com.rabbitmq.client.ShutdownSignalException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -104,13 +106,22 @@ public abstract class BaseConsumer implements Consumer {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
+		String exchange = GetterUtil.getString(properties.get("exchange"));
 		String queue = GetterUtil.getString(properties.get("queue"));
 		int prefetchCount = GetterUtil.getInteger(
 			properties.get("prefetch.count"), 20);
+		List<String> routingKeys = StringPlus.asList(
+			properties.get("routing.key"));
 
 		Connection connection = getConnection();
 
 		channel = connection.createChannel(prefetchCount);
+
+		channel.queueDeclare(queue, true, false, false, null);
+
+		for (String routingKey : routingKeys) {
+			channel.queueBind(queue, exchange, routingKey);
+		}
 
 		channel.basicConsume(queue, false, this);
 	}

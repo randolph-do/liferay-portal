@@ -49,6 +49,15 @@
 				Koroneiki_ContactProjectRole.projectId = ?
 		]]>
 	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactFinder.joinByTeam">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_ContactTeamRole ON
+					Koroneiki_ContactTeamRole.contactId = Koroneiki_Contact.contactId
+			WHERE
+				Koroneiki_ContactTeamRole.teamId = ?
+		]]>
+	</sql>
 	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactRoleFinder.countByName">
 		<![CDATA[
 			SELECT
@@ -99,6 +108,16 @@
 			WHERE
 				(Koroneiki_ContactProjectRole.projectId = ?) AND
 				(Koroneiki_ContactProjectRole.contactId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.ContactRoleFinder.joinByTeamContact">
+		<![CDATA[
+			INNER JOIN
+				Koroneiki_ContactTeamRole ON
+					Koroneiki_ContactTeamRole.contactRoleId = Koroneiki_ContactRole.contactRoleId
+			WHERE
+				(Koroneiki_ContactTeamRole.teamId = ?) AND
+				(Koroneiki_ContactTeamRole.contactId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.osb.koroneiki.taproot.service.persistence.TeamFinder.countByName">

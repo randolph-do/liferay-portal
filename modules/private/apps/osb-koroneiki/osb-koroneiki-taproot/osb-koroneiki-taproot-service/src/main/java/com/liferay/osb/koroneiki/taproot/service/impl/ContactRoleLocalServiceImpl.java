@@ -166,6 +166,17 @@ public class ContactRoleLocalServiceImpl
 		return contactRolePersistence.countByType(type);
 	}
 
+	public List<ContactRole> getContactTeamContactRoles(
+		long teamId, long contactId) {
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("teamContact", new Long[] {teamId, contactId});
+
+		return contactRoleFinder.findByName(
+			null, params, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
 	public ContactRole getMemberContactRole(int type) {
 		return _memberContactRoles.get(type);
 	}

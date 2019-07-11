@@ -16,7 +16,9 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
+import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.model.Team;
+import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
 import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -35,11 +37,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + TaprootPortletKeys.TEAMS_ADMIN,
-		"mvc.command.name=/teams_admin/edit_team"
+		"mvc.command.name=/teams_admin/assign_team_contact_roles"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditTeamMVCRenderCommand implements MVCRenderCommand {
+public class AssignTeamContactRolesMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -48,23 +51,17 @@ public class EditTeamMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			long teamId = ParamUtil.getLong(renderRequest, "teamId");
+			long contactId = ParamUtil.getLong(renderRequest, "contactId");
 
-			if (teamId > 0) {
-				Team team = _teamLocalService.getTeam(teamId);
+			Team team = _teamLocalService.getTeam(teamId);
 
-				renderRequest.setAttribute(TaprootWebKeys.TEAM, team);
-			}
+			renderRequest.setAttribute(TaprootWebKeys.TEAM, team);
 
-			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");
+			Contact contact = _contactLocalService.getContact(contactId);
 
-			if (tabs1.equals("contact-roles")) {
-				return "/teams_admin/edit_team_contact_roles.jsp";
-			}
-			else if (tabs1.equals("external-links")) {
-				return "/teams_admin/edit_team_external_links.jsp";
-			}
+			renderRequest.setAttribute(TaprootWebKeys.CONTACT, contact);
 
-			return "/teams_admin/edit_team.jsp";
+			return "/teams_admin/assign_team_contact_roles.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());
@@ -72,6 +69,9 @@ public class EditTeamMVCRenderCommand implements MVCRenderCommand {
 			return "/teams_admin/error.jsp";
 		}
 	}
+
+	@Reference
+	private ContactLocalService _contactLocalService;
 
 	@Reference
 	private TeamLocalService _teamLocalService;

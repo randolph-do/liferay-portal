@@ -38,6 +38,17 @@ long teamId = BeanParamUtil.getLong(team, request, "teamId");
 
 				add(
 					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("contact-roles"));
+
+						if (team != null) {
+							navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/teams_admin/edit_team", "tabs1", "contact-roles", "teamId", teamId);
+						}
+
+						navigationItem.setLabel(LanguageUtil.get(request, "contact-roles"));
+					});
+
+				add(
+					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("external-links"));
 
 						if (team != null) {

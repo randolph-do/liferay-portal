@@ -56,6 +56,9 @@ public class ContactFinderImpl
 	public static final String JOIN_BY_PROJECT =
 		ContactFinder.class.getName() + ".joinByProject";
 
+	public static final String JOIN_BY_TEAM =
+		ContactFinder.class.getName() + ".joinByTeam";
+
 	@Override
 	public int countByFN_MN_LN_E(
 		String firstName, String middleName, String lastName,
@@ -180,6 +183,9 @@ public class ContactFinderImpl
 		else if (key.equals("project")) {
 			join = _customSQL.get(getClass(), JOIN_BY_PROJECT);
 		}
+		else if (key.equals("team")) {
+			join = _customSQL.get(getClass(), JOIN_BY_TEAM);
+		}
 
 		if (Validator.isNotNull(join)) {
 			int pos = join.indexOf("WHERE");
@@ -218,6 +224,9 @@ public class ContactFinderImpl
 		}
 		else if (key.equals("project")) {
 			join = _customSQL.get(getClass(), JOIN_BY_PROJECT);
+		}
+		else if (key.equals("team")) {
+			join = _customSQL.get(getClass(), JOIN_BY_TEAM);
 		}
 
 		if (Validator.isNotNull(join)) {

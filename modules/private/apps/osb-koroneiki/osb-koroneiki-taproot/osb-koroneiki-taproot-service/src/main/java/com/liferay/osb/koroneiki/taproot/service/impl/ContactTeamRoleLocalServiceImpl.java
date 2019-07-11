@@ -18,6 +18,7 @@ import com.liferay.osb.koroneiki.taproot.model.ContactTeamRole;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactTeamRoleLocalServiceBaseImpl;
 import com.liferay.osb.koroneiki.taproot.service.persistence.ContactTeamRolePK;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,12 +33,53 @@ public class ContactTeamRoleLocalServiceImpl
 	extends ContactTeamRoleLocalServiceBaseImpl {
 
 	public ContactTeamRole addContactTeamRole(
-		long contactId, long teamId, long contactRoleId) {
+			long contactId, long teamId, long contactRoleId)
+		throws PortalException {
 
-		ContactTeamRolePK primaryKey = new ContactTeamRolePK(
+		validate(contactId, teamId);
+
+		ContactTeamRolePK contactTeamRolePK = new ContactTeamRolePK(
 			contactId, teamId, contactRoleId);
 
-		return contactTeamRolePersistence.create(primaryKey);
+		ContactTeamRole contactTeamRole =
+			contactTeamRolePersistence.fetchByPrimaryKey(contactTeamRolePK);
+
+		if (contactTeamRole == null) {
+			contactTeamRole = contactTeamRolePersistence.create(
+				contactTeamRolePK);
+
+			contactTeamRolePersistence.update(contactTeamRole);
+		}
+
+		return contactTeamRole;
+	}
+
+	public ContactTeamRole deleteContactTeamRole(
+		long contactId, long teamId, long contactRoleId) {
+
+		ContactTeamRolePK contactTeamRolePK = new ContactTeamRolePK(
+			contactId, teamId, contactRoleId);
+
+		ContactTeamRole contactTeamRole =
+			contactTeamRolePersistence.fetchByPrimaryKey(contactTeamRolePK);
+
+		if (contactTeamRole != null) {
+			deleteContactTeamRole(contactTeamRole);
+		}
+
+		return contactTeamRole;
+	}
+
+	public void deleteContactTeamRoles(long contactId, long teamId) {
+		contactTeamRolePersistence.removeByC_T(contactId, teamId);
+	}
+
+	protected void validate(long contactId, long teamId)
+		throws PortalException {
+
+		contactPersistence.findByPrimaryKey(contactId);
+
+		teamPersistence.findByPrimaryKey(teamId);
 	}
 
 }

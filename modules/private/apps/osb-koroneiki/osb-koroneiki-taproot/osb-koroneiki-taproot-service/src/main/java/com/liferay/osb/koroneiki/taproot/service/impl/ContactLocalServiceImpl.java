@@ -144,6 +144,23 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		return contactFinder.countByFN_MN_LN_E(null, null, null, null, params);
 	}
 
+	public List<Contact> getTeamContacts(long teamId, int start, int end) {
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("team", teamId);
+
+		return contactFinder.findByFN_MN_LN_E(
+			null, null, null, null, params, start, end);
+	}
+
+	public int getTeamContactsCount(long teamId) {
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("team", teamId);
+
+		return contactFinder.countByFN_MN_LN_E(null, null, null, null, params);
+	}
+
 	public Contact updateContact(
 			long contactId, String firstName, String middleName,
 			String lastName, String emailAddress, String languageId)

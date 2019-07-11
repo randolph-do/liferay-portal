@@ -56,6 +56,9 @@ public class ContactRoleFinderImpl
 	public static final String JOIN_BY_PROJECT_CONTACT =
 		ContactRoleFinder.class.getName() + ".joinByProjectContact";
 
+	public static final String JOIN_BY_TEAM_CONTACT =
+		ContactRoleFinder.class.getName() + ".joinByTeamContact";
+
 	@Override
 	public int countByName(String name, LinkedHashMap<String, Object> params) {
 		Session session = null;
@@ -162,6 +165,9 @@ public class ContactRoleFinderImpl
 		else if (key.equals("projectContact")) {
 			join = _customSQL.get(getClass(), JOIN_BY_PROJECT_CONTACT);
 		}
+		else if (key.equals("teamContact")) {
+			join = _customSQL.get(getClass(), JOIN_BY_TEAM_CONTACT);
+		}
 
 		if (Validator.isNotNull(join)) {
 			int pos = join.indexOf("WHERE");
@@ -200,6 +206,9 @@ public class ContactRoleFinderImpl
 		}
 		else if (key.equals("projectContact")) {
 			join = _customSQL.get(getClass(), JOIN_BY_PROJECT_CONTACT);
+		}
+		else if (key.equals("teamContact")) {
+			join = _customSQL.get(getClass(), JOIN_BY_TEAM_CONTACT);
 		}
 
 		if (Validator.isNotNull(join)) {

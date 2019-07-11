@@ -76,9 +76,9 @@ public class ExternalLinkModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"externalLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"domain", Types.VARCHAR}, {"entityName", Types.VARCHAR},
-		{"entityId", Types.VARCHAR}
+		{"externalLinkKey", Types.VARCHAR}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"domain", Types.VARCHAR},
+		{"entityName", Types.VARCHAR}, {"entityId", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,6 +89,7 @@ public class ExternalLinkModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("externalLinkKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("domain", Types.VARCHAR);
@@ -97,7 +98,7 @@ public class ExternalLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_ExternalLink (externalLinkId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,domain VARCHAR(75) null,entityName VARCHAR(75) null,entityId VARCHAR(75) null)";
+		"create table Koroneiki_ExternalLink (externalLinkId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,externalLinkKey VARCHAR(75) null,classNameId LONG,classPK LONG,domain VARCHAR(75) null,entityName VARCHAR(75) null,entityId VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_ExternalLink";
@@ -124,7 +125,9 @@ public class ExternalLinkModelImpl
 
 	public static final long ENTITYNAME_COLUMN_BITMASK = 16L;
 
-	public static final long EXTERNALLINKID_COLUMN_BITMASK = 32L;
+	public static final long EXTERNALLINKKEY_COLUMN_BITMASK = 32L;
+
+	public static final long EXTERNALLINKID_COLUMN_BITMASK = 64L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -151,6 +154,7 @@ public class ExternalLinkModelImpl
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setExternalLinkKey(soapModel.getExternalLinkKey());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setDomain(soapModel.getDomain());
@@ -325,6 +329,11 @@ public class ExternalLinkModelImpl
 			"modifiedDate",
 			(BiConsumer<ExternalLink, Date>)ExternalLink::setModifiedDate);
 		attributeGetterFunctions.put(
+			"externalLinkKey", ExternalLink::getExternalLinkKey);
+		attributeSetterBiConsumers.put(
+			"externalLinkKey",
+			(BiConsumer<ExternalLink, String>)ExternalLink::setExternalLinkKey);
+		attributeGetterFunctions.put(
 			"classNameId", ExternalLink::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
@@ -400,6 +409,32 @@ public class ExternalLinkModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getExternalLinkKey() {
+		if (_externalLinkKey == null) {
+			return "";
+		}
+		else {
+			return _externalLinkKey;
+		}
+	}
+
+	@Override
+	public void setExternalLinkKey(String externalLinkKey) {
+		_columnBitmask |= EXTERNALLINKKEY_COLUMN_BITMASK;
+
+		if (_originalExternalLinkKey == null) {
+			_originalExternalLinkKey = _externalLinkKey;
+		}
+
+		_externalLinkKey = externalLinkKey;
+	}
+
+	public String getOriginalExternalLinkKey() {
+		return GetterUtil.getString(_originalExternalLinkKey);
 	}
 
 	@Override
@@ -586,6 +621,7 @@ public class ExternalLinkModelImpl
 		externalLinkImpl.setCompanyId(getCompanyId());
 		externalLinkImpl.setCreateDate(getCreateDate());
 		externalLinkImpl.setModifiedDate(getModifiedDate());
+		externalLinkImpl.setExternalLinkKey(getExternalLinkKey());
 		externalLinkImpl.setClassNameId(getClassNameId());
 		externalLinkImpl.setClassPK(getClassPK());
 		externalLinkImpl.setDomain(getDomain());
@@ -655,6 +691,9 @@ public class ExternalLinkModelImpl
 
 		externalLinkModelImpl._setModifiedDate = false;
 
+		externalLinkModelImpl._originalExternalLinkKey =
+			externalLinkModelImpl._externalLinkKey;
+
 		externalLinkModelImpl._originalClassNameId =
 			externalLinkModelImpl._classNameId;
 
@@ -700,6 +739,14 @@ public class ExternalLinkModelImpl
 		}
 		else {
 			externalLinkCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		externalLinkCacheModel.externalLinkKey = getExternalLinkKey();
+
+		String externalLinkKey = externalLinkCacheModel.externalLinkKey;
+
+		if ((externalLinkKey != null) && (externalLinkKey.length() == 0)) {
+			externalLinkCacheModel.externalLinkKey = null;
 		}
 
 		externalLinkCacheModel.classNameId = getClassNameId();
@@ -811,6 +858,8 @@ public class ExternalLinkModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _externalLinkKey;
+	private String _originalExternalLinkKey;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

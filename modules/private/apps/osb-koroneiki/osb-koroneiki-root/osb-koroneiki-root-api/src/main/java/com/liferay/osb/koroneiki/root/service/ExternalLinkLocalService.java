@@ -201,6 +201,10 @@ public interface ExternalLinkLocalService
 	public ExternalLink getExternalLink(long externalLinkId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExternalLink getExternalLink(String externalLinkKey)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the external links.
 	 *

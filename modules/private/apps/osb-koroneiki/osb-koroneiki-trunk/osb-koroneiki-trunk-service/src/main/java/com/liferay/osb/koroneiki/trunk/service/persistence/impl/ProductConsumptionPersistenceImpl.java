@@ -2113,6 +2113,248 @@ public class ProductConsumptionPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"productConsumption.companyId = ?";
 
+	private FinderPath _finderPathFetchByProductConsumptionKey;
+	private FinderPath _finderPathCountByProductConsumptionKey;
+
+	/**
+	 * Returns the product consumption where productConsumptionKey = &#63; or throws a <code>NoSuchProductConsumptionException</code> if it could not be found.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the matching product consumption
+	 * @throws NoSuchProductConsumptionException if a matching product consumption could not be found
+	 */
+	@Override
+	public ProductConsumption findByProductConsumptionKey(
+			String productConsumptionKey)
+		throws NoSuchProductConsumptionException {
+
+		ProductConsumption productConsumption = fetchByProductConsumptionKey(
+			productConsumptionKey);
+
+		if (productConsumption == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("productConsumptionKey=");
+			msg.append(productConsumptionKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchProductConsumptionException(msg.toString());
+		}
+
+		return productConsumption;
+	}
+
+	/**
+	 * Returns the product consumption where productConsumptionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the matching product consumption, or <code>null</code> if a matching product consumption could not be found
+	 */
+	@Override
+	public ProductConsumption fetchByProductConsumptionKey(
+		String productConsumptionKey) {
+
+		return fetchByProductConsumptionKey(productConsumptionKey, true);
+	}
+
+	/**
+	 * Returns the product consumption where productConsumptionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching product consumption, or <code>null</code> if a matching product consumption could not be found
+	 */
+	@Override
+	public ProductConsumption fetchByProductConsumptionKey(
+		String productConsumptionKey, boolean retrieveFromCache) {
+
+		productConsumptionKey = Objects.toString(productConsumptionKey, "");
+
+		Object[] finderArgs = new Object[] {productConsumptionKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByProductConsumptionKey, finderArgs, this);
+		}
+
+		if (result instanceof ProductConsumption) {
+			ProductConsumption productConsumption = (ProductConsumption)result;
+
+			if (!Objects.equals(
+					productConsumptionKey,
+					productConsumption.getProductConsumptionKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_PRODUCTCONSUMPTION_WHERE);
+
+			boolean bindProductConsumptionKey = false;
+
+			if (productConsumptionKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_3);
+			}
+			else {
+				bindProductConsumptionKey = true;
+
+				query.append(
+					_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductConsumptionKey) {
+					qPos.add(productConsumptionKey);
+				}
+
+				List<ProductConsumption> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByProductConsumptionKey, finderArgs,
+						list);
+				}
+				else {
+					ProductConsumption productConsumption = list.get(0);
+
+					result = productConsumption;
+
+					cacheResult(productConsumption);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByProductConsumptionKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ProductConsumption)result;
+		}
+	}
+
+	/**
+	 * Removes the product consumption where productConsumptionKey = &#63; from the database.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the product consumption that was removed
+	 */
+	@Override
+	public ProductConsumption removeByProductConsumptionKey(
+			String productConsumptionKey)
+		throws NoSuchProductConsumptionException {
+
+		ProductConsumption productConsumption = findByProductConsumptionKey(
+			productConsumptionKey);
+
+		return remove(productConsumption);
+	}
+
+	/**
+	 * Returns the number of product consumptions where productConsumptionKey = &#63;.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the number of matching product consumptions
+	 */
+	@Override
+	public int countByProductConsumptionKey(String productConsumptionKey) {
+		productConsumptionKey = Objects.toString(productConsumptionKey, "");
+
+		FinderPath finderPath = _finderPathCountByProductConsumptionKey;
+
+		Object[] finderArgs = new Object[] {productConsumptionKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_PRODUCTCONSUMPTION_WHERE);
+
+			boolean bindProductConsumptionKey = false;
+
+			if (productConsumptionKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_3);
+			}
+			else {
+				bindProductConsumptionKey = true;
+
+				query.append(
+					_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductConsumptionKey) {
+					qPos.add(productConsumptionKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_2 =
+			"productConsumption.productConsumptionKey = ?";
+
+	private static final String
+		_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_3 =
+			"(productConsumption.productConsumptionKey IS NULL OR productConsumption.productConsumptionKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByAccountId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountId;
 	private FinderPath _finderPathCountByAccountId;
@@ -5021,6 +5263,11 @@ public class ProductConsumptionPersistenceImpl
 			entityCacheEnabled, ProductConsumptionImpl.class,
 			productConsumption.getPrimaryKey(), productConsumption);
 
+		finderCache.putResult(
+			_finderPathFetchByProductConsumptionKey,
+			new Object[] {productConsumption.getProductConsumptionKey()},
+			productConsumption);
+
 		productConsumption.resetOriginalValues();
 	}
 
@@ -5075,6 +5322,9 @@ public class ProductConsumptionPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(
+			(ProductConsumptionModelImpl)productConsumption, true);
 	}
 
 	@Override
@@ -5086,6 +5336,53 @@ public class ProductConsumptionPersistenceImpl
 			entityCache.removeResult(
 				entityCacheEnabled, ProductConsumptionImpl.class,
 				productConsumption.getPrimaryKey());
+
+			clearUniqueFindersCache(
+				(ProductConsumptionModelImpl)productConsumption, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		ProductConsumptionModelImpl productConsumptionModelImpl) {
+
+		Object[] args = new Object[] {
+			productConsumptionModelImpl.getProductConsumptionKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByProductConsumptionKey, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(
+			_finderPathFetchByProductConsumptionKey, args,
+			productConsumptionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ProductConsumptionModelImpl productConsumptionModelImpl,
+		boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				productConsumptionModelImpl.getProductConsumptionKey()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountByProductConsumptionKey, args);
+			finderCache.removeResult(
+				_finderPathFetchByProductConsumptionKey, args);
+		}
+
+		if ((productConsumptionModelImpl.getColumnBitmask() &
+			 _finderPathFetchByProductConsumptionKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				productConsumptionModelImpl.getOriginalProductConsumptionKey()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountByProductConsumptionKey, args);
+			finderCache.removeResult(
+				_finderPathFetchByProductConsumptionKey, args);
 		}
 	}
 
@@ -5446,6 +5743,9 @@ public class ProductConsumptionPersistenceImpl
 			entityCacheEnabled, ProductConsumptionImpl.class,
 			productConsumption.getPrimaryKey(), productConsumption, false);
 
+		clearUniqueFindersCache(productConsumptionModelImpl, false);
+		cacheUniqueFindersCache(productConsumptionModelImpl);
+
 		productConsumption.resetOriginalValues();
 
 		return productConsumption;
@@ -5789,6 +6089,19 @@ public class ProductConsumptionPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByProductConsumptionKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			ProductConsumptionImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByProductConsumptionKey",
+			new String[] {String.class.getName()},
+			ProductConsumptionModelImpl.PRODUCTCONSUMPTIONKEY_COLUMN_BITMASK);
+
+		_finderPathCountByProductConsumptionKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByProductConsumptionKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,

@@ -126,6 +126,67 @@ public class ExternalLinkUtil {
 	}
 
 	/**
+	 * Returns the external link where externalLinkKey = &#63; or throws a <code>NoSuchExternalLinkException</code> if it could not be found.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the matching external link
+	 * @throws NoSuchExternalLinkException if a matching external link could not be found
+	 */
+	public static ExternalLink findByExternalLinkKey(String externalLinkKey)
+		throws com.liferay.osb.koroneiki.root.exception.
+			NoSuchExternalLinkException {
+
+		return getPersistence().findByExternalLinkKey(externalLinkKey);
+	}
+
+	/**
+	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
+	 */
+	public static ExternalLink fetchByExternalLinkKey(String externalLinkKey) {
+		return getPersistence().fetchByExternalLinkKey(externalLinkKey);
+	}
+
+	/**
+	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
+	 */
+	public static ExternalLink fetchByExternalLinkKey(
+		String externalLinkKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByExternalLinkKey(
+			externalLinkKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the external link where externalLinkKey = &#63; from the database.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the external link that was removed
+	 */
+	public static ExternalLink removeByExternalLinkKey(String externalLinkKey)
+		throws com.liferay.osb.koroneiki.root.exception.
+			NoSuchExternalLinkException {
+
+		return getPersistence().removeByExternalLinkKey(externalLinkKey);
+	}
+
+	/**
+	 * Returns the number of external links where externalLinkKey = &#63;.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the number of matching external links
+	 */
+	public static int countByExternalLinkKey(String externalLinkKey) {
+		return getPersistence().countByExternalLinkKey(externalLinkKey);
+	}
+
+	/**
 	 * Returns all the external links where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID

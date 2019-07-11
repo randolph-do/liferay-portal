@@ -266,6 +266,13 @@ public class ProjectLocalServiceUtil {
 		return getService().getProject(projectId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Project getProject(
+			String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProject(projectKey);
+	}
+
 	/**
 	 * Returns the project with the matching UUID and company.
 	 *

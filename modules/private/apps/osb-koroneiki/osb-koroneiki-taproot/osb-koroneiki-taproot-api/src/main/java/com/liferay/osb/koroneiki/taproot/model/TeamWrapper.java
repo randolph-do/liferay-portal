@@ -51,6 +51,7 @@ public class TeamWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("teamKey", getTeamKey());
 		attributes.put("accountId", getAccountId());
 		attributes.put("name", getName());
 
@@ -93,6 +94,12 @@ public class TeamWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String teamKey = (String)attributes.get("teamKey");
+
+		if (teamKey != null) {
+			setTeamKey(teamKey);
 		}
 
 		Long accountId = (Long)attributes.get("accountId");
@@ -190,6 +197,16 @@ public class TeamWrapper
 	@Override
 	public long getTeamId() {
 		return model.getTeamId();
+	}
+
+	/**
+	 * Returns the team key of this team.
+	 *
+	 * @return the team key of this team
+	 */
+	@Override
+	public String getTeamKey() {
+		return model.getTeamKey();
 	}
 
 	/**
@@ -295,6 +312,16 @@ public class TeamWrapper
 	@Override
 	public void setTeamId(long teamId) {
 		model.setTeamId(teamId);
+	}
+
+	/**
+	 * Sets the team key of this team.
+	 *
+	 * @param teamKey the team key of this team
+	 */
+	@Override
+	public void setTeamKey(String teamKey) {
+		model.setTeamKey(teamKey);
 	}
 
 	/**

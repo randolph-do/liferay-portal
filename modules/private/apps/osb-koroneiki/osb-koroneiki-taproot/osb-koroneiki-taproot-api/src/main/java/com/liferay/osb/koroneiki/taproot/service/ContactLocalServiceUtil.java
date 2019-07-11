@@ -245,11 +245,18 @@ public class ContactLocalServiceUtil {
 		return getService().getContact(contactId);
 	}
 
-	public static com.liferay.osb.koroneiki.taproot.model.Contact getContact(
-			String emailAddress)
+	public static com.liferay.osb.koroneiki.taproot.model.Contact
+			getContactByContactKey(String contactKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getContact(emailAddress);
+		return getService().getContactByContactKey(contactKey);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Contact
+			getContactByEmailAddress(String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getContactByEmailAddress(emailAddress);
 	}
 
 	/**

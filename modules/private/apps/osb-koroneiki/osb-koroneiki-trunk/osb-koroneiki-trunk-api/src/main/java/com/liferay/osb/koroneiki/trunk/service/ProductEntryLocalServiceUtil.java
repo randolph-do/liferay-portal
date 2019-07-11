@@ -292,6 +292,13 @@ public class ProductEntryLocalServiceUtil {
 		return getService().getProductEntry(productEntryId);
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			getProductEntry(String productEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductEntry(productEntryKey);
+	}
+
 	/**
 	 * Returns the product entry with the matching UUID and company.
 	 *

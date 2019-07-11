@@ -165,6 +165,21 @@ public interface TeamModel extends BaseModel<Team>, ShardedModel, StagedModel {
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the team key of this team.
+	 *
+	 * @return the team key of this team
+	 */
+	@AutoEscape
+	public String getTeamKey();
+
+	/**
+	 * Sets the team key of this team.
+	 *
+	 * @param teamKey the team key of this team
+	 */
+	public void setTeamKey(String teamKey);
+
+	/**
 	 * Returns the account ID of this team.
 	 *
 	 * @return the account ID of this team

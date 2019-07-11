@@ -80,8 +80,9 @@ public class ContactRoleModelImpl
 		{"uuid_", Types.VARCHAR}, {"contactRoleId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"system_", Types.BOOLEAN}
+		{"contactRoleKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"system_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,6 +95,7 @@ public class ContactRoleModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("contactRoleKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
@@ -101,7 +103,7 @@ public class ContactRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_ContactRole (uuid_ VARCHAR(75) null,contactRoleId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,type_ INTEGER,system_ BOOLEAN)";
+		"create table Koroneiki_ContactRole (uuid_ VARCHAR(75) null,contactRoleId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,contactRoleKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,type_ INTEGER,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_ContactRole";
@@ -119,13 +121,15 @@ public class ContactRoleModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long CONTACTROLEKEY_COLUMN_BITMASK = 2L;
 
-	public static final long SYSTEM_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
 
-	public static final long TYPE_COLUMN_BITMASK = 8L;
+	public static final long SYSTEM_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long TYPE_COLUMN_BITMASK = 16L;
+
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -154,6 +158,7 @@ public class ContactRoleModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setContactRoleKey(soapModel.getContactRoleKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setType(soapModel.getType());
@@ -332,6 +337,11 @@ public class ContactRoleModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<ContactRole, Date>)ContactRole::setModifiedDate);
+		attributeGetterFunctions.put(
+			"contactRoleKey", ContactRole::getContactRoleKey);
+		attributeSetterBiConsumers.put(
+			"contactRoleKey",
+			(BiConsumer<ContactRole, String>)ContactRole::setContactRoleKey);
 		attributeGetterFunctions.put("name", ContactRole::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<ContactRole, String>)ContactRole::setName);
@@ -466,6 +476,32 @@ public class ContactRoleModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getContactRoleKey() {
+		if (_contactRoleKey == null) {
+			return "";
+		}
+		else {
+			return _contactRoleKey;
+		}
+	}
+
+	@Override
+	public void setContactRoleKey(String contactRoleKey) {
+		_columnBitmask |= CONTACTROLEKEY_COLUMN_BITMASK;
+
+		if (_originalContactRoleKey == null) {
+			_originalContactRoleKey = _contactRoleKey;
+		}
+
+		_contactRoleKey = contactRoleKey;
+	}
+
+	public String getOriginalContactRoleKey() {
+		return GetterUtil.getString(_originalContactRoleKey);
 	}
 
 	@JSON
@@ -610,6 +646,7 @@ public class ContactRoleModelImpl
 		contactRoleImpl.setUserId(getUserId());
 		contactRoleImpl.setCreateDate(getCreateDate());
 		contactRoleImpl.setModifiedDate(getModifiedDate());
+		contactRoleImpl.setContactRoleKey(getContactRoleKey());
 		contactRoleImpl.setName(getName());
 		contactRoleImpl.setDescription(getDescription());
 		contactRoleImpl.setType(getType());
@@ -683,6 +720,9 @@ public class ContactRoleModelImpl
 
 		contactRoleModelImpl._setModifiedDate = false;
 
+		contactRoleModelImpl._originalContactRoleKey =
+			contactRoleModelImpl._contactRoleKey;
+
 		contactRoleModelImpl._originalName = contactRoleModelImpl._name;
 
 		contactRoleModelImpl._originalType = contactRoleModelImpl._type;
@@ -731,6 +771,14 @@ public class ContactRoleModelImpl
 		}
 		else {
 			contactRoleCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		contactRoleCacheModel.contactRoleKey = getContactRoleKey();
+
+		String contactRoleKey = contactRoleCacheModel.contactRoleKey;
+
+		if ((contactRoleKey != null) && (contactRoleKey.length() == 0)) {
+			contactRoleCacheModel.contactRoleKey = null;
 		}
 
 		contactRoleCacheModel.name = getName();
@@ -839,6 +887,8 @@ public class ContactRoleModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _contactRoleKey;
+	private String _originalContactRoleKey;
 	private String _name;
 	private String _originalName;
 	private String _description;

@@ -2104,6 +2104,245 @@ public class ProductPurchasePersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"productPurchase.companyId = ?";
 
+	private FinderPath _finderPathFetchByProductPurchaseKey;
+	private FinderPath _finderPathCountByProductPurchaseKey;
+
+	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or throws a <code>NoSuchProductPurchaseException</code> if it could not be found.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the matching product purchase
+	 * @throws NoSuchProductPurchaseException if a matching product purchase could not be found
+	 */
+	@Override
+	public ProductPurchase findByProductPurchaseKey(String productPurchaseKey)
+		throws NoSuchProductPurchaseException {
+
+		ProductPurchase productPurchase = fetchByProductPurchaseKey(
+			productPurchaseKey);
+
+		if (productPurchase == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("productPurchaseKey=");
+			msg.append(productPurchaseKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchProductPurchaseException(msg.toString());
+		}
+
+		return productPurchase;
+	}
+
+	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	@Override
+	public ProductPurchase fetchByProductPurchaseKey(
+		String productPurchaseKey) {
+
+		return fetchByProductPurchaseKey(productPurchaseKey, true);
+	}
+
+	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	@Override
+	public ProductPurchase fetchByProductPurchaseKey(
+		String productPurchaseKey, boolean retrieveFromCache) {
+
+		productPurchaseKey = Objects.toString(productPurchaseKey, "");
+
+		Object[] finderArgs = new Object[] {productPurchaseKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByProductPurchaseKey, finderArgs, this);
+		}
+
+		if (result instanceof ProductPurchase) {
+			ProductPurchase productPurchase = (ProductPurchase)result;
+
+			if (!Objects.equals(
+					productPurchaseKey,
+					productPurchase.getProductPurchaseKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_PRODUCTPURCHASE_WHERE);
+
+			boolean bindProductPurchaseKey = false;
+
+			if (productPurchaseKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_3);
+			}
+			else {
+				bindProductPurchaseKey = true;
+
+				query.append(
+					_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductPurchaseKey) {
+					qPos.add(productPurchaseKey);
+				}
+
+				List<ProductPurchase> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByProductPurchaseKey, finderArgs, list);
+				}
+				else {
+					ProductPurchase productPurchase = list.get(0);
+
+					result = productPurchase;
+
+					cacheResult(productPurchase);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByProductPurchaseKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ProductPurchase)result;
+		}
+	}
+
+	/**
+	 * Removes the product purchase where productPurchaseKey = &#63; from the database.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the product purchase that was removed
+	 */
+	@Override
+	public ProductPurchase removeByProductPurchaseKey(String productPurchaseKey)
+		throws NoSuchProductPurchaseException {
+
+		ProductPurchase productPurchase = findByProductPurchaseKey(
+			productPurchaseKey);
+
+		return remove(productPurchase);
+	}
+
+	/**
+	 * Returns the number of product purchases where productPurchaseKey = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the number of matching product purchases
+	 */
+	@Override
+	public int countByProductPurchaseKey(String productPurchaseKey) {
+		productPurchaseKey = Objects.toString(productPurchaseKey, "");
+
+		FinderPath finderPath = _finderPathCountByProductPurchaseKey;
+
+		Object[] finderArgs = new Object[] {productPurchaseKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_PRODUCTPURCHASE_WHERE);
+
+			boolean bindProductPurchaseKey = false;
+
+			if (productPurchaseKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_3);
+			}
+			else {
+				bindProductPurchaseKey = true;
+
+				query.append(
+					_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductPurchaseKey) {
+					qPos.add(productPurchaseKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_2 =
+			"productPurchase.productPurchaseKey = ?";
+
+	private static final String
+		_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_3 =
+			"(productPurchase.productPurchaseKey IS NULL OR productPurchase.productPurchaseKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByAccountId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountId;
 	private FinderPath _finderPathCountByAccountId;
@@ -3908,6 +4147,11 @@ public class ProductPurchasePersistenceImpl
 			entityCacheEnabled, ProductPurchaseImpl.class,
 			productPurchase.getPrimaryKey(), productPurchase);
 
+		finderCache.putResult(
+			_finderPathFetchByProductPurchaseKey,
+			new Object[] {productPurchase.getProductPurchaseKey()},
+			productPurchase);
+
 		productPurchase.resetOriginalValues();
 	}
 
@@ -3962,6 +4206,9 @@ public class ProductPurchasePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(
+			(ProductPurchaseModelImpl)productPurchase, true);
 	}
 
 	@Override
@@ -3973,6 +4220,52 @@ public class ProductPurchasePersistenceImpl
 			entityCache.removeResult(
 				entityCacheEnabled, ProductPurchaseImpl.class,
 				productPurchase.getPrimaryKey());
+
+			clearUniqueFindersCache(
+				(ProductPurchaseModelImpl)productPurchase, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		ProductPurchaseModelImpl productPurchaseModelImpl) {
+
+		Object[] args = new Object[] {
+			productPurchaseModelImpl.getProductPurchaseKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByProductPurchaseKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByProductPurchaseKey, args,
+			productPurchaseModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ProductPurchaseModelImpl productPurchaseModelImpl,
+		boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				productPurchaseModelImpl.getProductPurchaseKey()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountByProductPurchaseKey, args);
+			finderCache.removeResult(
+				_finderPathFetchByProductPurchaseKey, args);
+		}
+
+		if ((productPurchaseModelImpl.getColumnBitmask() &
+			 _finderPathFetchByProductPurchaseKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				productPurchaseModelImpl.getOriginalProductPurchaseKey()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountByProductPurchaseKey, args);
+			finderCache.removeResult(
+				_finderPathFetchByProductPurchaseKey, args);
 		}
 	}
 
@@ -4283,6 +4576,9 @@ public class ProductPurchasePersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, ProductPurchaseImpl.class,
 			productPurchase.getPrimaryKey(), productPurchase, false);
+
+		clearUniqueFindersCache(productPurchaseModelImpl, false);
+		cacheUniqueFindersCache(productPurchaseModelImpl);
 
 		productPurchase.resetOriginalValues();
 
@@ -4621,6 +4917,17 @@ public class ProductPurchasePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByProductPurchaseKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ProductPurchaseImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByProductPurchaseKey",
+			new String[] {String.class.getName()},
+			ProductPurchaseModelImpl.PRODUCTPURCHASEKEY_COLUMN_BITMASK);
+
+		_finderPathCountByProductPurchaseKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByProductPurchaseKey", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ProductPurchaseImpl.class,

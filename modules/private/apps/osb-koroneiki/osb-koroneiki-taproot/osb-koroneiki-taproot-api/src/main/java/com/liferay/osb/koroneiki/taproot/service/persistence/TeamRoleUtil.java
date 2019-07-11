@@ -641,6 +641,67 @@ public class TeamRoleUtil {
 	}
 
 	/**
+	 * Returns the team role where teamRoleKey = &#63; or throws a <code>NoSuchTeamRoleException</code> if it could not be found.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the matching team role
+	 * @throws NoSuchTeamRoleException if a matching team role could not be found
+	 */
+	public static TeamRole findByTeamRoleKey(String teamRoleKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchTeamRoleException {
+
+		return getPersistence().findByTeamRoleKey(teamRoleKey);
+	}
+
+	/**
+	 * Returns the team role where teamRoleKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the matching team role, or <code>null</code> if a matching team role could not be found
+	 */
+	public static TeamRole fetchByTeamRoleKey(String teamRoleKey) {
+		return getPersistence().fetchByTeamRoleKey(teamRoleKey);
+	}
+
+	/**
+	 * Returns the team role where teamRoleKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching team role, or <code>null</code> if a matching team role could not be found
+	 */
+	public static TeamRole fetchByTeamRoleKey(
+		String teamRoleKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByTeamRoleKey(
+			teamRoleKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the team role where teamRoleKey = &#63; from the database.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the team role that was removed
+	 */
+	public static TeamRole removeByTeamRoleKey(String teamRoleKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchTeamRoleException {
+
+		return getPersistence().removeByTeamRoleKey(teamRoleKey);
+	}
+
+	/**
+	 * Returns the number of team roles where teamRoleKey = &#63;.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the number of matching team roles
+	 */
+	public static int countByTeamRoleKey(String teamRoleKey) {
+		return getPersistence().countByTeamRoleKey(teamRoleKey);
+	}
+
+	/**
 	 * Returns all the team roles where name = &#63;.
 	 *
 	 * @param name the name

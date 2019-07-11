@@ -63,7 +63,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -77,6 +77,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", teamKey=");
+		sb.append(teamKey);
 		sb.append(", accountId=");
 		sb.append(accountId);
 		sb.append(", name=");
@@ -115,6 +117,13 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 			teamImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (teamKey == null) {
+			teamImpl.setTeamKey("");
+		}
+		else {
+			teamImpl.setTeamKey(teamKey);
+		}
+
 		teamImpl.setAccountId(accountId);
 
 		if (name == null) {
@@ -140,6 +149,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		teamKey = objectInput.readUTF();
 
 		accountId = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -162,6 +172,13 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (teamKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(teamKey);
+		}
+
 		objectOutput.writeLong(accountId);
 
 		if (name == null) {
@@ -178,6 +195,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public String teamKey;
 	public long accountId;
 	public String name;
 

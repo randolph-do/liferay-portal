@@ -65,7 +65,7 @@ public class ExternalLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{externalLinkId=");
 		sb.append(externalLinkId);
@@ -75,6 +75,8 @@ public class ExternalLinkCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", externalLinkKey=");
+		sb.append(externalLinkKey);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -109,6 +111,13 @@ public class ExternalLinkCacheModel
 		}
 		else {
 			externalLinkImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		if (externalLinkKey == null) {
+			externalLinkImpl.setExternalLinkKey("");
+		}
+		else {
+			externalLinkImpl.setExternalLinkKey(externalLinkKey);
 		}
 
 		externalLinkImpl.setClassNameId(classNameId);
@@ -147,6 +156,7 @@ public class ExternalLinkCacheModel
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		externalLinkKey = objectInput.readUTF();
 
 		classNameId = objectInput.readLong();
 
@@ -163,6 +173,13 @@ public class ExternalLinkCacheModel
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (externalLinkKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalLinkKey);
+		}
 
 		objectOutput.writeLong(classNameId);
 
@@ -194,6 +211,7 @@ public class ExternalLinkCacheModel
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
+	public String externalLinkKey;
 	public long classNameId;
 	public long classPK;
 	public String domain;

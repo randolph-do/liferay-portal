@@ -2088,6 +2088,234 @@ public class ContactRolePersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"contactRole.companyId = ?";
 
+	private FinderPath _finderPathFetchByContactRoleKey;
+	private FinderPath _finderPathCountByContactRoleKey;
+
+	/**
+	 * Returns the contact role where contactRoleKey = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the matching contact role
+	 * @throws NoSuchContactRoleException if a matching contact role could not be found
+	 */
+	@Override
+	public ContactRole findByContactRoleKey(String contactRoleKey)
+		throws NoSuchContactRoleException {
+
+		ContactRole contactRole = fetchByContactRoleKey(contactRoleKey);
+
+		if (contactRole == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("contactRoleKey=");
+			msg.append(contactRoleKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchContactRoleException(msg.toString());
+		}
+
+		return contactRole;
+	}
+
+	/**
+	 * Returns the contact role where contactRoleKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
+	 */
+	@Override
+	public ContactRole fetchByContactRoleKey(String contactRoleKey) {
+		return fetchByContactRoleKey(contactRoleKey, true);
+	}
+
+	/**
+	 * Returns the contact role where contactRoleKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
+	 */
+	@Override
+	public ContactRole fetchByContactRoleKey(
+		String contactRoleKey, boolean retrieveFromCache) {
+
+		contactRoleKey = Objects.toString(contactRoleKey, "");
+
+		Object[] finderArgs = new Object[] {contactRoleKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByContactRoleKey, finderArgs, this);
+		}
+
+		if (result instanceof ContactRole) {
+			ContactRole contactRole = (ContactRole)result;
+
+			if (!Objects.equals(
+					contactRoleKey, contactRole.getContactRoleKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_CONTACTROLE_WHERE);
+
+			boolean bindContactRoleKey = false;
+
+			if (contactRoleKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_3);
+			}
+			else {
+				bindContactRoleKey = true;
+
+				query.append(_FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindContactRoleKey) {
+					qPos.add(contactRoleKey);
+				}
+
+				List<ContactRole> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByContactRoleKey, finderArgs, list);
+				}
+				else {
+					ContactRole contactRole = list.get(0);
+
+					result = contactRole;
+
+					cacheResult(contactRole);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByContactRoleKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ContactRole)result;
+		}
+	}
+
+	/**
+	 * Removes the contact role where contactRoleKey = &#63; from the database.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the contact role that was removed
+	 */
+	@Override
+	public ContactRole removeByContactRoleKey(String contactRoleKey)
+		throws NoSuchContactRoleException {
+
+		ContactRole contactRole = findByContactRoleKey(contactRoleKey);
+
+		return remove(contactRole);
+	}
+
+	/**
+	 * Returns the number of contact roles where contactRoleKey = &#63;.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the number of matching contact roles
+	 */
+	@Override
+	public int countByContactRoleKey(String contactRoleKey) {
+		contactRoleKey = Objects.toString(contactRoleKey, "");
+
+		FinderPath finderPath = _finderPathCountByContactRoleKey;
+
+		Object[] finderArgs = new Object[] {contactRoleKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTROLE_WHERE);
+
+			boolean bindContactRoleKey = false;
+
+			if (contactRoleKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_3);
+			}
+			else {
+				bindContactRoleKey = true;
+
+				query.append(_FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindContactRoleKey) {
+					qPos.add(contactRoleKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_2 =
+		"contactRole.contactRoleKey = ?";
+
+	private static final String _FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_3 =
+		"(contactRole.contactRoleKey IS NULL OR contactRole.contactRoleKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByType;
 	private FinderPath _finderPathWithoutPaginationFindByType;
 	private FinderPath _finderPathCountByType;
@@ -3268,6 +3496,10 @@ public class ContactRolePersistenceImpl
 			contactRole.getPrimaryKey(), contactRole);
 
 		finderCache.putResult(
+			_finderPathFetchByContactRoleKey,
+			new Object[] {contactRole.getContactRoleKey()}, contactRole);
+
+		finderCache.putResult(
 			_finderPathFetchByN_T_S,
 			new Object[] {
 				contactRole.getName(), contactRole.getType(),
@@ -3350,7 +3582,15 @@ public class ContactRolePersistenceImpl
 	protected void cacheUniqueFindersCache(
 		ContactRoleModelImpl contactRoleModelImpl) {
 
-		Object[] args = new Object[] {
+		Object[] args = new Object[] {contactRoleModelImpl.getContactRoleKey()};
+
+		finderCache.putResult(
+			_finderPathCountByContactRoleKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByContactRoleKey, args, contactRoleModelImpl,
+			false);
+
+		args = new Object[] {
 			contactRoleModelImpl.getName(), contactRoleModelImpl.getType(),
 			contactRoleModelImpl.isSystem()
 		};
@@ -3363,6 +3603,26 @@ public class ContactRolePersistenceImpl
 
 	protected void clearUniqueFindersCache(
 		ContactRoleModelImpl contactRoleModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				contactRoleModelImpl.getContactRoleKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByContactRoleKey, args);
+			finderCache.removeResult(_finderPathFetchByContactRoleKey, args);
+		}
+
+		if ((contactRoleModelImpl.getColumnBitmask() &
+			 _finderPathFetchByContactRoleKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				contactRoleModelImpl.getOriginalContactRoleKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByContactRoleKey, args);
+			finderCache.removeResult(_finderPathFetchByContactRoleKey, args);
+		}
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
@@ -4007,6 +4267,17 @@ public class ContactRolePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByContactRoleKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactRoleImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByContactRoleKey",
+			new String[] {String.class.getName()},
+			ContactRoleModelImpl.CONTACTROLEKEY_COLUMN_BITMASK);
+
+		_finderPathCountByContactRoleKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactRoleKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByType = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ContactRoleImpl.class,

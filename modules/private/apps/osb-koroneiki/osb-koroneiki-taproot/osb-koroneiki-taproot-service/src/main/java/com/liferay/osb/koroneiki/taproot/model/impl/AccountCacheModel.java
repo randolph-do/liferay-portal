@@ -63,7 +63,7 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -77,6 +77,8 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", accountKey=");
+		sb.append(accountKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -135,6 +137,13 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		}
 		else {
 			accountImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		if (accountKey == null) {
+			accountImpl.setAccountKey("");
+		}
+		else {
+			accountImpl.setAccountKey(accountKey);
 		}
 
 		if (name == null) {
@@ -228,6 +237,7 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		accountKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 
@@ -262,6 +272,13 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (accountKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(accountKey);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -341,6 +358,7 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public String accountKey;
 	public String name;
 	public String description;
 	public long logoId;

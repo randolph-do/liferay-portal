@@ -254,11 +254,19 @@ public class ContactLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.osb.koroneiki.taproot.model.Contact getContact(
-			String emailAddress)
+	public com.liferay.osb.koroneiki.taproot.model.Contact
+			getContactByContactKey(String contactKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _contactLocalService.getContact(emailAddress);
+		return _contactLocalService.getContactByContactKey(contactKey);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Contact
+			getContactByEmailAddress(String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactLocalService.getContactByEmailAddress(emailAddress);
 	}
 
 	/**

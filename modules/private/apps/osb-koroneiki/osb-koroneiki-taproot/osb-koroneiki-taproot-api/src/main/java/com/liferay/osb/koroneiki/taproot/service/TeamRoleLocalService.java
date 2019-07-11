@@ -225,6 +225,9 @@ public interface TeamRoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TeamRole getTeamRole(long teamRoleId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TeamRole getTeamRole(String teamRoleKey) throws PortalException;
+
 	/**
 	 * Returns the team role with the matching UUID and company.
 	 *

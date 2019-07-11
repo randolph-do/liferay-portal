@@ -52,6 +52,7 @@ public class ProductPurchaseWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("productPurchaseKey", getProductPurchaseKey());
 		attributes.put("accountId", getAccountId());
 		attributes.put("projectId", getProjectId());
 		attributes.put("productEntryId", getProductEntryId());
@@ -98,6 +99,13 @@ public class ProductPurchaseWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String productPurchaseKey = (String)attributes.get(
+			"productPurchaseKey");
+
+		if (productPurchaseKey != null) {
+			setProductPurchaseKey(productPurchaseKey);
 		}
 
 		Long accountId = (Long)attributes.get("accountId");
@@ -248,6 +256,16 @@ public class ProductPurchaseWrapper
 		return model.getProductPurchaseId();
 	}
 
+	/**
+	 * Returns the product purchase key of this product purchase.
+	 *
+	 * @return the product purchase key of this product purchase
+	 */
+	@Override
+	public String getProductPurchaseKey() {
+		return model.getProductPurchaseKey();
+	}
+
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Project getProject() {
 		return model.getProject();
@@ -396,6 +414,16 @@ public class ProductPurchaseWrapper
 	@Override
 	public void setProductPurchaseId(long productPurchaseId) {
 		model.setProductPurchaseId(productPurchaseId);
+	}
+
+	/**
+	 * Sets the product purchase key of this product purchase.
+	 *
+	 * @param productPurchaseKey the product purchase key of this product purchase
+	 */
+	@Override
+	public void setProductPurchaseKey(String productPurchaseKey) {
+		model.setProductPurchaseKey(productPurchaseKey);
 	}
 
 	/**

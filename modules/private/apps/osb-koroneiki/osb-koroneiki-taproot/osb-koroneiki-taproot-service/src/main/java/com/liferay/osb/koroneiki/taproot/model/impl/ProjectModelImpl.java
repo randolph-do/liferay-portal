@@ -81,12 +81,13 @@ public class ProjectModelImpl
 		{"uuid_", Types.VARCHAR}, {"projectId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"code_", Types.VARCHAR}, {"industry", Types.VARCHAR},
-		{"tier", Types.VARCHAR}, {"notes", Types.VARCHAR},
-		{"soldBy", Types.VARCHAR}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}, {"statusMessage", Types.VARCHAR}
+		{"projectKey", Types.VARCHAR}, {"accountId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"code_", Types.VARCHAR},
+		{"industry", Types.VARCHAR}, {"tier", Types.VARCHAR},
+		{"notes", Types.VARCHAR}, {"soldBy", Types.VARCHAR},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP},
+		{"statusMessage", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,6 +100,7 @@ public class ProjectModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("projectKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("code_", Types.VARCHAR);
@@ -114,7 +116,7 @@ public class ProjectModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_Project (uuid_ VARCHAR(75) null,projectId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,industry VARCHAR(75) null,tier VARCHAR(75) null,notes STRING null,soldBy VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
+		"create table Koroneiki_Project (uuid_ VARCHAR(75) null,projectId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,projectKey VARCHAR(75) null,accountId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,industry VARCHAR(75) null,tier VARCHAR(75) null,notes STRING null,soldBy VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_Project";
 
@@ -134,9 +136,11 @@ public class ProjectModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long PROJECTKEY_COLUMN_BITMASK = 4L;
 
-	public static final long PROJECTID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	public static final long PROJECTID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -165,6 +169,7 @@ public class ProjectModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setProjectKey(soapModel.getProjectKey());
 		model.setAccountId(soapModel.getAccountId());
 		model.setName(soapModel.getName());
 		model.setCode(soapModel.getCode());
@@ -343,6 +348,9 @@ public class ProjectModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<Project, Date>)Project::setModifiedDate);
+		attributeGetterFunctions.put("projectKey", Project::getProjectKey);
+		attributeSetterBiConsumers.put(
+			"projectKey", (BiConsumer<Project, String>)Project::setProjectKey);
 		attributeGetterFunctions.put("accountId", Project::getAccountId);
 		attributeSetterBiConsumers.put(
 			"accountId", (BiConsumer<Project, Long>)Project::setAccountId);
@@ -505,6 +513,32 @@ public class ProjectModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getProjectKey() {
+		if (_projectKey == null) {
+			return "";
+		}
+		else {
+			return _projectKey;
+		}
+	}
+
+	@Override
+	public void setProjectKey(String projectKey) {
+		_columnBitmask |= PROJECTKEY_COLUMN_BITMASK;
+
+		if (_originalProjectKey == null) {
+			_originalProjectKey = _projectKey;
+		}
+
+		_projectKey = projectKey;
+	}
+
+	public String getOriginalProjectKey() {
+		return GetterUtil.getString(_originalProjectKey);
 	}
 
 	@JSON
@@ -835,6 +869,7 @@ public class ProjectModelImpl
 		projectImpl.setUserId(getUserId());
 		projectImpl.setCreateDate(getCreateDate());
 		projectImpl.setModifiedDate(getModifiedDate());
+		projectImpl.setProjectKey(getProjectKey());
 		projectImpl.setAccountId(getAccountId());
 		projectImpl.setName(getName());
 		projectImpl.setCode(getCode());
@@ -917,6 +952,8 @@ public class ProjectModelImpl
 
 		projectModelImpl._setModifiedDate = false;
 
+		projectModelImpl._originalProjectKey = projectModelImpl._projectKey;
+
 		projectModelImpl._originalAccountId = projectModelImpl._accountId;
 
 		projectModelImpl._setOriginalAccountId = false;
@@ -958,6 +995,14 @@ public class ProjectModelImpl
 		}
 		else {
 			projectCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		projectCacheModel.projectKey = getProjectKey();
+
+		String projectKey = projectCacheModel.projectKey;
+
+		if ((projectKey != null) && (projectKey.length() == 0)) {
+			projectCacheModel.projectKey = null;
 		}
 
 		projectCacheModel.accountId = getAccountId();
@@ -1125,6 +1170,8 @@ public class ProjectModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _projectKey;
+	private String _originalProjectKey;
 	private long _accountId;
 	private long _originalAccountId;
 	private boolean _setOriginalAccountId;

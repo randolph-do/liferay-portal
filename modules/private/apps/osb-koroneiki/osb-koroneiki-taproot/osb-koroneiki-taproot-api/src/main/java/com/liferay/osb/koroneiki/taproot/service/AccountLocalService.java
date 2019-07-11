@@ -202,6 +202,9 @@ public interface AccountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Account getAccount(long accountId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Account getAccount(String accountKey) throws PortalException;
+
 	/**
 	 * Returns the account with the matching UUID and company.
 	 *

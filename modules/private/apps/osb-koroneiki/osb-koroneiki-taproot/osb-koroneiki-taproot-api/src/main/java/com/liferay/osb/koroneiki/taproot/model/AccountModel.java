@@ -167,6 +167,21 @@ public interface AccountModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the account key of this account.
+	 *
+	 * @return the account key of this account
+	 */
+	@AutoEscape
+	public String getAccountKey();
+
+	/**
+	 * Sets the account key of this account.
+	 *
+	 * @param accountKey the account key of this account
+	 */
+	public void setAccountKey(String accountKey);
+
+	/**
 	 * Returns the name of this account.
 	 *
 	 * @return the name of this account

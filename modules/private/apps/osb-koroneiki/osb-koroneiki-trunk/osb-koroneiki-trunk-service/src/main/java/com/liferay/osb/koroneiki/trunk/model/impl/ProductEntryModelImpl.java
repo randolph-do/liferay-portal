@@ -80,7 +80,7 @@ public class ProductEntryModelImpl
 		{"uuid_", Types.VARCHAR}, {"productEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}
+		{"productEntryKey", Types.VARCHAR}, {"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,11 +93,12 @@ public class ProductEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("productEntryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_ProductEntry (uuid_ VARCHAR(75) null,productEntryId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null)";
+		"create table Koroneiki_ProductEntry (uuid_ VARCHAR(75) null,productEntryId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,productEntryKey VARCHAR(75) null,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_ProductEntry";
@@ -116,9 +117,11 @@ public class ProductEntryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long PRODUCTENTRYKEY_COLUMN_BITMASK = 2L;
 
-	public static final long PRODUCTENTRYID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+
+	public static final long PRODUCTENTRYID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -147,6 +150,7 @@ public class ProductEntryModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setProductEntryKey(soapModel.getProductEntryKey());
 		model.setName(soapModel.getName());
 
 		return model;
@@ -322,6 +326,11 @@ public class ProductEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<ProductEntry, Date>)ProductEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"productEntryKey", ProductEntry::getProductEntryKey);
+		attributeSetterBiConsumers.put(
+			"productEntryKey",
+			(BiConsumer<ProductEntry, String>)ProductEntry::setProductEntryKey);
 		attributeGetterFunctions.put("name", ProductEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<ProductEntry, String>)ProductEntry::setName);
@@ -449,6 +458,32 @@ public class ProductEntryModelImpl
 
 	@JSON
 	@Override
+	public String getProductEntryKey() {
+		if (_productEntryKey == null) {
+			return "";
+		}
+		else {
+			return _productEntryKey;
+		}
+	}
+
+	@Override
+	public void setProductEntryKey(String productEntryKey) {
+		_columnBitmask |= PRODUCTENTRYKEY_COLUMN_BITMASK;
+
+		if (_originalProductEntryKey == null) {
+			_originalProductEntryKey = _productEntryKey;
+		}
+
+		_productEntryKey = productEntryKey;
+	}
+
+	public String getOriginalProductEntryKey() {
+		return GetterUtil.getString(_originalProductEntryKey);
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -511,6 +546,7 @@ public class ProductEntryModelImpl
 		productEntryImpl.setUserId(getUserId());
 		productEntryImpl.setCreateDate(getCreateDate());
 		productEntryImpl.setModifiedDate(getModifiedDate());
+		productEntryImpl.setProductEntryKey(getProductEntryKey());
 		productEntryImpl.setName(getName());
 
 		productEntryImpl.resetOriginalValues();
@@ -583,6 +619,9 @@ public class ProductEntryModelImpl
 
 		productEntryModelImpl._setModifiedDate = false;
 
+		productEntryModelImpl._originalProductEntryKey =
+			productEntryModelImpl._productEntryKey;
+
 		productEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -621,6 +660,14 @@ public class ProductEntryModelImpl
 		}
 		else {
 			productEntryCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		productEntryCacheModel.productEntryKey = getProductEntryKey();
+
+		String productEntryKey = productEntryCacheModel.productEntryKey;
+
+		if ((productEntryKey != null) && (productEntryKey.length() == 0)) {
+			productEntryCacheModel.productEntryKey = null;
 		}
 
 		productEntryCacheModel.name = getName();
@@ -717,6 +764,8 @@ public class ProductEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _productEntryKey;
+	private String _originalProductEntryKey;
 	private String _name;
 	private long _columnBitmask;
 	private ProductEntry _escapedModel;

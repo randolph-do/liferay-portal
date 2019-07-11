@@ -81,8 +81,8 @@ public class ProductConsumptionModelImpl
 		{"uuid_", Types.VARCHAR}, {"productConsumptionId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"projectId", Types.BIGINT},
-		{"productEntryId", Types.BIGINT}
+		{"productConsumptionKey", Types.VARCHAR}, {"accountId", Types.BIGINT},
+		{"projectId", Types.BIGINT}, {"productEntryId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,13 +95,14 @@ public class ProductConsumptionModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("productConsumptionKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("projectId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("productEntryId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_ProductConsumption (uuid_ VARCHAR(75) null,productConsumptionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,projectId LONG,productEntryId LONG)";
+		"create table Koroneiki_ProductConsumption (uuid_ VARCHAR(75) null,productConsumptionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,productConsumptionKey VARCHAR(75) null,accountId LONG,projectId LONG,productEntryId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_ProductConsumption";
@@ -122,15 +123,17 @@ public class ProductConsumptionModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long PRODUCTENTRYID_COLUMN_BITMASK = 4L;
+	public static final long PRODUCTCONSUMPTIONKEY_COLUMN_BITMASK = 4L;
 
-	public static final long PROJECTID_COLUMN_BITMASK = 8L;
+	public static final long PRODUCTENTRYID_COLUMN_BITMASK = 8L;
 
-	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long PROJECTID_COLUMN_BITMASK = 16L;
 
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 32L;
 
-	public static final long PRODUCTCONSUMPTIONID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long PRODUCTCONSUMPTIONID_COLUMN_BITMASK = 128L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -159,6 +162,7 @@ public class ProductConsumptionModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setProductConsumptionKey(soapModel.getProductConsumptionKey());
 		model.setAccountId(soapModel.getAccountId());
 		model.setProjectId(soapModel.getProjectId());
 		model.setProductEntryId(soapModel.getProductEntryId());
@@ -353,6 +357,13 @@ public class ProductConsumptionModelImpl
 			(BiConsumer<ProductConsumption, Date>)
 				ProductConsumption::setModifiedDate);
 		attributeGetterFunctions.put(
+			"productConsumptionKey",
+			ProductConsumption::getProductConsumptionKey);
+		attributeSetterBiConsumers.put(
+			"productConsumptionKey",
+			(BiConsumer<ProductConsumption, String>)
+				ProductConsumption::setProductConsumptionKey);
+		attributeGetterFunctions.put(
 			"accountId", ProductConsumption::getAccountId);
 		attributeSetterBiConsumers.put(
 			"accountId",
@@ -506,6 +517,32 @@ public class ProductConsumptionModelImpl
 
 	@JSON
 	@Override
+	public String getProductConsumptionKey() {
+		if (_productConsumptionKey == null) {
+			return "";
+		}
+		else {
+			return _productConsumptionKey;
+		}
+	}
+
+	@Override
+	public void setProductConsumptionKey(String productConsumptionKey) {
+		_columnBitmask |= PRODUCTCONSUMPTIONKEY_COLUMN_BITMASK;
+
+		if (_originalProductConsumptionKey == null) {
+			_originalProductConsumptionKey = _productConsumptionKey;
+		}
+
+		_productConsumptionKey = productConsumptionKey;
+	}
+
+	public String getOriginalProductConsumptionKey() {
+		return GetterUtil.getString(_originalProductConsumptionKey);
+	}
+
+	@JSON
+	@Override
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -624,6 +661,8 @@ public class ProductConsumptionModelImpl
 		productConsumptionImpl.setUserId(getUserId());
 		productConsumptionImpl.setCreateDate(getCreateDate());
 		productConsumptionImpl.setModifiedDate(getModifiedDate());
+		productConsumptionImpl.setProductConsumptionKey(
+			getProductConsumptionKey());
 		productConsumptionImpl.setAccountId(getAccountId());
 		productConsumptionImpl.setProjectId(getProjectId());
 		productConsumptionImpl.setProductEntryId(getProductEntryId());
@@ -704,6 +743,9 @@ public class ProductConsumptionModelImpl
 
 		productConsumptionModelImpl._setModifiedDate = false;
 
+		productConsumptionModelImpl._originalProductConsumptionKey =
+			productConsumptionModelImpl._productConsumptionKey;
+
 		productConsumptionModelImpl._originalAccountId =
 			productConsumptionModelImpl._accountId;
 
@@ -758,6 +800,18 @@ public class ProductConsumptionModelImpl
 		}
 		else {
 			productConsumptionCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		productConsumptionCacheModel.productConsumptionKey =
+			getProductConsumptionKey();
+
+		String productConsumptionKey =
+			productConsumptionCacheModel.productConsumptionKey;
+
+		if ((productConsumptionKey != null) &&
+			(productConsumptionKey.length() == 0)) {
+
+			productConsumptionCacheModel.productConsumptionKey = null;
 		}
 
 		productConsumptionCacheModel.accountId = getAccountId();
@@ -854,6 +908,8 @@ public class ProductConsumptionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _productConsumptionKey;
+	private String _originalProductConsumptionKey;
 	private long _accountId;
 	private long _originalAccountId;
 	private boolean _setOriginalAccountId;

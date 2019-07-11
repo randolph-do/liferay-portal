@@ -643,6 +643,67 @@ public class ContactRoleUtil {
 	}
 
 	/**
+	 * Returns the contact role where contactRoleKey = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the matching contact role
+	 * @throws NoSuchContactRoleException if a matching contact role could not be found
+	 */
+	public static ContactRole findByContactRoleKey(String contactRoleKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactRoleException {
+
+		return getPersistence().findByContactRoleKey(contactRoleKey);
+	}
+
+	/**
+	 * Returns the contact role where contactRoleKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
+	 */
+	public static ContactRole fetchByContactRoleKey(String contactRoleKey) {
+		return getPersistence().fetchByContactRoleKey(contactRoleKey);
+	}
+
+	/**
+	 * Returns the contact role where contactRoleKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
+	 */
+	public static ContactRole fetchByContactRoleKey(
+		String contactRoleKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByContactRoleKey(
+			contactRoleKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the contact role where contactRoleKey = &#63; from the database.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the contact role that was removed
+	 */
+	public static ContactRole removeByContactRoleKey(String contactRoleKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactRoleException {
+
+		return getPersistence().removeByContactRoleKey(contactRoleKey);
+	}
+
+	/**
+	 * Returns the number of contact roles where contactRoleKey = &#63;.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the number of matching contact roles
+	 */
+	public static int countByContactRoleKey(String contactRoleKey) {
+		return getPersistence().countByContactRoleKey(contactRoleKey);
+	}
+
+	/**
 	 * Returns all the contact roles where type = &#63;.
 	 *
 	 * @param type the type

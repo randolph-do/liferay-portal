@@ -2082,6 +2082,232 @@ public class TeamRolePersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"teamRole.companyId = ?";
 
+	private FinderPath _finderPathFetchByTeamRoleKey;
+	private FinderPath _finderPathCountByTeamRoleKey;
+
+	/**
+	 * Returns the team role where teamRoleKey = &#63; or throws a <code>NoSuchTeamRoleException</code> if it could not be found.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the matching team role
+	 * @throws NoSuchTeamRoleException if a matching team role could not be found
+	 */
+	@Override
+	public TeamRole findByTeamRoleKey(String teamRoleKey)
+		throws NoSuchTeamRoleException {
+
+		TeamRole teamRole = fetchByTeamRoleKey(teamRoleKey);
+
+		if (teamRole == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("teamRoleKey=");
+			msg.append(teamRoleKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchTeamRoleException(msg.toString());
+		}
+
+		return teamRole;
+	}
+
+	/**
+	 * Returns the team role where teamRoleKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the matching team role, or <code>null</code> if a matching team role could not be found
+	 */
+	@Override
+	public TeamRole fetchByTeamRoleKey(String teamRoleKey) {
+		return fetchByTeamRoleKey(teamRoleKey, true);
+	}
+
+	/**
+	 * Returns the team role where teamRoleKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching team role, or <code>null</code> if a matching team role could not be found
+	 */
+	@Override
+	public TeamRole fetchByTeamRoleKey(
+		String teamRoleKey, boolean retrieveFromCache) {
+
+		teamRoleKey = Objects.toString(teamRoleKey, "");
+
+		Object[] finderArgs = new Object[] {teamRoleKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByTeamRoleKey, finderArgs, this);
+		}
+
+		if (result instanceof TeamRole) {
+			TeamRole teamRole = (TeamRole)result;
+
+			if (!Objects.equals(teamRoleKey, teamRole.getTeamRoleKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_TEAMROLE_WHERE);
+
+			boolean bindTeamRoleKey = false;
+
+			if (teamRoleKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_3);
+			}
+			else {
+				bindTeamRoleKey = true;
+
+				query.append(_FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindTeamRoleKey) {
+					qPos.add(teamRoleKey);
+				}
+
+				List<TeamRole> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByTeamRoleKey, finderArgs, list);
+				}
+				else {
+					TeamRole teamRole = list.get(0);
+
+					result = teamRole;
+
+					cacheResult(teamRole);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByTeamRoleKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (TeamRole)result;
+		}
+	}
+
+	/**
+	 * Removes the team role where teamRoleKey = &#63; from the database.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the team role that was removed
+	 */
+	@Override
+	public TeamRole removeByTeamRoleKey(String teamRoleKey)
+		throws NoSuchTeamRoleException {
+
+		TeamRole teamRole = findByTeamRoleKey(teamRoleKey);
+
+		return remove(teamRole);
+	}
+
+	/**
+	 * Returns the number of team roles where teamRoleKey = &#63;.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the number of matching team roles
+	 */
+	@Override
+	public int countByTeamRoleKey(String teamRoleKey) {
+		teamRoleKey = Objects.toString(teamRoleKey, "");
+
+		FinderPath finderPath = _finderPathCountByTeamRoleKey;
+
+		Object[] finderArgs = new Object[] {teamRoleKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TEAMROLE_WHERE);
+
+			boolean bindTeamRoleKey = false;
+
+			if (teamRoleKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_3);
+			}
+			else {
+				bindTeamRoleKey = true;
+
+				query.append(_FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindTeamRoleKey) {
+					qPos.add(teamRoleKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_2 =
+		"teamRole.teamRoleKey = ?";
+
+	private static final String _FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_3 =
+		"(teamRole.teamRoleKey IS NULL OR teamRole.teamRoleKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByName;
 	private FinderPath _finderPathWithoutPaginationFindByName;
 	private FinderPath _finderPathCountByName;
@@ -3933,6 +4159,10 @@ public class TeamRolePersistenceImpl
 			entityCacheEnabled, TeamRoleImpl.class, teamRole.getPrimaryKey(),
 			teamRole);
 
+		finderCache.putResult(
+			_finderPathFetchByTeamRoleKey,
+			new Object[] {teamRole.getTeamRoleKey()}, teamRole);
+
 		teamRole.resetOriginalValues();
 	}
 
@@ -3986,6 +4216,8 @@ public class TeamRolePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((TeamRoleModelImpl)teamRole, true);
 	}
 
 	@Override
@@ -3997,6 +4229,41 @@ public class TeamRolePersistenceImpl
 			entityCache.removeResult(
 				entityCacheEnabled, TeamRoleImpl.class,
 				teamRole.getPrimaryKey());
+
+			clearUniqueFindersCache((TeamRoleModelImpl)teamRole, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		TeamRoleModelImpl teamRoleModelImpl) {
+
+		Object[] args = new Object[] {teamRoleModelImpl.getTeamRoleKey()};
+
+		finderCache.putResult(
+			_finderPathCountByTeamRoleKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByTeamRoleKey, args, teamRoleModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		TeamRoleModelImpl teamRoleModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {teamRoleModelImpl.getTeamRoleKey()};
+
+			finderCache.removeResult(_finderPathCountByTeamRoleKey, args);
+			finderCache.removeResult(_finderPathFetchByTeamRoleKey, args);
+		}
+
+		if ((teamRoleModelImpl.getColumnBitmask() &
+			 _finderPathFetchByTeamRoleKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				teamRoleModelImpl.getOriginalTeamRoleKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByTeamRoleKey, args);
+			finderCache.removeResult(_finderPathFetchByTeamRoleKey, args);
 		}
 	}
 
@@ -4298,6 +4565,9 @@ public class TeamRolePersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, TeamRoleImpl.class, teamRole.getPrimaryKey(),
 			teamRole, false);
+
+		clearUniqueFindersCache(teamRoleModelImpl, false);
+		cacheUniqueFindersCache(teamRoleModelImpl);
 
 		teamRole.resetOriginalValues();
 
@@ -4636,6 +4906,17 @@ public class TeamRolePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByTeamRoleKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamRoleImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByTeamRoleKey",
+			new String[] {String.class.getName()},
+			TeamRoleModelImpl.TEAMROLEKEY_COLUMN_BITMASK);
+
+		_finderPathCountByTeamRoleKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeamRoleKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByName = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, TeamRoleImpl.class,

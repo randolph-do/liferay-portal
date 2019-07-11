@@ -126,6 +126,67 @@ public class AuditEntryUtil {
 	}
 
 	/**
+	 * Returns the audit entry where auditEntryKey = &#63; or throws a <code>NoSuchAuditEntryException</code> if it could not be found.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the matching audit entry
+	 * @throws NoSuchAuditEntryException if a matching audit entry could not be found
+	 */
+	public static AuditEntry findByAuditEntryKey(String auditEntryKey)
+		throws com.liferay.osb.koroneiki.root.exception.
+			NoSuchAuditEntryException {
+
+		return getPersistence().findByAuditEntryKey(auditEntryKey);
+	}
+
+	/**
+	 * Returns the audit entry where auditEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the matching audit entry, or <code>null</code> if a matching audit entry could not be found
+	 */
+	public static AuditEntry fetchByAuditEntryKey(String auditEntryKey) {
+		return getPersistence().fetchByAuditEntryKey(auditEntryKey);
+	}
+
+	/**
+	 * Returns the audit entry where auditEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching audit entry, or <code>null</code> if a matching audit entry could not be found
+	 */
+	public static AuditEntry fetchByAuditEntryKey(
+		String auditEntryKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByAuditEntryKey(
+			auditEntryKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the audit entry where auditEntryKey = &#63; from the database.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the audit entry that was removed
+	 */
+	public static AuditEntry removeByAuditEntryKey(String auditEntryKey)
+		throws com.liferay.osb.koroneiki.root.exception.
+			NoSuchAuditEntryException {
+
+		return getPersistence().removeByAuditEntryKey(auditEntryKey);
+	}
+
+	/**
+	 * Returns the number of audit entries where auditEntryKey = &#63;.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the number of matching audit entries
+	 */
+	public static int countByAuditEntryKey(String auditEntryKey) {
+		return getPersistence().countByAuditEntryKey(auditEntryKey);
+	}
+
+	/**
 	 * Returns all the audit entries where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID

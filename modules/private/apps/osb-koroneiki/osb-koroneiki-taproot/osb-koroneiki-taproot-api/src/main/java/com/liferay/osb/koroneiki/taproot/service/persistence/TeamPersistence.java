@@ -470,6 +470,48 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the team where teamKey = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
+	 *
+	 * @param teamKey the team key
+	 * @return the matching team
+	 * @throws NoSuchTeamException if a matching team could not be found
+	 */
+	public Team findByTeamKey(String teamKey) throws NoSuchTeamException;
+
+	/**
+	 * Returns the team where teamKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param teamKey the team key
+	 * @return the matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public Team fetchByTeamKey(String teamKey);
+
+	/**
+	 * Returns the team where teamKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param teamKey the team key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public Team fetchByTeamKey(String teamKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the team where teamKey = &#63; from the database.
+	 *
+	 * @param teamKey the team key
+	 * @return the team that was removed
+	 */
+	public Team removeByTeamKey(String teamKey) throws NoSuchTeamException;
+
+	/**
+	 * Returns the number of teams where teamKey = &#63;.
+	 *
+	 * @param teamKey the team key
+	 * @return the number of matching teams
+	 */
+	public int countByTeamKey(String teamKey);
+
+	/**
 	 * Returns all the teams where accountId = &#63;.
 	 *
 	 * @param accountId the account ID

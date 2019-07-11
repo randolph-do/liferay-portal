@@ -52,6 +52,7 @@ public class ContactWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("contactKey", getContactKey());
 		attributes.put("firstName", getFirstName());
 		attributes.put("middleName", getMiddleName());
 		attributes.put("lastName", getLastName());
@@ -97,6 +98,12 @@ public class ContactWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String contactKey = (String)attributes.get("contactKey");
+
+		if (contactKey != null) {
+			setContactKey(contactKey);
 		}
 
 		String firstName = (String)attributes.get("firstName");
@@ -148,6 +155,16 @@ public class ContactWrapper
 	@Override
 	public long getContactId() {
 		return model.getContactId();
+	}
+
+	/**
+	 * Returns the contact key of this contact.
+	 *
+	 * @return the contact key of this contact
+	 */
+	@Override
+	public String getContactKey() {
+		return model.getContactKey();
 	}
 
 	/**
@@ -295,6 +312,16 @@ public class ContactWrapper
 	@Override
 	public void setContactId(long contactId) {
 		model.setContactId(contactId);
+	}
+
+	/**
+	 * Sets the contact key of this contact.
+	 *
+	 * @param contactKey the contact key of this contact
+	 */
+	@Override
+	public void setContactKey(String contactKey) {
+		model.setContactKey(contactKey);
 	}
 
 	/**

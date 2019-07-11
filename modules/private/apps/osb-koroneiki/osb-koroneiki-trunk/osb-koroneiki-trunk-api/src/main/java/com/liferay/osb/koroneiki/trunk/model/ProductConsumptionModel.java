@@ -166,6 +166,21 @@ public interface ProductConsumptionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the product consumption key of this product consumption.
+	 *
+	 * @return the product consumption key of this product consumption
+	 */
+	@AutoEscape
+	public String getProductConsumptionKey();
+
+	/**
+	 * Sets the product consumption key of this product consumption.
+	 *
+	 * @param productConsumptionKey the product consumption key of this product consumption
+	 */
+	public void setProductConsumptionKey(String productConsumptionKey);
+
+	/**
 	 * Returns the account ID of this product consumption.
 	 *
 	 * @return the account ID of this product consumption

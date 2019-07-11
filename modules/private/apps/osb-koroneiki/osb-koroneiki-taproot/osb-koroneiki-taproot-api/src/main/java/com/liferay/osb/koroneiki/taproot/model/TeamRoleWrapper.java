@@ -52,6 +52,7 @@ public class TeamRoleWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("teamRoleKey", getTeamRoleKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
@@ -95,6 +96,12 @@ public class TeamRoleWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String teamRoleKey = (String)attributes.get("teamRoleKey");
+
+		if (teamRoleKey != null) {
+			setTeamRoleKey(teamRoleKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -184,6 +191,16 @@ public class TeamRoleWrapper
 	@Override
 	public long getTeamRoleId() {
 		return model.getTeamRoleId();
+	}
+
+	/**
+	 * Returns the team role key of this team role.
+	 *
+	 * @return the team role key of this team role
+	 */
+	@Override
+	public String getTeamRoleKey() {
+		return model.getTeamRoleKey();
 	}
 
 	/**
@@ -304,6 +321,16 @@ public class TeamRoleWrapper
 	@Override
 	public void setTeamRoleId(long teamRoleId) {
 		model.setTeamRoleId(teamRoleId);
+	}
+
+	/**
+	 * Sets the team role key of this team role.
+	 *
+	 * @param teamRoleKey the team role key of this team role
+	 */
+	@Override
+	public void setTeamRoleKey(String teamRoleKey) {
+		model.setTeamRoleKey(teamRoleKey);
 	}
 
 	/**

@@ -471,6 +471,51 @@ public interface TeamRolePersistence extends BasePersistence<TeamRole> {
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the team role where teamRoleKey = &#63; or throws a <code>NoSuchTeamRoleException</code> if it could not be found.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the matching team role
+	 * @throws NoSuchTeamRoleException if a matching team role could not be found
+	 */
+	public TeamRole findByTeamRoleKey(String teamRoleKey)
+		throws NoSuchTeamRoleException;
+
+	/**
+	 * Returns the team role where teamRoleKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the matching team role, or <code>null</code> if a matching team role could not be found
+	 */
+	public TeamRole fetchByTeamRoleKey(String teamRoleKey);
+
+	/**
+	 * Returns the team role where teamRoleKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching team role, or <code>null</code> if a matching team role could not be found
+	 */
+	public TeamRole fetchByTeamRoleKey(
+		String teamRoleKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the team role where teamRoleKey = &#63; from the database.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the team role that was removed
+	 */
+	public TeamRole removeByTeamRoleKey(String teamRoleKey)
+		throws NoSuchTeamRoleException;
+
+	/**
+	 * Returns the number of team roles where teamRoleKey = &#63;.
+	 *
+	 * @param teamRoleKey the team role key
+	 * @return the number of matching team roles
+	 */
+	public int countByTeamRoleKey(String teamRoleKey);
+
+	/**
 	 * Returns all the team roles where name = &#63;.
 	 *
 	 * @param name the name

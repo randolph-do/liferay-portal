@@ -645,6 +645,71 @@ public class ProductPurchaseUtil {
 	}
 
 	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or throws a <code>NoSuchProductPurchaseException</code> if it could not be found.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the matching product purchase
+	 * @throws NoSuchProductPurchaseException if a matching product purchase could not be found
+	 */
+	public static ProductPurchase findByProductPurchaseKey(
+			String productPurchaseKey)
+		throws com.liferay.osb.koroneiki.trunk.exception.
+			NoSuchProductPurchaseException {
+
+		return getPersistence().findByProductPurchaseKey(productPurchaseKey);
+	}
+
+	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public static ProductPurchase fetchByProductPurchaseKey(
+		String productPurchaseKey) {
+
+		return getPersistence().fetchByProductPurchaseKey(productPurchaseKey);
+	}
+
+	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public static ProductPurchase fetchByProductPurchaseKey(
+		String productPurchaseKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByProductPurchaseKey(
+			productPurchaseKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the product purchase where productPurchaseKey = &#63; from the database.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the product purchase that was removed
+	 */
+	public static ProductPurchase removeByProductPurchaseKey(
+			String productPurchaseKey)
+		throws com.liferay.osb.koroneiki.trunk.exception.
+			NoSuchProductPurchaseException {
+
+		return getPersistence().removeByProductPurchaseKey(productPurchaseKey);
+	}
+
+	/**
+	 * Returns the number of product purchases where productPurchaseKey = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the number of matching product purchases
+	 */
+	public static int countByProductPurchaseKey(String productPurchaseKey) {
+		return getPersistence().countByProductPurchaseKey(productPurchaseKey);
+	}
+
+	/**
 	 * Returns all the product purchases where accountId = &#63;.
 	 *
 	 * @param accountId the account ID

@@ -40,6 +40,7 @@ public class AuditEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setAuditEntryKey(model.getAuditEntryKey());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setAuditSetId(model.getAuditSetId());
@@ -153,6 +154,14 @@ public class AuditEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getAuditEntryKey() {
+		return _auditEntryKey;
+	}
+
+	public void setAuditEntryKey(String auditEntryKey) {
+		_auditEntryKey = auditEntryKey;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -255,6 +264,7 @@ public class AuditEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _auditEntryKey;
 	private long _classNameId;
 	private long _classPK;
 	private long _auditSetId;

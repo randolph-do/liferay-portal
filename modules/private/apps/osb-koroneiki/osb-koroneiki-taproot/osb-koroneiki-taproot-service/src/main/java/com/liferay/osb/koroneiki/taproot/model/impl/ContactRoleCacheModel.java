@@ -65,7 +65,7 @@ public class ContactRoleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -79,6 +79,8 @@ public class ContactRoleCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", contactRoleKey=");
+		sb.append(contactRoleKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -121,6 +123,13 @@ public class ContactRoleCacheModel
 			contactRoleImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (contactRoleKey == null) {
+			contactRoleImpl.setContactRoleKey("");
+		}
+		else {
+			contactRoleImpl.setContactRoleKey(contactRoleKey);
+		}
+
 		if (name == null) {
 			contactRoleImpl.setName("");
 		}
@@ -154,6 +163,7 @@ public class ContactRoleCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		contactRoleKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 
@@ -178,6 +188,13 @@ public class ContactRoleCacheModel
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (contactRoleKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(contactRoleKey);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -204,6 +221,7 @@ public class ContactRoleCacheModel
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public String contactRoleKey;
 	public String name;
 	public String description;
 	public int type;

@@ -65,7 +65,7 @@ public class ProductEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -79,6 +79,8 @@ public class ProductEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", productEntryKey=");
+		sb.append(productEntryKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append("}");
@@ -115,6 +117,13 @@ public class ProductEntryCacheModel
 			productEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (productEntryKey == null) {
+			productEntryImpl.setProductEntryKey("");
+		}
+		else {
+			productEntryImpl.setProductEntryKey(productEntryKey);
+		}
+
 		if (name == null) {
 			productEntryImpl.setName("");
 		}
@@ -138,6 +147,7 @@ public class ProductEntryCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		productEntryKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 	}
 
@@ -158,6 +168,13 @@ public class ProductEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (productEntryKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(productEntryKey);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -172,6 +189,7 @@ public class ProductEntryCacheModel
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public String productEntryKey;
 	public String name;
 
 }

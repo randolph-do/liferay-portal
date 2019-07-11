@@ -40,6 +40,7 @@ public class TeamRoleSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setTeamRoleKey(model.getTeamRoleKey());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
@@ -144,6 +145,14 @@ public class TeamRoleSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getTeamRoleKey() {
+		return _teamRoleKey;
+	}
+
+	public void setTeamRoleKey(String teamRoleKey) {
+		_teamRoleKey = teamRoleKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -174,6 +183,7 @@ public class TeamRoleSoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _teamRoleKey;
 	private String _name;
 	private String _description;
 	private int _type;

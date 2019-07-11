@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,12 +80,13 @@ public class AuditEntryModelImpl
 		{"auditEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"auditSetId", Types.BIGINT}, {"fieldClassNameId", Types.BIGINT},
-		{"fieldClassPK", Types.BIGINT}, {"action", Types.VARCHAR},
-		{"field", Types.VARCHAR}, {"oldLabel", Types.VARCHAR},
-		{"oldValue", Types.VARCHAR}, {"newLabel", Types.VARCHAR},
-		{"newValue", Types.VARCHAR}, {"description", Types.VARCHAR}
+		{"auditEntryKey", Types.VARCHAR}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"auditSetId", Types.BIGINT},
+		{"fieldClassNameId", Types.BIGINT}, {"fieldClassPK", Types.BIGINT},
+		{"action", Types.VARCHAR}, {"field", Types.VARCHAR},
+		{"oldLabel", Types.VARCHAR}, {"oldValue", Types.VARCHAR},
+		{"newLabel", Types.VARCHAR}, {"newValue", Types.VARCHAR},
+		{"description", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,6 +99,7 @@ public class AuditEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("auditEntryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("auditSetId", Types.BIGINT);
@@ -112,7 +115,7 @@ public class AuditEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_AuditEntry (auditEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,auditSetId LONG,fieldClassNameId LONG,fieldClassPK LONG,action VARCHAR(75) null,field VARCHAR(75) null,oldLabel VARCHAR(75) null,oldValue VARCHAR(75) null,newLabel VARCHAR(75) null,newValue VARCHAR(75) null,description VARCHAR(75) null)";
+		"create table Koroneiki_AuditEntry (auditEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,auditEntryKey VARCHAR(75) null,classNameId LONG,classPK LONG,auditSetId LONG,fieldClassNameId LONG,fieldClassPK LONG,action VARCHAR(75) null,field VARCHAR(75) null,oldLabel VARCHAR(75) null,oldValue VARCHAR(75) null,newLabel VARCHAR(75) null,newValue VARCHAR(75) null,description VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_AuditEntry";
@@ -129,11 +132,13 @@ public class AuditEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long AUDITENTRYKEY_COLUMN_BITMASK = 1L;
 
-	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 
-	public static final long AUDITENTRYID_COLUMN_BITMASK = 4L;
+	public static final long CLASSPK_COLUMN_BITMASK = 4L;
+
+	public static final long AUDITENTRYID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -162,6 +167,7 @@ public class AuditEntryModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setAuditEntryKey(soapModel.getAuditEntryKey());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setAuditSetId(soapModel.getAuditSetId());
@@ -347,6 +353,11 @@ public class AuditEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<AuditEntry, Date>)AuditEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"auditEntryKey", AuditEntry::getAuditEntryKey);
+		attributeSetterBiConsumers.put(
+			"auditEntryKey",
+			(BiConsumer<AuditEntry, String>)AuditEntry::setAuditEntryKey);
 		attributeGetterFunctions.put("classNameId", AuditEntry::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
@@ -492,6 +503,32 @@ public class AuditEntryModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getAuditEntryKey() {
+		if (_auditEntryKey == null) {
+			return "";
+		}
+		else {
+			return _auditEntryKey;
+		}
+	}
+
+	@Override
+	public void setAuditEntryKey(String auditEntryKey) {
+		_columnBitmask |= AUDITENTRYKEY_COLUMN_BITMASK;
+
+		if (_originalAuditEntryKey == null) {
+			_originalAuditEntryKey = _auditEntryKey;
+		}
+
+		_auditEntryKey = auditEntryKey;
+	}
+
+	public String getOriginalAuditEntryKey() {
+		return GetterUtil.getString(_originalAuditEntryKey);
 	}
 
 	@Override
@@ -747,6 +784,7 @@ public class AuditEntryModelImpl
 		auditEntryImpl.setUserName(getUserName());
 		auditEntryImpl.setCreateDate(getCreateDate());
 		auditEntryImpl.setModifiedDate(getModifiedDate());
+		auditEntryImpl.setAuditEntryKey(getAuditEntryKey());
 		auditEntryImpl.setClassNameId(getClassNameId());
 		auditEntryImpl.setClassPK(getClassPK());
 		auditEntryImpl.setAuditSetId(getAuditSetId());
@@ -823,6 +861,9 @@ public class AuditEntryModelImpl
 
 		auditEntryModelImpl._setModifiedDate = false;
 
+		auditEntryModelImpl._originalAuditEntryKey =
+			auditEntryModelImpl._auditEntryKey;
+
 		auditEntryModelImpl._originalClassNameId =
 			auditEntryModelImpl._classNameId;
 
@@ -869,6 +910,14 @@ public class AuditEntryModelImpl
 		}
 		else {
 			auditEntryCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		auditEntryCacheModel.auditEntryKey = getAuditEntryKey();
+
+		String auditEntryKey = auditEntryCacheModel.auditEntryKey;
+
+		if ((auditEntryKey != null) && (auditEntryKey.length() == 0)) {
+			auditEntryCacheModel.auditEntryKey = null;
 		}
 
 		auditEntryCacheModel.classNameId = getClassNameId();
@@ -1020,6 +1069,8 @@ public class AuditEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _auditEntryKey;
+	private String _originalAuditEntryKey;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

@@ -166,6 +166,21 @@ public interface ContactModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the contact key of this contact.
+	 *
+	 * @return the contact key of this contact
+	 */
+	@AutoEscape
+	public String getContactKey();
+
+	/**
+	 * Sets the contact key of this contact.
+	 *
+	 * @param contactKey the contact key of this contact
+	 */
+	public void setContactKey(String contactKey);
+
+	/**
 	 * Returns the first name of this contact.
 	 *
 	 * @return the first name of this contact

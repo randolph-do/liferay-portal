@@ -245,6 +245,10 @@ public interface ProductEntryLocalService
 	public ProductEntry getProductEntry(long productEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ProductEntry getProductEntry(String productEntryKey)
+		throws PortalException;
+
 	/**
 	 * Returns the product entry with the matching UUID and company.
 	 *

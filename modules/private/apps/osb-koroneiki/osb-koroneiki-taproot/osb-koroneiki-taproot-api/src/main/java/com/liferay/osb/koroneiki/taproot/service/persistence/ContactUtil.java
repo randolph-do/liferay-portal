@@ -641,6 +641,67 @@ public class ContactUtil {
 	}
 
 	/**
+	 * Returns the contact where contactKey = &#63; or throws a <code>NoSuchContactException</code> if it could not be found.
+	 *
+	 * @param contactKey the contact key
+	 * @return the matching contact
+	 * @throws NoSuchContactException if a matching contact could not be found
+	 */
+	public static Contact findByContactKey(String contactKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactException {
+
+		return getPersistence().findByContactKey(contactKey);
+	}
+
+	/**
+	 * Returns the contact where contactKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param contactKey the contact key
+	 * @return the matching contact, or <code>null</code> if a matching contact could not be found
+	 */
+	public static Contact fetchByContactKey(String contactKey) {
+		return getPersistence().fetchByContactKey(contactKey);
+	}
+
+	/**
+	 * Returns the contact where contactKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param contactKey the contact key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching contact, or <code>null</code> if a matching contact could not be found
+	 */
+	public static Contact fetchByContactKey(
+		String contactKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByContactKey(
+			contactKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the contact where contactKey = &#63; from the database.
+	 *
+	 * @param contactKey the contact key
+	 * @return the contact that was removed
+	 */
+	public static Contact removeByContactKey(String contactKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactException {
+
+		return getPersistence().removeByContactKey(contactKey);
+	}
+
+	/**
+	 * Returns the number of contacts where contactKey = &#63;.
+	 *
+	 * @param contactKey the contact key
+	 * @return the number of matching contacts
+	 */
+	public static int countByContactKey(String contactKey) {
+		return getPersistence().countByContactKey(contactKey);
+	}
+
+	/**
 	 * Returns the contact where emailAddress = &#63; or throws a <code>NoSuchContactException</code> if it could not be found.
 	 *
 	 * @param emailAddress the email address

@@ -40,6 +40,7 @@ public class ProductEntrySoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setProductEntryKey(model.getProductEntryKey());
 		soapModel.setName(model.getName());
 
 		return soapModel;
@@ -142,6 +143,14 @@ public class ProductEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getProductEntryKey() {
+		return _productEntryKey;
+	}
+
+	public void setProductEntryKey(String productEntryKey) {
+		_productEntryKey = productEntryKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -156,6 +165,7 @@ public class ProductEntrySoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _productEntryKey;
 	private String _name;
 
 }

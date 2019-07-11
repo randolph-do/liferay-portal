@@ -40,6 +40,7 @@ public class ProductConsumptionSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setProductConsumptionKey(model.getProductConsumptionKey());
 		soapModel.setAccountId(model.getAccountId());
 		soapModel.setProjectId(model.getProjectId());
 		soapModel.setProductEntryId(model.getProductEntryId());
@@ -153,6 +154,14 @@ public class ProductConsumptionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getProductConsumptionKey() {
+		return _productConsumptionKey;
+	}
+
+	public void setProductConsumptionKey(String productConsumptionKey) {
+		_productConsumptionKey = productConsumptionKey;
+	}
+
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -183,6 +192,7 @@ public class ProductConsumptionSoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _productConsumptionKey;
 	private long _accountId;
 	private long _projectId;
 	private long _productEntryId;

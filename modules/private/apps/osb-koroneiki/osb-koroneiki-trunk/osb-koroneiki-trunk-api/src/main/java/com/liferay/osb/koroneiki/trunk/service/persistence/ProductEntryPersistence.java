@@ -473,6 +473,51 @@ public interface ProductEntryPersistence extends BasePersistence<ProductEntry> {
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the product entry where productEntryKey = &#63; or throws a <code>NoSuchProductEntryException</code> if it could not be found.
+	 *
+	 * @param productEntryKey the product entry key
+	 * @return the matching product entry
+	 * @throws NoSuchProductEntryException if a matching product entry could not be found
+	 */
+	public ProductEntry findByProductEntryKey(String productEntryKey)
+		throws NoSuchProductEntryException;
+
+	/**
+	 * Returns the product entry where productEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productEntryKey the product entry key
+	 * @return the matching product entry, or <code>null</code> if a matching product entry could not be found
+	 */
+	public ProductEntry fetchByProductEntryKey(String productEntryKey);
+
+	/**
+	 * Returns the product entry where productEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productEntryKey the product entry key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching product entry, or <code>null</code> if a matching product entry could not be found
+	 */
+	public ProductEntry fetchByProductEntryKey(
+		String productEntryKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the product entry where productEntryKey = &#63; from the database.
+	 *
+	 * @param productEntryKey the product entry key
+	 * @return the product entry that was removed
+	 */
+	public ProductEntry removeByProductEntryKey(String productEntryKey)
+		throws NoSuchProductEntryException;
+
+	/**
+	 * Returns the number of product entries where productEntryKey = &#63;.
+	 *
+	 * @param productEntryKey the product entry key
+	 * @return the number of matching product entries
+	 */
+	public int countByProductEntryKey(String productEntryKey);
+
+	/**
 	 * Caches the product entry in the entity cache if it is enabled.
 	 *
 	 * @param productEntry the product entry

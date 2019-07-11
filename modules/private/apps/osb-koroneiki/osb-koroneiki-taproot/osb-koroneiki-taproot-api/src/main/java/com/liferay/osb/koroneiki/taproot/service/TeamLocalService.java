@@ -232,6 +232,9 @@ public interface TeamLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Team getTeam(long teamId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team getTeam(String teamKey) throws PortalException;
+
 	/**
 	 * Returns the team with the matching UUID and company.
 	 *

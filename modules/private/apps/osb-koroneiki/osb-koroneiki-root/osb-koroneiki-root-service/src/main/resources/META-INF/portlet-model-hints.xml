@@ -8,6 +8,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="auditEntryKey" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="auditSetId" type="long" />
@@ -26,6 +27,7 @@
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="externalLinkKey" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="domain" type="String" />

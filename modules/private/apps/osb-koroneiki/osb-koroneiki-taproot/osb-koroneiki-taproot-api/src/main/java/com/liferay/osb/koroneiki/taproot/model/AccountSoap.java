@@ -40,6 +40,7 @@ public class AccountSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setAccountKey(model.getAccountKey());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setLogoId(model.getLogoId());
@@ -154,6 +155,14 @@ public class AccountSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getAccountKey() {
+		return _accountKey;
+	}
+
+	public void setAccountKey(String accountKey) {
+		_accountKey = accountKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -264,6 +273,7 @@ public class AccountSoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _accountKey;
 	private String _name;
 	private String _description;
 	private long _logoId;

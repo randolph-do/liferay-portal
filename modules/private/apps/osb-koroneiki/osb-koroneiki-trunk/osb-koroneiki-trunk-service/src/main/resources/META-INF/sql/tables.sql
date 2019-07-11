@@ -5,6 +5,7 @@ create table Koroneiki_ProductConsumption (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	productConsumptionKey VARCHAR(75) null,
 	accountId LONG,
 	projectId LONG,
 	productEntryId LONG
@@ -17,6 +18,7 @@ create table Koroneiki_ProductEntry (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	productEntryKey VARCHAR(75) null,
 	name VARCHAR(75) null
 );
 
@@ -37,6 +39,7 @@ create table Koroneiki_ProductPurchase (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	productPurchaseKey VARCHAR(75) null,
 	accountId LONG,
 	projectId LONG,
 	productEntryId LONG,

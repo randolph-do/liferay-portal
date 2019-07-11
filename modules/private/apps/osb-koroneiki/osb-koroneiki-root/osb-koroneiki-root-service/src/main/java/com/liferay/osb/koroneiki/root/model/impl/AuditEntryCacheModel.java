@@ -64,7 +64,7 @@ public class AuditEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{auditEntryId=");
 		sb.append(auditEntryId);
@@ -78,6 +78,8 @@ public class AuditEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", auditEntryKey=");
+		sb.append(auditEntryKey);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -134,6 +136,13 @@ public class AuditEntryCacheModel
 		}
 		else {
 			auditEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		if (auditEntryKey == null) {
+			auditEntryImpl.setAuditEntryKey("");
+		}
+		else {
+			auditEntryImpl.setAuditEntryKey(auditEntryKey);
 		}
 
 		auditEntryImpl.setClassNameId(classNameId);
@@ -206,6 +215,7 @@ public class AuditEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		auditEntryKey = objectInput.readUTF();
 
 		classNameId = objectInput.readLong();
 
@@ -242,6 +252,13 @@ public class AuditEntryCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (auditEntryKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(auditEntryKey);
+		}
 
 		objectOutput.writeLong(classNameId);
 
@@ -309,6 +326,7 @@ public class AuditEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String auditEntryKey;
 	public long classNameId;
 	public long classPK;
 	public long auditSetId;

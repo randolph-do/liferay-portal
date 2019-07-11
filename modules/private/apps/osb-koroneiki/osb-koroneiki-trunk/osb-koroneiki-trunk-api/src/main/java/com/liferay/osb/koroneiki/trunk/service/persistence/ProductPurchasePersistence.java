@@ -474,6 +474,51 @@ public interface ProductPurchasePersistence
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or throws a <code>NoSuchProductPurchaseException</code> if it could not be found.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the matching product purchase
+	 * @throws NoSuchProductPurchaseException if a matching product purchase could not be found
+	 */
+	public ProductPurchase findByProductPurchaseKey(String productPurchaseKey)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public ProductPurchase fetchByProductPurchaseKey(String productPurchaseKey);
+
+	/**
+	 * Returns the product purchase where productPurchaseKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching product purchase, or <code>null</code> if a matching product purchase could not be found
+	 */
+	public ProductPurchase fetchByProductPurchaseKey(
+		String productPurchaseKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the product purchase where productPurchaseKey = &#63; from the database.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the product purchase that was removed
+	 */
+	public ProductPurchase removeByProductPurchaseKey(String productPurchaseKey)
+		throws NoSuchProductPurchaseException;
+
+	/**
+	 * Returns the number of product purchases where productPurchaseKey = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @return the number of matching product purchases
+	 */
+	public int countByProductPurchaseKey(String productPurchaseKey);
+
+	/**
 	 * Returns all the product purchases where accountId = &#63;.
 	 *
 	 * @param accountId the account ID

@@ -64,7 +64,7 @@ public class TeamRoleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -78,6 +78,8 @@ public class TeamRoleCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", teamRoleKey=");
+		sb.append(teamRoleKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -118,6 +120,13 @@ public class TeamRoleCacheModel
 			teamRoleImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (teamRoleKey == null) {
+			teamRoleImpl.setTeamRoleKey("");
+		}
+		else {
+			teamRoleImpl.setTeamRoleKey(teamRoleKey);
+		}
+
 		if (name == null) {
 			teamRoleImpl.setName("");
 		}
@@ -150,6 +159,7 @@ public class TeamRoleCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		teamRoleKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 
@@ -172,6 +182,13 @@ public class TeamRoleCacheModel
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (teamRoleKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(teamRoleKey);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -196,6 +213,7 @@ public class TeamRoleCacheModel
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public String teamRoleKey;
 	public String name;
 	public String description;
 	public int type;

@@ -51,6 +51,7 @@ public class AuditEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("auditEntryKey", getAuditEntryKey());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("auditSetId", getAuditSetId());
@@ -103,6 +104,12 @@ public class AuditEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String auditEntryKey = (String)attributes.get("auditEntryKey");
+
+		if (auditEntryKey != null) {
+			setAuditEntryKey(auditEntryKey);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -196,6 +203,16 @@ public class AuditEntryWrapper
 	@Override
 	public long getAuditEntryId() {
 		return model.getAuditEntryId();
+	}
+
+	/**
+	 * Returns the audit entry key of this audit entry.
+	 *
+	 * @return the audit entry key of this audit entry
+	 */
+	@Override
+	public String getAuditEntryKey() {
+		return model.getAuditEntryKey();
 	}
 
 	/**
@@ -411,6 +428,16 @@ public class AuditEntryWrapper
 	@Override
 	public void setAuditEntryId(long auditEntryId) {
 		model.setAuditEntryId(auditEntryId);
+	}
+
+	/**
+	 * Sets the audit entry key of this audit entry.
+	 *
+	 * @param auditEntryKey the audit entry key of this audit entry
+	 */
+	@Override
+	public void setAuditEntryKey(String auditEntryKey) {
+		model.setAuditEntryKey(auditEntryKey);
 	}
 
 	/**

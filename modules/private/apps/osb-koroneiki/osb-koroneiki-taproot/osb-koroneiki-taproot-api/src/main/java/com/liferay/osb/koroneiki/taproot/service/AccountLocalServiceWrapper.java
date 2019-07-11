@@ -236,6 +236,14 @@ public class AccountLocalServiceWrapper
 		return _accountLocalService.getAccount(accountId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Account getAccount(
+			String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountLocalService.getAccount(accountKey);
+	}
+
 	/**
 	 * Returns the account with the matching UUID and company.
 	 *

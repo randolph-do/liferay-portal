@@ -649,6 +649,77 @@ public class ProductConsumptionUtil {
 	}
 
 	/**
+	 * Returns the product consumption where productConsumptionKey = &#63; or throws a <code>NoSuchProductConsumptionException</code> if it could not be found.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the matching product consumption
+	 * @throws NoSuchProductConsumptionException if a matching product consumption could not be found
+	 */
+	public static ProductConsumption findByProductConsumptionKey(
+			String productConsumptionKey)
+		throws com.liferay.osb.koroneiki.trunk.exception.
+			NoSuchProductConsumptionException {
+
+		return getPersistence().findByProductConsumptionKey(
+			productConsumptionKey);
+	}
+
+	/**
+	 * Returns the product consumption where productConsumptionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the matching product consumption, or <code>null</code> if a matching product consumption could not be found
+	 */
+	public static ProductConsumption fetchByProductConsumptionKey(
+		String productConsumptionKey) {
+
+		return getPersistence().fetchByProductConsumptionKey(
+			productConsumptionKey);
+	}
+
+	/**
+	 * Returns the product consumption where productConsumptionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching product consumption, or <code>null</code> if a matching product consumption could not be found
+	 */
+	public static ProductConsumption fetchByProductConsumptionKey(
+		String productConsumptionKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByProductConsumptionKey(
+			productConsumptionKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the product consumption where productConsumptionKey = &#63; from the database.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the product consumption that was removed
+	 */
+	public static ProductConsumption removeByProductConsumptionKey(
+			String productConsumptionKey)
+		throws com.liferay.osb.koroneiki.trunk.exception.
+			NoSuchProductConsumptionException {
+
+		return getPersistence().removeByProductConsumptionKey(
+			productConsumptionKey);
+	}
+
+	/**
+	 * Returns the number of product consumptions where productConsumptionKey = &#63;.
+	 *
+	 * @param productConsumptionKey the product consumption key
+	 * @return the number of matching product consumptions
+	 */
+	public static int countByProductConsumptionKey(
+		String productConsumptionKey) {
+
+		return getPersistence().countByProductConsumptionKey(
+			productConsumptionKey);
+	}
+
+	/**
 	 * Returns all the product consumptions where accountId = &#63;.
 	 *
 	 * @param accountId the account ID

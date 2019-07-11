@@ -67,7 +67,7 @@ public class ProductConsumptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -81,6 +81,8 @@ public class ProductConsumptionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", productConsumptionKey=");
+		sb.append(productConsumptionKey);
 		sb.append(", accountId=");
 		sb.append(accountId);
 		sb.append(", projectId=");
@@ -122,6 +124,14 @@ public class ProductConsumptionCacheModel
 			productConsumptionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (productConsumptionKey == null) {
+			productConsumptionImpl.setProductConsumptionKey("");
+		}
+		else {
+			productConsumptionImpl.setProductConsumptionKey(
+				productConsumptionKey);
+		}
+
 		productConsumptionImpl.setAccountId(accountId);
 		productConsumptionImpl.setProjectId(projectId);
 		productConsumptionImpl.setProductEntryId(productEntryId);
@@ -142,6 +152,7 @@ public class ProductConsumptionCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		productConsumptionKey = objectInput.readUTF();
 
 		accountId = objectInput.readLong();
 
@@ -167,6 +178,13 @@ public class ProductConsumptionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (productConsumptionKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(productConsumptionKey);
+		}
+
 		objectOutput.writeLong(accountId);
 
 		objectOutput.writeLong(projectId);
@@ -180,6 +198,7 @@ public class ProductConsumptionCacheModel
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public String productConsumptionKey;
 	public long accountId;
 	public long projectId;
 	public long productEntryId;

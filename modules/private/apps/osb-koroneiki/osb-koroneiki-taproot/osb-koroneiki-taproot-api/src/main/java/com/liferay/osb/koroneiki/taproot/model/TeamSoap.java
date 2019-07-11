@@ -40,6 +40,7 @@ public class TeamSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setTeamKey(model.getTeamKey());
 		soapModel.setAccountId(model.getAccountId());
 		soapModel.setName(model.getName());
 
@@ -142,6 +143,14 @@ public class TeamSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getTeamKey() {
+		return _teamKey;
+	}
+
+	public void setTeamKey(String teamKey) {
+		_teamKey = teamKey;
+	}
+
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -164,6 +173,7 @@ public class TeamSoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _teamKey;
 	private long _accountId;
 	private String _name;
 

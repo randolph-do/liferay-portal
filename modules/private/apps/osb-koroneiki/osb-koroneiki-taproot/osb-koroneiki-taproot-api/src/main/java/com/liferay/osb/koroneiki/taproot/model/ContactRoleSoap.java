@@ -40,6 +40,7 @@ public class ContactRoleSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setContactRoleKey(model.getContactRoleKey());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
@@ -145,6 +146,14 @@ public class ContactRoleSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getContactRoleKey() {
+		return _contactRoleKey;
+	}
+
+	public void setContactRoleKey(String contactRoleKey) {
+		_contactRoleKey = contactRoleKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -187,6 +196,7 @@ public class ContactRoleSoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _contactRoleKey;
 	private String _name;
 	private String _description;
 	private int _type;

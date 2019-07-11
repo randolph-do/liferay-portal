@@ -171,6 +171,21 @@ public interface AuditEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the audit entry key of this audit entry.
+	 *
+	 * @return the audit entry key of this audit entry
+	 */
+	@AutoEscape
+	public String getAuditEntryKey();
+
+	/**
+	 * Sets the audit entry key of this audit entry.
+	 *
+	 * @param auditEntryKey the audit entry key of this audit entry
+	 */
+	public void setAuditEntryKey(String auditEntryKey);
+
+	/**
 	 * Returns the fully qualified class name of this audit entry.
 	 *
 	 * @return the fully qualified class name of this audit entry

@@ -2073,6 +2073,232 @@ public class AccountPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"account.companyId = ?";
 
+	private FinderPath _finderPathFetchByAccountKey;
+	private FinderPath _finderPathCountByAccountKey;
+
+	/**
+	 * Returns the account where accountKey = &#63; or throws a <code>NoSuchAccountException</code> if it could not be found.
+	 *
+	 * @param accountKey the account key
+	 * @return the matching account
+	 * @throws NoSuchAccountException if a matching account could not be found
+	 */
+	@Override
+	public Account findByAccountKey(String accountKey)
+		throws NoSuchAccountException {
+
+		Account account = fetchByAccountKey(accountKey);
+
+		if (account == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("accountKey=");
+			msg.append(accountKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchAccountException(msg.toString());
+		}
+
+		return account;
+	}
+
+	/**
+	 * Returns the account where accountKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountKey the account key
+	 * @return the matching account, or <code>null</code> if a matching account could not be found
+	 */
+	@Override
+	public Account fetchByAccountKey(String accountKey) {
+		return fetchByAccountKey(accountKey, true);
+	}
+
+	/**
+	 * Returns the account where accountKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param accountKey the account key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching account, or <code>null</code> if a matching account could not be found
+	 */
+	@Override
+	public Account fetchByAccountKey(
+		String accountKey, boolean retrieveFromCache) {
+
+		accountKey = Objects.toString(accountKey, "");
+
+		Object[] finderArgs = new Object[] {accountKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByAccountKey, finderArgs, this);
+		}
+
+		if (result instanceof Account) {
+			Account account = (Account)result;
+
+			if (!Objects.equals(accountKey, account.getAccountKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_ACCOUNT_WHERE);
+
+			boolean bindAccountKey = false;
+
+			if (accountKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_3);
+			}
+			else {
+				bindAccountKey = true;
+
+				query.append(_FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindAccountKey) {
+					qPos.add(accountKey);
+				}
+
+				List<Account> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByAccountKey, finderArgs, list);
+				}
+				else {
+					Account account = list.get(0);
+
+					result = account;
+
+					cacheResult(account);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByAccountKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Account)result;
+		}
+	}
+
+	/**
+	 * Removes the account where accountKey = &#63; from the database.
+	 *
+	 * @param accountKey the account key
+	 * @return the account that was removed
+	 */
+	@Override
+	public Account removeByAccountKey(String accountKey)
+		throws NoSuchAccountException {
+
+		Account account = findByAccountKey(accountKey);
+
+		return remove(account);
+	}
+
+	/**
+	 * Returns the number of accounts where accountKey = &#63;.
+	 *
+	 * @param accountKey the account key
+	 * @return the number of matching accounts
+	 */
+	@Override
+	public int countByAccountKey(String accountKey) {
+		accountKey = Objects.toString(accountKey, "");
+
+		FinderPath finderPath = _finderPathCountByAccountKey;
+
+		Object[] finderArgs = new Object[] {accountKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ACCOUNT_WHERE);
+
+			boolean bindAccountKey = false;
+
+			if (accountKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_3);
+			}
+			else {
+				bindAccountKey = true;
+
+				query.append(_FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindAccountKey) {
+					qPos.add(accountKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_2 =
+		"account.accountKey = ?";
+
+	private static final String _FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_3 =
+		"(account.accountKey IS NULL OR account.accountKey = '')";
+
 	public AccountPersistenceImpl() {
 		setModelClass(Account.class);
 
@@ -2096,6 +2322,10 @@ public class AccountPersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, AccountImpl.class, account.getPrimaryKey(),
 			account);
+
+		finderCache.putResult(
+			_finderPathFetchByAccountKey,
+			new Object[] {account.getAccountKey()}, account);
 
 		account.resetOriginalValues();
 	}
@@ -2150,6 +2380,8 @@ public class AccountPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((AccountModelImpl)account, true);
 	}
 
 	@Override
@@ -2160,6 +2392,39 @@ public class AccountPersistenceImpl
 		for (Account account : accounts) {
 			entityCache.removeResult(
 				entityCacheEnabled, AccountImpl.class, account.getPrimaryKey());
+
+			clearUniqueFindersCache((AccountModelImpl)account, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(AccountModelImpl accountModelImpl) {
+		Object[] args = new Object[] {accountModelImpl.getAccountKey()};
+
+		finderCache.putResult(
+			_finderPathCountByAccountKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByAccountKey, args, accountModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		AccountModelImpl accountModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {accountModelImpl.getAccountKey()};
+
+			finderCache.removeResult(_finderPathCountByAccountKey, args);
+			finderCache.removeResult(_finderPathFetchByAccountKey, args);
+		}
+
+		if ((accountModelImpl.getColumnBitmask() &
+			 _finderPathFetchByAccountKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				accountModelImpl.getOriginalAccountKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByAccountKey, args);
+			finderCache.removeResult(_finderPathFetchByAccountKey, args);
 		}
 	}
 
@@ -2410,6 +2675,9 @@ public class AccountPersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, AccountImpl.class, account.getPrimaryKey(),
 			account, false);
+
+		clearUniqueFindersCache(accountModelImpl, false);
+		cacheUniqueFindersCache(accountModelImpl);
 
 		account.resetOriginalValues();
 
@@ -2746,6 +3014,17 @@ public class AccountPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByAccountKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByAccountKey",
+			new String[] {String.class.getName()},
+			AccountModelImpl.ACCOUNTKEY_COLUMN_BITMASK);
+
+		_finderPathCountByAccountKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountKey",
+			new String[] {String.class.getName()});
 	}
 
 	@Deactivate

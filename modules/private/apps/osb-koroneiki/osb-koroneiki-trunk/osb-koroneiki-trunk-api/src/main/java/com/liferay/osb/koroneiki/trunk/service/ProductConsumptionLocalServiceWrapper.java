@@ -327,6 +327,15 @@ public class ProductConsumptionLocalServiceWrapper
 			productConsumptionId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			getProductConsumption(String productConsumptionKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.getProductConsumption(
+			productConsumptionKey);
+	}
+
 	/**
 	 * Returns the product consumption with the matching UUID and company.
 	 *

@@ -2074,6 +2074,232 @@ public class ContactPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"contact.companyId = ?";
 
+	private FinderPath _finderPathFetchByContactKey;
+	private FinderPath _finderPathCountByContactKey;
+
+	/**
+	 * Returns the contact where contactKey = &#63; or throws a <code>NoSuchContactException</code> if it could not be found.
+	 *
+	 * @param contactKey the contact key
+	 * @return the matching contact
+	 * @throws NoSuchContactException if a matching contact could not be found
+	 */
+	@Override
+	public Contact findByContactKey(String contactKey)
+		throws NoSuchContactException {
+
+		Contact contact = fetchByContactKey(contactKey);
+
+		if (contact == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("contactKey=");
+			msg.append(contactKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchContactException(msg.toString());
+		}
+
+		return contact;
+	}
+
+	/**
+	 * Returns the contact where contactKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param contactKey the contact key
+	 * @return the matching contact, or <code>null</code> if a matching contact could not be found
+	 */
+	@Override
+	public Contact fetchByContactKey(String contactKey) {
+		return fetchByContactKey(contactKey, true);
+	}
+
+	/**
+	 * Returns the contact where contactKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param contactKey the contact key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching contact, or <code>null</code> if a matching contact could not be found
+	 */
+	@Override
+	public Contact fetchByContactKey(
+		String contactKey, boolean retrieveFromCache) {
+
+		contactKey = Objects.toString(contactKey, "");
+
+		Object[] finderArgs = new Object[] {contactKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByContactKey, finderArgs, this);
+		}
+
+		if (result instanceof Contact) {
+			Contact contact = (Contact)result;
+
+			if (!Objects.equals(contactKey, contact.getContactKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_CONTACT_WHERE);
+
+			boolean bindContactKey = false;
+
+			if (contactKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_CONTACTKEY_CONTACTKEY_3);
+			}
+			else {
+				bindContactKey = true;
+
+				query.append(_FINDER_COLUMN_CONTACTKEY_CONTACTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindContactKey) {
+					qPos.add(contactKey);
+				}
+
+				List<Contact> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByContactKey, finderArgs, list);
+				}
+				else {
+					Contact contact = list.get(0);
+
+					result = contact;
+
+					cacheResult(contact);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByContactKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Contact)result;
+		}
+	}
+
+	/**
+	 * Removes the contact where contactKey = &#63; from the database.
+	 *
+	 * @param contactKey the contact key
+	 * @return the contact that was removed
+	 */
+	@Override
+	public Contact removeByContactKey(String contactKey)
+		throws NoSuchContactException {
+
+		Contact contact = findByContactKey(contactKey);
+
+		return remove(contact);
+	}
+
+	/**
+	 * Returns the number of contacts where contactKey = &#63;.
+	 *
+	 * @param contactKey the contact key
+	 * @return the number of matching contacts
+	 */
+	@Override
+	public int countByContactKey(String contactKey) {
+		contactKey = Objects.toString(contactKey, "");
+
+		FinderPath finderPath = _finderPathCountByContactKey;
+
+		Object[] finderArgs = new Object[] {contactKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACT_WHERE);
+
+			boolean bindContactKey = false;
+
+			if (contactKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_CONTACTKEY_CONTACTKEY_3);
+			}
+			else {
+				bindContactKey = true;
+
+				query.append(_FINDER_COLUMN_CONTACTKEY_CONTACTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindContactKey) {
+					qPos.add(contactKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTACTKEY_CONTACTKEY_2 =
+		"contact.contactKey = ?";
+
+	private static final String _FINDER_COLUMN_CONTACTKEY_CONTACTKEY_3 =
+		"(contact.contactKey IS NULL OR contact.contactKey = '')";
+
 	private FinderPath _finderPathFetchByEmailAddress;
 	private FinderPath _finderPathCountByEmailAddress;
 
@@ -2336,6 +2562,10 @@ public class ContactPersistenceImpl
 			contact);
 
 		finderCache.putResult(
+			_finderPathFetchByContactKey,
+			new Object[] {contact.getContactKey()}, contact);
+
+		finderCache.putResult(
 			_finderPathFetchByEmailAddress,
 			new Object[] {contact.getEmailAddress()}, contact);
 
@@ -2410,7 +2640,14 @@ public class ContactPersistenceImpl
 	}
 
 	protected void cacheUniqueFindersCache(ContactModelImpl contactModelImpl) {
-		Object[] args = new Object[] {contactModelImpl.getEmailAddress()};
+		Object[] args = new Object[] {contactModelImpl.getContactKey()};
+
+		finderCache.putResult(
+			_finderPathCountByContactKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByContactKey, args, contactModelImpl, false);
+
+		args = new Object[] {contactModelImpl.getEmailAddress()};
 
 		finderCache.putResult(
 			_finderPathCountByEmailAddress, args, Long.valueOf(1), false);
@@ -2420,6 +2657,24 @@ public class ContactPersistenceImpl
 
 	protected void clearUniqueFindersCache(
 		ContactModelImpl contactModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {contactModelImpl.getContactKey()};
+
+			finderCache.removeResult(_finderPathCountByContactKey, args);
+			finderCache.removeResult(_finderPathFetchByContactKey, args);
+		}
+
+		if ((contactModelImpl.getColumnBitmask() &
+			 _finderPathFetchByContactKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				contactModelImpl.getOriginalContactKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByContactKey, args);
+			finderCache.removeResult(_finderPathFetchByContactKey, args);
+		}
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {contactModelImpl.getEmailAddress()};
@@ -3026,6 +3281,17 @@ public class ContactPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByContactKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ContactImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByContactKey",
+			new String[] {String.class.getName()},
+			ContactModelImpl.CONTACTKEY_COLUMN_BITMASK);
+
+		_finderPathCountByContactKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactKey",
+			new String[] {String.class.getName()});
 
 		_finderPathFetchByEmailAddress = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ContactImpl.class,

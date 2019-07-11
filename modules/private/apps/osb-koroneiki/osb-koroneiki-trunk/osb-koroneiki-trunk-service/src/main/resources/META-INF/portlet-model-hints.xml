@@ -8,6 +8,7 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="productConsumptionKey" type="String" />
 		<field name="accountId" type="long" />
 		<field name="projectId" type="long" />
 		<field name="productEntryId" type="long" />
@@ -19,6 +20,7 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="productEntryKey" type="String" />
 		<field name="name" type="String" />
 	</model>
 	<model name="com.liferay.osb.koroneiki.trunk.model.ProductField">
@@ -37,6 +39,7 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="productPurchaseKey" type="String" />
 		<field name="accountId" type="long" />
 		<field name="projectId" type="long" />
 		<field name="productEntryId" type="long" />

@@ -167,6 +167,21 @@ public interface ProjectModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the project key of this project.
+	 *
+	 * @return the project key of this project
+	 */
+	@AutoEscape
+	public String getProjectKey();
+
+	/**
+	 * Sets the project key of this project.
+	 *
+	 * @param projectKey the project key of this project
+	 */
+	public void setProjectKey(String projectKey);
+
+	/**
 	 * Returns the account ID of this project.
 	 *
 	 * @return the account ID of this project

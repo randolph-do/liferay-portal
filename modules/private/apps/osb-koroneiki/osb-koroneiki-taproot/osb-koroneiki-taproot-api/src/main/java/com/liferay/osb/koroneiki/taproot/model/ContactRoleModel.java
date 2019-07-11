@@ -166,6 +166,21 @@ public interface ContactRoleModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the contact role key of this contact role.
+	 *
+	 * @return the contact role key of this contact role
+	 */
+	@AutoEscape
+	public String getContactRoleKey();
+
+	/**
+	 * Sets the contact role key of this contact role.
+	 *
+	 * @param contactRoleKey the contact role key of this contact role
+	 */
+	public void setContactRoleKey(String contactRoleKey);
+
+	/**
 	 * Returns the name of this contact role.
 	 *
 	 * @return the name of this contact role

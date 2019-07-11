@@ -236,6 +236,10 @@ public interface ProductPurchaseLocalService
 	public ProductPurchase getProductPurchase(long productPurchaseId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ProductPurchase getProductPurchase(String productPurchaseKey)
+		throws PortalException;
+
 	/**
 	 * Returns the product purchase with the matching UUID and company.
 	 *

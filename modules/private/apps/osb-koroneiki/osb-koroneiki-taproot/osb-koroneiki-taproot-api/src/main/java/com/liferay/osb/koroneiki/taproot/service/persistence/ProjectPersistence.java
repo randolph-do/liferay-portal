@@ -471,6 +471,51 @@ public interface ProjectPersistence extends BasePersistence<Project> {
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the project where projectKey = &#63; or throws a <code>NoSuchProjectException</code> if it could not be found.
+	 *
+	 * @param projectKey the project key
+	 * @return the matching project
+	 * @throws NoSuchProjectException if a matching project could not be found
+	 */
+	public Project findByProjectKey(String projectKey)
+		throws NoSuchProjectException;
+
+	/**
+	 * Returns the project where projectKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param projectKey the project key
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 */
+	public Project fetchByProjectKey(String projectKey);
+
+	/**
+	 * Returns the project where projectKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param projectKey the project key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 */
+	public Project fetchByProjectKey(
+		String projectKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the project where projectKey = &#63; from the database.
+	 *
+	 * @param projectKey the project key
+	 * @return the project that was removed
+	 */
+	public Project removeByProjectKey(String projectKey)
+		throws NoSuchProjectException;
+
+	/**
+	 * Returns the number of projects where projectKey = &#63;.
+	 *
+	 * @param projectKey the project key
+	 * @return the number of matching projects
+	 */
+	public int countByProjectKey(String projectKey);
+
+	/**
 	 * Returns all the projects where accountId = &#63;.
 	 *
 	 * @param accountId the account ID

@@ -245,6 +245,14 @@ public class ExternalLinkLocalServiceWrapper
 		return _externalLinkLocalService.getExternalLink(externalLinkId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.root.model.ExternalLink getExternalLink(
+			String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _externalLinkLocalService.getExternalLink(externalLinkKey);
+	}
+
 	/**
 	 * Returns a range of all the external links.
 	 *

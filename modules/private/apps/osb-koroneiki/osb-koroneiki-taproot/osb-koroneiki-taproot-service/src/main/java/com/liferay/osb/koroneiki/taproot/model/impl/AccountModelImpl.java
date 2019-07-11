@@ -81,8 +81,9 @@ public class AccountModelImpl
 		{"uuid_", Types.VARCHAR}, {"accountId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"logoId", Types.BIGINT}, {"contactEmailAddress", Types.VARCHAR},
+		{"accountKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"logoId", Types.BIGINT},
+		{"contactEmailAddress", Types.VARCHAR},
 		{"profileEmailAddress", Types.VARCHAR}, {"phoneNumber", Types.VARCHAR},
 		{"faxNumber", Types.VARCHAR}, {"website", Types.VARCHAR},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
@@ -100,6 +101,7 @@ public class AccountModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("accountKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
@@ -116,7 +118,7 @@ public class AccountModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_Account (uuid_ VARCHAR(75) null,accountId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,logoId LONG,contactEmailAddress VARCHAR(75) null,profileEmailAddress VARCHAR(75) null,phoneNumber VARCHAR(75) null,faxNumber VARCHAR(75) null,website VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
+		"create table Koroneiki_Account (uuid_ VARCHAR(75) null,accountId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountKey VARCHAR(75) null,name VARCHAR(75) null,description VARCHAR(75) null,logoId LONG,contactEmailAddress VARCHAR(75) null,profileEmailAddress VARCHAR(75) null,phoneNumber VARCHAR(75) null,faxNumber VARCHAR(75) null,website VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,statusMessage VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_Account";
 
@@ -132,11 +134,13 @@ public class AccountModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ACCOUNTKEY_COLUMN_BITMASK = 1L;
 
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long ACCOUNTID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+
+	public static final long ACCOUNTID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -165,6 +169,7 @@ public class AccountModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setAccountKey(soapModel.getAccountKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setLogoId(soapModel.getLogoId());
@@ -344,6 +349,9 @@ public class AccountModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<Account, Date>)Account::setModifiedDate);
+		attributeGetterFunctions.put("accountKey", Account::getAccountKey);
+		attributeSetterBiConsumers.put(
+			"accountKey", (BiConsumer<Account, String>)Account::setAccountKey);
 		attributeGetterFunctions.put("name", Account::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<Account, String>)Account::setName);
@@ -515,6 +523,32 @@ public class AccountModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getAccountKey() {
+		if (_accountKey == null) {
+			return "";
+		}
+		else {
+			return _accountKey;
+		}
+	}
+
+	@Override
+	public void setAccountKey(String accountKey) {
+		_columnBitmask |= ACCOUNTKEY_COLUMN_BITMASK;
+
+		if (_originalAccountKey == null) {
+			_originalAccountKey = _accountKey;
+		}
+
+		_accountKey = accountKey;
+	}
+
+	public String getOriginalAccountKey() {
+		return GetterUtil.getString(_originalAccountKey);
 	}
 
 	@JSON
@@ -849,6 +883,7 @@ public class AccountModelImpl
 		accountImpl.setUserId(getUserId());
 		accountImpl.setCreateDate(getCreateDate());
 		accountImpl.setModifiedDate(getModifiedDate());
+		accountImpl.setAccountKey(getAccountKey());
 		accountImpl.setName(getName());
 		accountImpl.setDescription(getDescription());
 		accountImpl.setLogoId(getLogoId());
@@ -932,6 +967,8 @@ public class AccountModelImpl
 
 		accountModelImpl._setModifiedDate = false;
 
+		accountModelImpl._originalAccountKey = accountModelImpl._accountKey;
+
 		accountModelImpl._columnBitmask = 0;
 	}
 
@@ -969,6 +1006,14 @@ public class AccountModelImpl
 		}
 		else {
 			accountCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		accountCacheModel.accountKey = getAccountKey();
+
+		String accountKey = accountCacheModel.accountKey;
+
+		if ((accountKey != null) && (accountKey.length() == 0)) {
+			accountCacheModel.accountKey = null;
 		}
 
 		accountCacheModel.name = getName();
@@ -1148,6 +1193,8 @@ public class AccountModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _accountKey;
+	private String _originalAccountKey;
 	private String _name;
 	private String _description;
 	private long _logoId;

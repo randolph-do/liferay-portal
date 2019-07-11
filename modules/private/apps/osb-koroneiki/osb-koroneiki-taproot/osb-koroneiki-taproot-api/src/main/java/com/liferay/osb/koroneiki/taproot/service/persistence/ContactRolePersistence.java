@@ -473,6 +473,51 @@ public interface ContactRolePersistence extends BasePersistence<ContactRole> {
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the contact role where contactRoleKey = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the matching contact role
+	 * @throws NoSuchContactRoleException if a matching contact role could not be found
+	 */
+	public ContactRole findByContactRoleKey(String contactRoleKey)
+		throws NoSuchContactRoleException;
+
+	/**
+	 * Returns the contact role where contactRoleKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
+	 */
+	public ContactRole fetchByContactRoleKey(String contactRoleKey);
+
+	/**
+	 * Returns the contact role where contactRoleKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
+	 */
+	public ContactRole fetchByContactRoleKey(
+		String contactRoleKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the contact role where contactRoleKey = &#63; from the database.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the contact role that was removed
+	 */
+	public ContactRole removeByContactRoleKey(String contactRoleKey)
+		throws NoSuchContactRoleException;
+
+	/**
+	 * Returns the number of contact roles where contactRoleKey = &#63;.
+	 *
+	 * @param contactRoleKey the contact role key
+	 * @return the number of matching contact roles
+	 */
+	public int countByContactRoleKey(String contactRoleKey);
+
+	/**
 	 * Returns all the contact roles where type = &#63;.
 	 *
 	 * @param type the type

@@ -276,6 +276,14 @@ public class AuditEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.root.model.AuditEntry getAuditEntry(
+			String auditEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _auditEntryLocalService.getAuditEntry(auditEntryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

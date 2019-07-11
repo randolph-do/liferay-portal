@@ -48,6 +48,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.sql.DataSource;
 
@@ -89,6 +90,232 @@ public class AuditEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByAuditEntryKey;
+	private FinderPath _finderPathCountByAuditEntryKey;
+
+	/**
+	 * Returns the audit entry where auditEntryKey = &#63; or throws a <code>NoSuchAuditEntryException</code> if it could not be found.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the matching audit entry
+	 * @throws NoSuchAuditEntryException if a matching audit entry could not be found
+	 */
+	@Override
+	public AuditEntry findByAuditEntryKey(String auditEntryKey)
+		throws NoSuchAuditEntryException {
+
+		AuditEntry auditEntry = fetchByAuditEntryKey(auditEntryKey);
+
+		if (auditEntry == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("auditEntryKey=");
+			msg.append(auditEntryKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchAuditEntryException(msg.toString());
+		}
+
+		return auditEntry;
+	}
+
+	/**
+	 * Returns the audit entry where auditEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the matching audit entry, or <code>null</code> if a matching audit entry could not be found
+	 */
+	@Override
+	public AuditEntry fetchByAuditEntryKey(String auditEntryKey) {
+		return fetchByAuditEntryKey(auditEntryKey, true);
+	}
+
+	/**
+	 * Returns the audit entry where auditEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching audit entry, or <code>null</code> if a matching audit entry could not be found
+	 */
+	@Override
+	public AuditEntry fetchByAuditEntryKey(
+		String auditEntryKey, boolean retrieveFromCache) {
+
+		auditEntryKey = Objects.toString(auditEntryKey, "");
+
+		Object[] finderArgs = new Object[] {auditEntryKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByAuditEntryKey, finderArgs, this);
+		}
+
+		if (result instanceof AuditEntry) {
+			AuditEntry auditEntry = (AuditEntry)result;
+
+			if (!Objects.equals(auditEntryKey, auditEntry.getAuditEntryKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_AUDITENTRY_WHERE);
+
+			boolean bindAuditEntryKey = false;
+
+			if (auditEntryKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_3);
+			}
+			else {
+				bindAuditEntryKey = true;
+
+				query.append(_FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindAuditEntryKey) {
+					qPos.add(auditEntryKey);
+				}
+
+				List<AuditEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByAuditEntryKey, finderArgs, list);
+				}
+				else {
+					AuditEntry auditEntry = list.get(0);
+
+					result = auditEntry;
+
+					cacheResult(auditEntry);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByAuditEntryKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (AuditEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the audit entry where auditEntryKey = &#63; from the database.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the audit entry that was removed
+	 */
+	@Override
+	public AuditEntry removeByAuditEntryKey(String auditEntryKey)
+		throws NoSuchAuditEntryException {
+
+		AuditEntry auditEntry = findByAuditEntryKey(auditEntryKey);
+
+		return remove(auditEntry);
+	}
+
+	/**
+	 * Returns the number of audit entries where auditEntryKey = &#63;.
+	 *
+	 * @param auditEntryKey the audit entry key
+	 * @return the number of matching audit entries
+	 */
+	@Override
+	public int countByAuditEntryKey(String auditEntryKey) {
+		auditEntryKey = Objects.toString(auditEntryKey, "");
+
+		FinderPath finderPath = _finderPathCountByAuditEntryKey;
+
+		Object[] finderArgs = new Object[] {auditEntryKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_AUDITENTRY_WHERE);
+
+			boolean bindAuditEntryKey = false;
+
+			if (auditEntryKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_3);
+			}
+			else {
+				bindAuditEntryKey = true;
+
+				query.append(_FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindAuditEntryKey) {
+					qPos.add(auditEntryKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_2 =
+		"auditEntry.auditEntryKey = ?";
+
+	private static final String _FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_3 =
+		"(auditEntry.auditEntryKey IS NULL OR auditEntry.auditEntryKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
@@ -657,6 +884,10 @@ public class AuditEntryPersistenceImpl
 			entityCacheEnabled, AuditEntryImpl.class,
 			auditEntry.getPrimaryKey(), auditEntry);
 
+		finderCache.putResult(
+			_finderPathFetchByAuditEntryKey,
+			new Object[] {auditEntry.getAuditEntryKey()}, auditEntry);
+
 		auditEntry.resetOriginalValues();
 	}
 
@@ -711,6 +942,8 @@ public class AuditEntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((AuditEntryModelImpl)auditEntry, true);
 	}
 
 	@Override
@@ -722,6 +955,43 @@ public class AuditEntryPersistenceImpl
 			entityCache.removeResult(
 				entityCacheEnabled, AuditEntryImpl.class,
 				auditEntry.getPrimaryKey());
+
+			clearUniqueFindersCache((AuditEntryModelImpl)auditEntry, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		AuditEntryModelImpl auditEntryModelImpl) {
+
+		Object[] args = new Object[] {auditEntryModelImpl.getAuditEntryKey()};
+
+		finderCache.putResult(
+			_finderPathCountByAuditEntryKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByAuditEntryKey, args, auditEntryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		AuditEntryModelImpl auditEntryModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				auditEntryModelImpl.getAuditEntryKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByAuditEntryKey, args);
+			finderCache.removeResult(_finderPathFetchByAuditEntryKey, args);
+		}
+
+		if ((auditEntryModelImpl.getColumnBitmask() &
+			 _finderPathFetchByAuditEntryKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				auditEntryModelImpl.getOriginalAuditEntryKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByAuditEntryKey, args);
+			finderCache.removeResult(_finderPathFetchByAuditEntryKey, args);
 		}
 	}
 
@@ -942,6 +1212,9 @@ public class AuditEntryPersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, AuditEntryImpl.class,
 			auditEntry.getPrimaryKey(), auditEntry, false);
+
+		clearUniqueFindersCache(auditEntryModelImpl, false);
+		cacheUniqueFindersCache(auditEntryModelImpl);
 
 		auditEntry.resetOriginalValues();
 
@@ -1233,6 +1506,17 @@ public class AuditEntryPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathFetchByAuditEntryKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, AuditEntryImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByAuditEntryKey",
+			new String[] {String.class.getName()},
+			AuditEntryModelImpl.AUDITENTRYKEY_COLUMN_BITMASK);
+
+		_finderPathCountByAuditEntryKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAuditEntryKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, AuditEntryImpl.class,

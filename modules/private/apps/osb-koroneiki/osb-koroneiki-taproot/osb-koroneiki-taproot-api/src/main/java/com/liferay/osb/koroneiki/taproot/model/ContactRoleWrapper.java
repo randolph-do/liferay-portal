@@ -52,6 +52,7 @@ public class ContactRoleWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("contactRoleKey", getContactRoleKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
@@ -98,6 +99,12 @@ public class ContactRoleWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String contactRoleKey = (String)attributes.get("contactRoleKey");
+
+		if (contactRoleKey != null) {
+			setContactRoleKey(contactRoleKey);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -141,6 +148,16 @@ public class ContactRoleWrapper
 	@Override
 	public long getContactRoleId() {
 		return model.getContactRoleId();
+	}
+
+	/**
+	 * Returns the contact role key of this contact role.
+	 *
+	 * @return the contact role key of this contact role
+	 */
+	@Override
+	public String getContactRoleKey() {
+		return model.getContactRoleKey();
 	}
 
 	/**
@@ -286,6 +303,16 @@ public class ContactRoleWrapper
 	@Override
 	public void setContactRoleId(long contactRoleId) {
 		model.setContactRoleId(contactRoleId);
+	}
+
+	/**
+	 * Sets the contact role key of this contact role.
+	 *
+	 * @param contactRoleKey the contact role key of this contact role
+	 */
+	@Override
+	public void setContactRoleKey(String contactRoleKey) {
+		model.setContactRoleKey(contactRoleKey);
 	}
 
 	/**

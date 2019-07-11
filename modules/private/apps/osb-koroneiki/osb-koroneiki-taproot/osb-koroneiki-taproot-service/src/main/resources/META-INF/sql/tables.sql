@@ -5,6 +5,7 @@ create table Koroneiki_Account (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	accountKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
 	logoId LONG,
@@ -27,6 +28,7 @@ create table Koroneiki_Contact (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	contactKey VARCHAR(75) null,
 	firstName VARCHAR(75) null,
 	middleName VARCHAR(75) null,
 	lastName VARCHAR(75) null,
@@ -55,6 +57,7 @@ create table Koroneiki_ContactRole (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	contactRoleKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description STRING null,
 	type_ INTEGER,
@@ -75,6 +78,7 @@ create table Koroneiki_Project (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	projectKey VARCHAR(75) null,
 	accountId LONG,
 	name VARCHAR(75) null,
 	code_ VARCHAR(75) null,
@@ -96,6 +100,7 @@ create table Koroneiki_Team (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	teamKey VARCHAR(75) null,
 	accountId LONG,
 	name VARCHAR(75) null
 );
@@ -114,6 +119,7 @@ create table Koroneiki_TeamRole (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	teamRoleKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
 	type_ INTEGER

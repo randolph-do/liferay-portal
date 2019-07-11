@@ -49,6 +49,7 @@ public class ExternalLinkWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("externalLinkKey", getExternalLinkKey());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("domain", getDomain());
@@ -82,6 +83,12 @@ public class ExternalLinkWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String externalLinkKey = (String)attributes.get("externalLinkKey");
+
+		if (externalLinkKey != null) {
+			setExternalLinkKey(externalLinkKey);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -206,6 +213,16 @@ public class ExternalLinkWrapper
 	}
 
 	/**
+	 * Returns the external link key of this external link.
+	 *
+	 * @return the external link key of this external link
+	 */
+	@Override
+	public String getExternalLinkKey() {
+		return model.getExternalLinkKey();
+	}
+
+	/**
 	 * Returns the modified date of this external link.
 	 *
 	 * @return the modified date of this external link
@@ -313,6 +330,16 @@ public class ExternalLinkWrapper
 	@Override
 	public void setExternalLinkId(long externalLinkId) {
 		model.setExternalLinkId(externalLinkId);
+	}
+
+	/**
+	 * Sets the external link key of this external link.
+	 *
+	 * @param externalLinkKey the external link key of this external link
+	 */
+	@Override
+	public void setExternalLinkKey(String externalLinkKey) {
+		model.setExternalLinkKey(externalLinkKey);
 	}
 
 	/**

@@ -166,6 +166,21 @@ public interface ProductPurchaseModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the product purchase key of this product purchase.
+	 *
+	 * @return the product purchase key of this product purchase
+	 */
+	@AutoEscape
+	public String getProductPurchaseKey();
+
+	/**
+	 * Sets the product purchase key of this product purchase.
+	 *
+	 * @param productPurchaseKey the product purchase key of this product purchase
+	 */
+	public void setProductPurchaseKey(String productPurchaseKey);
+
+	/**
 	 * Returns the account ID of this product purchase.
 	 *
 	 * @return the account ID of this product purchase

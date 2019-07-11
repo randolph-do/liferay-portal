@@ -641,6 +641,67 @@ public class ProjectUtil {
 	}
 
 	/**
+	 * Returns the project where projectKey = &#63; or throws a <code>NoSuchProjectException</code> if it could not be found.
+	 *
+	 * @param projectKey the project key
+	 * @return the matching project
+	 * @throws NoSuchProjectException if a matching project could not be found
+	 */
+	public static Project findByProjectKey(String projectKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchProjectException {
+
+		return getPersistence().findByProjectKey(projectKey);
+	}
+
+	/**
+	 * Returns the project where projectKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param projectKey the project key
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 */
+	public static Project fetchByProjectKey(String projectKey) {
+		return getPersistence().fetchByProjectKey(projectKey);
+	}
+
+	/**
+	 * Returns the project where projectKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param projectKey the project key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 */
+	public static Project fetchByProjectKey(
+		String projectKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByProjectKey(
+			projectKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the project where projectKey = &#63; from the database.
+	 *
+	 * @param projectKey the project key
+	 * @return the project that was removed
+	 */
+	public static Project removeByProjectKey(String projectKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchProjectException {
+
+		return getPersistence().removeByProjectKey(projectKey);
+	}
+
+	/**
+	 * Returns the number of projects where projectKey = &#63;.
+	 *
+	 * @param projectKey the project key
+	 * @return the number of matching projects
+	 */
+	public static int countByProjectKey(String projectKey) {
+		return getPersistence().countByProjectKey(projectKey);
+	}
+
+	/**
 	 * Returns all the projects where accountId = &#63;.
 	 *
 	 * @param accountId the account ID

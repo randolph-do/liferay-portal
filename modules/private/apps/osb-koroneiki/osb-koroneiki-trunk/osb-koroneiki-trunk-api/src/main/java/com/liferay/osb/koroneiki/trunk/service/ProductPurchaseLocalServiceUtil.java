@@ -286,6 +286,13 @@ public class ProductPurchaseLocalServiceUtil {
 		return getService().getProductPurchase(productPurchaseId);
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			getProductPurchase(String productPurchaseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductPurchase(productPurchaseKey);
+	}
+
 	/**
 	 * Returns the product purchase with the matching UUID and company.
 	 *

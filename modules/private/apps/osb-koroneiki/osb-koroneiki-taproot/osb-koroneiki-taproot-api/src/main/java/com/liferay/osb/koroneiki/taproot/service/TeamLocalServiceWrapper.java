@@ -293,6 +293,13 @@ public class TeamLocalServiceWrapper
 		return _teamLocalService.getTeam(teamId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Team getTeam(String teamKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamLocalService.getTeam(teamKey);
+	}
+
 	/**
 	 * Returns the team with the matching UUID and company.
 	 *

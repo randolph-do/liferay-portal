@@ -166,6 +166,21 @@ public interface ProductEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the product entry key of this product entry.
+	 *
+	 * @return the product entry key of this product entry
+	 */
+	@AutoEscape
+	public String getProductEntryKey();
+
+	/**
+	 * Sets the product entry key of this product entry.
+	 *
+	 * @param productEntryKey the product entry key of this product entry
+	 */
+	public void setProductEntryKey(String productEntryKey);
+
+	/**
 	 * Returns the name of this product entry.
 	 *
 	 * @return the name of this product entry

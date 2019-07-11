@@ -117,6 +117,21 @@ public interface ExternalLinkModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the external link key of this external link.
+	 *
+	 * @return the external link key of this external link
+	 */
+	@AutoEscape
+	public String getExternalLinkKey();
+
+	/**
+	 * Sets the external link key of this external link.
+	 *
+	 * @param externalLinkKey the external link key of this external link
+	 */
+	public void setExternalLinkKey(String externalLinkKey);
+
+	/**
 	 * Returns the fully qualified class name of this external link.
 	 *
 	 * @return the fully qualified class name of this external link

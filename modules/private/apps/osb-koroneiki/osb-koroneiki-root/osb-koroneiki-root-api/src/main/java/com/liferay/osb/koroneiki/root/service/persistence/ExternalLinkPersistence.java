@@ -41,6 +41,51 @@ public interface ExternalLinkPersistence extends BasePersistence<ExternalLink> {
 	 */
 
 	/**
+	 * Returns the external link where externalLinkKey = &#63; or throws a <code>NoSuchExternalLinkException</code> if it could not be found.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the matching external link
+	 * @throws NoSuchExternalLinkException if a matching external link could not be found
+	 */
+	public ExternalLink findByExternalLinkKey(String externalLinkKey)
+		throws NoSuchExternalLinkException;
+
+	/**
+	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
+	 */
+	public ExternalLink fetchByExternalLinkKey(String externalLinkKey);
+
+	/**
+	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
+	 */
+	public ExternalLink fetchByExternalLinkKey(
+		String externalLinkKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the external link where externalLinkKey = &#63; from the database.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the external link that was removed
+	 */
+	public ExternalLink removeByExternalLinkKey(String externalLinkKey)
+		throws NoSuchExternalLinkException;
+
+	/**
+	 * Returns the number of external links where externalLinkKey = &#63;.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the number of matching external links
+	 */
+	public int countByExternalLinkKey(String externalLinkKey);
+
+	/**
 	 * Returns all the external links where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID

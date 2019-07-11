@@ -471,6 +471,51 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the account where accountKey = &#63; or throws a <code>NoSuchAccountException</code> if it could not be found.
+	 *
+	 * @param accountKey the account key
+	 * @return the matching account
+	 * @throws NoSuchAccountException if a matching account could not be found
+	 */
+	public Account findByAccountKey(String accountKey)
+		throws NoSuchAccountException;
+
+	/**
+	 * Returns the account where accountKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountKey the account key
+	 * @return the matching account, or <code>null</code> if a matching account could not be found
+	 */
+	public Account fetchByAccountKey(String accountKey);
+
+	/**
+	 * Returns the account where accountKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param accountKey the account key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching account, or <code>null</code> if a matching account could not be found
+	 */
+	public Account fetchByAccountKey(
+		String accountKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the account where accountKey = &#63; from the database.
+	 *
+	 * @param accountKey the account key
+	 * @return the account that was removed
+	 */
+	public Account removeByAccountKey(String accountKey)
+		throws NoSuchAccountException;
+
+	/**
+	 * Returns the number of accounts where accountKey = &#63;.
+	 *
+	 * @param accountKey the account key
+	 * @return the number of matching accounts
+	 */
+	public int countByAccountKey(String accountKey);
+
+	/**
 	 * Caches the account in the entity cache if it is enabled.
 	 *
 	 * @param account the account

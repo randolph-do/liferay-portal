@@ -79,7 +79,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		{"uuid_", Types.VARCHAR}, {"teamId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"name", Types.VARCHAR}
+		{"teamKey", Types.VARCHAR}, {"accountId", Types.BIGINT},
+		{"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,12 +93,13 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("teamKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_Team (uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,name VARCHAR(75) null)";
+		"create table Koroneiki_Team (uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,teamKey VARCHAR(75) null,accountId LONG,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_Team";
 
@@ -118,9 +120,11 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public static final long NAME_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long TEAMKEY_COLUMN_BITMASK = 8L;
 
-	public static final long TEAMID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+
+	public static final long TEAMID_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -149,6 +153,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setTeamKey(soapModel.getTeamKey());
 		model.setAccountId(soapModel.getAccountId());
 		model.setName(soapModel.getName());
 
@@ -312,6 +317,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		attributeGetterFunctions.put("modifiedDate", Team::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate", (BiConsumer<Team, Date>)Team::setModifiedDate);
+		attributeGetterFunctions.put("teamKey", Team::getTeamKey);
+		attributeSetterBiConsumers.put(
+			"teamKey", (BiConsumer<Team, String>)Team::setTeamKey);
 		attributeGetterFunctions.put("accountId", Team::getAccountId);
 		attributeSetterBiConsumers.put(
 			"accountId", (BiConsumer<Team, Long>)Team::setAccountId);
@@ -442,6 +450,32 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@JSON
 	@Override
+	public String getTeamKey() {
+		if (_teamKey == null) {
+			return "";
+		}
+		else {
+			return _teamKey;
+		}
+	}
+
+	@Override
+	public void setTeamKey(String teamKey) {
+		_columnBitmask |= TEAMKEY_COLUMN_BITMASK;
+
+		if (_originalTeamKey == null) {
+			_originalTeamKey = _teamKey;
+		}
+
+		_teamKey = teamKey;
+	}
+
+	public String getOriginalTeamKey() {
+		return GetterUtil.getString(_originalTeamKey);
+	}
+
+	@JSON
+	@Override
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -537,6 +571,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamImpl.setUserId(getUserId());
 		teamImpl.setCreateDate(getCreateDate());
 		teamImpl.setModifiedDate(getModifiedDate());
+		teamImpl.setTeamKey(getTeamKey());
 		teamImpl.setAccountId(getAccountId());
 		teamImpl.setName(getName());
 
@@ -609,6 +644,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 		teamModelImpl._setModifiedDate = false;
 
+		teamModelImpl._originalTeamKey = teamModelImpl._teamKey;
+
 		teamModelImpl._originalAccountId = teamModelImpl._accountId;
 
 		teamModelImpl._setOriginalAccountId = false;
@@ -652,6 +689,14 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 		else {
 			teamCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		teamCacheModel.teamKey = getTeamKey();
+
+		String teamKey = teamCacheModel.teamKey;
+
+		if ((teamKey != null) && (teamKey.length() == 0)) {
+			teamCacheModel.teamKey = null;
 		}
 
 		teamCacheModel.accountId = getAccountId();
@@ -748,6 +793,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _teamKey;
+	private String _originalTeamKey;
 	private long _accountId;
 	private long _originalAccountId;
 	private boolean _setOriginalAccountId;

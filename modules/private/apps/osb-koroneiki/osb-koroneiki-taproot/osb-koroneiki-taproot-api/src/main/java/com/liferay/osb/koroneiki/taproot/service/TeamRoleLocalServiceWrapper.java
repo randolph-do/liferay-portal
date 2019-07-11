@@ -285,6 +285,14 @@ public class TeamRoleLocalServiceWrapper
 		return _teamRoleLocalService.getTeamRole(teamRoleId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.TeamRole getTeamRole(
+			String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamRoleLocalService.getTeamRole(teamRoleKey);
+	}
+
 	/**
 	 * Returns the team role with the matching UUID and company.
 	 *

@@ -2066,6 +2066,225 @@ public class TeamPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"team.companyId = ?";
 
+	private FinderPath _finderPathFetchByTeamKey;
+	private FinderPath _finderPathCountByTeamKey;
+
+	/**
+	 * Returns the team where teamKey = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
+	 *
+	 * @param teamKey the team key
+	 * @return the matching team
+	 * @throws NoSuchTeamException if a matching team could not be found
+	 */
+	@Override
+	public Team findByTeamKey(String teamKey) throws NoSuchTeamException {
+		Team team = fetchByTeamKey(teamKey);
+
+		if (team == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("teamKey=");
+			msg.append(teamKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchTeamException(msg.toString());
+		}
+
+		return team;
+	}
+
+	/**
+	 * Returns the team where teamKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param teamKey the team key
+	 * @return the matching team, or <code>null</code> if a matching team could not be found
+	 */
+	@Override
+	public Team fetchByTeamKey(String teamKey) {
+		return fetchByTeamKey(teamKey, true);
+	}
+
+	/**
+	 * Returns the team where teamKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param teamKey the team key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching team, or <code>null</code> if a matching team could not be found
+	 */
+	@Override
+	public Team fetchByTeamKey(String teamKey, boolean retrieveFromCache) {
+		teamKey = Objects.toString(teamKey, "");
+
+		Object[] finderArgs = new Object[] {teamKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByTeamKey, finderArgs, this);
+		}
+
+		if (result instanceof Team) {
+			Team team = (Team)result;
+
+			if (!Objects.equals(teamKey, team.getTeamKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_TEAM_WHERE);
+
+			boolean bindTeamKey = false;
+
+			if (teamKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_TEAMKEY_TEAMKEY_3);
+			}
+			else {
+				bindTeamKey = true;
+
+				query.append(_FINDER_COLUMN_TEAMKEY_TEAMKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindTeamKey) {
+					qPos.add(teamKey);
+				}
+
+				List<Team> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByTeamKey, finderArgs, list);
+				}
+				else {
+					Team team = list.get(0);
+
+					result = team;
+
+					cacheResult(team);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(_finderPathFetchByTeamKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Team)result;
+		}
+	}
+
+	/**
+	 * Removes the team where teamKey = &#63; from the database.
+	 *
+	 * @param teamKey the team key
+	 * @return the team that was removed
+	 */
+	@Override
+	public Team removeByTeamKey(String teamKey) throws NoSuchTeamException {
+		Team team = findByTeamKey(teamKey);
+
+		return remove(team);
+	}
+
+	/**
+	 * Returns the number of teams where teamKey = &#63;.
+	 *
+	 * @param teamKey the team key
+	 * @return the number of matching teams
+	 */
+	@Override
+	public int countByTeamKey(String teamKey) {
+		teamKey = Objects.toString(teamKey, "");
+
+		FinderPath finderPath = _finderPathCountByTeamKey;
+
+		Object[] finderArgs = new Object[] {teamKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TEAM_WHERE);
+
+			boolean bindTeamKey = false;
+
+			if (teamKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_TEAMKEY_TEAMKEY_3);
+			}
+			else {
+				bindTeamKey = true;
+
+				query.append(_FINDER_COLUMN_TEAMKEY_TEAMKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindTeamKey) {
+					qPos.add(teamKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TEAMKEY_TEAMKEY_2 =
+		"team.teamKey = ?";
+
+	private static final String _FINDER_COLUMN_TEAMKEY_TEAMKEY_3 =
+		"(team.teamKey IS NULL OR team.teamKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByAccountId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountId;
 	private FinderPath _finderPathCountByAccountId;
@@ -3905,6 +4124,9 @@ public class TeamPersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, TeamImpl.class, team.getPrimaryKey(), team);
 
+		finderCache.putResult(
+			_finderPathFetchByTeamKey, new Object[] {team.getTeamKey()}, team);
+
 		team.resetOriginalValues();
 	}
 
@@ -3958,6 +4180,8 @@ public class TeamPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((TeamModelImpl)team, true);
 	}
 
 	@Override
@@ -3968,6 +4192,37 @@ public class TeamPersistenceImpl
 		for (Team team : teams) {
 			entityCache.removeResult(
 				entityCacheEnabled, TeamImpl.class, team.getPrimaryKey());
+
+			clearUniqueFindersCache((TeamModelImpl)team, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(TeamModelImpl teamModelImpl) {
+		Object[] args = new Object[] {teamModelImpl.getTeamKey()};
+
+		finderCache.putResult(
+			_finderPathCountByTeamKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByTeamKey, args, teamModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		TeamModelImpl teamModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {teamModelImpl.getTeamKey()};
+
+			finderCache.removeResult(_finderPathCountByTeamKey, args);
+			finderCache.removeResult(_finderPathFetchByTeamKey, args);
+		}
+
+		if ((teamModelImpl.getColumnBitmask() &
+			 _finderPathFetchByTeamKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {teamModelImpl.getOriginalTeamKey()};
+
+			finderCache.removeResult(_finderPathCountByTeamKey, args);
+			finderCache.removeResult(_finderPathFetchByTeamKey, args);
 		}
 	}
 
@@ -4261,6 +4516,9 @@ public class TeamPersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, TeamImpl.class, team.getPrimaryKey(), team,
 			false);
+
+		clearUniqueFindersCache(teamModelImpl, false);
+		cacheUniqueFindersCache(teamModelImpl);
 
 		team.resetOriginalValues();
 
@@ -4595,6 +4853,17 @@ public class TeamPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByTeamKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TeamImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByTeamKey",
+			new String[] {String.class.getName()},
+			TeamModelImpl.TEAMKEY_COLUMN_BITMASK);
+
+		_finderPathCountByTeamKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeamKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, TeamImpl.class,

@@ -92,6 +92,236 @@ public class ExternalLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByExternalLinkKey;
+	private FinderPath _finderPathCountByExternalLinkKey;
+
+	/**
+	 * Returns the external link where externalLinkKey = &#63; or throws a <code>NoSuchExternalLinkException</code> if it could not be found.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the matching external link
+	 * @throws NoSuchExternalLinkException if a matching external link could not be found
+	 */
+	@Override
+	public ExternalLink findByExternalLinkKey(String externalLinkKey)
+		throws NoSuchExternalLinkException {
+
+		ExternalLink externalLink = fetchByExternalLinkKey(externalLinkKey);
+
+		if (externalLink == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("externalLinkKey=");
+			msg.append(externalLinkKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchExternalLinkException(msg.toString());
+		}
+
+		return externalLink;
+	}
+
+	/**
+	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
+	 */
+	@Override
+	public ExternalLink fetchByExternalLinkKey(String externalLinkKey) {
+		return fetchByExternalLinkKey(externalLinkKey, true);
+	}
+
+	/**
+	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
+	 */
+	@Override
+	public ExternalLink fetchByExternalLinkKey(
+		String externalLinkKey, boolean retrieveFromCache) {
+
+		externalLinkKey = Objects.toString(externalLinkKey, "");
+
+		Object[] finderArgs = new Object[] {externalLinkKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByExternalLinkKey, finderArgs, this);
+		}
+
+		if (result instanceof ExternalLink) {
+			ExternalLink externalLink = (ExternalLink)result;
+
+			if (!Objects.equals(
+					externalLinkKey, externalLink.getExternalLinkKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_EXTERNALLINK_WHERE);
+
+			boolean bindExternalLinkKey = false;
+
+			if (externalLinkKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_EXTERNALLINKKEY_EXTERNALLINKKEY_3);
+			}
+			else {
+				bindExternalLinkKey = true;
+
+				query.append(_FINDER_COLUMN_EXTERNALLINKKEY_EXTERNALLINKKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindExternalLinkKey) {
+					qPos.add(externalLinkKey);
+				}
+
+				List<ExternalLink> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByExternalLinkKey, finderArgs, list);
+				}
+				else {
+					ExternalLink externalLink = list.get(0);
+
+					result = externalLink;
+
+					cacheResult(externalLink);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByExternalLinkKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ExternalLink)result;
+		}
+	}
+
+	/**
+	 * Removes the external link where externalLinkKey = &#63; from the database.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the external link that was removed
+	 */
+	@Override
+	public ExternalLink removeByExternalLinkKey(String externalLinkKey)
+		throws NoSuchExternalLinkException {
+
+		ExternalLink externalLink = findByExternalLinkKey(externalLinkKey);
+
+		return remove(externalLink);
+	}
+
+	/**
+	 * Returns the number of external links where externalLinkKey = &#63;.
+	 *
+	 * @param externalLinkKey the external link key
+	 * @return the number of matching external links
+	 */
+	@Override
+	public int countByExternalLinkKey(String externalLinkKey) {
+		externalLinkKey = Objects.toString(externalLinkKey, "");
+
+		FinderPath finderPath = _finderPathCountByExternalLinkKey;
+
+		Object[] finderArgs = new Object[] {externalLinkKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_EXTERNALLINK_WHERE);
+
+			boolean bindExternalLinkKey = false;
+
+			if (externalLinkKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_EXTERNALLINKKEY_EXTERNALLINKKEY_3);
+			}
+			else {
+				bindExternalLinkKey = true;
+
+				query.append(_FINDER_COLUMN_EXTERNALLINKKEY_EXTERNALLINKKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindExternalLinkKey) {
+					qPos.add(externalLinkKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_EXTERNALLINKKEY_EXTERNALLINKKEY_2 =
+			"externalLink.externalLinkKey = ?";
+
+	private static final String
+		_FINDER_COLUMN_EXTERNALLINKKEY_EXTERNALLINKKEY_3 =
+			"(externalLink.externalLinkKey IS NULL OR externalLink.externalLinkKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
@@ -1001,6 +1231,10 @@ public class ExternalLinkPersistenceImpl
 			externalLink.getPrimaryKey(), externalLink);
 
 		finderCache.putResult(
+			_finderPathFetchByExternalLinkKey,
+			new Object[] {externalLink.getExternalLinkKey()}, externalLink);
+
+		finderCache.putResult(
 			_finderPathFetchByD_EN_EI,
 			new Object[] {
 				externalLink.getDomain(), externalLink.getEntityName(),
@@ -1084,6 +1318,16 @@ public class ExternalLinkPersistenceImpl
 		ExternalLinkModelImpl externalLinkModelImpl) {
 
 		Object[] args = new Object[] {
+			externalLinkModelImpl.getExternalLinkKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByExternalLinkKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByExternalLinkKey, args, externalLinkModelImpl,
+			false);
+
+		args = new Object[] {
 			externalLinkModelImpl.getDomain(),
 			externalLinkModelImpl.getEntityName(),
 			externalLinkModelImpl.getEntityId()
@@ -1097,6 +1341,26 @@ public class ExternalLinkPersistenceImpl
 
 	protected void clearUniqueFindersCache(
 		ExternalLinkModelImpl externalLinkModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				externalLinkModelImpl.getExternalLinkKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByExternalLinkKey, args);
+			finderCache.removeResult(_finderPathFetchByExternalLinkKey, args);
+		}
+
+		if ((externalLinkModelImpl.getColumnBitmask() &
+			 _finderPathFetchByExternalLinkKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				externalLinkModelImpl.getOriginalExternalLinkKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByExternalLinkKey, args);
+			finderCache.removeResult(_finderPathFetchByExternalLinkKey, args);
+		}
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
@@ -1636,6 +1900,17 @@ public class ExternalLinkPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathFetchByExternalLinkKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ExternalLinkImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByExternalLinkKey",
+			new String[] {String.class.getName()},
+			ExternalLinkModelImpl.EXTERNALLINKKEY_COLUMN_BITMASK);
+
+		_finderPathCountByExternalLinkKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByExternalLinkKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ExternalLinkImpl.class,

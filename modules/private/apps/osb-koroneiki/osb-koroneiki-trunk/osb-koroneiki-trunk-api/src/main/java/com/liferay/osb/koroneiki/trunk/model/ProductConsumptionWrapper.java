@@ -52,6 +52,7 @@ public class ProductConsumptionWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("productConsumptionKey", getProductConsumptionKey());
 		attributes.put("accountId", getAccountId());
 		attributes.put("projectId", getProjectId());
 		attributes.put("productEntryId", getProductEntryId());
@@ -96,6 +97,13 @@ public class ProductConsumptionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String productConsumptionKey = (String)attributes.get(
+			"productConsumptionKey");
+
+		if (productConsumptionKey != null) {
+			setProductConsumptionKey(productConsumptionKey);
 		}
 
 		Long accountId = (Long)attributes.get("accountId");
@@ -189,6 +197,16 @@ public class ProductConsumptionWrapper
 	@Override
 	public long getProductConsumptionId() {
 		return model.getProductConsumptionId();
+	}
+
+	/**
+	 * Returns the product consumption key of this product consumption.
+	 *
+	 * @return the product consumption key of this product consumption
+	 */
+	@Override
+	public String getProductConsumptionKey() {
+		return model.getProductConsumptionKey();
 	}
 
 	@Override
@@ -326,6 +344,16 @@ public class ProductConsumptionWrapper
 	@Override
 	public void setProductConsumptionId(long productConsumptionId) {
 		model.setProductConsumptionId(productConsumptionId);
+	}
+
+	/**
+	 * Sets the product consumption key of this product consumption.
+	 *
+	 * @param productConsumptionKey the product consumption key of this product consumption
+	 */
+	@Override
+	public void setProductConsumptionKey(String productConsumptionKey) {
+		model.setProductConsumptionKey(productConsumptionKey);
 	}
 
 	/**

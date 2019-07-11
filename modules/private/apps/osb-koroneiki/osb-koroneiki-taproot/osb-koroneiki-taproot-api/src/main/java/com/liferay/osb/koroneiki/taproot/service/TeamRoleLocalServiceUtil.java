@@ -270,6 +270,13 @@ public class TeamRoleLocalServiceUtil {
 		return getService().getTeamRole(teamRoleId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRole getTeamRole(
+			String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getTeamRole(teamRoleKey);
+	}
+
 	/**
 	 * Returns the team role with the matching UUID and company.
 	 *

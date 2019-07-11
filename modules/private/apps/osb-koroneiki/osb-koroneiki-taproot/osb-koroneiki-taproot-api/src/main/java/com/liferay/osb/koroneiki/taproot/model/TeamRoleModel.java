@@ -166,6 +166,21 @@ public interface TeamRoleModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the team role key of this team role.
+	 *
+	 * @return the team role key of this team role
+	 */
+	@AutoEscape
+	public String getTeamRoleKey();
+
+	/**
+	 * Sets the team role key of this team role.
+	 *
+	 * @param teamRoleKey the team role key of this team role
+	 */
+	public void setTeamRoleKey(String teamRoleKey);
+
+	/**
 	 * Returns the name of this team role.
 	 *
 	 * @return the name of this team role

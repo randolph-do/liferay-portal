@@ -80,8 +80,8 @@ public class TeamRoleModelImpl
 		{"uuid_", Types.VARCHAR}, {"teamRoleId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"type_", Types.INTEGER}
+		{"teamRoleKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"type_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,13 +94,14 @@ public class TeamRoleModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("teamRoleKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_TeamRole (uuid_ VARCHAR(75) null,teamRoleId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,type_ INTEGER)";
+		"create table Koroneiki_TeamRole (uuid_ VARCHAR(75) null,teamRoleId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,teamRoleKey VARCHAR(75) null,name VARCHAR(75) null,description VARCHAR(75) null,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_TeamRole";
 
@@ -119,9 +120,11 @@ public class TeamRoleModelImpl
 
 	public static final long NAME_COLUMN_BITMASK = 2L;
 
-	public static final long TYPE_COLUMN_BITMASK = 4L;
+	public static final long TEAMROLEKEY_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long TYPE_COLUMN_BITMASK = 8L;
+
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -150,6 +153,7 @@ public class TeamRoleModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setTeamRoleKey(soapModel.getTeamRoleKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setType(soapModel.getType());
@@ -320,6 +324,10 @@ public class TeamRoleModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<TeamRole, Date>)TeamRole::setModifiedDate);
+		attributeGetterFunctions.put("teamRoleKey", TeamRole::getTeamRoleKey);
+		attributeSetterBiConsumers.put(
+			"teamRoleKey",
+			(BiConsumer<TeamRole, String>)TeamRole::setTeamRoleKey);
 		attributeGetterFunctions.put("name", TeamRole::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<TeamRole, String>)TeamRole::setName);
@@ -454,6 +462,32 @@ public class TeamRoleModelImpl
 
 	@JSON
 	@Override
+	public String getTeamRoleKey() {
+		if (_teamRoleKey == null) {
+			return "";
+		}
+		else {
+			return _teamRoleKey;
+		}
+	}
+
+	@Override
+	public void setTeamRoleKey(String teamRoleKey) {
+		_columnBitmask |= TEAMROLEKEY_COLUMN_BITMASK;
+
+		if (_originalTeamRoleKey == null) {
+			_originalTeamRoleKey = _teamRoleKey;
+		}
+
+		_teamRoleKey = teamRoleKey;
+	}
+
+	public String getOriginalTeamRoleKey() {
+		return GetterUtil.getString(_originalTeamRoleKey);
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -565,6 +599,7 @@ public class TeamRoleModelImpl
 		teamRoleImpl.setUserId(getUserId());
 		teamRoleImpl.setCreateDate(getCreateDate());
 		teamRoleImpl.setModifiedDate(getModifiedDate());
+		teamRoleImpl.setTeamRoleKey(getTeamRoleKey());
 		teamRoleImpl.setName(getName());
 		teamRoleImpl.setDescription(getDescription());
 		teamRoleImpl.setType(getType());
@@ -636,6 +671,8 @@ public class TeamRoleModelImpl
 
 		teamRoleModelImpl._setModifiedDate = false;
 
+		teamRoleModelImpl._originalTeamRoleKey = teamRoleModelImpl._teamRoleKey;
+
 		teamRoleModelImpl._originalName = teamRoleModelImpl._name;
 
 		teamRoleModelImpl._originalType = teamRoleModelImpl._type;
@@ -679,6 +716,14 @@ public class TeamRoleModelImpl
 		}
 		else {
 			teamRoleCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		teamRoleCacheModel.teamRoleKey = getTeamRoleKey();
+
+		String teamRoleKey = teamRoleCacheModel.teamRoleKey;
+
+		if ((teamRoleKey != null) && (teamRoleKey.length() == 0)) {
+			teamRoleCacheModel.teamRoleKey = null;
 		}
 
 		teamRoleCacheModel.name = getName();
@@ -785,6 +830,8 @@ public class TeamRoleModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _teamRoleKey;
+	private String _originalTeamRoleKey;
 	private String _name;
 	private String _originalName;
 	private String _description;

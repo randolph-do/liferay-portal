@@ -40,6 +40,7 @@ public class ProjectSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setProjectKey(model.getProjectKey());
 		soapModel.setAccountId(model.getAccountId());
 		soapModel.setName(model.getName());
 		soapModel.setCode(model.getCode());
@@ -153,6 +154,14 @@ public class ProjectSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getProjectKey() {
+		return _projectKey;
+	}
+
+	public void setProjectKey(String projectKey) {
+		_projectKey = projectKey;
+	}
+
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -255,6 +264,7 @@ public class ProjectSoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _projectKey;
 	private long _accountId;
 	private String _name;
 	private String _code;

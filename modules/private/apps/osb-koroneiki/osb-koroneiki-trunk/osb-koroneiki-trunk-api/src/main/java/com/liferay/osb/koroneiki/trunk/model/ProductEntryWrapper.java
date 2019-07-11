@@ -52,6 +52,7 @@ public class ProductEntryWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("productEntryKey", getProductEntryKey());
 		attributes.put("name", getName());
 
 		return attributes;
@@ -93,6 +94,12 @@ public class ProductEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String productEntryKey = (String)attributes.get("productEntryKey");
+
+		if (productEntryKey != null) {
+			setProductEntryKey(productEntryKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -167,6 +174,16 @@ public class ProductEntryWrapper
 	@Override
 	public long getProductEntryId() {
 		return model.getProductEntryId();
+	}
+
+	/**
+	 * Returns the product entry key of this product entry.
+	 *
+	 * @return the product entry key of this product entry
+	 */
+	@Override
+	public String getProductEntryKey() {
+		return model.getProductEntryKey();
 	}
 
 	/**
@@ -262,6 +279,16 @@ public class ProductEntryWrapper
 	@Override
 	public void setProductEntryId(long productEntryId) {
 		model.setProductEntryId(productEntryId);
+	}
+
+	/**
+	 * Sets the product entry key of this product entry.
+	 *
+	 * @param productEntryKey the product entry key of this product entry
+	 */
+	@Override
+	public void setProductEntryKey(String productEntryKey) {
+		model.setProductEntryKey(productEntryKey);
 	}
 
 	/**

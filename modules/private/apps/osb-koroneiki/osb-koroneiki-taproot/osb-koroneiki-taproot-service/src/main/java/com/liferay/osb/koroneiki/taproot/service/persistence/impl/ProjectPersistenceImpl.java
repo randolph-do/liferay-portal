@@ -2073,6 +2073,232 @@ public class ProjectPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"project.companyId = ?";
 
+	private FinderPath _finderPathFetchByProjectKey;
+	private FinderPath _finderPathCountByProjectKey;
+
+	/**
+	 * Returns the project where projectKey = &#63; or throws a <code>NoSuchProjectException</code> if it could not be found.
+	 *
+	 * @param projectKey the project key
+	 * @return the matching project
+	 * @throws NoSuchProjectException if a matching project could not be found
+	 */
+	@Override
+	public Project findByProjectKey(String projectKey)
+		throws NoSuchProjectException {
+
+		Project project = fetchByProjectKey(projectKey);
+
+		if (project == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("projectKey=");
+			msg.append(projectKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchProjectException(msg.toString());
+		}
+
+		return project;
+	}
+
+	/**
+	 * Returns the project where projectKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param projectKey the project key
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 */
+	@Override
+	public Project fetchByProjectKey(String projectKey) {
+		return fetchByProjectKey(projectKey, true);
+	}
+
+	/**
+	 * Returns the project where projectKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param projectKey the project key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 */
+	@Override
+	public Project fetchByProjectKey(
+		String projectKey, boolean retrieveFromCache) {
+
+		projectKey = Objects.toString(projectKey, "");
+
+		Object[] finderArgs = new Object[] {projectKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByProjectKey, finderArgs, this);
+		}
+
+		if (result instanceof Project) {
+			Project project = (Project)result;
+
+			if (!Objects.equals(projectKey, project.getProjectKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_PROJECT_WHERE);
+
+			boolean bindProjectKey = false;
+
+			if (projectKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_PROJECTKEY_PROJECTKEY_3);
+			}
+			else {
+				bindProjectKey = true;
+
+				query.append(_FINDER_COLUMN_PROJECTKEY_PROJECTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProjectKey) {
+					qPos.add(projectKey);
+				}
+
+				List<Project> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByProjectKey, finderArgs, list);
+				}
+				else {
+					Project project = list.get(0);
+
+					result = project;
+
+					cacheResult(project);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathFetchByProjectKey, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Project)result;
+		}
+	}
+
+	/**
+	 * Removes the project where projectKey = &#63; from the database.
+	 *
+	 * @param projectKey the project key
+	 * @return the project that was removed
+	 */
+	@Override
+	public Project removeByProjectKey(String projectKey)
+		throws NoSuchProjectException {
+
+		Project project = findByProjectKey(projectKey);
+
+		return remove(project);
+	}
+
+	/**
+	 * Returns the number of projects where projectKey = &#63;.
+	 *
+	 * @param projectKey the project key
+	 * @return the number of matching projects
+	 */
+	@Override
+	public int countByProjectKey(String projectKey) {
+		projectKey = Objects.toString(projectKey, "");
+
+		FinderPath finderPath = _finderPathCountByProjectKey;
+
+		Object[] finderArgs = new Object[] {projectKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_PROJECT_WHERE);
+
+			boolean bindProjectKey = false;
+
+			if (projectKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_PROJECTKEY_PROJECTKEY_3);
+			}
+			else {
+				bindProjectKey = true;
+
+				query.append(_FINDER_COLUMN_PROJECTKEY_PROJECTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProjectKey) {
+					qPos.add(projectKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PROJECTKEY_PROJECTKEY_2 =
+		"project.projectKey = ?";
+
+	private static final String _FINDER_COLUMN_PROJECTKEY_PROJECTKEY_3 =
+		"(project.projectKey IS NULL OR project.projectKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByAccountId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountId;
 	private FinderPath _finderPathCountByAccountId;
@@ -2973,6 +3199,10 @@ public class ProjectPersistenceImpl
 			entityCacheEnabled, ProjectImpl.class, project.getPrimaryKey(),
 			project);
 
+		finderCache.putResult(
+			_finderPathFetchByProjectKey,
+			new Object[] {project.getProjectKey()}, project);
+
 		project.resetOriginalValues();
 	}
 
@@ -3026,6 +3256,8 @@ public class ProjectPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((ProjectModelImpl)project, true);
 	}
 
 	@Override
@@ -3036,6 +3268,39 @@ public class ProjectPersistenceImpl
 		for (Project project : projects) {
 			entityCache.removeResult(
 				entityCacheEnabled, ProjectImpl.class, project.getPrimaryKey());
+
+			clearUniqueFindersCache((ProjectModelImpl)project, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(ProjectModelImpl projectModelImpl) {
+		Object[] args = new Object[] {projectModelImpl.getProjectKey()};
+
+		finderCache.putResult(
+			_finderPathCountByProjectKey, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByProjectKey, args, projectModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ProjectModelImpl projectModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {projectModelImpl.getProjectKey()};
+
+			finderCache.removeResult(_finderPathCountByProjectKey, args);
+			finderCache.removeResult(_finderPathFetchByProjectKey, args);
+		}
+
+		if ((projectModelImpl.getColumnBitmask() &
+			 _finderPathFetchByProjectKey.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				projectModelImpl.getOriginalProjectKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByProjectKey, args);
+			finderCache.removeResult(_finderPathFetchByProjectKey, args);
 		}
 	}
 
@@ -3311,6 +3576,9 @@ public class ProjectPersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, ProjectImpl.class, project.getPrimaryKey(),
 			project, false);
+
+		clearUniqueFindersCache(projectModelImpl, false);
+		cacheUniqueFindersCache(projectModelImpl);
 
 		project.resetOriginalValues();
 
@@ -3647,6 +3915,17 @@ public class ProjectPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByProjectKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ProjectImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByProjectKey",
+			new String[] {String.class.getName()},
+			ProjectModelImpl.PROJECTKEY_COLUMN_BITMASK);
+
+		_finderPathCountByProjectKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByProjectKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ProjectImpl.class,

@@ -52,6 +52,7 @@ public class AccountWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("accountKey", getAccountKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("logoId", getLogoId());
@@ -105,6 +106,12 @@ public class AccountWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String accountKey = (String)attributes.get("accountKey");
+
+		if (accountKey != null) {
+			setAccountKey(accountKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -196,6 +203,16 @@ public class AccountWrapper
 	@Override
 	public long getAccountId() {
 		return model.getAccountId();
+	}
+
+	/**
+	 * Returns the account key of this account.
+	 *
+	 * @return the account key of this account
+	 */
+	@Override
+	public String getAccountKey() {
+		return model.getAccountKey();
 	}
 
 	@Override
@@ -527,6 +544,16 @@ public class AccountWrapper
 	@Override
 	public void setAccountId(long accountId) {
 		model.setAccountId(accountId);
+	}
+
+	/**
+	 * Sets the account key of this account.
+	 *
+	 * @param accountKey the account key of this account
+	 */
+	@Override
+	public void setAccountKey(String accountKey) {
+		model.setAccountKey(accountKey);
 	}
 
 	/**

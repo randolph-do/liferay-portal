@@ -238,6 +238,13 @@ public class ExternalLinkLocalServiceUtil {
 		return getService().getExternalLink(externalLinkId);
 	}
 
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			getExternalLink(String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getExternalLink(externalLinkKey);
+	}
+
 	/**
 	 * Returns a range of all the external links.
 	 *

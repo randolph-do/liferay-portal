@@ -278,6 +278,14 @@ public class ProjectLocalServiceWrapper
 		return _projectLocalService.getProject(projectId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project getProject(
+			String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectLocalService.getProject(projectKey);
+	}
+
 	/**
 	 * Returns the project with the matching UUID and company.
 	 *

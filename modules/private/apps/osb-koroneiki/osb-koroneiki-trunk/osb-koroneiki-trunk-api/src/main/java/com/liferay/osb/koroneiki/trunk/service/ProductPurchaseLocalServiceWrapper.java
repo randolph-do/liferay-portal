@@ -312,6 +312,15 @@ public class ProductPurchaseLocalServiceWrapper
 			productPurchaseId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			getProductPurchase(String productPurchaseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseLocalService.getProductPurchase(
+			productPurchaseKey);
+	}
+
 	/**
 	 * Returns the product purchase with the matching UUID and company.
 	 *

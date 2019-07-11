@@ -80,9 +80,10 @@ public class ProductPurchaseModelImpl
 		{"uuid_", Types.VARCHAR}, {"productPurchaseId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"projectId", Types.BIGINT},
-		{"productEntryId", Types.BIGINT}, {"startDate", Types.TIMESTAMP},
-		{"endDate", Types.TIMESTAMP}, {"quantity", Types.INTEGER}
+		{"productPurchaseKey", Types.VARCHAR}, {"accountId", Types.BIGINT},
+		{"projectId", Types.BIGINT}, {"productEntryId", Types.BIGINT},
+		{"startDate", Types.TIMESTAMP}, {"endDate", Types.TIMESTAMP},
+		{"quantity", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,6 +96,7 @@ public class ProductPurchaseModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("productPurchaseKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("projectId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("productEntryId", Types.BIGINT);
@@ -104,7 +106,7 @@ public class ProductPurchaseModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_ProductPurchase (uuid_ VARCHAR(75) null,productPurchaseId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,accountId LONG,projectId LONG,productEntryId LONG,startDate DATE null,endDate DATE null,quantity INTEGER)";
+		"create table Koroneiki_ProductPurchase (uuid_ VARCHAR(75) null,productPurchaseId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,productPurchaseKey VARCHAR(75) null,accountId LONG,projectId LONG,productEntryId LONG,startDate DATE null,endDate DATE null,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_ProductPurchase";
@@ -125,11 +127,13 @@ public class ProductPurchaseModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long PROJECTID_COLUMN_BITMASK = 4L;
+	public static final long PRODUCTPURCHASEKEY_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long PROJECTID_COLUMN_BITMASK = 8L;
 
-	public static final long PRODUCTPURCHASEID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+
+	public static final long PRODUCTPURCHASEID_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -158,6 +162,7 @@ public class ProductPurchaseModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setProductPurchaseKey(soapModel.getProductPurchaseKey());
 		model.setAccountId(soapModel.getAccountId());
 		model.setProjectId(soapModel.getProjectId());
 		model.setProductEntryId(soapModel.getProductEntryId());
@@ -348,6 +353,12 @@ public class ProductPurchaseModelImpl
 			(BiConsumer<ProductPurchase, Date>)
 				ProductPurchase::setModifiedDate);
 		attributeGetterFunctions.put(
+			"productPurchaseKey", ProductPurchase::getProductPurchaseKey);
+		attributeSetterBiConsumers.put(
+			"productPurchaseKey",
+			(BiConsumer<ProductPurchase, String>)
+				ProductPurchase::setProductPurchaseKey);
+		attributeGetterFunctions.put(
 			"accountId", ProductPurchase::getAccountId);
 		attributeSetterBiConsumers.put(
 			"accountId",
@@ -500,6 +511,32 @@ public class ProductPurchaseModelImpl
 
 	@JSON
 	@Override
+	public String getProductPurchaseKey() {
+		if (_productPurchaseKey == null) {
+			return "";
+		}
+		else {
+			return _productPurchaseKey;
+		}
+	}
+
+	@Override
+	public void setProductPurchaseKey(String productPurchaseKey) {
+		_columnBitmask |= PRODUCTPURCHASEKEY_COLUMN_BITMASK;
+
+		if (_originalProductPurchaseKey == null) {
+			_originalProductPurchaseKey = _productPurchaseKey;
+		}
+
+		_productPurchaseKey = productPurchaseKey;
+	}
+
+	public String getOriginalProductPurchaseKey() {
+		return GetterUtil.getString(_originalProductPurchaseKey);
+	}
+
+	@JSON
+	@Override
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -636,6 +673,7 @@ public class ProductPurchaseModelImpl
 		productPurchaseImpl.setUserId(getUserId());
 		productPurchaseImpl.setCreateDate(getCreateDate());
 		productPurchaseImpl.setModifiedDate(getModifiedDate());
+		productPurchaseImpl.setProductPurchaseKey(getProductPurchaseKey());
 		productPurchaseImpl.setAccountId(getAccountId());
 		productPurchaseImpl.setProjectId(getProjectId());
 		productPurchaseImpl.setProductEntryId(getProductEntryId());
@@ -713,6 +751,9 @@ public class ProductPurchaseModelImpl
 
 		productPurchaseModelImpl._setModifiedDate = false;
 
+		productPurchaseModelImpl._originalProductPurchaseKey =
+			productPurchaseModelImpl._productPurchaseKey;
+
 		productPurchaseModelImpl._originalAccountId =
 			productPurchaseModelImpl._accountId;
 
@@ -761,6 +802,17 @@ public class ProductPurchaseModelImpl
 		}
 		else {
 			productPurchaseCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		productPurchaseCacheModel.productPurchaseKey = getProductPurchaseKey();
+
+		String productPurchaseKey =
+			productPurchaseCacheModel.productPurchaseKey;
+
+		if ((productPurchaseKey != null) &&
+			(productPurchaseKey.length() == 0)) {
+
+			productPurchaseCacheModel.productPurchaseKey = null;
 		}
 
 		productPurchaseCacheModel.accountId = getAccountId();
@@ -875,6 +927,8 @@ public class ProductPurchaseModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _productPurchaseKey;
+	private String _originalProductPurchaseKey;
 	private long _accountId;
 	private long _originalAccountId;
 	private boolean _setOriginalAccountId;

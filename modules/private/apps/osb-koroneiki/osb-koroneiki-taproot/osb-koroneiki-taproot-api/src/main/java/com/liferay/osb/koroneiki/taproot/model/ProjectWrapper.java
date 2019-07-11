@@ -52,6 +52,7 @@ public class ProjectWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("projectKey", getProjectKey());
 		attributes.put("accountId", getAccountId());
 		attributes.put("name", getName());
 		attributes.put("code", getCode());
@@ -104,6 +105,12 @@ public class ProjectWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String projectKey = (String)attributes.get("projectKey");
+
+		if (projectKey != null) {
+			setProjectKey(projectKey);
 		}
 
 		Long accountId = (Long)attributes.get("accountId");
@@ -291,6 +298,16 @@ public class ProjectWrapper
 	@Override
 	public long getProjectId() {
 		return model.getProjectId();
+	}
+
+	/**
+	 * Returns the project key of this project.
+	 *
+	 * @return the project key of this project
+	 */
+	@Override
+	public String getProjectKey() {
+		return model.getProjectKey();
 	}
 
 	/**
@@ -591,6 +608,16 @@ public class ProjectWrapper
 	@Override
 	public void setProjectId(long projectId) {
 		model.setProjectId(projectId);
+	}
+
+	/**
+	 * Sets the project key of this project.
+	 *
+	 * @param projectKey the project key of this project
+	 */
+	@Override
+	public void setProjectKey(String projectKey) {
+		model.setProjectKey(projectKey);
 	}
 
 	/**

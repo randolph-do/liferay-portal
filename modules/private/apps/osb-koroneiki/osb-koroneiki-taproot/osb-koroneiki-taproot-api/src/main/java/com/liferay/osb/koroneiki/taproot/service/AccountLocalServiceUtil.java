@@ -230,6 +230,13 @@ public class AccountLocalServiceUtil {
 		return getService().getAccount(accountId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Account getAccount(
+			String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccount(accountKey);
+	}
+
 	/**
 	 * Returns the account with the matching UUID and company.
 	 *

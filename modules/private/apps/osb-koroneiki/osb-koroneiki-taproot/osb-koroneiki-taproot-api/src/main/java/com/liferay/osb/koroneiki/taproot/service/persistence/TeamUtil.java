@@ -621,6 +621,64 @@ public class TeamUtil {
 	}
 
 	/**
+	 * Returns the team where teamKey = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
+	 *
+	 * @param teamKey the team key
+	 * @return the matching team
+	 * @throws NoSuchTeamException if a matching team could not be found
+	 */
+	public static Team findByTeamKey(String teamKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamException {
+
+		return getPersistence().findByTeamKey(teamKey);
+	}
+
+	/**
+	 * Returns the team where teamKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param teamKey the team key
+	 * @return the matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public static Team fetchByTeamKey(String teamKey) {
+		return getPersistence().fetchByTeamKey(teamKey);
+	}
+
+	/**
+	 * Returns the team where teamKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param teamKey the team key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching team, or <code>null</code> if a matching team could not be found
+	 */
+	public static Team fetchByTeamKey(
+		String teamKey, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByTeamKey(teamKey, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the team where teamKey = &#63; from the database.
+	 *
+	 * @param teamKey the team key
+	 * @return the team that was removed
+	 */
+	public static Team removeByTeamKey(String teamKey)
+		throws com.liferay.osb.koroneiki.taproot.exception.NoSuchTeamException {
+
+		return getPersistence().removeByTeamKey(teamKey);
+	}
+
+	/**
+	 * Returns the number of teams where teamKey = &#63;.
+	 *
+	 * @param teamKey the team key
+	 * @return the number of matching teams
+	 */
+	public static int countByTeamKey(String teamKey) {
+		return getPersistence().countByTeamKey(teamKey);
+	}
+
+	/**
 	 * Returns all the teams where accountId = &#63;.
 	 *
 	 * @param accountId the account ID

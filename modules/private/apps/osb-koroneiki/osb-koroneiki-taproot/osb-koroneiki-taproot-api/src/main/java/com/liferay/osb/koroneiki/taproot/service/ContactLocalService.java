@@ -211,7 +211,12 @@ public interface ContactLocalService
 	public Contact getContact(long contactId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Contact getContact(String emailAddress) throws PortalException;
+	public Contact getContactByContactKey(String contactKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Contact getContactByEmailAddress(String emailAddress)
+		throws PortalException;
 
 	/**
 	 * Returns the contact with the matching UUID and company.

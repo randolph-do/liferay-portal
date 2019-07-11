@@ -38,6 +38,7 @@ public class ExternalLinkSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setExternalLinkKey(model.getExternalLinkKey());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setDomain(model.getDomain());
@@ -128,6 +129,14 @@ public class ExternalLinkSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getExternalLinkKey() {
+		return _externalLinkKey;
+	}
+
+	public void setExternalLinkKey(String externalLinkKey) {
+		_externalLinkKey = externalLinkKey;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -172,6 +181,7 @@ public class ExternalLinkSoap implements Serializable {
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _externalLinkKey;
 	private long _classNameId;
 	private long _classPK;
 	private String _domain;

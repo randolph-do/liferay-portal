@@ -244,6 +244,11 @@ public interface ProductConsumptionLocalService
 	public ProductConsumption getProductConsumption(long productConsumptionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ProductConsumption getProductConsumption(
+			String productConsumptionKey)
+		throws PortalException;
+
 	/**
 	 * Returns the product consumption with the matching UUID and company.
 	 *

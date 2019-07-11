@@ -336,6 +336,17 @@ public class ContactLocalServiceUtil {
 		return getService().getProjectContactsCount(projectId);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.Contact> getTeamContacts(
+			long teamId, int start, int end) {
+
+		return getService().getTeamContacts(teamId, start, end);
+	}
+
+	public static int getTeamContactsCount(long teamId) {
+		return getService().getTeamContactsCount(teamId);
+	}
+
 	/**
 	 * Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

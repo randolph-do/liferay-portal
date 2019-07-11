@@ -35,6 +35,32 @@ public class ContactTeamRoleServiceWrapper
 		_contactTeamRoleService = contactTeamRoleService;
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.ContactTeamRole
+			addContactTeamRole(long contactId, long teamId, long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactTeamRoleService.addContactTeamRole(
+			contactId, teamId, contactRoleId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.ContactTeamRole
+			deleteContactTeamRole(
+				long contactId, long teamId, long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactTeamRoleService.deleteContactTeamRole(
+			contactId, teamId, contactRoleId);
+	}
+
+	@Override
+	public void deleteContactTeamRoles(long contactId, long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_contactTeamRoleService.deleteContactTeamRoles(contactId, teamId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

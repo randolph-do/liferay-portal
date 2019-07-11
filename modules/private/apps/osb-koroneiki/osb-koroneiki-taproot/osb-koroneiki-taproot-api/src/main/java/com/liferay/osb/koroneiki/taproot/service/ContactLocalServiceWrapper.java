@@ -353,6 +353,18 @@ public class ContactLocalServiceWrapper
 		return _contactLocalService.getProjectContactsCount(projectId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Contact>
+		getTeamContacts(long teamId, int start, int end) {
+
+		return _contactLocalService.getTeamContacts(teamId, start, end);
+	}
+
+	@Override
+	public int getTeamContactsCount(long teamId) {
+		return _contactLocalService.getTeamContactsCount(teamId);
+	}
+
 	/**
 	 * Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

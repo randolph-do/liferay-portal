@@ -14,11 +14,17 @@
 
 package com.liferay.osb.koroneiki.taproot.service.http;
 
+import com.liferay.osb.koroneiki.taproot.service.ContactTeamRoleServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.osb.koroneiki.taproot.service.ContactTeamRoleServiceUtil</code> service
+ * <code>ContactTeamRoleServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,61 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class ContactTeamRoleServiceSoap {
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactTeamRoleSoap
+			addContactTeamRole(long contactId, long teamId, long contactRoleId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.ContactTeamRole
+				returnValue = ContactTeamRoleServiceUtil.addContactTeamRole(
+					contactId, teamId, contactRoleId);
+
+			return com.liferay.osb.koroneiki.taproot.model.ContactTeamRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactTeamRoleSoap
+			deleteContactTeamRole(
+				long contactId, long teamId, long contactRoleId)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.ContactTeamRole
+				returnValue = ContactTeamRoleServiceUtil.deleteContactTeamRole(
+					contactId, teamId, contactRoleId);
+
+			return com.liferay.osb.koroneiki.taproot.model.ContactTeamRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteContactTeamRoles(long contactId, long teamId)
+		throws RemoteException {
+
+		try {
+			ContactTeamRoleServiceUtil.deleteContactTeamRoles(
+				contactId, teamId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ContactTeamRoleServiceSoap.class);
+
 }

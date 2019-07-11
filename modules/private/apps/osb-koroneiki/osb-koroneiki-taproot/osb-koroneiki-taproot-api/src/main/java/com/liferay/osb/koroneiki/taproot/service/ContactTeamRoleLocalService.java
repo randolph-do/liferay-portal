@@ -72,7 +72,8 @@ public interface ContactTeamRoleLocalService
 	public ContactTeamRole addContactTeamRole(ContactTeamRole contactTeamRole);
 
 	public ContactTeamRole addContactTeamRole(
-		long contactId, long teamId, long contactRoleId);
+			long contactId, long teamId, long contactRoleId)
+		throws PortalException;
 
 	/**
 	 * Creates a new contact team role with the primary key. Does not add the contact team role to the database.
@@ -105,6 +106,11 @@ public interface ContactTeamRoleLocalService
 	public ContactTeamRole deleteContactTeamRole(
 			ContactTeamRolePK contactTeamRolePK)
 		throws PortalException;
+
+	public ContactTeamRole deleteContactTeamRole(
+		long contactId, long teamId, long contactRoleId);
+
+	public void deleteContactTeamRoles(long contactId, long teamId);
 
 	/**
 	 * @throws PortalException

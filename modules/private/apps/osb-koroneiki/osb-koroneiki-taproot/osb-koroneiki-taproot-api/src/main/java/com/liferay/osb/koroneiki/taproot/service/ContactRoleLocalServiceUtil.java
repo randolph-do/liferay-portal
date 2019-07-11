@@ -308,6 +308,13 @@ public class ContactRoleLocalServiceUtil {
 		return getService().getContactRolesCount(type);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.ContactRole>
+			getContactTeamContactRoles(long teamId, long contactId) {
+
+		return getService().getContactTeamContactRoles(teamId, contactId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

@@ -53,7 +53,8 @@ public class ContactTeamRoleLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.ContactTeamRole
-		addContactTeamRole(long contactId, long teamId, long contactRoleId) {
+			addContactTeamRole(long contactId, long teamId, long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _contactTeamRoleLocalService.addContactTeamRole(
 			contactId, teamId, contactRoleId);
@@ -107,6 +108,19 @@ public class ContactTeamRoleLocalServiceWrapper
 
 		return _contactTeamRoleLocalService.deleteContactTeamRole(
 			contactTeamRolePK);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.ContactTeamRole
+		deleteContactTeamRole(long contactId, long teamId, long contactRoleId) {
+
+		return _contactTeamRoleLocalService.deleteContactTeamRole(
+			contactId, teamId, contactRoleId);
+	}
+
+	@Override
+	public void deleteContactTeamRoles(long contactId, long teamId) {
+		_contactTeamRoleLocalService.deleteContactTeamRoles(contactId, teamId);
 	}
 
 	/**

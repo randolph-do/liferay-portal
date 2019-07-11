@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.service;
 
+import com.liferay.osb.koroneiki.taproot.model.ContactTeamRole;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -47,6 +48,16 @@ public interface ContactTeamRoleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ContactTeamRoleServiceUtil} to access the contact team role remote service. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.ContactTeamRoleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public ContactTeamRole addContactTeamRole(
+			long contactId, long teamId, long contactRoleId)
+		throws PortalException;
+
+	public ContactTeamRole deleteContactTeamRole(
+			long contactId, long teamId, long contactRoleId)
+		throws PortalException;
+
+	public void deleteContactTeamRoles(long contactId, long teamId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

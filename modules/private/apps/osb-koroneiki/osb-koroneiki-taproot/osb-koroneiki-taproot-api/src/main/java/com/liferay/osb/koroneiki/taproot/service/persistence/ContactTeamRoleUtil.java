@@ -646,6 +646,194 @@ public class ContactTeamRoleUtil {
 	}
 
 	/**
+	 * Returns all the contact team roles where contactId = &#63; and teamId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @return the matching contact team roles
+	 */
+	public static List<ContactTeamRole> findByC_T(long contactId, long teamId) {
+		return getPersistence().findByC_T(contactId, teamId);
+	}
+
+	/**
+	 * Returns a range of all the contact team roles where contactId = &#63; and teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @return the range of matching contact team roles
+	 */
+	public static List<ContactTeamRole> findByC_T(
+		long contactId, long teamId, int start, int end) {
+
+		return getPersistence().findByC_T(contactId, teamId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where contactId = &#63; and teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact team roles
+	 */
+	public static List<ContactTeamRole> findByC_T(
+		long contactId, long teamId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		return getPersistence().findByC_T(
+			contactId, teamId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact team roles where contactId = &#63; and teamId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ContactTeamRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param start the lower bound of the range of contact team roles
+	 * @param end the upper bound of the range of contact team roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact team roles
+	 */
+	public static List<ContactTeamRole> findByC_T(
+		long contactId, long teamId, int start, int end,
+		OrderByComparator<ContactTeamRole> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByC_T(
+			contactId, teamId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where contactId = &#63; and teamId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	public static ContactTeamRole findByC_T_First(
+			long contactId, long teamId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactTeamRoleException {
+
+		return getPersistence().findByC_T_First(
+			contactId, teamId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first contact team role in the ordered set where contactId = &#63; and teamId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	public static ContactTeamRole fetchByC_T_First(
+		long contactId, long teamId,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		return getPersistence().fetchByC_T_First(
+			contactId, teamId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where contactId = &#63; and teamId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role
+	 * @throws NoSuchContactTeamRoleException if a matching contact team role could not be found
+	 */
+	public static ContactTeamRole findByC_T_Last(
+			long contactId, long teamId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactTeamRoleException {
+
+		return getPersistence().findByC_T_Last(
+			contactId, teamId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last contact team role in the ordered set where contactId = &#63; and teamId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact team role, or <code>null</code> if a matching contact team role could not be found
+	 */
+	public static ContactTeamRole fetchByC_T_Last(
+		long contactId, long teamId,
+		OrderByComparator<ContactTeamRole> orderByComparator) {
+
+		return getPersistence().fetchByC_T_Last(
+			contactId, teamId, orderByComparator);
+	}
+
+	/**
+	 * Returns the contact team roles before and after the current contact team role in the ordered set where contactId = &#63; and teamId = &#63;.
+	 *
+	 * @param contactTeamRolePK the primary key of the current contact team role
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact team role
+	 * @throws NoSuchContactTeamRoleException if a contact team role with the primary key could not be found
+	 */
+	public static ContactTeamRole[] findByC_T_PrevAndNext(
+			ContactTeamRolePK contactTeamRolePK, long contactId, long teamId,
+			OrderByComparator<ContactTeamRole> orderByComparator)
+		throws com.liferay.osb.koroneiki.taproot.exception.
+			NoSuchContactTeamRoleException {
+
+		return getPersistence().findByC_T_PrevAndNext(
+			contactTeamRolePK, contactId, teamId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the contact team roles where contactId = &#63; and teamId = &#63; from the database.
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 */
+	public static void removeByC_T(long contactId, long teamId) {
+		getPersistence().removeByC_T(contactId, teamId);
+	}
+
+	/**
+	 * Returns the number of contact team roles where contactId = &#63; and teamId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param teamId the team ID
+	 * @return the number of matching contact team roles
+	 */
+	public static int countByC_T(long contactId, long teamId) {
+		return getPersistence().countByC_T(contactId, teamId);
+	}
+
+	/**
 	 * Caches the contact team role in the entity cache if it is enabled.
 	 *
 	 * @param contactTeamRole the contact team role

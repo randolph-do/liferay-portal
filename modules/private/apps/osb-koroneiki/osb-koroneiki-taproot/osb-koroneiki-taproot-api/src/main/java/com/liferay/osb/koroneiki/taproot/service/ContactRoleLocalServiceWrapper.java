@@ -326,6 +326,14 @@ public class ContactRoleLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.ContactRole>
+		getContactTeamContactRoles(long teamId, long contactId) {
+
+		return _contactRoleLocalService.getContactTeamContactRoles(
+			teamId, contactId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

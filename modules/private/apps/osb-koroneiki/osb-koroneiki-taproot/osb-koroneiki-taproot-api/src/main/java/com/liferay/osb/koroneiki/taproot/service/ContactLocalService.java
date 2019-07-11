@@ -272,6 +272,12 @@ public interface ContactLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getProjectContactsCount(long projectId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Contact> getTeamContacts(long teamId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTeamContactsCount(long teamId);
+
 	/**
 	 * Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

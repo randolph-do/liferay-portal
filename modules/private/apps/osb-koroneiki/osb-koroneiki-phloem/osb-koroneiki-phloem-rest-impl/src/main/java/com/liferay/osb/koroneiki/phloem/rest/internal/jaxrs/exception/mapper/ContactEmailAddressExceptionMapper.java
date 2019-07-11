@@ -40,8 +40,12 @@ public class ContactEmailAddressExceptionMapper
 	implements ExceptionMapper<ContactEmailAddressException> {
 
 	@Override
-	public Response toResponse(ContactEmailAddressException ceae) {
-		if (ceae instanceof ContactEmailAddressException.MustNotBeDuplicate) {
+	public Response toResponse(
+		ContactEmailAddressException contactEmailAddressException) {
+
+		if (contactEmailAddressException instanceof
+				ContactEmailAddressException.MustNotBeDuplicate) {
+
 			return Response.status(
 				409
 			).type(

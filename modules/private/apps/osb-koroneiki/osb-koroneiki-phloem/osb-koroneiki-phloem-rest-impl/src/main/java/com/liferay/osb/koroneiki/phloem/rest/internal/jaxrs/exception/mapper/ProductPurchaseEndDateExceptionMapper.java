@@ -39,7 +39,9 @@ public class ProductPurchaseEndDateExceptionMapper
 	implements ExceptionMapper<ProductPurchaseEndDateException> {
 
 	@Override
-	public Response toResponse(ProductPurchaseEndDateException ppede) {
+	public Response toResponse(
+		ProductPurchaseEndDateException productPurchaseEndDateException) {
+
 		return Response.status(
 			400
 		).type(

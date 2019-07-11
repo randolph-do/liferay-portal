@@ -232,6 +232,9 @@ renderResponse.setTitle((productPurchase == null) ? LanguageUtil.get(request, "n
 			A.io.request(
 				'/o/koroneiki-rest/v1.0/accounts/' + accountId + '/projects',
 				{
+					data: {
+						p_auth: Liferay.authToken
+					},
 					method: 'GET',
 					on: {
 						success: function(event, id, obj) {

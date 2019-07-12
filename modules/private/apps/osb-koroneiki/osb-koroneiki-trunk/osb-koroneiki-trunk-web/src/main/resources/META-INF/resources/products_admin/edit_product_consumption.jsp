@@ -44,7 +44,7 @@ renderResponse.setTitle((productConsumption == null) ? LanguageUtil.get(request,
 		<aui:fieldset>
 			<c:choose>
 				<c:when test="<%= productConsumption != null %>">
-					<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= productConsumption.getUuid() %>" />
+					<aui:input label="key" name="key" type="resource" value="<%= productConsumption.getProductConsumptionKey() %>" />
 
 					<%
 					Account koroneikiAccount = productConsumption.getAccount();

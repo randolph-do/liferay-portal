@@ -59,7 +59,7 @@ renderResponse.setTitle((project == null) ? LanguageUtil.get(request, "new-proje
 					</aui:select>
 				</c:when>
 				<c:otherwise>
-					<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= project.getUuid() %>" />
+					<aui:input label="key" name="key" type="resource" value="<%= project.getProjectKey() %>" />
 
 					<h5><liferay-ui:message key="account" /></h5>
 

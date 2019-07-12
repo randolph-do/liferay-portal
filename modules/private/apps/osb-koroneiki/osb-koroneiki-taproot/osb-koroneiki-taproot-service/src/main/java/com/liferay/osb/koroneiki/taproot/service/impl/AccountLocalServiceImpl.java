@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.exception.AccountNameException;
 import com.liferay.osb.koroneiki.taproot.exception.RequiredAccountException;
 import com.liferay.osb.koroneiki.taproot.model.Account;
@@ -56,6 +57,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 		account.setCompanyId(user.getCompanyId());
 		account.setUserId(userId);
+		account.setAccountKey(ModelKeyGenerator.generate(accountId));
 		account.setName(name);
 		account.setDescription(description);
 		account.setLogoId(logoId);
@@ -110,6 +112,10 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		teamPersistence.removeByAccountId(accountId);
 
 		return accountPersistence.remove(accountId);
+	}
+
+	public Account getAccount(String accountKey) throws PortalException {
+		return accountPersistence.findByAccountKey(accountKey);
 	}
 
 	public Account updateAccount(

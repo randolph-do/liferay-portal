@@ -40,7 +40,7 @@ long teamId = BeanParamUtil.getLong(team, request, "teamId");
 	<aui:fieldset-group>
 		<aui:fieldset>
 			<c:if test="<%= team != null %>">
-				<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= team.getUuid() %>" />
+				<aui:input label="key" name="key" type="resource" value="<%= team.getTeamKey() %>" />
 			</c:if>
 
 			<aui:input name="name" />

@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.exception.ContactEmailAddressException;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactLocalServiceBaseImpl;
@@ -54,6 +55,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 		contact.setCompanyId(user.getCompanyId());
 		contact.setUserId(userId);
+		contact.setContactKey(ModelKeyGenerator.generate(contactId));
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
@@ -121,7 +123,15 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		return contactFinder.countByFN_MN_LN_E(null, null, null, null, params);
 	}
 
-	public Contact getContact(String emailAddress) throws PortalException {
+	public Contact getContactByContactKey(String contactKey)
+		throws PortalException {
+
+		return contactPersistence.findByContactKey(contactKey);
+	}
+
+	public Contact getContactByEmailAddress(String emailAddress)
+		throws PortalException {
+
 		return contactPersistence.findByEmailAddress(emailAddress);
 	}
 

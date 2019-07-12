@@ -38,7 +38,7 @@ long contactId = BeanParamUtil.getLong(koroneikiContact, request, "contactId");
 	<aui:fieldset-group>
 		<aui:fieldset>
 			<c:if test="<%= koroneikiContact != null %>">
-				<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= koroneikiContact.getUuid() %>" />
+				<aui:input label="key" name="key" type="resource" value="<%= koroneikiContact.getContactKey() %>" />
 			</c:if>
 
 			<aui:input name="firstName" />

@@ -41,7 +41,7 @@ renderResponse.setTitle((koroneikiAccount == null) ? LanguageUtil.get(request, "
 	<aui:fieldset-group>
 		<aui:fieldset>
 			<c:if test="<%= koroneikiAccount != null %>">
-				<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= koroneikiAccount.getUuid() %>" />
+				<aui:input label="key" name="key" type="resource" value="<%= koroneikiAccount.getAccountKey() %>" />
 			</c:if>
 
 			<aui:input name="name" />

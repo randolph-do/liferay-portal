@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.constants.TeamRoleType;
 import com.liferay.osb.koroneiki.taproot.exception.TeamRoleNameException;
 import com.liferay.osb.koroneiki.taproot.exception.TeamRoleTypeException;
@@ -55,6 +56,7 @@ public class TeamRoleLocalServiceImpl extends TeamRoleLocalServiceBaseImpl {
 
 		teamRole.setCompanyId(user.getCompanyId());
 		teamRole.setUserId(userId);
+		teamRole.setTeamRoleKey(ModelKeyGenerator.generate(teamRoleId));
 		teamRole.setName(name);
 		teamRole.setDescription(description);
 		teamRole.setType(type);
@@ -94,6 +96,10 @@ public class TeamRoleLocalServiceImpl extends TeamRoleLocalServiceBaseImpl {
 
 		return teamRoleFinder.findByName(
 			null, params, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public TeamRole getTeamRole(String teamRoleKey) throws PortalException {
+		return teamRolePersistence.findByTeamRoleKey(teamRoleKey);
 	}
 
 	public List<TeamRole> getTeamRoles(int type, int start, int end) {

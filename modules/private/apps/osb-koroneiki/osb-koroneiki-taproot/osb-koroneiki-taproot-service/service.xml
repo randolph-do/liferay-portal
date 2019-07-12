@@ -18,6 +18,7 @@
 
 		<!-- Other fields -->
 
+		<column name="accountKey" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="logoId" type="long" />
@@ -31,6 +32,12 @@
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
 		<column name="statusMessage" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="AccountKey" return-type="Account" unique="true">
+			<finder-column name="accountKey" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="Contact" remote-service="true" uuid="true">
 
@@ -47,6 +54,7 @@
 
 		<!-- Other fields -->
 
+		<column name="contactKey" type="String" />
 		<column name="firstName" type="String" />
 		<column name="middleName" type="String" />
 		<column name="lastName" type="String" />
@@ -55,6 +63,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ContactKey" return-type="Contact" unique="true">
+			<finder-column name="contactKey" />
+		</finder>
 		<finder name="EmailAddress" return-type="Contact">
 			<finder-column name="emailAddress" />
 		</finder>
@@ -122,6 +133,7 @@
 
 		<!-- Other fields -->
 
+		<column name="contactRoleKey" type="String" />
 		<column accessor="true" name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="type" type="int" />
@@ -135,6 +147,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ContactRoleKey" return-type="ContactRole" unique="true">
+			<finder-column name="contactRoleKey" />
+		</finder>
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
 		</finder>
@@ -183,6 +198,7 @@
 
 		<!-- Other fields -->
 
+		<column name="projectKey" type="String" />
 		<column name="accountId" type="long" />
 		<column name="name" type="String" />
 		<column name="code" type="String" />
@@ -198,6 +214,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ProjectKey" return-type="Project" unique="true">
+			<finder-column name="projectKey" />
+		</finder>
 		<finder name="AccountId" return-type="Collection">
 			<finder-column name="accountId" />
 		</finder>
@@ -217,11 +236,15 @@
 
 		<!-- Other fields -->
 
+		<column name="teamKey" type="String" />
 		<column name="accountId" type="long" />
 		<column name="name" type="String" />
 
 		<!-- Finder methods -->
 
+		<finder name="TeamKey" return-type="Team" unique="true">
+			<finder-column name="teamKey" />
+		</finder>
 		<finder name="AccountId" return-type="Collection">
 			<finder-column name="accountId" />
 		</finder>
@@ -268,6 +291,7 @@
 
 		<!-- Other fields -->
 
+		<column name="teamRoleKey" type="String" />
 		<column accessor="true" name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="type" type="int" />
@@ -280,6 +304,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="TeamRoleKey" return-type="TeamRole" unique="true">
+			<finder-column name="teamRoleKey" />
+		</finder>
 		<finder name="Name" return-type="Collection">
 			<finder-column name="name" />
 		</finder>

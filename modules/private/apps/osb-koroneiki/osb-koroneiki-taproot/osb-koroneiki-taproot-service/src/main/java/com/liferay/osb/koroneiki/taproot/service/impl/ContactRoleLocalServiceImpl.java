@@ -14,6 +14,7 @@
 
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleSystem;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleNameException;
@@ -62,6 +63,8 @@ public class ContactRoleLocalServiceImpl
 
 		contactRole.setCompanyId(user.getCompanyId());
 		contactRole.setUserId(userId);
+		contactRole.setContactRoleKey(
+			ModelKeyGenerator.generate(contactRoleId));
 		contactRole.setName(name);
 		contactRole.setDescription(description);
 		contactRole.setType(type);
@@ -156,6 +159,12 @@ public class ContactRoleLocalServiceImpl
 
 		return contactRoleFinder.findByName(
 			null, params, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public ContactRole getContactRole(String contactRoleKey)
+		throws PortalException {
+
+		return contactRolePersistence.findByContactRoleKey(contactRoleKey);
 	}
 
 	public List<ContactRole> getContactRoles(int type, int start, int end) {

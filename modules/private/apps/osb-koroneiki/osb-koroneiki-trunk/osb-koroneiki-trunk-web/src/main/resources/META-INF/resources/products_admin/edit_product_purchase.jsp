@@ -58,7 +58,7 @@ renderResponse.setTitle((productPurchase == null) ? LanguageUtil.get(request, "n
 		<aui:fieldset>
 			<c:choose>
 				<c:when test="<%= productPurchase != null %>">
-					<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= productPurchase.getUuid() %>" />
+					<aui:input label="key" name="key" type="resource" value="<%= productPurchase.getProductPurchaseKey() %>" />
 
 					<%
 					Account koroneikiAccount = productPurchase.getAccount();

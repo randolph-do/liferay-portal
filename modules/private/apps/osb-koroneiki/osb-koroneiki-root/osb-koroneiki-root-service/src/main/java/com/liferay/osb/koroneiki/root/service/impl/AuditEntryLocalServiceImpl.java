@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.root.service.impl;
 
 import com.liferay.osb.koroneiki.root.model.AuditEntry;
 import com.liferay.osb.koroneiki.root.service.base.AuditEntryLocalServiceBaseImpl;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -55,6 +56,7 @@ public class AuditEntryLocalServiceImpl extends AuditEntryLocalServiceBaseImpl {
 		auditEntry.setCompanyId(user.getCompanyId());
 		auditEntry.setUserId(userId);
 		auditEntry.setUserName(user.getFullName());
+		auditEntry.setAuditEntryKey(ModelKeyGenerator.generate(auditEntryId));
 		auditEntry.setClassNameId(classNameId);
 		auditEntry.setClassPK(classPK);
 		auditEntry.setAuditSetId(auditSetId);
@@ -80,6 +82,12 @@ public class AuditEntryLocalServiceImpl extends AuditEntryLocalServiceBaseImpl {
 
 	public int getAuditEntriesCount(long classNameId, long classPK) {
 		return auditEntryPersistence.countByC_C(classNameId, classPK);
+	}
+
+	public AuditEntry getAuditEntry(String auditEntryKey)
+		throws PortalException {
+
+		return auditEntryPersistence.findByAuditEntryKey(auditEntryKey);
 	}
 
 	public long getNextAuditSetId(long classNameId, long classPK) {

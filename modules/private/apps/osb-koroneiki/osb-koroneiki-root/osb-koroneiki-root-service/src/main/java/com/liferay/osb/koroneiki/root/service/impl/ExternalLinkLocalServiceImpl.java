@@ -19,6 +19,7 @@ import com.liferay.osb.koroneiki.root.exception.ExternalLinkEntityIdException;
 import com.liferay.osb.koroneiki.root.exception.ExternalLinkEntityNameException;
 import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.osb.koroneiki.root.service.base.ExternalLinkLocalServiceBaseImpl;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -53,6 +54,8 @@ public class ExternalLinkLocalServiceImpl
 			externalLinkId);
 
 		externalLink.setCompanyId(user.getUserId());
+		externalLink.setExternalLinkKey(
+			ModelKeyGenerator.generate(externalLinkId));
 		externalLink.setClassNameId(classNameId);
 		externalLink.setClassPK(classPK);
 		externalLink.setDomain(domain);
@@ -75,6 +78,12 @@ public class ExternalLinkLocalServiceImpl
 
 	public void deleteExternalLinks(long classNameId, long classPK) {
 		externalLinkPersistence.removeByC_C(classNameId, classPK);
+	}
+
+	public ExternalLink getExternalLink(String externalLinkKey)
+		throws PortalException {
+
+		return externalLinkPersistence.findByExternalLinkKey(externalLinkKey);
 	}
 
 	public List<ExternalLink> getExternalLinks(

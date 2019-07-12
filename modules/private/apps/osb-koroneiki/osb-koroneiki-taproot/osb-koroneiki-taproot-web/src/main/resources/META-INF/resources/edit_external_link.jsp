@@ -46,6 +46,10 @@ renderResponse.setTitle(title);
 
 	<aui:fieldset-group>
 		<aui:fieldset>
+			<c:if test="<%= externalLink != null %>">
+				<aui:input label="key" name="key" type="resource" value="<%= externalLink.getExternalLinkKey() %>" />
+			</c:if>
+
 			<aui:input disabled="<%= externalLink != null %>" name="domain" />
 
 			<aui:input disabled="<%= externalLink != null %>" name="entityName" />

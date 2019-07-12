@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.exception.ProjectNameException;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.base.ProjectLocalServiceBaseImpl;
@@ -58,6 +59,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 		project.setCompanyId(user.getCompanyId());
 		project.setUserId(userId);
+		project.setProjectKey(ModelKeyGenerator.generate(projectId));
 		project.setAccountId(accountId);
 		project.setName(name);
 		project.setCode(code);
@@ -107,6 +109,10 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		teamProjectRolePersistence.removeByProjectId(projectId);
 
 		return projectPersistence.remove(projectId);
+	}
+
+	public Project getProject(String projectKey) throws PortalException {
+		return projectPersistence.findByProjectKey(projectKey);
 	}
 
 	public List<Project> getProjects(long accountId, int start, int end) {

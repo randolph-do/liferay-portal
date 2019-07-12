@@ -41,7 +41,7 @@ renderResponse.setTitle((productEntry == null) ? LanguageUtil.get(request, "new-
 	<aui:fieldset-group>
 		<aui:fieldset>
 			<c:if test="<%= productEntry != null %>">
-				<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= productEntry.getUuid() %>" />
+				<aui:input label="key" name="key" type="resource" value="<%= productEntry.getProductEntryKey() %>" />
 			</c:if>
 
 			<aui:input name="name" />

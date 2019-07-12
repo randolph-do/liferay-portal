@@ -18,12 +18,16 @@
 
 		<!-- Other fields -->
 
+		<column name="productConsumptionKey" type="String" />
 		<column name="accountId" type="long" />
 		<column name="projectId" type="long" />
 		<column name="productEntryId" type="long" />
 
 		<!-- Finder methods -->
 
+		<finder name="ProductConsumptionKey" return-type="ProductConsumption" unique="true">
+			<finder-column name="productConsumptionKey" />
+		</finder>
 		<finder name="AccountId" return-type="Collection" where="projectId = 0">
 			<finder-column name="accountId" />
 		</finder>
@@ -52,7 +56,14 @@
 
 		<!-- Other fields -->
 
+		<column name="productEntryKey" type="String" />
 		<column name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ProductEntryKey" return-type="ProductEntry" unique="true">
+			<finder-column name="productEntryKey" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ProductField" remote-service="true">
 
@@ -94,6 +105,7 @@
 
 		<!-- Other fields -->
 
+		<column name="productPurchaseKey" type="String" />
 		<column name="accountId" type="long" />
 		<column name="projectId" type="long" />
 		<column name="productEntryId" type="long" />
@@ -103,6 +115,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ProductPurchaseKey" return-type="ProductPurchase" unique="true">
+			<finder-column name="productPurchaseKey" />
+		</finder>
 		<finder name="AccountId" return-type="Collection" where="projectId = 0">
 			<finder-column name="accountId" />
 		</finder>

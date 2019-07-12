@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.osb.koroneiki.trunk.exception.NoSuchProductConsumptionException;
@@ -58,6 +59,8 @@ public class ProductConsumptionLocalServiceImpl
 
 		productConsumption.setCompanyId(user.getCompanyId());
 		productConsumption.setUserId(userId);
+		productConsumption.setProductConsumptionKey(
+			ModelKeyGenerator.generate(productConsumptionId));
 		productConsumption.setAccountId(accountId);
 		productConsumption.setProjectId(projectId);
 		productConsumption.setProductEntryId(productEntryId);
@@ -148,6 +151,14 @@ public class ProductConsumptionLocalServiceImpl
 		throws PortalException {
 
 		return productConsumptionPersistence.countByAccountId(accountId);
+	}
+
+	public ProductConsumption getProductConsumption(
+			String productConsumptionKey)
+		throws PortalException {
+
+		return productConsumptionPersistence.findByProductConsumptionKey(
+			productConsumptionKey);
 	}
 
 	@Override

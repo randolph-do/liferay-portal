@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.exception.TeamNameException;
 import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamLocalServiceBaseImpl;
@@ -52,6 +53,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		team.setCompanyId(user.getCompanyId());
 		team.setUserId(userId);
+		team.setTeamKey(ModelKeyGenerator.generate(teamId));
 		team.setAccountId(accountId);
 		team.setName(name);
 
@@ -111,6 +113,10 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		params.put("project", projectId);
 
 		return teamFinder.countByName(null, params);
+	}
+
+	public Team getTeam(String teamKey) throws PortalException {
+		return teamPersistence.findByTeamKey(teamKey);
 	}
 
 	public List<Team> getTeams(String name) throws PortalException {

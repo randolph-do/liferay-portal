@@ -19,6 +19,7 @@
 
 		<!-- Other fields -->
 
+		<column name="auditEntryKey" type="String" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="auditSetId" type="long" />
@@ -34,6 +35,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="AuditEntryKey" return-type="AuditEntry" unique="true">
+			<finder-column name="auditEntryKey" />
+		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -53,6 +57,7 @@
 
 		<!-- Other fields -->
 
+		<column name="externalLinkKey" type="String" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="domain" type="String" />
@@ -61,6 +66,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ExternalLinkKey" return-type="ExternalLink" unique="true">
+			<finder-column name="externalLinkKey" />
+		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.trunk.exception.ProductEntryNameException;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.service.base.ProductEntryLocalServiceBaseImpl;
@@ -51,6 +52,8 @@ public class ProductEntryLocalServiceImpl
 
 		productEntry.setCompanyId(user.getCompanyId());
 		productEntry.setUserId(userId);
+		productEntry.setProductEntryKey(
+			ModelKeyGenerator.generate(productEntryId));
 		productEntry.setName(name);
 
 		productEntryPersistence.update(productEntry);
@@ -88,6 +91,12 @@ public class ProductEntryLocalServiceImpl
 			productEntry.getProductEntryId());
 
 		return productEntryPersistence.remove(productEntryId);
+	}
+
+	public ProductEntry getProductEntry(String productEntryKey)
+		throws PortalException {
+
+		return productEntryPersistence.findByProductEntryKey(productEntryKey);
 	}
 
 	public ProductEntry updateProductEntry(long productEntryId, String name)

@@ -40,7 +40,7 @@ int type = BeanParamUtil.getInteger(contactRole, request, "type");
 	<aui:fieldset-group>
 		<aui:fieldset>
 			<c:if test="<%= contactRole != null %>">
-				<aui:input label="uuid" name="uuidLabel" type="resource" value="<%= contactRole.getUuid() %>" />
+				<aui:input label="key" name="key" type="resource" value="<%= contactRole.getContactRoleKey() %>" />
 			</c:if>
 
 			<h5><liferay-ui:message key="type" /></h5>

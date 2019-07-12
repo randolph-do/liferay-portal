@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.trunk.service.impl;
 
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
+import com.liferay.osb.koroneiki.root.util.ModelKeyGenerator;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
@@ -66,6 +67,8 @@ public class ProductPurchaseLocalServiceImpl
 
 		productPurchase.setCompanyId(user.getCompanyId());
 		productPurchase.setUserId(userId);
+		productPurchase.setProductPurchaseKey(
+			ModelKeyGenerator.generate(productPurchaseId));
 		productPurchase.setAccountId(accountId);
 		productPurchase.setProjectId(projectId);
 		productPurchase.setProductEntryId(productEntryId);
@@ -131,6 +134,13 @@ public class ProductPurchaseLocalServiceImpl
 
 	public int getAccountProductPurchasesCount(long accountId) {
 		return productPurchasePersistence.countByAccountId(accountId);
+	}
+
+	public ProductPurchase getProductPurchase(String productPurchaseKey)
+		throws PortalException {
+
+		return productPurchasePersistence.findByProductPurchaseKey(
+			productPurchaseKey);
 	}
 
 	public List<ProductPurchase> getProjectProductPurchases(

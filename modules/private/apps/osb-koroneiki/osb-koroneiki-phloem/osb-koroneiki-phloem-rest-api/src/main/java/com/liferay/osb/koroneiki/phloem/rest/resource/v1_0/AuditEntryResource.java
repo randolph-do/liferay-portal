@@ -37,30 +37,30 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AuditEntryResource {
 
-	public Page<AuditEntry> getAccountAuditEntriesPage(
-			Long accountId, Pagination pagination)
+	public Page<AuditEntry> getAccountAccountKeyAuditEntriesPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public AuditEntry getAuditEntry(Long auditEntryId) throws Exception;
+	public AuditEntry getAuditEntry(String auditEntryKey) throws Exception;
 
-	public Page<AuditEntry> getContactRoleAuditEntriesPage(
-			Long contactRoleId, Pagination pagination)
+	public Page<AuditEntry> getContactRoleContactRoleKeyAuditEntriesPage(
+			String contactRoleKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getContactAuditEntriesPage(
-			Long contactId, Pagination pagination)
+	public Page<AuditEntry> getContactContactKeyAuditEntriesPage(
+			String contactKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getProjectAuditEntriesPage(
-			Long projectId, Pagination pagination)
+	public Page<AuditEntry> getProjectProjectKeyAuditEntriesPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getTeamRoleAuditEntriesPage(
-			Long teamRoleId, Pagination pagination)
+	public Page<AuditEntry> getTeamRoleTeamRoleKeyAuditEntriesPage(
+			String teamRoleKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getTeamAuditEntriesPage(
-			Long teamId, Pagination pagination)
+	public Page<AuditEntry> getTeamTeamKeyAuditEntriesPage(
+			String teamKey, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

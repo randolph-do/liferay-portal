@@ -37,81 +37,85 @@ public interface ProjectResource {
 		return new Builder();
 	}
 
-	public Page<Project> getAccountProjectsPage(
-			Long accountId, Pagination pagination)
+	public Page<Project> getAccountAccountKeyProjectsPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountProjectsPageHttpResponse(
-			Long accountId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getAccountAccountKeyProjectsPageHttpResponse(
+				String accountKey, Pagination pagination)
 		throws Exception;
 
-	public Project postAccountProject(Long accountId, Project project)
+	public Project postAccountAccountKeyProject(
+			String accountKey, Project project)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postAccountProjectHttpResponse(
-			Long accountId, Project project)
+	public HttpInvoker.HttpResponse postAccountAccountKeyProjectHttpResponse(
+			String accountKey, Project project)
 		throws Exception;
 
-	public void deleteProject(Long projectId) throws Exception;
+	public void deleteProject(String projectKey) throws Exception;
 
-	public HttpInvoker.HttpResponse deleteProjectHttpResponse(Long projectId)
+	public HttpInvoker.HttpResponse deleteProjectHttpResponse(String projectKey)
 		throws Exception;
 
-	public Project getProject(Long projectId) throws Exception;
+	public Project getProject(String projectKey) throws Exception;
 
-	public HttpInvoker.HttpResponse getProjectHttpResponse(Long projectId)
+	public HttpInvoker.HttpResponse getProjectHttpResponse(String projectKey)
 		throws Exception;
 
-	public Project putProject(Long projectId, Project project) throws Exception;
+	public Project putProject(String projectKey, Project project)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse putProjectHttpResponse(
-			Long projectId, Project project)
+			String projectKey, Project project)
 		throws Exception;
 
-	public void deleteProjectContact(Long projectId, Long[] contactIds)
+	public void deleteProjectContact(String projectKey, String[] contactKeys)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteProjectContactHttpResponse(
-			Long projectId, Long[] contactIds)
+			String projectKey, String[] contactKeys)
 		throws Exception;
 
-	public void putProjectContact(Long projectId, Long[] contactIds)
+	public void putProjectContact(String projectKey, String[] contactKeys)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putProjectContactHttpResponse(
-			Long projectId, Long[] contactIds)
+			String projectKey, String[] contactKeys)
 		throws Exception;
 
-	public void deleteProjectContactRole(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public void deleteProjectContactContactKeyRole(
+			String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteProjectContactRoleHttpResponse(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public HttpInvoker.HttpResponse
+			deleteProjectContactContactKeyRoleHttpResponse(
+				String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception;
 
-	public void putProjectContactRole(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public void putProjectContactContactKeyRole(
+			String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putProjectContactRoleHttpResponse(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public HttpInvoker.HttpResponse putProjectContactContactKeyRoleHttpResponse(
+			String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception;
 
-	public void deleteProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public void deleteProjectTeamTeamKeyRole(
+			String projectKey, String teamKey, String[] teamRoleKeys)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteProjectTeamRoleHttpResponse(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public HttpInvoker.HttpResponse deleteProjectTeamTeamKeyRoleHttpResponse(
+			String projectKey, String teamKey, String[] teamRoleKeys)
 		throws Exception;
 
-	public void putProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public void putProjectTeamTeamKeyRole(
+			String projectKey, String teamKey, String[] teamRoleKeys)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putProjectTeamRoleHttpResponse(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public HttpInvoker.HttpResponse putProjectTeamTeamKeyRoleHttpResponse(
+			String projectKey, String teamKey, String[] teamRoleKeys)
 		throws Exception;
 
 	public static class Builder {
@@ -155,12 +159,13 @@ public interface ProjectResource {
 
 	public static class ProjectResourceImpl implements ProjectResource {
 
-		public Page<Project> getAccountProjectsPage(
-				Long accountId, Pagination pagination)
+		public Page<Project> getAccountAccountKeyProjectsPage(
+				String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountProjectsPageHttpResponse(accountId, pagination);
+				getAccountAccountKeyProjectsPageHttpResponse(
+					accountKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -173,8 +178,9 @@ public interface ProjectResource {
 			return Page.of(content, ProjectSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getAccountProjectsPageHttpResponse(
-				Long accountId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getAccountAccountKeyProjectsPageHttpResponse(
+					String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -196,8 +202,8 @@ public interface ProjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/projects",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -205,11 +211,12 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public Project postAccountProject(Long accountId, Project project)
+		public Project postAccountAccountKeyProject(
+				String accountKey, Project project)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountProjectHttpResponse(accountId, project);
+				postAccountAccountKeyProjectHttpResponse(accountKey, project);
 
 			String content = httpResponse.getContent();
 
@@ -231,8 +238,9 @@ public interface ProjectResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAccountProjectHttpResponse(
-				Long accountId, Project project)
+		public HttpInvoker.HttpResponse
+				postAccountAccountKeyProjectHttpResponse(
+					String accountKey, Project project)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -249,8 +257,8 @@ public interface ProjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/projects",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/projects",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -258,9 +266,9 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteProject(Long projectId) throws Exception {
+		public void deleteProject(String projectKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteProjectHttpResponse(
-				projectId);
+				projectKey);
 
 			String content = httpResponse.getContent();
 
@@ -272,7 +280,7 @@ public interface ProjectResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteProjectHttpResponse(
-				Long projectId)
+				String projectKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -287,8 +295,8 @@ public interface ProjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -296,9 +304,9 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public Project getProject(Long projectId) throws Exception {
+		public Project getProject(String projectKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getProjectHttpResponse(
-				projectId);
+				projectKey);
 
 			String content = httpResponse.getContent();
 
@@ -320,7 +328,8 @@ public interface ProjectResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getProjectHttpResponse(Long projectId)
+		public HttpInvoker.HttpResponse getProjectHttpResponse(
+				String projectKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -335,8 +344,8 @@ public interface ProjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -344,11 +353,11 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public Project putProject(Long projectId, Project project)
+		public Project putProject(String projectKey, Project project)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putProjectHttpResponse(
-				projectId, project);
+				projectKey, project);
 
 			String content = httpResponse.getContent();
 
@@ -371,7 +380,7 @@ public interface ProjectResource {
 		}
 
 		public HttpInvoker.HttpResponse putProjectHttpResponse(
-				Long projectId, Project project)
+				String projectKey, Project project)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -388,8 +397,8 @@ public interface ProjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -397,11 +406,12 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteProjectContact(Long projectId, Long[] contactIds)
+		public void deleteProjectContact(
+				String projectKey, String[] contactKeys)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteProjectContactHttpResponse(projectId, contactIds);
+				deleteProjectContactHttpResponse(projectKey, contactKeys);
 
 			String content = httpResponse.getContent();
 
@@ -413,7 +423,7 @@ public interface ProjectResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteProjectContactHttpResponse(
-				Long projectId, Long[] contactIds)
+				String projectKey, String[] contactKeys)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -425,18 +435,18 @@ public interface ProjectResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
-			if (contactIds != null) {
-				for (int i = 0; i < contactIds.length; i++) {
+			if (contactKeys != null) {
+				for (int i = 0; i < contactKeys.length; i++) {
 					httpInvoker.parameter(
-						"contactIds", String.valueOf(contactIds[i]));
+						"contactKeys", String.valueOf(contactKeys[i]));
 				}
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/contacts",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -444,11 +454,11 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putProjectContact(Long projectId, Long[] contactIds)
+		public void putProjectContact(String projectKey, String[] contactKeys)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putProjectContactHttpResponse(projectId, contactIds);
+				putProjectContactHttpResponse(projectKey, contactKeys);
 
 			String content = httpResponse.getContent();
 
@@ -460,12 +470,12 @@ public interface ProjectResource {
 		}
 
 		public HttpInvoker.HttpResponse putProjectContactHttpResponse(
-				Long projectId, Long[] contactIds)
+				String projectKey, String[] contactKeys)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(contactIds.toString(), "application/json");
+			httpInvoker.body(contactKeys.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -474,18 +484,18 @@ public interface ProjectResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
-			if (contactIds != null) {
-				for (int i = 0; i < contactIds.length; i++) {
+			if (contactKeys != null) {
+				for (int i = 0; i < contactKeys.length; i++) {
 					httpInvoker.parameter(
-						"contactIds", String.valueOf(contactIds[i]));
+						"contactKeys", String.valueOf(contactKeys[i]));
 				}
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/contacts",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -493,13 +503,13 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteProjectContactRole(
-				Long projectId, Long contactId, Long[] contactRoleIds)
+		public void deleteProjectContactContactKeyRole(
+				String projectKey, String contactKey, String[] contactRoleKeys)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteProjectContactRoleHttpResponse(
-					projectId, contactId, contactRoleIds);
+				deleteProjectContactContactKeyRoleHttpResponse(
+					projectKey, contactKey, contactRoleKeys);
 
 			String content = httpResponse.getContent();
 
@@ -510,8 +520,10 @@ public interface ProjectResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		public HttpInvoker.HttpResponse deleteProjectContactRoleHttpResponse(
-				Long projectId, Long contactId, Long[] contactRoleIds)
+		public HttpInvoker.HttpResponse
+				deleteProjectContactContactKeyRoleHttpResponse(
+					String projectKey, String contactKey,
+					String[] contactRoleKeys)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -523,18 +535,18 @@ public interface ProjectResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
-			if (contactRoleIds != null) {
-				for (int i = 0; i < contactRoleIds.length; i++) {
+			if (contactRoleKeys != null) {
+				for (int i = 0; i < contactRoleKeys.length; i++) {
 					httpInvoker.parameter(
-						"contactRoleIds", String.valueOf(contactRoleIds[i]));
+						"contactRoleKeys", String.valueOf(contactRoleKeys[i]));
 				}
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
-				projectId, contactId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/contacts/{contactKey}/roles",
+				projectKey, contactKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -542,13 +554,13 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putProjectContactRole(
-				Long projectId, Long contactId, Long[] contactRoleIds)
+		public void putProjectContactContactKeyRole(
+				String projectKey, String contactKey, String[] contactRoleKeys)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putProjectContactRoleHttpResponse(
-					projectId, contactId, contactRoleIds);
+				putProjectContactContactKeyRoleHttpResponse(
+					projectKey, contactKey, contactRoleKeys);
 
 			String content = httpResponse.getContent();
 
@@ -559,13 +571,15 @@ public interface ProjectResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		public HttpInvoker.HttpResponse putProjectContactRoleHttpResponse(
-				Long projectId, Long contactId, Long[] contactRoleIds)
+		public HttpInvoker.HttpResponse
+				putProjectContactContactKeyRoleHttpResponse(
+					String projectKey, String contactKey,
+					String[] contactRoleKeys)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(contactRoleIds.toString(), "application/json");
+			httpInvoker.body(contactRoleKeys.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -574,18 +588,18 @@ public interface ProjectResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
-			if (contactRoleIds != null) {
-				for (int i = 0; i < contactRoleIds.length; i++) {
+			if (contactRoleKeys != null) {
+				for (int i = 0; i < contactRoleKeys.length; i++) {
 					httpInvoker.parameter(
-						"contactRoleIds", String.valueOf(contactRoleIds[i]));
+						"contactRoleKeys", String.valueOf(contactRoleKeys[i]));
 				}
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts/{contactId}/roles",
-				projectId, contactId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/contacts/{contactKey}/roles",
+				projectKey, contactKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -593,13 +607,13 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteProjectTeamRole(
-				Long projectId, Long teamId, Long[] teamRoleIds)
+		public void deleteProjectTeamTeamKeyRole(
+				String projectKey, String teamKey, String[] teamRoleKeys)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteProjectTeamRoleHttpResponse(
-					projectId, teamId, teamRoleIds);
+				deleteProjectTeamTeamKeyRoleHttpResponse(
+					projectKey, teamKey, teamRoleKeys);
 
 			String content = httpResponse.getContent();
 
@@ -610,8 +624,9 @@ public interface ProjectResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		public HttpInvoker.HttpResponse deleteProjectTeamRoleHttpResponse(
-				Long projectId, Long teamId, Long[] teamRoleIds)
+		public HttpInvoker.HttpResponse
+				deleteProjectTeamTeamKeyRoleHttpResponse(
+					String projectKey, String teamKey, String[] teamRoleKeys)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -623,18 +638,18 @@ public interface ProjectResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
-			if (teamRoleIds != null) {
-				for (int i = 0; i < teamRoleIds.length; i++) {
+			if (teamRoleKeys != null) {
+				for (int i = 0; i < teamRoleKeys.length; i++) {
 					httpInvoker.parameter(
-						"teamRoleIds", String.valueOf(teamRoleIds[i]));
+						"teamRoleKeys", String.valueOf(teamRoleKeys[i]));
 				}
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
-				projectId, teamId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/teams/{teamKey}/roles",
+				projectKey, teamKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -642,12 +657,13 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putProjectTeamRole(
-				Long projectId, Long teamId, Long[] teamRoleIds)
+		public void putProjectTeamTeamKeyRole(
+				String projectKey, String teamKey, String[] teamRoleKeys)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putProjectTeamRoleHttpResponse(projectId, teamId, teamRoleIds);
+				putProjectTeamTeamKeyRoleHttpResponse(
+					projectKey, teamKey, teamRoleKeys);
 
 			String content = httpResponse.getContent();
 
@@ -658,13 +674,13 @@ public interface ProjectResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		public HttpInvoker.HttpResponse putProjectTeamRoleHttpResponse(
-				Long projectId, Long teamId, Long[] teamRoleIds)
+		public HttpInvoker.HttpResponse putProjectTeamTeamKeyRoleHttpResponse(
+				String projectKey, String teamKey, String[] teamRoleKeys)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(teamRoleIds.toString(), "application/json");
+			httpInvoker.body(teamRoleKeys.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -673,18 +689,18 @@ public interface ProjectResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
-			if (teamRoleIds != null) {
-				for (int i = 0; i < teamRoleIds.length; i++) {
+			if (teamRoleKeys != null) {
+				for (int i = 0; i < teamRoleKeys.length; i++) {
 					httpInvoker.parameter(
-						"teamRoleIds", String.valueOf(teamRoleIds[i]));
+						"teamRoleKeys", String.valueOf(teamRoleKeys[i]));
 				}
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/teams/{teamId}/roles",
-				projectId, teamId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/teams/{teamKey}/roles",
+				projectKey, teamKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

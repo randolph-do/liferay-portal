@@ -138,14 +138,18 @@ public class ContactSerDes {
 			sb.append("\"");
 		}
 
-		if (contact.getId() != null) {
+		if (contact.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(contact.getId());
+			sb.append("\"");
+
+			sb.append(_escape(contact.getKey()));
+
+			sb.append("\"");
 		}
 
 		if (contact.getLanguageId() != null) {
@@ -241,11 +245,11 @@ public class ContactSerDes {
 			map.put("firstName", String.valueOf(contact.getFirstName()));
 		}
 
-		if (contact.getId() == null) {
-			map.put("id", null);
+		if (contact.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(contact.getId()));
+			map.put("key", String.valueOf(contact.getKey()));
 		}
 
 		if (contact.getLanguageId() == null) {
@@ -360,9 +364,9 @@ public class ContactSerDes {
 					contact.setFirstName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					contact.setId(Long.valueOf((String)jsonParserFieldValue));
+					contact.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "languageId")) {

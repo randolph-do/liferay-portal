@@ -113,24 +113,24 @@ public class ExternalLink {
 
 	protected String entityName;
 
-	public Long getId() {
-		return id;
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long id;
+	protected String key;
 
 	@Override
 	public boolean equals(Object object) {

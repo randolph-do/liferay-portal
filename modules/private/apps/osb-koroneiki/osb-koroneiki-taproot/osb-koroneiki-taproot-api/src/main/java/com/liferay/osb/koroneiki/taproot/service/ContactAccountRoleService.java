@@ -52,11 +52,22 @@ public interface ContactAccountRoleService extends BaseService {
 			long contactId, long accountId, long contactRoleId)
 		throws PortalException;
 
+	public ContactAccountRole addContactAccountRole(
+			String contactKey, String accountKey, String contactRoleKey)
+		throws PortalException;
+
 	public ContactAccountRole deleteContactAccountRole(
 			long contactId, long accountId, long contactRoleId)
 		throws PortalException;
 
+	public ContactAccountRole deleteContactAccountRole(
+			String contactKey, String accountKey, String contactRoleKey)
+		throws PortalException;
+
 	public void deleteContactAccountRoles(long contactId, long accountId)
+		throws PortalException;
+
+	public void deleteContactAccountRoles(String contactKey, String accountKey)
 		throws PortalException;
 
 	/**

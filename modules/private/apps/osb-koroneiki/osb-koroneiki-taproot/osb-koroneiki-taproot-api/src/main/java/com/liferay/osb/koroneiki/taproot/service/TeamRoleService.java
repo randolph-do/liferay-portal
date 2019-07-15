@@ -54,6 +54,8 @@ public interface TeamRoleService extends BaseService {
 
 	public TeamRole deleteTeamRole(long teamRoleId) throws PortalException;
 
+	public TeamRole deleteTeamRole(String teamRoleKey) throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -64,8 +66,15 @@ public interface TeamRoleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TeamRole getTeamRole(long teamRoleId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TeamRole getTeamRole(String teamRoleKey) throws PortalException;
+
 	public TeamRole updateTeamRole(
 			long teamRoleId, String name, String description)
+		throws PortalException;
+
+	public TeamRole updateTeamRole(
+			String teamRoleKey, String name, String description)
 		throws PortalException;
 
 }

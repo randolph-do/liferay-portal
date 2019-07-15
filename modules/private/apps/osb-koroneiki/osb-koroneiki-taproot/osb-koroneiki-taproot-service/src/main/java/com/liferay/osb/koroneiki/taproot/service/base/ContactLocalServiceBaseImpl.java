@@ -134,10 +134,11 @@ public abstract class ContactLocalServiceBaseImpl
 	 *
 	 * @param contact the contact
 	 * @return the contact that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Contact deleteContact(Contact contact) {
+	public Contact deleteContact(Contact contact) throws PortalException {
 		return contactPersistence.remove(contact);
 	}
 

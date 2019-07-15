@@ -46,11 +46,25 @@ public class TeamServiceUtil {
 		return getService().addTeam(accountId, name);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Team addTeam(
+			String accountKey, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addTeam(accountKey, name);
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Team deleteTeam(
 			long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteTeam(teamId);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Team deleteTeam(
+			String teamKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteTeam(teamKey);
 	}
 
 	public static java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
@@ -60,10 +74,23 @@ public class TeamServiceUtil {
 		return getService().getAccountTeams(accountId, start, end);
 	}
 
+	public static java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+			getAccountTeams(String accountKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountTeams(accountKey, start, end);
+	}
+
 	public static int getAccountTeamsCount(long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAccountTeamsCount(accountId);
+	}
+
+	public static int getAccountTeamsCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountTeamsCount(accountKey);
 	}
 
 	/**
@@ -82,11 +109,25 @@ public class TeamServiceUtil {
 		return getService().getTeam(teamId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Team getTeam(
+			String teamKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getTeam(teamKey);
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
 			long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateTeam(teamId, name);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
+			String teamKey, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateTeam(teamKey, name);
 	}
 
 	public static TeamService getService() {

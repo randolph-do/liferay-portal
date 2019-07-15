@@ -80,9 +80,11 @@ public class AccountLocalServiceUtil {
 	 *
 	 * @param account the account
 	 * @return the account that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Account deleteAccount(
-		com.liferay.osb.koroneiki.taproot.model.Account account) {
+			com.liferay.osb.koroneiki.taproot.model.Account account)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteAccount(account);
 	}

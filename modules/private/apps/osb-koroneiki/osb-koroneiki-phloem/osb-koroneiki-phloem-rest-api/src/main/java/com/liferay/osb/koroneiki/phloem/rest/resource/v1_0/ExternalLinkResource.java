@@ -37,64 +37,67 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ExternalLinkResource {
 
-	public Page<ExternalLink> getAccountExternalLinksPage(
-			Long accountId, Pagination pagination)
+	public Page<ExternalLink> getAccountAccountKeyExternalLinksPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public ExternalLink postAccountExternalLink(
-			Long accountId, ExternalLink externalLink)
+	public ExternalLink postAccountAccountKeyExternalLink(
+			String accountKey, ExternalLink externalLink)
 		throws Exception;
 
-	public Page<ExternalLink> getContactExternalLinksPage(
-			Long contactId, Pagination pagination)
+	public Page<ExternalLink> getContactContactKeyExternalLinksPage(
+			String contactKey, Pagination pagination)
 		throws Exception;
 
-	public ExternalLink postContactExternalLink(
-			Long contactId, ExternalLink externalLink)
+	public ExternalLink postContactContactKeyExternalLink(
+			String contactKey, ExternalLink externalLink)
 		throws Exception;
 
-	public void deleteExternalLink(Long externalLinkId) throws Exception;
+	public void deleteExternalLink(String externalLinkKey) throws Exception;
 
-	public ExternalLink getExternalLink(Long externalLinkId) throws Exception;
-
-	public Page<ExternalLink> getProductConsumptionExternalLinksPage(
-			Long productConsumptionId, Pagination pagination)
+	public ExternalLink getExternalLink(String externalLinkKey)
 		throws Exception;
 
-	public ExternalLink postProductConsumptionExternalLink(
-			Long productConsumptionId, ExternalLink externalLink)
+	public Page<ExternalLink>
+			getProductConsumptionProductConsumptionKeyExternalLinksPage(
+				String productConsumptionKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getProductPurchaseExternalLinksPage(
-			Long productPurchaseId, Pagination pagination)
+	public ExternalLink postProductConsumptionProductConsumptionKeyExternalLink(
+			String productConsumptionKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postProductPurchaseExternalLink(
-			Long productPurchaseId, ExternalLink externalLink)
+	public Page<ExternalLink>
+			getProductPurchaseProductPurchaseKeyExternalLinksPage(
+				String productPurchaseKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getProductExternalLinksPage(
-			Long productId, Pagination pagination)
+	public ExternalLink postProductPurchaseProductPurchaseKeyExternalLink(
+			String productPurchaseKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postProductExternalLink(
-			Long productId, ExternalLink externalLink)
+	public Page<ExternalLink> getProductProductKeyExternalLinksPage(
+			String productKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getProjectExternalLinksPage(
-			Long projectId, Pagination pagination)
+	public ExternalLink postProductProductKeyExternalLink(
+			String productKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postProjectExternalLink(
-			Long projectId, ExternalLink externalLink)
+	public Page<ExternalLink> getProjectProjectKeyExternalLinksPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getTeamExternalLinksPage(
-			Long teamId, Pagination pagination)
+	public ExternalLink postProjectProjectKeyExternalLink(
+			String projectKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postTeamExternalLink(
-			Long teamId, ExternalLink externalLink)
+	public Page<ExternalLink> getTeamTeamKeyExternalLinksPage(
+			String teamKey, Pagination pagination)
+		throws Exception;
+
+	public ExternalLink postTeamTeamKeyExternalLink(
+			String teamKey, ExternalLink externalLink)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

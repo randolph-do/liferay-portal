@@ -44,11 +44,29 @@ public class ProjectServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project addProject(
+			String accountKey, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectService.addProject(
+			accountKey, name, code, industry, tier, notes, soldBy, status);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Project deleteProject(
 			long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _projectService.deleteProject(projectId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project deleteProject(
+			String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectService.deleteProject(projectKey);
 	}
 
 	/**
@@ -70,11 +88,27 @@ public class ProjectServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project getProject(
+			String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectService.getProject(projectKey);
+	}
+
+	@Override
 	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Project>
 			getProjects(long accountId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _projectService.getProjects(accountId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Project>
+			getProjects(String accountKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectService.getProjects(accountKey, start, end);
 	}
 
 	@Override
@@ -85,6 +119,13 @@ public class ProjectServiceWrapper
 	}
 
 	@Override
+	public int getProjectsCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectService.getProjectsCount(accountKey);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Project updateProject(
 			long projectId, String name, String code, String industry,
 			String tier, String notes, String soldBy, int status)
@@ -92,6 +133,16 @@ public class ProjectServiceWrapper
 
 		return _projectService.updateProject(
 			projectId, name, code, industry, tier, notes, soldBy, status);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project updateProject(
+			String projectKey, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectService.updateProject(
+			projectKey, name, code, industry, tier, notes, soldBy, status);
 	}
 
 	@Override

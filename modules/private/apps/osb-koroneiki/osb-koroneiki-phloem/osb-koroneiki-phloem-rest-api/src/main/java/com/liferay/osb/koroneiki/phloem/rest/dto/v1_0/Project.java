@@ -175,21 +175,21 @@ public class Project {
 
 	}
 
-	@Schema(description = "The project's account's ID.")
-	public Long getAccountId() {
-		return accountId;
+	@Schema(description = "The project's account's key.")
+	public String getAccountKey() {
+		return accountKey;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
 	}
 
 	@JsonIgnore
-	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
 		try {
-			accountId = accountIdUnsafeSupplier.get();
+			accountKey = accountKeyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -201,7 +201,7 @@ public class Project {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long accountId;
+	protected String accountKey;
 
 	@Schema(description = "The code of the project.")
 	public String getCode() {
@@ -317,32 +317,6 @@ public class Project {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ExternalLink[] externalLinks;
 
-	@Schema(description = "The project's ID.")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
 	@Schema(description = "The industry of the project.")
 	public Industry getIndustry() {
 		return industry;
@@ -379,6 +353,32 @@ public class Project {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Industry industry;
+
+	@Schema(description = "The project's key.")
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	@JsonIgnore
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+		try {
+			key = keyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String key;
 
 	@Schema(description = "The name of the project.")
 	public String getName() {
@@ -566,14 +566,18 @@ public class Project {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (accountId != null) {
+		if (accountKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"accountId\": ");
+			sb.append("\"accountKey\": ");
 
-			sb.append(accountId);
+			sb.append("\"");
+
+			sb.append(_escape(accountKey));
+
+			sb.append("\"");
 		}
 
 		if (code != null) {
@@ -638,16 +642,6 @@ public class Project {
 			sb.append("]");
 		}
 
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
 		if (industry != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -658,6 +652,20 @@ public class Project {
 			sb.append("\"");
 
 			sb.append(industry);
+
+			sb.append("\"");
+		}
+
+		if (key != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(key));
 
 			sb.append("\"");
 		}

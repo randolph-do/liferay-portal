@@ -142,10 +142,11 @@ public abstract class ProjectLocalServiceBaseImpl
 	 *
 	 * @param project the project
 	 * @return the project that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Project deleteProject(Project project) {
+	public Project deleteProject(Project project) throws PortalException {
 		return projectPersistence.remove(project);
 	}
 

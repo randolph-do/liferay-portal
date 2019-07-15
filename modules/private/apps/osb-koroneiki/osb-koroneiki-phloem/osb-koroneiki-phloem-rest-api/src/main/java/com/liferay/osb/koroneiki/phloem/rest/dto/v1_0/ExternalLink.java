@@ -166,19 +166,19 @@ public class ExternalLink {
 	@NotEmpty
 	protected String entityName;
 
-	@Schema(description = "The external link's ID.")
-	public Long getId() {
-		return id;
+	@Schema(description = "The external link's key.")
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -190,7 +190,7 @@ public class ExternalLink {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected String key;
 
 	@Override
 	public boolean equals(Object object) {
@@ -278,14 +278,18 @@ public class ExternalLink {
 			sb.append("\"");
 		}
 
-		if (id != null) {
+		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

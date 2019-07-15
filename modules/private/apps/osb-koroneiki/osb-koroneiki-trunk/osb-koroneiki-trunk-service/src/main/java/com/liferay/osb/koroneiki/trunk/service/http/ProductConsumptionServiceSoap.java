@@ -90,6 +90,31 @@ public class ProductConsumptionServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
+			addProductConsumption(
+				String accountKey, String projectKey, String productEntryKey,
+				com.liferay.osb.koroneiki.trunk.model.ProductFieldSoap[]
+					productFields)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+				returnValue =
+					ProductConsumptionServiceUtil.addProductConsumption(
+						accountKey, projectKey, productEntryKey,
+						com.liferay.osb.koroneiki.trunk.model.impl.
+							ProductFieldModelImpl.toModels(productFields));
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
 			deleteProductConsumption(long productConsumptionId)
 		throws RemoteException {
 
@@ -130,6 +155,26 @@ public class ProductConsumptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
+			deleteProductConsumption(String productConsumptionKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+				returnValue =
+					ProductConsumptionServiceUtil.deleteProductConsumption(
+						productConsumptionKey);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap[]
 			getAccountProductConsumptions(long accountId, int start, int end)
 		throws RemoteException {
@@ -141,6 +186,28 @@ public class ProductConsumptionServiceSoap {
 						ProductConsumptionServiceUtil.
 							getAccountProductConsumptions(
 								accountId, start, end);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap[]
+			getAccountProductConsumptions(String accountKey, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+					returnValue =
+						ProductConsumptionServiceUtil.
+							getAccountProductConsumptions(
+								accountKey, start, end);
 
 			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
 				toSoapModels(returnValue);
@@ -169,6 +236,23 @@ public class ProductConsumptionServiceSoap {
 		}
 	}
 
+	public static int getAccountProductConsumptionsCount(String accountKey)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				ProductConsumptionServiceUtil.
+					getAccountProductConsumptionsCount(accountKey);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
 			getProductConsumption(long productConsumptionId)
 		throws RemoteException {
@@ -178,6 +262,26 @@ public class ProductConsumptionServiceSoap {
 				returnValue =
 					ProductConsumptionServiceUtil.getProductConsumption(
 						productConsumptionId);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
+			getProductConsumption(String productConsumptionKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+				returnValue =
+					ProductConsumptionServiceUtil.getProductConsumption(
+						productConsumptionKey);
 
 			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
 				toSoapModel(returnValue);
@@ -211,6 +315,28 @@ public class ProductConsumptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap[]
+			getProjectProductConsumptions(String projectKey, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.osb.koroneiki.trunk.model.ProductConsumption>
+					returnValue =
+						ProductConsumptionServiceUtil.
+							getProjectProductConsumptions(
+								projectKey, start, end);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getProjectProductConsumptionsCount(long projectId)
 		throws RemoteException {
 
@@ -218,6 +344,23 @@ public class ProductConsumptionServiceSoap {
 			int returnValue =
 				ProductConsumptionServiceUtil.
 					getProjectProductConsumptionsCount(projectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getProjectProductConsumptionsCount(String projectKey)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				ProductConsumptionServiceUtil.
+					getProjectProductConsumptionsCount(projectKey);
 
 			return returnValue;
 		}

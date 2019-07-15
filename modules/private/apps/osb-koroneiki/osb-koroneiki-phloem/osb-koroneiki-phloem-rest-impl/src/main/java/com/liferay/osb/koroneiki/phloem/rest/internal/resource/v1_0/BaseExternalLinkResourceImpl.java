@@ -62,17 +62,17 @@ public abstract class BaseExternalLinkResourceImpl
 	@Operation(description = "Retrieves the account's external links.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/accounts/{accountId}/external-links")
+	@Path("/accounts/{accountKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public Page<ExternalLink> getAccountExternalLinksPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Page<ExternalLink> getAccountAccountKeyExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -83,13 +83,15 @@ public abstract class BaseExternalLinkResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds an external link to the account.")
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/external-links")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public ExternalLink postAccountExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public ExternalLink postAccountAccountKeyExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			ExternalLink externalLink)
 		throws Exception {
 
@@ -101,17 +103,17 @@ public abstract class BaseExternalLinkResourceImpl
 	@Operation(description = "Retrieves the contact's external links.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "contactId"),
+			@Parameter(in = ParameterIn.PATH, name = "contactKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/contacts/{contactId}/external-links")
+	@Path("/contacts/{contactKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public Page<ExternalLink> getContactExternalLinksPage(
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId,
+	public Page<ExternalLink> getContactContactKeyExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -122,13 +124,15 @@ public abstract class BaseExternalLinkResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds an external link to the contact.")
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "contactId")})
-	@Path("/contacts/{contactId}/external-links")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "contactKey")}
+	)
+	@Path("/contacts/{contactKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public ExternalLink postContactExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId,
+	public ExternalLink postContactContactKeyExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey,
 			ExternalLink externalLink)
 		throws Exception {
 
@@ -138,14 +142,14 @@ public abstract class BaseExternalLinkResourceImpl
 	@Override
 	@DELETE
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "externalLinkId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "externalLinkKey")}
 	)
-	@Path("/external-links/{externalLinkId}")
+	@Path("/external-links/{externalLinkKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ExternalLink")})
 	public void deleteExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("externalLinkId") Long
-				externalLinkId)
+			@NotNull @Parameter(hidden = true) @PathParam("externalLinkKey")
+				String externalLinkKey)
 		throws Exception {
 	}
 
@@ -153,14 +157,14 @@ public abstract class BaseExternalLinkResourceImpl
 	@GET
 	@Operation(description = "Retrieves the external link.")
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "externalLinkId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "externalLinkKey")}
 	)
-	@Path("/external-links/{externalLinkId}")
+	@Path("/external-links/{externalLinkKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
 	public ExternalLink getExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("externalLinkId") Long
-				externalLinkId)
+			@NotNull @Parameter(hidden = true) @PathParam("externalLinkKey")
+				String externalLinkKey)
 		throws Exception {
 
 		return new ExternalLink();
@@ -173,18 +177,20 @@ public abstract class BaseExternalLinkResourceImpl
 	)
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "productConsumptionId"),
+			@Parameter(in = ParameterIn.PATH, name = "productConsumptionKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/product-consumptions/{productConsumptionId}/external-links")
+	@Path("/product-consumptions/{productConsumptionKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public Page<ExternalLink> getProductConsumptionExternalLinksPage(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("productConsumptionId") Long productConsumptionId,
-			@Context Pagination pagination)
+	public Page<ExternalLink>
+			getProductConsumptionProductConsumptionKeyExternalLinksPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("productConsumptionKey") String
+					productConsumptionKey,
+				@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -198,15 +204,15 @@ public abstract class BaseExternalLinkResourceImpl
 	@POST
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "productConsumptionId")
+			@Parameter(in = ParameterIn.PATH, name = "productConsumptionKey")
 		}
 	)
-	@Path("/product-consumptions/{productConsumptionId}/external-links")
+	@Path("/product-consumptions/{productConsumptionKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public ExternalLink postProductConsumptionExternalLink(
+	public ExternalLink postProductConsumptionProductConsumptionKeyExternalLink(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("productConsumptionId") Long productConsumptionId,
+			@PathParam("productConsumptionKey") String productConsumptionKey,
 			ExternalLink externalLink)
 		throws Exception {
 
@@ -218,18 +224,19 @@ public abstract class BaseExternalLinkResourceImpl
 	@Operation(description = "Retrieves the product purchase's external links.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "productPurchaseId"),
+			@Parameter(in = ParameterIn.PATH, name = "productPurchaseKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/product-purchases/{productPurchaseId}/external-links")
+	@Path("/product-purchases/{productPurchaseKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public Page<ExternalLink> getProductPurchaseExternalLinksPage(
-			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseId")
-				Long productPurchaseId,
-			@Context Pagination pagination)
+	public Page<ExternalLink>
+			getProductPurchaseProductPurchaseKeyExternalLinksPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("productPurchaseKey") String productPurchaseKey,
+				@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -240,14 +247,14 @@ public abstract class BaseExternalLinkResourceImpl
 	@Operation(description = "Adds an external link to the product purchase.")
 	@POST
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseKey")}
 	)
-	@Path("/product-purchases/{productPurchaseId}/external-links")
+	@Path("/product-purchases/{productPurchaseKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public ExternalLink postProductPurchaseExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseId")
-				Long productPurchaseId,
+	public ExternalLink postProductPurchaseProductPurchaseKeyExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseKey")
+				String productPurchaseKey,
 			ExternalLink externalLink)
 		throws Exception {
 
@@ -259,17 +266,17 @@ public abstract class BaseExternalLinkResourceImpl
 	@Operation(description = "Retrieves the product's external links.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "productId"),
+			@Parameter(in = ParameterIn.PATH, name = "productKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/products/{productId}/external-links")
+	@Path("/products/{productKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public Page<ExternalLink> getProductExternalLinksPage(
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId,
+	public Page<ExternalLink> getProductProductKeyExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("productKey") String
+				productKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -280,13 +287,15 @@ public abstract class BaseExternalLinkResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds an external link to the product.")
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "productId")})
-	@Path("/products/{productId}/external-links")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "productKey")}
+	)
+	@Path("/products/{productKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public ExternalLink postProductExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId,
+	public ExternalLink postProductProductKeyExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("productKey") String
+				productKey,
 			ExternalLink externalLink)
 		throws Exception {
 
@@ -298,17 +307,17 @@ public abstract class BaseExternalLinkResourceImpl
 	@Operation(description = "Retrieves the project's external links.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/projects/{projectId}/external-links")
+	@Path("/projects/{projectKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public Page<ExternalLink> getProjectExternalLinksPage(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public Page<ExternalLink> getProjectProjectKeyExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -319,13 +328,15 @@ public abstract class BaseExternalLinkResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds an external link to the project.")
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
-	@Path("/projects/{projectId}/external-links")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
+	)
+	@Path("/projects/{projectKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public ExternalLink postProjectExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public ExternalLink postProjectProjectKeyExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			ExternalLink externalLink)
 		throws Exception {
 
@@ -337,16 +348,17 @@ public abstract class BaseExternalLinkResourceImpl
 	@Operation(description = "Retrieves the team's external links.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "teamId"),
+			@Parameter(in = ParameterIn.PATH, name = "teamKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/teams/{teamId}/external-links")
+	@Path("/teams/{teamKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public Page<ExternalLink> getTeamExternalLinksPage(
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+	public Page<ExternalLink> getTeamTeamKeyExternalLinksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -357,12 +369,13 @@ public abstract class BaseExternalLinkResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds an external link to the team.")
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamId")})
-	@Path("/teams/{teamId}/external-links")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamKey")})
+	@Path("/teams/{teamKey}/external-links")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExternalLink")})
-	public ExternalLink postTeamExternalLink(
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+	public ExternalLink postTeamTeamKeyExternalLink(
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey,
 			ExternalLink externalLink)
 		throws Exception {
 

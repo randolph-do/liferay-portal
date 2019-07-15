@@ -133,16 +133,93 @@ public class ExternalLinkServiceHttp {
 	}
 
 	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			deleteExternalLink(
+				HttpPrincipal httpPrincipal, String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExternalLinkServiceUtil.class, "deleteExternalLink",
+				_deleteExternalLinkParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalLinkKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.root.model.ExternalLink)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
 			getExternalLink(HttpPrincipal httpPrincipal, long externalLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				ExternalLinkServiceUtil.class, "getExternalLink",
-				_getExternalLinkParameterTypes2);
+				_getExternalLinkParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalLinkId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.root.model.ExternalLink)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			getExternalLink(HttpPrincipal httpPrincipal, String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExternalLinkServiceUtil.class, "getExternalLink",
+				_getExternalLinkParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalLinkKey);
 
 			Object returnObj = null;
 
@@ -179,7 +256,7 @@ public class ExternalLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ExternalLinkServiceUtil.class, "getExternalLinks",
-				_getExternalLinksParameterTypes3);
+				_getExternalLinksParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNameId, classPK, start, end);
@@ -218,7 +295,7 @@ public class ExternalLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ExternalLinkServiceUtil.class, "getExternalLinksCount",
-				_getExternalLinksCountParameterTypes4);
+				_getExternalLinksCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNameId, classPK);
@@ -258,7 +335,7 @@ public class ExternalLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ExternalLinkServiceUtil.class, "updateExternalLink",
-				_updateExternalLinkParameterTypes5);
+				_updateExternalLinkParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalLinkId, entityId);
@@ -298,13 +375,17 @@ public class ExternalLinkServiceHttp {
 		};
 	private static final Class<?>[] _deleteExternalLinkParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getExternalLinkParameterTypes2 =
+	private static final Class<?>[] _deleteExternalLinkParameterTypes2 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getExternalLinkParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getExternalLinksParameterTypes3 =
+	private static final Class<?>[] _getExternalLinkParameterTypes4 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getExternalLinksParameterTypes5 =
 		new Class[] {long.class, long.class, int.class, int.class};
-	private static final Class<?>[] _getExternalLinksCountParameterTypes4 =
+	private static final Class<?>[] _getExternalLinksCountParameterTypes6 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateExternalLinkParameterTypes5 =
+	private static final Class<?>[] _updateExternalLinkParameterTypes7 =
 		new Class[] {long.class, String.class};
 
 }

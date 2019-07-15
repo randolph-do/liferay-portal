@@ -52,10 +52,34 @@ public class ProductPurchaseServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			addProductPurchase(
+				String accountKey, String projectKey, String productEntryKey,
+				java.util.Date startDate, java.util.Date endDate, int quantity,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.addProductPurchase(
+			accountKey, projectKey, productEntryKey, startDate, endDate,
+			quantity, productFields);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductPurchase
 			deleteProductPurchase(long productPurchaseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productPurchaseService.deleteProductPurchase(productPurchaseId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			deleteProductPurchase(String productPurchaseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.deleteProductPurchase(
+			productPurchaseKey);
 	}
 
 	@Override
@@ -68,11 +92,28 @@ public class ProductPurchaseServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+			getAccountProductPurchases(String accountKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getAccountProductPurchases(
+			accountKey, start, end);
+	}
+
+	@Override
 	public int getAccountProductPurchasesCount(long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productPurchaseService.getAccountProductPurchasesCount(
 			accountId);
+	}
+
+	@Override
+	public int getAccountProductPurchasesCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getAccountProductPurchasesCount(
+			accountKey);
 	}
 
 	/**
@@ -94,6 +135,14 @@ public class ProductPurchaseServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			getProductPurchase(String productPurchaseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getProductPurchase(productPurchaseKey);
+	}
+
+	@Override
 	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
 			getProjectProductPurchases(long projectId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -103,11 +152,28 @@ public class ProductPurchaseServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+			getProjectProductPurchases(String projectKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getProjectProductPurchases(
+			projectKey, start, end);
+	}
+
+	@Override
 	public int getProjectProductPurchasesCount(long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productPurchaseService.getProjectProductPurchasesCount(
 			projectId);
+	}
+
+	@Override
+	public int getProjectProductPurchasesCount(String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.getProjectProductPurchasesCount(
+			projectKey);
 	}
 
 	@Override
@@ -122,6 +188,20 @@ public class ProductPurchaseServiceWrapper
 
 		return _productPurchaseService.updateProductPurchase(
 			productPurchaseId, startDate, endDate, quantity, productFields);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			updateProductPurchase(
+				String productPurchaseKey, java.util.Date startDate,
+				java.util.Date endDate, int quantity,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productPurchaseService.updateProductPurchase(
+			productPurchaseKey, startDate, endDate, quantity, productFields);
 	}
 
 	@Override

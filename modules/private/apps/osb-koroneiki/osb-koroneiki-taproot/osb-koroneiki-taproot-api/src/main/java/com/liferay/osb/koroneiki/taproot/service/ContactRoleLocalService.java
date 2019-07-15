@@ -92,9 +92,11 @@ public interface ContactRoleLocalService
 	 *
 	 * @param contactRole the contact role
 	 * @return the contact role that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public ContactRole deleteContactRole(ContactRole contactRole);
+	public ContactRole deleteContactRole(ContactRole contactRole)
+		throws PortalException;
 
 	/**
 	 * Deletes the contact role with the primary key from the database. Also notifies the appropriate model listeners.

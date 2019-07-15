@@ -37,12 +37,13 @@ public interface ContactResource {
 		return new Builder();
 	}
 
-	public Page<Contact> getAccountContactsPage(
-			Long accountId, Pagination pagination)
+	public Page<Contact> getAccountAccountKeyContactsPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountContactsPageHttpResponse(
-			Long accountId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getAccountAccountKeyContactsPageHttpResponse(
+				String accountKey, Pagination pagination)
 		throws Exception;
 
 	public Contact postContact(Contact contact) throws Exception;
@@ -50,22 +51,23 @@ public interface ContactResource {
 	public HttpInvoker.HttpResponse postContactHttpResponse(Contact contact)
 		throws Exception;
 
-	public void deleteContact(Long contactId) throws Exception;
+	public void deleteContact(String contactKey) throws Exception;
 
-	public HttpInvoker.HttpResponse deleteContactHttpResponse(Long contactId)
+	public HttpInvoker.HttpResponse deleteContactHttpResponse(String contactKey)
 		throws Exception;
 
-	public Contact getContact(Long contactId) throws Exception;
+	public Contact getContact(String contactKey) throws Exception;
 
-	public HttpInvoker.HttpResponse getContactHttpResponse(Long contactId)
+	public HttpInvoker.HttpResponse getContactHttpResponse(String contactKey)
 		throws Exception;
 
-	public Page<Contact> getProjectContactsPage(
-			Long projectId, Pagination pagination)
+	public Page<Contact> getProjectProjectKeyContactsPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProjectContactsPageHttpResponse(
-			Long projectId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getProjectProjectKeyContactsPageHttpResponse(
+				String projectKey, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -109,12 +111,13 @@ public interface ContactResource {
 
 	public static class ContactResourceImpl implements ContactResource {
 
-		public Page<Contact> getAccountContactsPage(
-				Long accountId, Pagination pagination)
+		public Page<Contact> getAccountAccountKeyContactsPage(
+				String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountContactsPageHttpResponse(accountId, pagination);
+				getAccountAccountKeyContactsPageHttpResponse(
+					accountKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -127,8 +130,9 @@ public interface ContactResource {
 			return Page.of(content, ContactSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getAccountContactsPageHttpResponse(
-				Long accountId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getAccountAccountKeyContactsPageHttpResponse(
+					String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -150,8 +154,8 @@ public interface ContactResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/contacts",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/contacts",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -207,9 +211,9 @@ public interface ContactResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteContact(Long contactId) throws Exception {
+		public void deleteContact(String contactKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteContactHttpResponse(
-				contactId);
+				contactKey);
 
 			String content = httpResponse.getContent();
 
@@ -221,7 +225,7 @@ public interface ContactResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteContactHttpResponse(
-				Long contactId)
+				String contactKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -236,8 +240,8 @@ public interface ContactResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contacts/{contactId}",
-				contactId);
+						"/o/koroneiki-rest/v1.0/contacts/{contactKey}",
+				contactKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -245,9 +249,9 @@ public interface ContactResource {
 			return httpInvoker.invoke();
 		}
 
-		public Contact getContact(Long contactId) throws Exception {
+		public Contact getContact(String contactKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getContactHttpResponse(
-				contactId);
+				contactKey);
 
 			String content = httpResponse.getContent();
 
@@ -269,7 +273,8 @@ public interface ContactResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getContactHttpResponse(Long contactId)
+		public HttpInvoker.HttpResponse getContactHttpResponse(
+				String contactKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -284,8 +289,8 @@ public interface ContactResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contacts/{contactId}",
-				contactId);
+						"/o/koroneiki-rest/v1.0/contacts/{contactKey}",
+				contactKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -293,12 +298,13 @@ public interface ContactResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Contact> getProjectContactsPage(
-				Long projectId, Pagination pagination)
+		public Page<Contact> getProjectProjectKeyContactsPage(
+				String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProjectContactsPageHttpResponse(projectId, pagination);
+				getProjectProjectKeyContactsPageHttpResponse(
+					projectKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -311,8 +317,9 @@ public interface ContactResource {
 			return Page.of(content, ContactSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getProjectContactsPageHttpResponse(
-				Long projectId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getProjectProjectKeyContactsPageHttpResponse(
+					String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -334,8 +341,8 @@ public interface ContactResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/contacts",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/contacts",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -197,19 +197,19 @@ public class Contact {
 	@NotEmpty
 	protected String firstName;
 
-	@Schema(description = "The contact's ID.")
-	public Long getId() {
-		return id;
+	@Schema(description = "The contact's key.")
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -221,7 +221,7 @@ public class Contact {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected String key;
 
 	@Schema(description = "The language ID of the contact.")
 	public String getLanguageId() {
@@ -414,14 +414,18 @@ public class Contact {
 			sb.append("\"");
 		}
 
-		if (id != null) {
+		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
 		if (languageId != null) {

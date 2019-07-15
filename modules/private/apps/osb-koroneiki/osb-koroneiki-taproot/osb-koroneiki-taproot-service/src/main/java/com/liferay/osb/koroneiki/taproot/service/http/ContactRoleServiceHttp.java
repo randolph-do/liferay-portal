@@ -135,16 +135,95 @@ public class ContactRoleServiceHttp {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
+			deleteContactRole(
+				HttpPrincipal httpPrincipal, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactRoleServiceUtil.class, "deleteContactRole",
+				_deleteContactRoleParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactRoleKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.ContactRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
 			getContactRole(HttpPrincipal httpPrincipal, long contactRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactRoleServiceUtil.class, "getContactRole",
-				_getContactRoleParameterTypes2);
+				_getContactRoleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactRoleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.ContactRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
+			getContactRole(HttpPrincipal httpPrincipal, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactRoleServiceUtil.class, "getContactRole",
+				_getContactRoleParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactRoleKey);
 
 			Object returnObj = null;
 
@@ -182,10 +261,51 @@ public class ContactRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactRoleServiceUtil.class, "updateContactRole",
-				_updateContactRoleParameterTypes3);
+				_updateContactRoleParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactRoleId, name, description);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.ContactRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
+			updateContactRole(
+				HttpPrincipal httpPrincipal, String contactRoleKey, String name,
+				String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactRoleServiceUtil.class, "updateContactRole",
+				_updateContactRoleParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactRoleKey, name, description);
 
 			Object returnObj = null;
 
@@ -221,9 +341,15 @@ public class ContactRoleServiceHttp {
 		new Class[] {String.class, String.class, int.class};
 	private static final Class<?>[] _deleteContactRoleParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getContactRoleParameterTypes2 =
+	private static final Class<?>[] _deleteContactRoleParameterTypes2 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getContactRoleParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateContactRoleParameterTypes3 =
+	private static final Class<?>[] _getContactRoleParameterTypes4 =
+		new Class[] {String.class};
+	private static final Class<?>[] _updateContactRoleParameterTypes5 =
 		new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[] _updateContactRoleParameterTypes6 =
+		new Class[] {String.class, String.class, String.class};
 
 }

@@ -63,17 +63,17 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@Operation(description = "Retrieves the account's projects.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/accounts/{accountId}/projects")
+	@Path("/accounts/{accountKey}/projects")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Project")})
-	public Page<Project> getAccountProjectsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Page<Project> getAccountAccountKeyProjectsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -83,13 +83,15 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/projects")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}/projects")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Project")})
-	public Project postAccountProject(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Project postAccountAccountKeyProject(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			Project project)
 		throws Exception {
 
@@ -98,26 +100,30 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
-	@Path("/projects/{projectId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
+	)
+	@Path("/projects/{projectKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Project")})
 	public void deleteProject(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId)
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey)
 		throws Exception {
 	}
 
 	@Override
 	@GET
 	@Operation(description = "Retrieves the project.")
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
-	@Path("/projects/{projectId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
+	)
+	@Path("/projects/{projectKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Project")})
 	public Project getProject(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId)
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey)
 		throws Exception {
 
 		return new Project();
@@ -126,13 +132,15 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@PUT
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
-	@Path("/projects/{projectId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
+	)
+	@Path("/projects/{projectKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Project")})
 	public Project putProject(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			Project project)
 		throws Exception {
 
@@ -144,18 +152,18 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@Operation(description = "Unassigns contacts from the project.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactIds")
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactKeys")
 		}
 	)
-	@Path("/projects/{projectId}/contacts")
+	@Path("/projects/{projectKey}/contacts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Project")})
 	public void deleteProjectContact(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactIds") Long[]
-				contactIds)
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactKeys")
+				String[] contactKeys)
 		throws Exception {
 	}
 
@@ -164,18 +172,18 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@PUT
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactIds")
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactKeys")
 		}
 	)
-	@Path("/projects/{projectId}/contacts")
+	@Path("/projects/{projectKey}/contacts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Project")})
 	public void putProjectContact(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactIds") Long[]
-				contactIds)
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactKeys")
+				String[] contactKeys)
 		throws Exception {
 	}
 
@@ -186,21 +194,21 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	)
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.PATH, name = "contactId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactRoleIds")
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
+			@Parameter(in = ParameterIn.PATH, name = "contactKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactRoleKeys")
 		}
 	)
-	@Path("/projects/{projectId}/contacts/{contactId}/roles")
+	@Path("/projects/{projectKey}/contacts/{contactKey}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Project")})
-	public void deleteProjectContactRole(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleIds")
-				Long[] contactRoleIds)
+	public void deleteProjectContactContactKeyRole(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleKeys")
+				String[] contactRoleKeys)
 		throws Exception {
 	}
 
@@ -209,21 +217,21 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@PUT
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.PATH, name = "contactId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactRoleIds")
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
+			@Parameter(in = ParameterIn.PATH, name = "contactKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactRoleKeys")
 		}
 	)
-	@Path("/projects/{projectId}/contacts/{contactId}/roles")
+	@Path("/projects/{projectKey}/contacts/{contactKey}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Project")})
-	public void putProjectContactRole(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleIds")
-				Long[] contactRoleIds)
+	public void putProjectContactContactKeyRole(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleKeys")
+				String[] contactRoleKeys)
 		throws Exception {
 	}
 
@@ -232,20 +240,21 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@Operation(description = "Unassigns roles from the team for the project.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.PATH, name = "teamId"),
-			@Parameter(in = ParameterIn.QUERY, name = "teamRoleIds")
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
+			@Parameter(in = ParameterIn.PATH, name = "teamKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "teamRoleKeys")
 		}
 	)
-	@Path("/projects/{projectId}/teams/{teamId}/roles")
+	@Path("/projects/{projectKey}/teams/{teamKey}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Project")})
-	public void deleteProjectTeamRole(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
-			@NotNull @Parameter(hidden = true) @QueryParam("teamRoleIds") Long[]
-				teamRoleIds)
+	public void deleteProjectTeamTeamKeyRole(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("teamRoleKeys")
+				String[] teamRoleKeys)
 		throws Exception {
 	}
 
@@ -254,20 +263,21 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@PUT
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
-			@Parameter(in = ParameterIn.PATH, name = "teamId"),
-			@Parameter(in = ParameterIn.QUERY, name = "teamRoleIds")
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
+			@Parameter(in = ParameterIn.PATH, name = "teamKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "teamRoleKeys")
 		}
 	)
-	@Path("/projects/{projectId}/teams/{teamId}/roles")
+	@Path("/projects/{projectKey}/teams/{teamKey}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Project")})
-	public void putProjectTeamRole(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
-			@NotNull @Parameter(hidden = true) @QueryParam("teamRoleIds") Long[]
-				teamRoleIds)
+	public void putProjectTeamTeamKeyRole(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("teamRoleKeys")
+				String[] teamRoleKeys)
 		throws Exception {
 	}
 

@@ -38,12 +38,12 @@ public interface ContactRoleResource {
 	public ContactRole postContactRole(ContactRole contactRole)
 		throws Exception;
 
-	public void deleteContactRole(Long contactRoleId) throws Exception;
+	public void deleteContactRole(String contactRoleKey) throws Exception;
 
-	public ContactRole getContactRole(Long contactRoleId) throws Exception;
+	public ContactRole getContactRole(String contactRoleKey) throws Exception;
 
 	public ContactRole putContactRole(
-			Long contactRoleId, ContactRole contactRole)
+			String contactRoleKey, ContactRole contactRole)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -131,6 +131,44 @@ public class TeamRoleServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRole
+			deleteTeamRole(HttpPrincipal httpPrincipal, String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamRoleServiceUtil.class, "deleteTeamRole",
+				_deleteTeamRoleParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, teamRoleKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.TeamRole)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.TeamRole getTeamRole(
 			HttpPrincipal httpPrincipal, long teamRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -138,10 +176,48 @@ public class TeamRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamRoleServiceUtil.class, "getTeamRole",
-				_getTeamRoleParameterTypes2);
+				_getTeamRoleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, teamRoleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.TeamRole)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRole getTeamRole(
+			HttpPrincipal httpPrincipal, String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamRoleServiceUtil.class, "getTeamRole",
+				_getTeamRoleParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, teamRoleKey);
 
 			Object returnObj = null;
 
@@ -178,10 +254,50 @@ public class TeamRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamRoleServiceUtil.class, "updateTeamRole",
-				_updateTeamRoleParameterTypes3);
+				_updateTeamRoleParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, teamRoleId, name, description);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.TeamRole)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRole
+			updateTeamRole(
+				HttpPrincipal httpPrincipal, String teamRoleKey, String name,
+				String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamRoleServiceUtil.class, "updateTeamRole",
+				_updateTeamRoleParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, teamRoleKey, name, description);
 
 			Object returnObj = null;
 
@@ -216,10 +332,17 @@ public class TeamRoleServiceHttp {
 	};
 	private static final Class<?>[] _deleteTeamRoleParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getTeamRoleParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteTeamRoleParameterTypes2 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getTeamRoleParameterTypes3 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _updateTeamRoleParameterTypes3 =
+	private static final Class<?>[] _getTeamRoleParameterTypes4 = new Class[] {
+		String.class
+	};
+	private static final Class<?>[] _updateTeamRoleParameterTypes5 =
 		new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[] _updateTeamRoleParameterTypes6 =
+		new Class[] {String.class, String.class, String.class};
 
 }

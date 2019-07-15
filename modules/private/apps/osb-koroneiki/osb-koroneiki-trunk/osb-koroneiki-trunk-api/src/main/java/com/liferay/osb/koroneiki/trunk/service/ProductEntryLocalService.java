@@ -106,9 +106,11 @@ public interface ProductEntryLocalService
 	 *
 	 * @param productEntry the product entry
 	 * @return the product entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public ProductEntry deleteProductEntry(ProductEntry productEntry);
+	public ProductEntry deleteProductEntry(ProductEntry productEntry)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

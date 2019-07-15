@@ -37,131 +37,143 @@ public interface ExternalLinkResource {
 		return new Builder();
 	}
 
-	public Page<ExternalLink> getAccountExternalLinksPage(
-			Long accountId, Pagination pagination)
+	public Page<ExternalLink> getAccountAccountKeyExternalLinksPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountExternalLinksPageHttpResponse(
-			Long accountId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getAccountAccountKeyExternalLinksPageHttpResponse(
+				String accountKey, Pagination pagination)
 		throws Exception;
 
-	public ExternalLink postAccountExternalLink(
-			Long accountId, ExternalLink externalLink)
+	public ExternalLink postAccountAccountKeyExternalLink(
+			String accountKey, ExternalLink externalLink)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postAccountExternalLinkHttpResponse(
-			Long accountId, ExternalLink externalLink)
+	public HttpInvoker.HttpResponse
+			postAccountAccountKeyExternalLinkHttpResponse(
+				String accountKey, ExternalLink externalLink)
 		throws Exception;
 
-	public Page<ExternalLink> getContactExternalLinksPage(
-			Long contactId, Pagination pagination)
+	public Page<ExternalLink> getContactContactKeyExternalLinksPage(
+			String contactKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getContactExternalLinksPageHttpResponse(
-			Long contactId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getContactContactKeyExternalLinksPageHttpResponse(
+				String contactKey, Pagination pagination)
 		throws Exception;
 
-	public ExternalLink postContactExternalLink(
-			Long contactId, ExternalLink externalLink)
+	public ExternalLink postContactContactKeyExternalLink(
+			String contactKey, ExternalLink externalLink)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postContactExternalLinkHttpResponse(
-			Long contactId, ExternalLink externalLink)
+	public HttpInvoker.HttpResponse
+			postContactContactKeyExternalLinkHttpResponse(
+				String contactKey, ExternalLink externalLink)
 		throws Exception;
 
-	public void deleteExternalLink(Long externalLinkId) throws Exception;
+	public void deleteExternalLink(String externalLinkKey) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteExternalLinkHttpResponse(
-			Long externalLinkId)
+			String externalLinkKey)
 		throws Exception;
 
-	public ExternalLink getExternalLink(Long externalLinkId) throws Exception;
+	public ExternalLink getExternalLink(String externalLinkKey)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse getExternalLinkHttpResponse(
-			Long externalLinkId)
+			String externalLinkKey)
 		throws Exception;
 
-	public Page<ExternalLink> getProductConsumptionExternalLinksPage(
-			Long productConsumptionId, Pagination pagination)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getProductConsumptionExternalLinksPageHttpResponse(
-				Long productConsumptionId, Pagination pagination)
-		throws Exception;
-
-	public ExternalLink postProductConsumptionExternalLink(
-			Long productConsumptionId, ExternalLink externalLink)
+	public Page<ExternalLink>
+			getProductConsumptionProductConsumptionKeyExternalLinksPage(
+				String productConsumptionKey, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postProductConsumptionExternalLinkHttpResponse(
-				Long productConsumptionId, ExternalLink externalLink)
+			getProductConsumptionProductConsumptionKeyExternalLinksPageHttpResponse(
+				String productConsumptionKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getProductPurchaseExternalLinksPage(
-			Long productPurchaseId, Pagination pagination)
+	public ExternalLink postProductConsumptionProductConsumptionKeyExternalLink(
+			String productConsumptionKey, ExternalLink externalLink)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getProductPurchaseExternalLinksPageHttpResponse(
-				Long productPurchaseId, Pagination pagination)
+			postProductConsumptionProductConsumptionKeyExternalLinkHttpResponse(
+				String productConsumptionKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postProductPurchaseExternalLink(
-			Long productPurchaseId, ExternalLink externalLink)
+	public Page<ExternalLink>
+			getProductPurchaseProductPurchaseKeyExternalLinksPage(
+				String productPurchaseKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postProductPurchaseExternalLinkHttpResponse(
-			Long productPurchaseId, ExternalLink externalLink)
+	public HttpInvoker.HttpResponse
+			getProductPurchaseProductPurchaseKeyExternalLinksPageHttpResponse(
+				String productPurchaseKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getProductExternalLinksPage(
-			Long productId, Pagination pagination)
+	public ExternalLink postProductPurchaseProductPurchaseKeyExternalLink(
+			String productPurchaseKey, ExternalLink externalLink)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProductExternalLinksPageHttpResponse(
-			Long productId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			postProductPurchaseProductPurchaseKeyExternalLinkHttpResponse(
+				String productPurchaseKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postProductExternalLink(
-			Long productId, ExternalLink externalLink)
+	public Page<ExternalLink> getProductProductKeyExternalLinksPage(
+			String productKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postProductExternalLinkHttpResponse(
-			Long productId, ExternalLink externalLink)
+	public HttpInvoker.HttpResponse
+			getProductProductKeyExternalLinksPageHttpResponse(
+				String productKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getProjectExternalLinksPage(
-			Long projectId, Pagination pagination)
+	public ExternalLink postProductProductKeyExternalLink(
+			String productKey, ExternalLink externalLink)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProjectExternalLinksPageHttpResponse(
-			Long projectId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			postProductProductKeyExternalLinkHttpResponse(
+				String productKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postProjectExternalLink(
-			Long projectId, ExternalLink externalLink)
+	public Page<ExternalLink> getProjectProjectKeyExternalLinksPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postProjectExternalLinkHttpResponse(
-			Long projectId, ExternalLink externalLink)
+	public HttpInvoker.HttpResponse
+			getProjectProjectKeyExternalLinksPageHttpResponse(
+				String projectKey, Pagination pagination)
 		throws Exception;
 
-	public Page<ExternalLink> getTeamExternalLinksPage(
-			Long teamId, Pagination pagination)
+	public ExternalLink postProjectProjectKeyExternalLink(
+			String projectKey, ExternalLink externalLink)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getTeamExternalLinksPageHttpResponse(
-			Long teamId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			postProjectProjectKeyExternalLinkHttpResponse(
+				String projectKey, ExternalLink externalLink)
 		throws Exception;
 
-	public ExternalLink postTeamExternalLink(
-			Long teamId, ExternalLink externalLink)
+	public Page<ExternalLink> getTeamTeamKeyExternalLinksPage(
+			String teamKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTeamExternalLinkHttpResponse(
-			Long teamId, ExternalLink externalLink)
+	public HttpInvoker.HttpResponse getTeamTeamKeyExternalLinksPageHttpResponse(
+			String teamKey, Pagination pagination)
+		throws Exception;
+
+	public ExternalLink postTeamTeamKeyExternalLink(
+			String teamKey, ExternalLink externalLink)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postTeamTeamKeyExternalLinkHttpResponse(
+			String teamKey, ExternalLink externalLink)
 		throws Exception;
 
 	public static class Builder {
@@ -206,12 +218,13 @@ public interface ExternalLinkResource {
 	public static class ExternalLinkResourceImpl
 		implements ExternalLinkResource {
 
-		public Page<ExternalLink> getAccountExternalLinksPage(
-				Long accountId, Pagination pagination)
+		public Page<ExternalLink> getAccountAccountKeyExternalLinksPage(
+				String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountExternalLinksPageHttpResponse(accountId, pagination);
+				getAccountAccountKeyExternalLinksPageHttpResponse(
+					accountKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -224,8 +237,9 @@ public interface ExternalLinkResource {
 			return Page.of(content, ExternalLinkSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getAccountExternalLinksPageHttpResponse(
-				Long accountId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getAccountAccountKeyExternalLinksPageHttpResponse(
+					String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -247,8 +261,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/external-links",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/external-links",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -256,12 +270,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExternalLink postAccountExternalLink(
-				Long accountId, ExternalLink externalLink)
+		public ExternalLink postAccountAccountKeyExternalLink(
+				String accountKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountExternalLinkHttpResponse(accountId, externalLink);
+				postAccountAccountKeyExternalLinkHttpResponse(
+					accountKey, externalLink);
 
 			String content = httpResponse.getContent();
 
@@ -283,8 +298,9 @@ public interface ExternalLinkResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAccountExternalLinkHttpResponse(
-				Long accountId, ExternalLink externalLink)
+		public HttpInvoker.HttpResponse
+				postAccountAccountKeyExternalLinkHttpResponse(
+					String accountKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -301,8 +317,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/external-links",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/external-links",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -310,12 +326,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<ExternalLink> getContactExternalLinksPage(
-				Long contactId, Pagination pagination)
+		public Page<ExternalLink> getContactContactKeyExternalLinksPage(
+				String contactKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getContactExternalLinksPageHttpResponse(contactId, pagination);
+				getContactContactKeyExternalLinksPageHttpResponse(
+					contactKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -328,8 +345,9 @@ public interface ExternalLinkResource {
 			return Page.of(content, ExternalLinkSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getContactExternalLinksPageHttpResponse(
-				Long contactId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getContactContactKeyExternalLinksPageHttpResponse(
+					String contactKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -351,8 +369,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contacts/{contactId}/external-links",
-				contactId);
+						"/o/koroneiki-rest/v1.0/contacts/{contactKey}/external-links",
+				contactKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -360,12 +378,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExternalLink postContactExternalLink(
-				Long contactId, ExternalLink externalLink)
+		public ExternalLink postContactContactKeyExternalLink(
+				String contactKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postContactExternalLinkHttpResponse(contactId, externalLink);
+				postContactContactKeyExternalLinkHttpResponse(
+					contactKey, externalLink);
 
 			String content = httpResponse.getContent();
 
@@ -387,8 +406,9 @@ public interface ExternalLinkResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postContactExternalLinkHttpResponse(
-				Long contactId, ExternalLink externalLink)
+		public HttpInvoker.HttpResponse
+				postContactContactKeyExternalLinkHttpResponse(
+					String contactKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -405,8 +425,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contacts/{contactId}/external-links",
-				contactId);
+						"/o/koroneiki-rest/v1.0/contacts/{contactKey}/external-links",
+				contactKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -414,9 +434,11 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteExternalLink(Long externalLinkId) throws Exception {
+		public void deleteExternalLink(String externalLinkKey)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				deleteExternalLinkHttpResponse(externalLinkId);
+				deleteExternalLinkHttpResponse(externalLinkKey);
 
 			String content = httpResponse.getContent();
 
@@ -428,7 +450,7 @@ public interface ExternalLinkResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteExternalLinkHttpResponse(
-				Long externalLinkId)
+				String externalLinkKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -443,8 +465,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/external-links/{externalLinkId}",
-				externalLinkId);
+						"/o/koroneiki-rest/v1.0/external-links/{externalLinkKey}",
+				externalLinkKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -452,11 +474,11 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExternalLink getExternalLink(Long externalLinkId)
+		public ExternalLink getExternalLink(String externalLinkKey)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getExternalLinkHttpResponse(
-				externalLinkId);
+				externalLinkKey);
 
 			String content = httpResponse.getContent();
 
@@ -479,7 +501,7 @@ public interface ExternalLinkResource {
 		}
 
 		public HttpInvoker.HttpResponse getExternalLinkHttpResponse(
-				Long externalLinkId)
+				String externalLinkKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -494,8 +516,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/external-links/{externalLinkId}",
-				externalLinkId);
+						"/o/koroneiki-rest/v1.0/external-links/{externalLinkKey}",
+				externalLinkKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -503,13 +525,14 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<ExternalLink> getProductConsumptionExternalLinksPage(
-				Long productConsumptionId, Pagination pagination)
+		public Page<ExternalLink>
+				getProductConsumptionProductConsumptionKeyExternalLinksPage(
+					String productConsumptionKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProductConsumptionExternalLinksPageHttpResponse(
-					productConsumptionId, pagination);
+				getProductConsumptionProductConsumptionKeyExternalLinksPageHttpResponse(
+					productConsumptionKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -523,8 +546,8 @@ public interface ExternalLinkResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getProductConsumptionExternalLinksPageHttpResponse(
-					Long productConsumptionId, Pagination pagination)
+				getProductConsumptionProductConsumptionKeyExternalLinksPageHttpResponse(
+					String productConsumptionKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -546,8 +569,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}/external-links",
-				productConsumptionId);
+						"/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionKey}/external-links",
+				productConsumptionKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -555,121 +578,14 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExternalLink postProductConsumptionExternalLink(
-				Long productConsumptionId, ExternalLink externalLink)
+		public ExternalLink
+				postProductConsumptionProductConsumptionKeyExternalLink(
+					String productConsumptionKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProductConsumptionExternalLinkHttpResponse(
-					productConsumptionId, externalLink);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-
-			try {
-				return ExternalLinkSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw e;
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postProductConsumptionExternalLinkHttpResponse(
-					Long productConsumptionId, ExternalLink externalLink)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(externalLink.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionId}/external-links",
-				productConsumptionId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<ExternalLink> getProductPurchaseExternalLinksPage(
-				Long productPurchaseId, Pagination pagination)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getProductPurchaseExternalLinksPageHttpResponse(
-					productPurchaseId, pagination);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-
-			return Page.of(content, ExternalLinkSerDes::toDTO);
-		}
-
-		public HttpInvoker.HttpResponse
-				getProductPurchaseExternalLinksPageHttpResponse(
-					Long productPurchaseId, Pagination pagination)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}/external-links",
-				productPurchaseId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public ExternalLink postProductPurchaseExternalLink(
-				Long productPurchaseId, ExternalLink externalLink)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postProductPurchaseExternalLinkHttpResponse(
-					productPurchaseId, externalLink);
+				postProductConsumptionProductConsumptionKeyExternalLinkHttpResponse(
+					productConsumptionKey, externalLink);
 
 			String content = httpResponse.getContent();
 
@@ -692,8 +608,8 @@ public interface ExternalLinkResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postProductPurchaseExternalLinkHttpResponse(
-					Long productPurchaseId, ExternalLink externalLink)
+				postProductConsumptionProductConsumptionKeyExternalLinkHttpResponse(
+					String productConsumptionKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -710,8 +626,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}/external-links",
-				productPurchaseId);
+						"/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionKey}/external-links",
+				productConsumptionKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -719,12 +635,14 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<ExternalLink> getProductExternalLinksPage(
-				Long productId, Pagination pagination)
+		public Page<ExternalLink>
+				getProductPurchaseProductPurchaseKeyExternalLinksPage(
+					String productPurchaseKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProductExternalLinksPageHttpResponse(productId, pagination);
+				getProductPurchaseProductPurchaseKeyExternalLinksPageHttpResponse(
+					productPurchaseKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -737,8 +655,9 @@ public interface ExternalLinkResource {
 			return Page.of(content, ExternalLinkSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getProductExternalLinksPageHttpResponse(
-				Long productId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getProductPurchaseProductPurchaseKeyExternalLinksPageHttpResponse(
+					String productPurchaseKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -760,8 +679,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/products/{productId}/external-links",
-				productId);
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseKey}/external-links",
+				productPurchaseKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -769,12 +688,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExternalLink postProductExternalLink(
-				Long productId, ExternalLink externalLink)
+		public ExternalLink postProductPurchaseProductPurchaseKeyExternalLink(
+				String productPurchaseKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProductExternalLinkHttpResponse(productId, externalLink);
+				postProductPurchaseProductPurchaseKeyExternalLinkHttpResponse(
+					productPurchaseKey, externalLink);
 
 			String content = httpResponse.getContent();
 
@@ -796,8 +716,9 @@ public interface ExternalLinkResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postProductExternalLinkHttpResponse(
-				Long productId, ExternalLink externalLink)
+		public HttpInvoker.HttpResponse
+				postProductPurchaseProductPurchaseKeyExternalLinkHttpResponse(
+					String productPurchaseKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -814,8 +735,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/products/{productId}/external-links",
-				productId);
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseKey}/external-links",
+				productPurchaseKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -823,12 +744,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<ExternalLink> getProjectExternalLinksPage(
-				Long projectId, Pagination pagination)
+		public Page<ExternalLink> getProductProductKeyExternalLinksPage(
+				String productKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProjectExternalLinksPageHttpResponse(projectId, pagination);
+				getProductProductKeyExternalLinksPageHttpResponse(
+					productKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -841,8 +763,9 @@ public interface ExternalLinkResource {
 			return Page.of(content, ExternalLinkSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getProjectExternalLinksPageHttpResponse(
-				Long projectId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getProductProductKeyExternalLinksPageHttpResponse(
+					String productKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -864,8 +787,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/external-links",
-				projectId);
+						"/o/koroneiki-rest/v1.0/products/{productKey}/external-links",
+				productKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -873,12 +796,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExternalLink postProjectExternalLink(
-				Long projectId, ExternalLink externalLink)
+		public ExternalLink postProductProductKeyExternalLink(
+				String productKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProjectExternalLinkHttpResponse(projectId, externalLink);
+				postProductProductKeyExternalLinkHttpResponse(
+					productKey, externalLink);
 
 			String content = httpResponse.getContent();
 
@@ -900,8 +824,9 @@ public interface ExternalLinkResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postProjectExternalLinkHttpResponse(
-				Long projectId, ExternalLink externalLink)
+		public HttpInvoker.HttpResponse
+				postProductProductKeyExternalLinkHttpResponse(
+					String productKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -918,8 +843,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/external-links",
-				projectId);
+						"/o/koroneiki-rest/v1.0/products/{productKey}/external-links",
+				productKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -927,12 +852,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<ExternalLink> getTeamExternalLinksPage(
-				Long teamId, Pagination pagination)
+		public Page<ExternalLink> getProjectProjectKeyExternalLinksPage(
+				String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTeamExternalLinksPageHttpResponse(teamId, pagination);
+				getProjectProjectKeyExternalLinksPageHttpResponse(
+					projectKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -945,8 +871,9 @@ public interface ExternalLinkResource {
 			return Page.of(content, ExternalLinkSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getTeamExternalLinksPageHttpResponse(
-				Long teamId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getProjectProjectKeyExternalLinksPageHttpResponse(
+					String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -968,8 +895,8 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/teams/{teamId}/external-links",
-				teamId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/external-links",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -977,12 +904,13 @@ public interface ExternalLinkResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExternalLink postTeamExternalLink(
-				Long teamId, ExternalLink externalLink)
+		public ExternalLink postProjectProjectKeyExternalLink(
+				String projectKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTeamExternalLinkHttpResponse(teamId, externalLink);
+				postProjectProjectKeyExternalLinkHttpResponse(
+					projectKey, externalLink);
 
 			String content = httpResponse.getContent();
 
@@ -1004,8 +932,9 @@ public interface ExternalLinkResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTeamExternalLinkHttpResponse(
-				Long teamId, ExternalLink externalLink)
+		public HttpInvoker.HttpResponse
+				postProjectProjectKeyExternalLinkHttpResponse(
+					String projectKey, ExternalLink externalLink)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1022,8 +951,114 @@ public interface ExternalLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/teams/{teamId}/external-links",
-				teamId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/external-links",
+				projectKey);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<ExternalLink> getTeamTeamKeyExternalLinksPage(
+				String teamKey, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getTeamTeamKeyExternalLinksPageHttpResponse(
+					teamKey, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, ExternalLinkSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getTeamTeamKeyExternalLinksPageHttpResponse(
+					String teamKey, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/teams/{teamKey}/external-links",
+				teamKey);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ExternalLink postTeamTeamKeyExternalLink(
+				String teamKey, ExternalLink externalLink)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postTeamTeamKeyExternalLinkHttpResponse(teamKey, externalLink);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ExternalLinkSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse postTeamTeamKeyExternalLinkHttpResponse(
+				String teamKey, ExternalLink externalLink)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(externalLink.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/koroneiki-rest/v1.0/teams/{teamKey}/external-links",
+				teamKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

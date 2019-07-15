@@ -131,6 +131,46 @@ public class ProductEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			deleteProductEntry(
+				HttpPrincipal httpPrincipal, String productEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductEntryServiceUtil.class, "deleteProductEntry",
+				_deleteProductEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, productEntryKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.trunk.model.ProductEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.osb.koroneiki.trunk.model.ProductEntry> getProductEntries(
 				HttpPrincipal httpPrincipal, int start, int end)
@@ -139,7 +179,7 @@ public class ProductEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProductEntryServiceUtil.class, "getProductEntries",
-				_getProductEntriesParameterTypes2);
+				_getProductEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, start, end);
@@ -177,7 +217,7 @@ public class ProductEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProductEntryServiceUtil.class, "getProductEntriesCount",
-				_getProductEntriesCountParameterTypes3);
+				_getProductEntriesCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -214,10 +254,49 @@ public class ProductEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProductEntryServiceUtil.class, "getProductEntry",
-				_getProductEntryParameterTypes4);
+				_getProductEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, productEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.trunk.model.ProductEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			getProductEntry(HttpPrincipal httpPrincipal, String productEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductEntryServiceUtil.class, "getProductEntry",
+				_getProductEntryParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, productEntryKey);
 
 			Object returnObj = null;
 
@@ -254,10 +333,51 @@ public class ProductEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProductEntryServiceUtil.class, "updateProductEntry",
-				_updateProductEntryParameterTypes5);
+				_updateProductEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, productEntryId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.trunk.model.ProductEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			updateProductEntry(
+				HttpPrincipal httpPrincipal, String productEntryKey,
+				String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductEntryServiceUtil.class, "updateProductEntry",
+				_updateProductEntryParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, productEntryKey, name);
 
 			Object returnObj = null;
 
@@ -293,13 +413,19 @@ public class ProductEntryServiceHttp {
 		new Class[] {String.class};
 	private static final Class<?>[] _deleteProductEntryParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getProductEntriesParameterTypes2 =
+	private static final Class<?>[] _deleteProductEntryParameterTypes2 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getProductEntriesParameterTypes3 =
 		new Class[] {int.class, int.class};
-	private static final Class<?>[] _getProductEntriesCountParameterTypes3 =
+	private static final Class<?>[] _getProductEntriesCountParameterTypes4 =
 		new Class[] {};
-	private static final Class<?>[] _getProductEntryParameterTypes4 =
+	private static final Class<?>[] _getProductEntryParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateProductEntryParameterTypes5 =
+	private static final Class<?>[] _getProductEntryParameterTypes6 =
+		new Class[] {String.class};
+	private static final Class<?>[] _updateProductEntryParameterTypes7 =
 		new Class[] {long.class, String.class};
+	private static final Class<?>[] _updateProductEntryParameterTypes8 =
+		new Class[] {String.class, String.class};
 
 }

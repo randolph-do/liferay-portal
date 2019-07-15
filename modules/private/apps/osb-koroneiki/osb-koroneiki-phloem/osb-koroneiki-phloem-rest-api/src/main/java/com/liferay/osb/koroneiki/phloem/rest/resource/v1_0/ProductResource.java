@@ -42,11 +42,12 @@ public interface ProductResource {
 
 	public Product postProduct(Product product) throws Exception;
 
-	public void deleteProduct(Long productId) throws Exception;
+	public void deleteProduct(String productKey) throws Exception;
 
-	public Product getProduct(Long productId) throws Exception;
+	public Product getProduct(String productKey) throws Exception;
 
-	public Product putProduct(Long productId, Product product) throws Exception;
+	public Product putProduct(String productKey, Product product)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

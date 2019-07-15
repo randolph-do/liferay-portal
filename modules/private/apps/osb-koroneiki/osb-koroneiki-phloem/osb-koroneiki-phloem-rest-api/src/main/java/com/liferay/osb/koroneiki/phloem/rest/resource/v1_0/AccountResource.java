@@ -37,24 +37,25 @@ public interface AccountResource {
 
 	public Account postAccount(Account account) throws Exception;
 
-	public void deleteAccount(Long accountId) throws Exception;
+	public void deleteAccount(String accountKey) throws Exception;
 
-	public Account getAccount(Long accountId) throws Exception;
+	public Account getAccount(String accountKey) throws Exception;
 
-	public Account putAccount(Long accountId, Account account) throws Exception;
-
-	public void deleteAccountContact(Long accountId, Long[] contactIds)
+	public Account putAccount(String accountKey, Account account)
 		throws Exception;
 
-	public void putAccountContact(Long accountId, Long[] contactIds)
+	public void deleteAccountContact(String accountKey, String[] contactKeys)
 		throws Exception;
 
-	public void deleteAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
+	public void putAccountContact(String accountKey, String[] contactKeys)
 		throws Exception;
 
-	public void putAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
+	public void deleteAccountContactContactKeyRole(
+			String accountKey, String contactKey, String[] contactRoleKeys)
+		throws Exception;
+
+	public void putAccountContactContactKeyRole(
+			String accountKey, String contactKey, String[] contactRoleKeys)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

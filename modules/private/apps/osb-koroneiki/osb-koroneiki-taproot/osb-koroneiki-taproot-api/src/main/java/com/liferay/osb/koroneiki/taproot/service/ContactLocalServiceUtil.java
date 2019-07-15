@@ -78,9 +78,11 @@ public class ContactLocalServiceUtil {
 	 *
 	 * @param contact the contact
 	 * @return the contact that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Contact deleteContact(
-		com.liferay.osb.koroneiki.taproot.model.Contact contact) {
+			com.liferay.osb.koroneiki.taproot.model.Contact contact)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteContact(contact);
 	}

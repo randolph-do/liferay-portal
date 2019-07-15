@@ -100,9 +100,11 @@ public class TeamLocalServiceUtil {
 	 *
 	 * @param team the team
 	 * @return the team that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Team deleteTeam(
-		com.liferay.osb.koroneiki.taproot.model.Team team) {
+			com.liferay.osb.koroneiki.taproot.model.Team team)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteTeam(team);
 	}

@@ -116,10 +116,12 @@ public interface ProductConsumptionLocalService
 	 *
 	 * @param productConsumption the product consumption
 	 * @return the product consumption that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ProductConsumption deleteProductConsumption(
-		ProductConsumption productConsumption);
+			ProductConsumption productConsumption)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

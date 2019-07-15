@@ -37,39 +37,41 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProjectResource {
 
-	public Page<Project> getAccountProjectsPage(
-			Long accountId, Pagination pagination)
+	public Page<Project> getAccountAccountKeyProjectsPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public Project postAccountProject(Long accountId, Project project)
+	public Project postAccountAccountKeyProject(
+			String accountKey, Project project)
 		throws Exception;
 
-	public void deleteProject(Long projectId) throws Exception;
+	public void deleteProject(String projectKey) throws Exception;
 
-	public Project getProject(Long projectId) throws Exception;
+	public Project getProject(String projectKey) throws Exception;
 
-	public Project putProject(Long projectId, Project project) throws Exception;
-
-	public void deleteProjectContact(Long projectId, Long[] contactIds)
+	public Project putProject(String projectKey, Project project)
 		throws Exception;
 
-	public void putProjectContact(Long projectId, Long[] contactIds)
+	public void deleteProjectContact(String projectKey, String[] contactKeys)
 		throws Exception;
 
-	public void deleteProjectContactRole(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public void putProjectContact(String projectKey, String[] contactKeys)
 		throws Exception;
 
-	public void putProjectContactRole(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public void deleteProjectContactContactKeyRole(
+			String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception;
 
-	public void deleteProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public void putProjectContactContactKeyRole(
+			String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception;
 
-	public void putProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public void deleteProjectTeamTeamKeyRole(
+			String projectKey, String teamKey, String[] teamRoleKeys)
+		throws Exception;
+
+	public void putProjectTeamTeamKeyRole(
+			String projectKey, String teamKey, String[] teamRoleKeys)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

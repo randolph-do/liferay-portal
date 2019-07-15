@@ -63,6 +63,10 @@ public interface AuditEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AuditEntry getAuditEntry(long auditEntryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AuditEntry getAuditEntry(String auditEntryKey)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

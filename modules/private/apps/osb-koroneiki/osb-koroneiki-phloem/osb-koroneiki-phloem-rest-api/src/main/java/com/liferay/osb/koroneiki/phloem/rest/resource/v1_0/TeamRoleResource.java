@@ -37,11 +37,11 @@ public interface TeamRoleResource {
 
 	public TeamRole postTeamRole(TeamRole teamRole) throws Exception;
 
-	public void deleteTeamRole(Long teamRoleId) throws Exception;
+	public void deleteTeamRole(String teamRoleKey) throws Exception;
 
-	public TeamRole getTeamRole(Long teamRoleId) throws Exception;
+	public TeamRole getTeamRole(String teamRoleKey) throws Exception;
 
-	public TeamRole putTeamRole(Long teamRoleId, TeamRole teamRole)
+	public TeamRole putTeamRole(String teamRoleKey, TeamRole teamRole)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

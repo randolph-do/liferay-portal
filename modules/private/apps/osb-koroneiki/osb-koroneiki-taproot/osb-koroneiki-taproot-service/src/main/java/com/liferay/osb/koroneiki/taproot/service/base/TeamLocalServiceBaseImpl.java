@@ -134,10 +134,11 @@ public abstract class TeamLocalServiceBaseImpl
 	 *
 	 * @param team the team
 	 * @return the team that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Team deleteTeam(Team team) {
+	public Team deleteTeam(Team team) throws PortalException {
 		return teamPersistence.remove(team);
 	}
 

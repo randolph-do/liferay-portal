@@ -100,6 +100,24 @@ public class ProductEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap
+			deleteProductEntry(String productEntryKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductEntry returnValue =
+				ProductEntryServiceUtil.deleteProductEntry(productEntryKey);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap[]
 			getProductEntries(int start, int end)
 		throws RemoteException {
@@ -151,6 +169,24 @@ public class ProductEntryServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap
+			getProductEntry(String productEntryKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductEntry returnValue =
+				ProductEntryServiceUtil.getProductEntry(productEntryKey);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap
 			updateProductEntry(long productEntryId, String name)
 		throws RemoteException {
 
@@ -158,6 +194,25 @@ public class ProductEntryServiceSoap {
 			com.liferay.osb.koroneiki.trunk.model.ProductEntry returnValue =
 				ProductEntryServiceUtil.updateProductEntry(
 					productEntryId, name);
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap
+			updateProductEntry(String productEntryKey, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductEntry returnValue =
+				ProductEntryServiceUtil.updateProductEntry(
+					productEntryKey, name);
 
 			return com.liferay.osb.koroneiki.trunk.model.ProductEntrySoap.
 				toSoapModel(returnValue);

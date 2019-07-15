@@ -57,6 +57,14 @@ public class AuditEntryServiceWrapper
 		return _auditEntryService.getAuditEntry(auditEntryId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.root.model.AuditEntry getAuditEntry(
+			String auditEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _auditEntryService.getAuditEntry(auditEntryKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

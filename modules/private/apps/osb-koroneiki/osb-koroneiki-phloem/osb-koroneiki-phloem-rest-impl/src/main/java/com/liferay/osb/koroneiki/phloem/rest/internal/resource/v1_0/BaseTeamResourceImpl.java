@@ -62,17 +62,17 @@ public abstract class BaseTeamResourceImpl implements TeamResource {
 	@Operation(description = "Retrieves the account's teams.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/accounts/{accountId}/teams")
+	@Path("/accounts/{accountKey}/teams")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Team")})
-	public Page<Team> getAccountTeamsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Page<Team> getAccountAccountKeyTeamsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -82,13 +82,15 @@ public abstract class BaseTeamResourceImpl implements TeamResource {
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/teams")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}/teams")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Team")})
-	public Team postAccountTeam(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Team postAccountAccountKeyTeam(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			Team team)
 		throws Exception {
 
@@ -97,24 +99,26 @@ public abstract class BaseTeamResourceImpl implements TeamResource {
 
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamId")})
-	@Path("/teams/{teamId}")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamKey")})
+	@Path("/teams/{teamKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Team")})
 	public void deleteTeam(
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId)
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey)
 		throws Exception {
 	}
 
 	@Override
 	@GET
 	@Operation(description = "Retrieves the team.")
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamId")})
-	@Path("/teams/{teamId}")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamKey")})
+	@Path("/teams/{teamKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Team")})
 	public Team getTeam(
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId)
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey)
 		throws Exception {
 
 		return new Team();
@@ -123,12 +127,13 @@ public abstract class BaseTeamResourceImpl implements TeamResource {
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@PUT
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamId")})
-	@Path("/teams/{teamId}")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "teamKey")})
+	@Path("/teams/{teamKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Team")})
 	public Team putTeam(
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey,
 			Team team)
 		throws Exception {
 

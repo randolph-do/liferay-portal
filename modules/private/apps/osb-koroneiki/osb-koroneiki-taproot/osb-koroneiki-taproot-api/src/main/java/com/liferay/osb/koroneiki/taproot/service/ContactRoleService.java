@@ -55,8 +55,15 @@ public interface ContactRoleService extends BaseService {
 	public ContactRole deleteContactRole(long contactRoleId)
 		throws PortalException;
 
+	public ContactRole deleteContactRole(String contactRoleKey)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ContactRole getContactRole(long contactRoleId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ContactRole getContactRole(String contactRoleKey)
 		throws PortalException;
 
 	/**
@@ -68,6 +75,10 @@ public interface ContactRoleService extends BaseService {
 
 	public ContactRole updateContactRole(
 			long contactRoleId, String name, String description)
+		throws PortalException;
+
+	public ContactRole updateContactRole(
+			String contactRoleKey, String name, String description)
 		throws PortalException;
 
 }

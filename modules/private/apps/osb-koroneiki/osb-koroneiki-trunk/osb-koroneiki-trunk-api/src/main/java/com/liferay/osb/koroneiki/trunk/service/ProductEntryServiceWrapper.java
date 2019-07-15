@@ -49,6 +49,14 @@ public class ProductEntryServiceWrapper
 		return _productEntryService.deleteProductEntry(productEntryId);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			deleteProductEntry(String productEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productEntryService.deleteProductEntry(productEntryKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -83,11 +91,27 @@ public class ProductEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductEntry getProductEntry(
+			String productEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productEntryService.getProductEntry(productEntryKey);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.trunk.model.ProductEntry
 			updateProductEntry(long productEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productEntryService.updateProductEntry(productEntryId, name);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductEntry
+			updateProductEntry(String productEntryKey, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productEntryService.updateProductEntry(productEntryKey, name);
 	}
 
 	@Override

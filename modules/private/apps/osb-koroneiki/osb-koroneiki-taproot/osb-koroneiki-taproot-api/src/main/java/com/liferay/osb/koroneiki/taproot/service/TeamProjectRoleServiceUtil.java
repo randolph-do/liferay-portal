@@ -47,11 +47,29 @@ public class TeamProjectRoleServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+			addTeamProjectRole(
+				String teamKey, String projectKey, String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addTeamProjectRole(
+			teamKey, projectKey, teamRoleKey);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
 			deleteTeamProjectRole(long teamId, long projectId, long teamRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteTeamProjectRole(
 			teamId, projectId, teamRoleId);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+			deleteTeamProjectRole(
+				String teamKey, String projectKey, String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteTeamProjectRole(
+			teamKey, projectKey, teamRoleKey);
 	}
 
 	public static void deleteTeamProjectRoles(long teamId, long projectId)

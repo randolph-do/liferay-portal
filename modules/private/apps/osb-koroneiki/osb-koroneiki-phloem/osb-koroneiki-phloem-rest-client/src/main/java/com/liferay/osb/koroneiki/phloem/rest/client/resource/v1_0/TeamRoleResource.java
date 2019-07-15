@@ -39,21 +39,22 @@ public interface TeamRoleResource {
 	public HttpInvoker.HttpResponse postTeamRoleHttpResponse(TeamRole teamRole)
 		throws Exception;
 
-	public void deleteTeamRole(Long teamRoleId) throws Exception;
+	public void deleteTeamRole(String teamRoleKey) throws Exception;
 
-	public HttpInvoker.HttpResponse deleteTeamRoleHttpResponse(Long teamRoleId)
+	public HttpInvoker.HttpResponse deleteTeamRoleHttpResponse(
+			String teamRoleKey)
 		throws Exception;
 
-	public TeamRole getTeamRole(Long teamRoleId) throws Exception;
+	public TeamRole getTeamRole(String teamRoleKey) throws Exception;
 
-	public HttpInvoker.HttpResponse getTeamRoleHttpResponse(Long teamRoleId)
+	public HttpInvoker.HttpResponse getTeamRoleHttpResponse(String teamRoleKey)
 		throws Exception;
 
-	public TeamRole putTeamRole(Long teamRoleId, TeamRole teamRole)
+	public TeamRole putTeamRole(String teamRoleKey, TeamRole teamRole)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putTeamRoleHttpResponse(
-			Long teamRoleId, TeamRole teamRole)
+			String teamRoleKey, TeamRole teamRole)
 		throws Exception;
 
 	public static class Builder {
@@ -147,9 +148,9 @@ public interface TeamRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteTeamRole(Long teamRoleId) throws Exception {
+		public void deleteTeamRole(String teamRoleKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteTeamRoleHttpResponse(
-				teamRoleId);
+				teamRoleKey);
 
 			String content = httpResponse.getContent();
 
@@ -161,7 +162,7 @@ public interface TeamRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteTeamRoleHttpResponse(
-				Long teamRoleId)
+				String teamRoleKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -176,8 +177,8 @@ public interface TeamRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
-				teamRoleId);
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleKey}",
+				teamRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -185,9 +186,9 @@ public interface TeamRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public TeamRole getTeamRole(Long teamRoleId) throws Exception {
+		public TeamRole getTeamRole(String teamRoleKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getTeamRoleHttpResponse(
-				teamRoleId);
+				teamRoleKey);
 
 			String content = httpResponse.getContent();
 
@@ -210,7 +211,8 @@ public interface TeamRoleResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTeamRoleHttpResponse(Long teamRoleId)
+		public HttpInvoker.HttpResponse getTeamRoleHttpResponse(
+				String teamRoleKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -225,8 +227,8 @@ public interface TeamRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
-				teamRoleId);
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleKey}",
+				teamRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -234,11 +236,11 @@ public interface TeamRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public TeamRole putTeamRole(Long teamRoleId, TeamRole teamRole)
+		public TeamRole putTeamRole(String teamRoleKey, TeamRole teamRole)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putTeamRoleHttpResponse(
-				teamRoleId, teamRole);
+				teamRoleKey, teamRole);
 
 			String content = httpResponse.getContent();
 
@@ -262,7 +264,7 @@ public interface TeamRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse putTeamRoleHttpResponse(
-				Long teamRoleId, TeamRole teamRole)
+				String teamRoleKey, TeamRole teamRole)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -279,8 +281,8 @@ public interface TeamRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}",
-				teamRoleId);
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleKey}",
+				teamRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

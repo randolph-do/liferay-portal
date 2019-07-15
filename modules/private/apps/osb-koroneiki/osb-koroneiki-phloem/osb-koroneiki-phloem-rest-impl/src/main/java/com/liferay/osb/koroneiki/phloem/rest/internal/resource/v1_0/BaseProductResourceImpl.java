@@ -86,26 +86,30 @@ public abstract class BaseProductResourceImpl implements ProductResource {
 
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "productId")})
-	@Path("/products/{productId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "productKey")}
+	)
+	@Path("/products/{productKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Product")})
 	public void deleteProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId)
+			@NotNull @Parameter(hidden = true) @PathParam("productKey") String
+				productKey)
 		throws Exception {
 	}
 
 	@Override
 	@GET
 	@Operation(description = "Retrieves the product.")
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "productId")})
-	@Path("/products/{productId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "productKey")}
+	)
+	@Path("/products/{productKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Product")})
 	public Product getProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId)
+			@NotNull @Parameter(hidden = true) @PathParam("productKey") String
+				productKey)
 		throws Exception {
 
 		return new Product();
@@ -114,13 +118,15 @@ public abstract class BaseProductResourceImpl implements ProductResource {
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@PUT
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "productId")})
-	@Path("/products/{productId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "productKey")}
+	)
+	@Path("/products/{productKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Product")})
 	public Product putProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId,
+			@NotNull @Parameter(hidden = true) @PathParam("productKey") String
+				productKey,
 			Product product)
 		throws Exception {
 

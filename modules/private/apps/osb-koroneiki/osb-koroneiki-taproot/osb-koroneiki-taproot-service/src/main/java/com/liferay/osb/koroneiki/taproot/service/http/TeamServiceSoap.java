@@ -82,6 +82,24 @@ public class TeamServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap addTeam(
+			String accountKey, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
+				TeamServiceUtil.addTeam(accountKey, name);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap deleteTeam(
 			long teamId)
 		throws RemoteException {
@@ -89,6 +107,24 @@ public class TeamServiceSoap {
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
 				TeamServiceUtil.deleteTeam(teamId);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap deleteTeam(
+			String teamKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
+				TeamServiceUtil.deleteTeam(teamKey);
 
 			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
 				returnValue);
@@ -119,11 +155,45 @@ public class TeamServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap[]
+			getAccountTeams(String accountKey, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+				returnValue = TeamServiceUtil.getAccountTeams(
+					accountKey, start, end);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getAccountTeamsCount(long accountId)
 		throws RemoteException {
 
 		try {
 			int returnValue = TeamServiceUtil.getAccountTeamsCount(accountId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getAccountTeamsCount(String accountKey)
+		throws RemoteException {
+
+		try {
+			int returnValue = TeamServiceUtil.getAccountTeamsCount(accountKey);
 
 			return returnValue;
 		}
@@ -152,6 +222,24 @@ public class TeamServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap getTeam(
+			String teamKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
+				TeamServiceUtil.getTeam(teamKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap updateTeam(
 			long teamId, String name)
 		throws RemoteException {
@@ -159,6 +247,24 @@ public class TeamServiceSoap {
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
 				TeamServiceUtil.updateTeam(teamId, name);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamSoap updateTeam(
+			String teamKey, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Team returnValue =
+				TeamServiceUtil.updateTeam(teamKey, name);
 
 			return com.liferay.osb.koroneiki.taproot.model.TeamSoap.toSoapModel(
 				returnValue);

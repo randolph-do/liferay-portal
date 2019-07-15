@@ -105,14 +105,18 @@ public class ContactRoleSerDes {
 			sb.append("\"");
 		}
 
-		if (contactRole.getId() != null) {
+		if (contactRole.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(contactRole.getId());
+			sb.append("\"");
+
+			sb.append(_escape(contactRole.getKey()));
+
+			sb.append("\"");
 		}
 
 		if (contactRole.getName() != null) {
@@ -191,11 +195,11 @@ public class ContactRoleSerDes {
 				"description", String.valueOf(contactRole.getDescription()));
 		}
 
-		if (contactRole.getId() == null) {
-			map.put("id", null);
+		if (contactRole.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(contactRole.getId()));
+			map.put("key", String.valueOf(contactRole.getKey()));
 		}
 
 		if (contactRole.getName() == null) {
@@ -294,10 +298,9 @@ public class ContactRoleSerDes {
 					contactRole.setDescription((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					contactRole.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					contactRole.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

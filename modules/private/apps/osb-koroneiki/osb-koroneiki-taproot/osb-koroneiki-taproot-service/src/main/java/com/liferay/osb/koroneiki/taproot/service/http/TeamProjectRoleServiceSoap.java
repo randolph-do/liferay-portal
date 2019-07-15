@@ -84,6 +84,26 @@ public class TeamProjectRoleServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRoleSoap
+			addTeamProjectRole(
+				String teamKey, String projectKey, String teamRoleKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+				returnValue = TeamProjectRoleServiceUtil.addTeamProjectRole(
+					teamKey, projectKey, teamRoleKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamProjectRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRoleSoap
 			deleteTeamProjectRole(long teamId, long projectId, long teamRoleId)
 		throws RemoteException {
 
@@ -91,6 +111,26 @@ public class TeamProjectRoleServiceSoap {
 			com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
 				returnValue = TeamProjectRoleServiceUtil.deleteTeamProjectRole(
 					teamId, projectId, teamRoleId);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamProjectRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRoleSoap
+			deleteTeamProjectRole(
+				String teamKey, String projectKey, String teamRoleKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+				returnValue = TeamProjectRoleServiceUtil.deleteTeamProjectRole(
+					teamKey, projectKey, teamRoleKey);
 
 			return com.liferay.osb.koroneiki.taproot.model.TeamProjectRoleSoap.
 				toSoapModel(returnValue);

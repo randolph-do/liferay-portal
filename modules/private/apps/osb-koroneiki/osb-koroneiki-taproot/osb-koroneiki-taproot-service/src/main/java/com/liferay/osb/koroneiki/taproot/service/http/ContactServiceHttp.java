@@ -132,6 +132,44 @@ public class ContactServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Contact deleteContact(
+			HttpPrincipal httpPrincipal, String contactKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "deleteContact",
+				_deleteContactParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Contact)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.osb.koroneiki.taproot.model.Contact> getAccountContacts(
 				HttpPrincipal httpPrincipal, long accountId, int start, int end)
@@ -140,10 +178,51 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getAccountContacts",
-				_getAccountContactsParameterTypes2);
+				_getAccountContactsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.osb.koroneiki.taproot.model.Contact>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.Contact> getAccountContacts(
+				HttpPrincipal httpPrincipal, String accountKey, int start,
+				int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "getAccountContacts",
+				_getAccountContactsParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey, start, end);
 
 			Object returnObj = null;
 
@@ -179,10 +258,48 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getAccountContactsCount",
-				_getAccountContactsCountParameterTypes3);
+				_getAccountContactsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getAccountContactsCount(
+			HttpPrincipal httpPrincipal, String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "getAccountContactsCount",
+				_getAccountContactsCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey);
 
 			Object returnObj = null;
 
@@ -217,10 +334,49 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getContact",
-				_getContactParameterTypes4);
+				_getContactParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Contact)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Contact
+			getContactByContactKey(
+				HttpPrincipal httpPrincipal, String contactKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "getContactByContactKey",
+				_getContactByContactKeyParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactKey);
 
 			Object returnObj = null;
 
@@ -256,10 +412,51 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getProjectContacts",
-				_getProjectContactsParameterTypes5);
+				_getProjectContactsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, projectId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.osb.koroneiki.taproot.model.Contact>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.Contact> getProjectContacts(
+				HttpPrincipal httpPrincipal, String projectKey, int start,
+				int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "getProjectContacts",
+				_getProjectContactsParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, projectKey, start, end);
 
 			Object returnObj = null;
 
@@ -295,10 +492,48 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getProjectContactsCount",
-				_getProjectContactsCountParameterTypes6);
+				_getProjectContactsCountParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, projectId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getProjectContactsCount(
+			HttpPrincipal httpPrincipal, String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "getProjectContactsCount",
+				_getProjectContactsCountParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, projectKey);
 
 			Object returnObj = null;
 
@@ -335,7 +570,7 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "updateContact",
-				_updateContactParameterTypes7);
+				_updateContactParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactId, firstName, middleName, lastName,
@@ -374,18 +609,30 @@ public class ContactServiceHttp {
 	};
 	private static final Class<?>[] _deleteContactParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getAccountContactsParameterTypes2 =
+	private static final Class<?>[] _deleteContactParameterTypes2 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getAccountContactsParameterTypes3 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getAccountContactsCountParameterTypes3 =
+	private static final Class<?>[] _getAccountContactsParameterTypes4 =
+		new Class[] {String.class, int.class, int.class};
+	private static final Class<?>[] _getAccountContactsCountParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getContactParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getAccountContactsCountParameterTypes6 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getContactParameterTypes7 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getProjectContactsParameterTypes5 =
+	private static final Class<?>[] _getContactByContactKeyParameterTypes8 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getProjectContactsParameterTypes9 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getProjectContactsCountParameterTypes6 =
+	private static final Class<?>[] _getProjectContactsParameterTypes10 =
+		new Class[] {String.class, int.class, int.class};
+	private static final Class<?>[] _getProjectContactsCountParameterTypes11 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateContactParameterTypes7 =
+	private static final Class<?>[] _getProjectContactsCountParameterTypes12 =
+		new Class[] {String.class};
+	private static final Class<?>[] _updateContactParameterTypes13 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class

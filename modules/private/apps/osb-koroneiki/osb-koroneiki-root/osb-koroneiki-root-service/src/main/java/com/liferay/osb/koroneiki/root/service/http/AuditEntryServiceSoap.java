@@ -117,6 +117,24 @@ public class AuditEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.root.model.AuditEntrySoap
+			getAuditEntry(String auditEntryKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.AuditEntry returnValue =
+				AuditEntryServiceUtil.getAuditEntry(auditEntryKey);
+
+			return com.liferay.osb.koroneiki.root.model.AuditEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AuditEntryServiceSoap.class);
 

@@ -29,26 +29,26 @@ import javax.annotation.Generated;
 @Generated("")
 public class Team {
 
-	public Long getAccountId() {
-		return accountId;
+	public String getAccountKey() {
+		return accountKey;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
 	}
 
-	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
 		try {
-			accountId = accountIdUnsafeSupplier.get();
+			accountKey = accountKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long accountId;
+	protected String accountKey;
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -113,24 +113,24 @@ public class Team {
 
 	protected ExternalLink[] externalLinks;
 
-	public Long getId() {
-		return id;
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long id;
+	protected String key;
 
 	public String getName() {
 		return name;

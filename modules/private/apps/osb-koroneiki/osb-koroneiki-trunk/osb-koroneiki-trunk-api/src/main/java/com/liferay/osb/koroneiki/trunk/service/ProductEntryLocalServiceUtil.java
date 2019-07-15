@@ -101,10 +101,12 @@ public class ProductEntryLocalServiceUtil {
 	 *
 	 * @param productEntry the product entry
 	 * @return the product entry that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.osb.koroneiki.trunk.model.ProductEntry
-		deleteProductEntry(
-			com.liferay.osb.koroneiki.trunk.model.ProductEntry productEntry) {
+			deleteProductEntry(
+				com.liferay.osb.koroneiki.trunk.model.ProductEntry productEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteProductEntry(productEntry);
 	}

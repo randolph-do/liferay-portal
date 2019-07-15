@@ -86,6 +86,27 @@ public class ContactProjectRoleServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRoleSoap
+			addContactProjectRole(
+				String contactKey, String projectKey, String contactRoleKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+				returnValue =
+					ContactProjectRoleServiceUtil.addContactProjectRole(
+						contactKey, projectKey, contactRoleKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.
+				ContactProjectRoleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRoleSoap
 			deleteContactProjectRole(
 				long contactId, long projectId, long contactRoleId)
 		throws RemoteException {
@@ -106,12 +127,48 @@ public class ContactProjectRoleServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRoleSoap
+			deleteContactProjectRole(
+				String contactKey, String projectKey, String contactRoleKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+				returnValue =
+					ContactProjectRoleServiceUtil.deleteContactProjectRole(
+						contactKey, projectKey, contactRoleKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.
+				ContactProjectRoleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteContactProjectRoles(long contactId, long projectId)
 		throws RemoteException {
 
 		try {
 			ContactProjectRoleServiceUtil.deleteContactProjectRoles(
 				contactId, projectId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteContactProjectRoles(
+			String contactKey, String projectKey)
+		throws RemoteException {
+
+		try {
+			ContactProjectRoleServiceUtil.deleteContactProjectRoles(
+				contactKey, projectKey);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

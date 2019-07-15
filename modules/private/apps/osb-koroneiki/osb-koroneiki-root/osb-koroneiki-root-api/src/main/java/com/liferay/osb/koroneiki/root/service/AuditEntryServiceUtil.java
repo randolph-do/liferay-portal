@@ -60,6 +60,13 @@ public class AuditEntryServiceUtil {
 		return getService().getAuditEntry(auditEntryId);
 	}
 
+	public static com.liferay.osb.koroneiki.root.model.AuditEntry getAuditEntry(
+			String auditEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAuditEntry(auditEntryKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

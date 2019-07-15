@@ -30,26 +30,26 @@ import javax.annotation.Generated;
 @Generated("")
 public class ProductPurchase {
 
-	public Long getAccountId() {
-		return accountId;
+	public String getAccountKey() {
+		return accountKey;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
 	}
 
-	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
 		try {
-			accountId = accountIdUnsafeSupplier.get();
+			accountKey = accountKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long accountId;
+	protected String accountKey;
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -114,66 +114,66 @@ public class ProductPurchase {
 
 	protected ExternalLink[] externalLinks;
 
-	public Long getId() {
-		return id;
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long id;
+	protected String key;
 
-	public Long getProductId() {
-		return productId;
+	public String getProductKey() {
+		return productKey;
 	}
 
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setProductKey(String productKey) {
+		this.productKey = productKey;
 	}
 
-	public void setProductId(
-		UnsafeSupplier<Long, Exception> productIdUnsafeSupplier) {
+	public void setProductKey(
+		UnsafeSupplier<String, Exception> productKeyUnsafeSupplier) {
 
 		try {
-			productId = productIdUnsafeSupplier.get();
+			productKey = productKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long productId;
+	protected String productKey;
 
-	public Long getProjectId() {
-		return projectId;
+	public String getProjectKey() {
+		return projectKey;
 	}
 
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
+	public void setProjectKey(String projectKey) {
+		this.projectKey = projectKey;
 	}
 
-	public void setProjectId(
-		UnsafeSupplier<Long, Exception> projectIdUnsafeSupplier) {
+	public void setProjectKey(
+		UnsafeSupplier<String, Exception> projectKeyUnsafeSupplier) {
 
 		try {
-			projectId = projectIdUnsafeSupplier.get();
+			projectKey = projectKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long projectId;
+	protected String projectKey;
 
 	public Map<String, String> getProperties() {
 		return properties;

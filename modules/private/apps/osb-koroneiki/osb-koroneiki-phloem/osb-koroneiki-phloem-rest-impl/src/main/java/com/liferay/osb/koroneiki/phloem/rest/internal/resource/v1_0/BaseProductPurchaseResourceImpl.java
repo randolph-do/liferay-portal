@@ -63,17 +63,17 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Operation(description = "Retrieves the account's product purchases.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/accounts/{accountId}/product-purchases")
+	@Path("/accounts/{accountKey}/product-purchases")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
-	public Page<ProductPurchase> getAccountProductPurchasesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Page<ProductPurchase> getAccountAccountKeyProductPurchasesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -83,13 +83,15 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/product-purchases")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}/product-purchases")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
-	public ProductPurchase postAccountProductPurchase(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public ProductPurchase postAccountAccountKeyProductPurchase(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			ProductPurchase productPurchase)
 		throws Exception {
 
@@ -99,14 +101,14 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Override
 	@DELETE
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseKey")}
 	)
-	@Path("/product-purchases/{productPurchaseId}")
+	@Path("/product-purchases/{productPurchaseKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ProductPurchase")})
 	public void deleteProductPurchase(
-			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseId")
-				Long productPurchaseId)
+			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseKey")
+				String productPurchaseKey)
 		throws Exception {
 	}
 
@@ -114,14 +116,14 @@ public abstract class BaseProductPurchaseResourceImpl
 	@GET
 	@Operation(description = "Retrieves the product purchase.")
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseKey")}
 	)
-	@Path("/product-purchases/{productPurchaseId}")
+	@Path("/product-purchases/{productPurchaseKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
 	public ProductPurchase getProductPurchase(
-			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseId")
-				Long productPurchaseId)
+			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseKey")
+				String productPurchaseKey)
 		throws Exception {
 
 		return new ProductPurchase();
@@ -131,14 +133,14 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "productPurchaseKey")}
 	)
-	@Path("/product-purchases/{productPurchaseId}")
+	@Path("/product-purchases/{productPurchaseKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
 	public ProductPurchase putProductPurchase(
-			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseId")
-				Long productPurchaseId,
+			@NotNull @Parameter(hidden = true) @PathParam("productPurchaseKey")
+				String productPurchaseKey,
 			ProductPurchase productPurchase)
 		throws Exception {
 
@@ -150,17 +152,17 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Operation(description = "Retrieves the project's product purchases.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/projects/{projectId}/product-purchases")
+	@Path("/projects/{projectKey}/product-purchases")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
-	public Page<ProductPurchase> getProjectProductPurchasesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public Page<ProductPurchase> getProjectProjectKeyProductPurchasesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -170,13 +172,15 @@ public abstract class BaseProductPurchaseResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
-	@Path("/projects/{projectId}/product-purchases")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
+	)
+	@Path("/projects/{projectKey}/product-purchases")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductPurchase")})
-	public ProductPurchase postProjectProductPurchase(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public ProductPurchase postProjectProjectKeyProductPurchase(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			ProductPurchase productPurchase)
 		throws Exception {
 

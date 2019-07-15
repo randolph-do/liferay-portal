@@ -57,10 +57,24 @@ public class ExternalLinkServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			deleteExternalLink(String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteExternalLink(externalLinkKey);
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
 			getExternalLink(long externalLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getExternalLink(externalLinkId);
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLink
+			getExternalLink(String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getExternalLink(externalLinkKey);
 	}
 
 	public static java.util.List

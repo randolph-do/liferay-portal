@@ -67,14 +67,14 @@ public abstract class BaseTeamRoleResourceImpl implements TeamRoleResource {
 	@Override
 	@DELETE
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "teamRoleId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "teamRoleKey")}
 	)
-	@Path("/team-roles/{teamRoleId}")
+	@Path("/team-roles/{teamRoleKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TeamRole")})
 	public void deleteTeamRole(
-			@NotNull @Parameter(hidden = true) @PathParam("teamRoleId") Long
-				teamRoleId)
+			@NotNull @Parameter(hidden = true) @PathParam("teamRoleKey") String
+				teamRoleKey)
 		throws Exception {
 	}
 
@@ -82,14 +82,14 @@ public abstract class BaseTeamRoleResourceImpl implements TeamRoleResource {
 	@GET
 	@Operation(description = "Retrieves the team role.")
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "teamRoleId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "teamRoleKey")}
 	)
-	@Path("/team-roles/{teamRoleId}")
+	@Path("/team-roles/{teamRoleKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TeamRole")})
 	public TeamRole getTeamRole(
-			@NotNull @Parameter(hidden = true) @PathParam("teamRoleId") Long
-				teamRoleId)
+			@NotNull @Parameter(hidden = true) @PathParam("teamRoleKey") String
+				teamRoleKey)
 		throws Exception {
 
 		return new TeamRole();
@@ -99,14 +99,14 @@ public abstract class BaseTeamRoleResourceImpl implements TeamRoleResource {
 	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "teamRoleId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "teamRoleKey")}
 	)
-	@Path("/team-roles/{teamRoleId}")
+	@Path("/team-roles/{teamRoleKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TeamRole")})
 	public TeamRole putTeamRole(
-			@NotNull @Parameter(hidden = true) @PathParam("teamRoleId") Long
-				teamRoleId,
+			@NotNull @Parameter(hidden = true) @PathParam("teamRoleKey") String
+				teamRoleKey,
 			TeamRole teamRole)
 		throws Exception {
 

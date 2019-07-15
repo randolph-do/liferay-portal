@@ -49,6 +49,15 @@ public class ContactProjectRoleServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+			addContactProjectRole(
+				String contactKey, String projectKey, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addContactProjectRole(
+			contactKey, projectKey, contactRoleKey);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
 			deleteContactProjectRole(
 				long contactId, long projectId, long contactRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -57,10 +66,26 @@ public class ContactProjectRoleServiceUtil {
 			contactId, projectId, contactRoleId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+			deleteContactProjectRole(
+				String contactKey, String projectKey, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteContactProjectRole(
+			contactKey, projectKey, contactRoleKey);
+	}
+
 	public static void deleteContactProjectRoles(long contactId, long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteContactProjectRoles(contactId, projectId);
+	}
+
+	public static void deleteContactProjectRoles(
+			String contactKey, String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteContactProjectRoles(contactKey, projectKey);
 	}
 
 	/**

@@ -84,10 +84,12 @@ public class ContactRoleLocalServiceUtil {
 	 *
 	 * @param contactRole the contact role
 	 * @return the contact role that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.ContactRole
-		deleteContactRole(
-			com.liferay.osb.koroneiki.taproot.model.ContactRole contactRole) {
+			deleteContactRole(
+				com.liferay.osb.koroneiki.taproot.model.ContactRole contactRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteContactRole(contactRole);
 	}

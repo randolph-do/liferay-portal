@@ -101,10 +101,12 @@ public class TeamRoleLocalServiceWrapper
 	 *
 	 * @param teamRole the team role
 	 * @return the team role that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.TeamRole deleteTeamRole(
-		com.liferay.osb.koroneiki.taproot.model.TeamRole teamRole) {
+			com.liferay.osb.koroneiki.taproot.model.TeamRole teamRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamRoleLocalService.deleteTeamRole(teamRole);
 	}

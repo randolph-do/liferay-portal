@@ -173,6 +173,7 @@ public abstract class BaseContactResourceTestCase {
 
 		contact.setEmailAddress(regex);
 		contact.setFirstName(regex);
+		contact.setKey(regex);
 		contact.setLanguageId(regex);
 		contact.setLastName(regex);
 		contact.setMiddleName(regex);
@@ -185,28 +186,32 @@ public abstract class BaseContactResourceTestCase {
 
 		Assert.assertEquals(regex, contact.getEmailAddress());
 		Assert.assertEquals(regex, contact.getFirstName());
+		Assert.assertEquals(regex, contact.getKey());
 		Assert.assertEquals(regex, contact.getLanguageId());
 		Assert.assertEquals(regex, contact.getLastName());
 		Assert.assertEquals(regex, contact.getMiddleName());
 	}
 
 	@Test
-	public void testGetAccountContactsPage() throws Exception {
-		Page<Contact> page = contactResource.getAccountContactsPage(
-			testGetAccountContactsPage_getAccountId(), Pagination.of(1, 2));
+	public void testGetAccountAccountKeyContactsPage() throws Exception {
+		Page<Contact> page = contactResource.getAccountAccountKeyContactsPage(
+			testGetAccountAccountKeyContactsPage_getAccountKey(),
+			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long accountId = testGetAccountContactsPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountContactsPage_getIrrelevantAccountId();
+		String accountKey =
+			testGetAccountAccountKeyContactsPage_getAccountKey();
+		String irrelevantAccountKey =
+			testGetAccountAccountKeyContactsPage_getIrrelevantAccountKey();
 
-		if ((irrelevantAccountId != null)) {
-			Contact irrelevantContact = testGetAccountContactsPage_addContact(
-				irrelevantAccountId, randomIrrelevantContact());
+		if ((irrelevantAccountKey != null)) {
+			Contact irrelevantContact =
+				testGetAccountAccountKeyContactsPage_addContact(
+					irrelevantAccountKey, randomIrrelevantContact());
 
-			page = contactResource.getAccountContactsPage(
-				irrelevantAccountId, Pagination.of(1, 2));
+			page = contactResource.getAccountAccountKeyContactsPage(
+				irrelevantAccountKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -216,14 +221,14 @@ public abstract class BaseContactResourceTestCase {
 			assertValid(page);
 		}
 
-		Contact contact1 = testGetAccountContactsPage_addContact(
-			accountId, randomContact());
+		Contact contact1 = testGetAccountAccountKeyContactsPage_addContact(
+			accountKey, randomContact());
 
-		Contact contact2 = testGetAccountContactsPage_addContact(
-			accountId, randomContact());
+		Contact contact2 = testGetAccountAccountKeyContactsPage_addContact(
+			accountKey, randomContact());
 
-		page = contactResource.getAccountContactsPage(
-			accountId, Pagination.of(1, 2));
+		page = contactResource.getAccountAccountKeyContactsPage(
+			accountKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -233,27 +238,30 @@ public abstract class BaseContactResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountContactsPageWithPagination() throws Exception {
-		Long accountId = testGetAccountContactsPage_getAccountId();
+	public void testGetAccountAccountKeyContactsPageWithPagination()
+		throws Exception {
 
-		Contact contact1 = testGetAccountContactsPage_addContact(
-			accountId, randomContact());
+		String accountKey =
+			testGetAccountAccountKeyContactsPage_getAccountKey();
 
-		Contact contact2 = testGetAccountContactsPage_addContact(
-			accountId, randomContact());
+		Contact contact1 = testGetAccountAccountKeyContactsPage_addContact(
+			accountKey, randomContact());
 
-		Contact contact3 = testGetAccountContactsPage_addContact(
-			accountId, randomContact());
+		Contact contact2 = testGetAccountAccountKeyContactsPage_addContact(
+			accountKey, randomContact());
 
-		Page<Contact> page1 = contactResource.getAccountContactsPage(
-			accountId, Pagination.of(1, 2));
+		Contact contact3 = testGetAccountAccountKeyContactsPage_addContact(
+			accountKey, randomContact());
+
+		Page<Contact> page1 = contactResource.getAccountAccountKeyContactsPage(
+			accountKey, Pagination.of(1, 2));
 
 		List<Contact> contacts1 = (List<Contact>)page1.getItems();
 
 		Assert.assertEquals(contacts1.toString(), 2, contacts1.size());
 
-		Page<Contact> page2 = contactResource.getAccountContactsPage(
-			accountId, Pagination.of(2, 2));
+		Page<Contact> page2 = contactResource.getAccountAccountKeyContactsPage(
+			accountKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -261,28 +269,31 @@ public abstract class BaseContactResourceTestCase {
 
 		Assert.assertEquals(contacts2.toString(), 1, contacts2.size());
 
-		Page<Contact> page3 = contactResource.getAccountContactsPage(
-			accountId, Pagination.of(1, 3));
+		Page<Contact> page3 = contactResource.getAccountAccountKeyContactsPage(
+			accountKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contact1, contact2, contact3),
 			(List<Contact>)page3.getItems());
 	}
 
-	protected Contact testGetAccountContactsPage_addContact(
-			Long accountId, Contact contact)
+	protected Contact testGetAccountAccountKeyContactsPage_addContact(
+			String accountKey, Contact contact)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountContactsPage_getAccountId() throws Exception {
+	protected String testGetAccountAccountKeyContactsPage_getAccountKey()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountContactsPage_getIrrelevantAccountId()
+	protected String
+			testGetAccountAccountKeyContactsPage_getIrrelevantAccountKey()
 		throws Exception {
 
 		return null;
@@ -307,55 +318,34 @@ public abstract class BaseContactResourceTestCase {
 
 	@Test
 	public void testDeleteContact() throws Exception {
-		Contact contact = testDeleteContact_addContact();
-
-		assertHttpResponseStatusCode(
-			204, contactResource.deleteContactHttpResponse(contact.getId()));
-
-		assertHttpResponseStatusCode(
-			404, contactResource.getContactHttpResponse(contact.getId()));
-
-		assertHttpResponseStatusCode(
-			404, contactResource.getContactHttpResponse(0L));
-	}
-
-	protected Contact testDeleteContact_addContact() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetContact() throws Exception {
-		Contact postContact = testGetContact_addContact();
-
-		Contact getContact = contactResource.getContact(postContact.getId());
-
-		assertEquals(postContact, getContact);
-		assertValid(getContact);
-	}
-
-	protected Contact testGetContact_addContact() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetProjectContactsPage() throws Exception {
-		Page<Contact> page = contactResource.getProjectContactsPage(
-			testGetProjectContactsPage_getProjectId(), Pagination.of(1, 2));
+	public void testGetProjectProjectKeyContactsPage() throws Exception {
+		Page<Contact> page = contactResource.getProjectProjectKeyContactsPage(
+			testGetProjectProjectKeyContactsPage_getProjectKey(),
+			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long projectId = testGetProjectContactsPage_getProjectId();
-		Long irrelevantProjectId =
-			testGetProjectContactsPage_getIrrelevantProjectId();
+		String projectKey =
+			testGetProjectProjectKeyContactsPage_getProjectKey();
+		String irrelevantProjectKey =
+			testGetProjectProjectKeyContactsPage_getIrrelevantProjectKey();
 
-		if ((irrelevantProjectId != null)) {
-			Contact irrelevantContact = testGetProjectContactsPage_addContact(
-				irrelevantProjectId, randomIrrelevantContact());
+		if ((irrelevantProjectKey != null)) {
+			Contact irrelevantContact =
+				testGetProjectProjectKeyContactsPage_addContact(
+					irrelevantProjectKey, randomIrrelevantContact());
 
-			page = contactResource.getProjectContactsPage(
-				irrelevantProjectId, Pagination.of(1, 2));
+			page = contactResource.getProjectProjectKeyContactsPage(
+				irrelevantProjectKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -365,14 +355,14 @@ public abstract class BaseContactResourceTestCase {
 			assertValid(page);
 		}
 
-		Contact contact1 = testGetProjectContactsPage_addContact(
-			projectId, randomContact());
+		Contact contact1 = testGetProjectProjectKeyContactsPage_addContact(
+			projectKey, randomContact());
 
-		Contact contact2 = testGetProjectContactsPage_addContact(
-			projectId, randomContact());
+		Contact contact2 = testGetProjectProjectKeyContactsPage_addContact(
+			projectKey, randomContact());
 
-		page = contactResource.getProjectContactsPage(
-			projectId, Pagination.of(1, 2));
+		page = contactResource.getProjectProjectKeyContactsPage(
+			projectKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -382,27 +372,30 @@ public abstract class BaseContactResourceTestCase {
 	}
 
 	@Test
-	public void testGetProjectContactsPageWithPagination() throws Exception {
-		Long projectId = testGetProjectContactsPage_getProjectId();
+	public void testGetProjectProjectKeyContactsPageWithPagination()
+		throws Exception {
 
-		Contact contact1 = testGetProjectContactsPage_addContact(
-			projectId, randomContact());
+		String projectKey =
+			testGetProjectProjectKeyContactsPage_getProjectKey();
 
-		Contact contact2 = testGetProjectContactsPage_addContact(
-			projectId, randomContact());
+		Contact contact1 = testGetProjectProjectKeyContactsPage_addContact(
+			projectKey, randomContact());
 
-		Contact contact3 = testGetProjectContactsPage_addContact(
-			projectId, randomContact());
+		Contact contact2 = testGetProjectProjectKeyContactsPage_addContact(
+			projectKey, randomContact());
 
-		Page<Contact> page1 = contactResource.getProjectContactsPage(
-			projectId, Pagination.of(1, 2));
+		Contact contact3 = testGetProjectProjectKeyContactsPage_addContact(
+			projectKey, randomContact());
+
+		Page<Contact> page1 = contactResource.getProjectProjectKeyContactsPage(
+			projectKey, Pagination.of(1, 2));
 
 		List<Contact> contacts1 = (List<Contact>)page1.getItems();
 
 		Assert.assertEquals(contacts1.toString(), 2, contacts1.size());
 
-		Page<Contact> page2 = contactResource.getProjectContactsPage(
-			projectId, Pagination.of(2, 2));
+		Page<Contact> page2 = contactResource.getProjectProjectKeyContactsPage(
+			projectKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -410,28 +403,31 @@ public abstract class BaseContactResourceTestCase {
 
 		Assert.assertEquals(contacts2.toString(), 1, contacts2.size());
 
-		Page<Contact> page3 = contactResource.getProjectContactsPage(
-			projectId, Pagination.of(1, 3));
+		Page<Contact> page3 = contactResource.getProjectProjectKeyContactsPage(
+			projectKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contact1, contact2, contact3),
 			(List<Contact>)page3.getItems());
 	}
 
-	protected Contact testGetProjectContactsPage_addContact(
-			Long projectId, Contact contact)
+	protected Contact testGetProjectProjectKeyContactsPage_addContact(
+			String projectKey, Contact contact)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProjectContactsPage_getProjectId() throws Exception {
+	protected String testGetProjectProjectKeyContactsPage_getProjectKey()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProjectContactsPage_getIrrelevantProjectId()
+	protected String
+			testGetProjectProjectKeyContactsPage_getIrrelevantProjectKey()
 		throws Exception {
 
 		return null;
@@ -496,10 +492,6 @@ public abstract class BaseContactResourceTestCase {
 			valid = false;
 		}
 
-		if (contact.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -521,6 +513,14 @@ public abstract class BaseContactResourceTestCase {
 
 			if (Objects.equals("firstName", additionalAssertFieldName)) {
 				if (contact.getFirstName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (contact.getKey() == null) {
 					valid = false;
 				}
 
@@ -645,8 +645,8 @@ public abstract class BaseContactResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(contact1.getId(), contact2.getId())) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(contact1.getKey(), contact2.getKey())) {
 					return false;
 				}
 
@@ -824,9 +824,12 @@ public abstract class BaseContactResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(contact.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("languageId")) {
@@ -864,7 +867,7 @@ public abstract class BaseContactResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				emailAddress = RandomTestUtil.randomString();
 				firstName = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				languageId = RandomTestUtil.randomString();
 				lastName = RandomTestUtil.randomString();
 				middleName = RandomTestUtil.randomString();

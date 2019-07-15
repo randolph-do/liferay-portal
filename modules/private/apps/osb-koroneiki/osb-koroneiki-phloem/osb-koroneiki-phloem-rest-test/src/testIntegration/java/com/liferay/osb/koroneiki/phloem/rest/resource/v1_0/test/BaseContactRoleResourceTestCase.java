@@ -170,6 +170,7 @@ public abstract class BaseContactRoleResourceTestCase {
 		ContactRole contactRole = randomContactRole();
 
 		contactRole.setDescription(regex);
+		contactRole.setKey(regex);
 		contactRole.setName(regex);
 
 		String json = ContactRoleSerDes.toJSON(contactRole);
@@ -179,6 +180,7 @@ public abstract class BaseContactRoleResourceTestCase {
 		contactRole = ContactRoleSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, contactRole.getDescription());
+		Assert.assertEquals(regex, contactRole.getKey());
 		Assert.assertEquals(regex, contactRole.getName());
 	}
 
@@ -203,67 +205,17 @@ public abstract class BaseContactRoleResourceTestCase {
 
 	@Test
 	public void testDeleteContactRole() throws Exception {
-		ContactRole contactRole = testDeleteContactRole_addContactRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			contactRoleResource.deleteContactRoleHttpResponse(
-				contactRole.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			contactRoleResource.getContactRoleHttpResponse(
-				contactRole.getId()));
-
-		assertHttpResponseStatusCode(
-			404, contactRoleResource.getContactRoleHttpResponse(0L));
-	}
-
-	protected ContactRole testDeleteContactRole_addContactRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetContactRole() throws Exception {
-		ContactRole postContactRole = testGetContactRole_addContactRole();
-
-		ContactRole getContactRole = contactRoleResource.getContactRole(
-			postContactRole.getId());
-
-		assertEquals(postContactRole, getContactRole);
-		assertValid(getContactRole);
-	}
-
-	protected ContactRole testGetContactRole_addContactRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testPutContactRole() throws Exception {
-		ContactRole postContactRole = testPutContactRole_addContactRole();
-
-		ContactRole randomContactRole = randomContactRole();
-
-		ContactRole putContactRole = contactRoleResource.putContactRole(
-			postContactRole.getId(), randomContactRole);
-
-		assertEquals(randomContactRole, putContactRole);
-		assertValid(putContactRole);
-
-		ContactRole getContactRole = contactRoleResource.getContactRole(
-			putContactRole.getId());
-
-		assertEquals(randomContactRole, getContactRole);
-		assertValid(getContactRole);
-	}
-
-	protected ContactRole testPutContactRole_addContactRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -327,15 +279,19 @@ public abstract class BaseContactRoleResourceTestCase {
 			valid = false;
 		}
 
-		if (contactRole.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (contactRole.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (contactRole.getKey() == null) {
 					valid = false;
 				}
 
@@ -442,9 +398,9 @@ public abstract class BaseContactRoleResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contactRole1.getId(), contactRole2.getId())) {
+						contactRole1.getKey(), contactRole2.getKey())) {
 
 					return false;
 				}
@@ -613,9 +569,12 @@ public abstract class BaseContactRoleResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(contactRole.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -646,7 +605,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				system = RandomTestUtil.randomBoolean();
 			}

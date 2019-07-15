@@ -67,26 +67,30 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Account")})
 	public void deleteAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId)
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey)
 		throws Exception {
 	}
 
 	@Override
 	@GET
 	@Operation(description = "Retrieves the account.")
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Account getAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId)
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey)
 		throws Exception {
 
 		return new Account();
@@ -95,13 +99,15 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@PUT
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Account putAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			Account account)
 		throws Exception {
 
@@ -113,18 +119,18 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	@Operation(description = "Unassigns contacts from the account.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactIds")
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactKeys")
 		}
 	)
-	@Path("/accounts/{accountId}/contacts")
+	@Path("/accounts/{accountKey}/contacts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Account")})
 	public void deleteAccountContact(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactIds") Long[]
-				contactIds)
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactKeys")
+				String[] contactKeys)
 		throws Exception {
 	}
 
@@ -133,18 +139,18 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	@PUT
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactIds")
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactKeys")
 		}
 	)
-	@Path("/accounts/{accountId}/contacts")
+	@Path("/accounts/{accountKey}/contacts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Account")})
 	public void putAccountContact(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactIds") Long[]
-				contactIds)
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactKeys")
+				String[] contactKeys)
 		throws Exception {
 	}
 
@@ -155,21 +161,21 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	)
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.PATH, name = "contactId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactRoleIds")
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
+			@Parameter(in = ParameterIn.PATH, name = "contactKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactRoleKeys")
 		}
 	)
-	@Path("/accounts/{accountId}/contacts/{contactId}/roles")
+	@Path("/accounts/{accountKey}/contacts/{contactKey}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Account")})
-	public void deleteAccountContactRole(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleIds")
-				Long[] contactRoleIds)
+	public void deleteAccountContactContactKeyRole(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleKeys")
+				String[] contactRoleKeys)
 		throws Exception {
 	}
 
@@ -178,21 +184,21 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	@PUT
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
-			@Parameter(in = ParameterIn.PATH, name = "contactId"),
-			@Parameter(in = ParameterIn.QUERY, name = "contactRoleIds")
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
+			@Parameter(in = ParameterIn.PATH, name = "contactKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "contactRoleKeys")
 		}
 	)
-	@Path("/accounts/{accountId}/contacts/{contactId}/roles")
+	@Path("/accounts/{accountKey}/contacts/{contactKey}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Account")})
-	public void putAccountContactRole(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId,
-			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleIds")
-				Long[] contactRoleIds)
+	public void putAccountContactContactKeyRole(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey,
+			@NotNull @Parameter(hidden = true) @QueryParam("contactRoleKeys")
+				String[] contactRoleKeys)
 		throws Exception {
 	}
 

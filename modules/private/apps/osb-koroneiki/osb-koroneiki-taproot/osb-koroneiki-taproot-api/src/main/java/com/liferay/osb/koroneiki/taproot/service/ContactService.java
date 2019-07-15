@@ -58,15 +58,30 @@ public interface ContactService extends BaseService {
 
 	public Contact deleteContact(long contactId) throws PortalException;
 
+	public Contact deleteContact(String contactKey) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Contact> getAccountContacts(long accountId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Contact> getAccountContacts(
+			String accountKey, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountContactsCount(long accountId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountContactsCount(String accountKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Contact getContact(long contactId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Contact getContactByContactKey(String contactKey)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -80,7 +95,16 @@ public interface ContactService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Contact> getProjectContacts(
+			String projectKey, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getProjectContactsCount(long projectId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProjectContactsCount(String projectKey)
+		throws PortalException;
 
 	public Contact updateContact(
 			long contactId, String firstName, String middleName,

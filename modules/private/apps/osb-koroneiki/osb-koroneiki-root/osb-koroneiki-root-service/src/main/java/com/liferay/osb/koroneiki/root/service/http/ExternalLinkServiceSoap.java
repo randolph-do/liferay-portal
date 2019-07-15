@@ -104,12 +104,48 @@ public class ExternalLinkServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
+			deleteExternalLink(String externalLinkKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.ExternalLink returnValue =
+				ExternalLinkServiceUtil.deleteExternalLink(externalLinkKey);
+
+			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
 			getExternalLink(long externalLinkId)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.root.model.ExternalLink returnValue =
 				ExternalLinkServiceUtil.getExternalLink(externalLinkId);
+
+			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.root.model.ExternalLinkSoap
+			getExternalLink(String externalLinkKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.root.model.ExternalLink returnValue =
+				ExternalLinkServiceUtil.getExternalLink(externalLinkKey);
 
 			return com.liferay.osb.koroneiki.root.model.ExternalLinkSoap.
 				toSoapModel(returnValue);

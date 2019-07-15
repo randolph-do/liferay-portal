@@ -133,6 +133,44 @@ public class AccountServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Account deleteAccount(
+			HttpPrincipal httpPrincipal, String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountServiceUtil.class, "deleteAccount",
+				_deleteAccountParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Account)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Account getAccount(
 			HttpPrincipal httpPrincipal, long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -140,10 +178,48 @@ public class AccountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountServiceUtil.class, "getAccount",
-				_getAccountParameterTypes2);
+				_getAccountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Account)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Account getAccount(
+			HttpPrincipal httpPrincipal, String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountServiceUtil.class, "getAccount",
+				_getAccountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey);
 
 			Object returnObj = null;
 
@@ -181,10 +257,53 @@ public class AccountServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountServiceUtil.class, "updateAccount",
-				_updateAccountParameterTypes3);
+				_updateAccountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountId, name, description, logoId,
+				contactEmailAddress, profileEmailAddress, phoneNumber,
+				faxNumber, website, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Account)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Account updateAccount(
+			HttpPrincipal httpPrincipal, String accountKey, String name,
+			String description, long logoId, String contactEmailAddress,
+			String profileEmailAddress, String phoneNumber, String faxNumber,
+			String website, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountServiceUtil.class, "updateAccount",
+				_updateAccountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey, name, description, logoId,
 				contactEmailAddress, profileEmailAddress, phoneNumber,
 				faxNumber, website, status);
 
@@ -222,12 +341,22 @@ public class AccountServiceHttp {
 	};
 	private static final Class<?>[] _deleteAccountParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getAccountParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteAccountParameterTypes2 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getAccountParameterTypes3 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _updateAccountParameterTypes3 =
+	private static final Class<?>[] _getAccountParameterTypes4 = new Class[] {
+		String.class
+	};
+	private static final Class<?>[] _updateAccountParameterTypes5 =
 		new Class[] {
 			long.class, String.class, String.class, long.class, String.class,
+			String.class, String.class, String.class, String.class, int.class
+		};
+	private static final Class<?>[] _updateAccountParameterTypes6 =
+		new Class[] {
+			String.class, String.class, String.class, long.class, String.class,
 			String.class, String.class, String.class, String.class, int.class
 		};
 

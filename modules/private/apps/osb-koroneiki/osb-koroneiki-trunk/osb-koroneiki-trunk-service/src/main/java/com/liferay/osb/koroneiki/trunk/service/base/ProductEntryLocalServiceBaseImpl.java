@@ -126,10 +126,13 @@ public abstract class ProductEntryLocalServiceBaseImpl
 	 *
 	 * @param productEntry the product entry
 	 * @return the product entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ProductEntry deleteProductEntry(ProductEntry productEntry) {
+	public ProductEntry deleteProductEntry(ProductEntry productEntry)
+		throws PortalException {
+
 		return productEntryPersistence.remove(productEntry);
 	}
 

@@ -48,11 +48,27 @@ public class ProjectServiceUtil {
 			accountId, name, code, industry, tier, notes, soldBy, status);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Project addProject(
+			String accountKey, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addProject(
+			accountKey, name, code, industry, tier, notes, soldBy, status);
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Project deleteProject(
 			long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteProject(projectId);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Project deleteProject(
+			String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteProject(projectKey);
 	}
 
 	/**
@@ -71,6 +87,13 @@ public class ProjectServiceUtil {
 		return getService().getProject(projectId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Project getProject(
+			String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProject(projectKey);
+	}
+
 	public static java.util.List
 		<com.liferay.osb.koroneiki.taproot.model.Project> getProjects(
 				long accountId, int start, int end)
@@ -79,10 +102,24 @@ public class ProjectServiceUtil {
 		return getService().getProjects(accountId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.Project> getProjects(
+				String accountKey, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjects(accountKey, start, end);
+	}
+
 	public static int getProjectsCount(long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getProjectsCount(accountId);
+	}
+
+	public static int getProjectsCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjectsCount(accountKey);
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Project updateProject(
@@ -92,6 +129,15 @@ public class ProjectServiceUtil {
 
 		return getService().updateProject(
 			projectId, name, code, industry, tier, notes, soldBy, status);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Project updateProject(
+			String projectKey, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateProject(
+			projectKey, name, code, industry, tier, notes, soldBy, status);
 	}
 
 	public static ProjectService getService() {

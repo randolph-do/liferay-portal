@@ -136,10 +136,13 @@ public abstract class ContactRoleLocalServiceBaseImpl
 	 *
 	 * @param contactRole the contact role
 	 * @return the contact role that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ContactRole deleteContactRole(ContactRole contactRole) {
+	public ContactRole deleteContactRole(ContactRole contactRole)
+		throws PortalException {
+
 		return contactRolePersistence.remove(contactRole);
 	}
 

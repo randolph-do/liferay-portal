@@ -55,6 +55,13 @@ public class ContactServiceUtil {
 		return getService().deleteContact(contactId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Contact deleteContact(
+			String contactKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteContact(contactKey);
+	}
+
 	public static java.util.List
 		<com.liferay.osb.koroneiki.taproot.model.Contact> getAccountContacts(
 				long accountId, int start, int end)
@@ -63,10 +70,24 @@ public class ContactServiceUtil {
 		return getService().getAccountContacts(accountId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.Contact> getAccountContacts(
+				String accountKey, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountContacts(accountKey, start, end);
+	}
+
 	public static int getAccountContactsCount(long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAccountContactsCount(accountId);
+	}
+
+	public static int getAccountContactsCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountContactsCount(accountKey);
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Contact getContact(
@@ -74,6 +95,13 @@ public class ContactServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getContact(contactId);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Contact
+			getContactByContactKey(String contactKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getContactByContactKey(contactKey);
 	}
 
 	/**
@@ -93,10 +121,24 @@ public class ContactServiceUtil {
 		return getService().getProjectContacts(projectId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.Contact> getProjectContacts(
+				String projectKey, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjectContacts(projectKey, start, end);
+	}
+
 	public static int getProjectContactsCount(long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getProjectContactsCount(projectId);
+	}
+
+	public static int getProjectContactsCount(String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjectContactsCount(projectKey);
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.Contact updateContact(

@@ -171,7 +171,9 @@ public abstract class BaseProjectResourceTestCase {
 
 		Project project = randomProject();
 
+		project.setAccountKey(regex);
 		project.setCode(regex);
+		project.setKey(regex);
 		project.setName(regex);
 		project.setNotes(regex);
 		project.setSoldBy(regex);
@@ -182,29 +184,34 @@ public abstract class BaseProjectResourceTestCase {
 
 		project = ProjectSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, project.getAccountKey());
 		Assert.assertEquals(regex, project.getCode());
+		Assert.assertEquals(regex, project.getKey());
 		Assert.assertEquals(regex, project.getName());
 		Assert.assertEquals(regex, project.getNotes());
 		Assert.assertEquals(regex, project.getSoldBy());
 	}
 
 	@Test
-	public void testGetAccountProjectsPage() throws Exception {
-		Page<Project> page = projectResource.getAccountProjectsPage(
-			testGetAccountProjectsPage_getAccountId(), Pagination.of(1, 2));
+	public void testGetAccountAccountKeyProjectsPage() throws Exception {
+		Page<Project> page = projectResource.getAccountAccountKeyProjectsPage(
+			testGetAccountAccountKeyProjectsPage_getAccountKey(),
+			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long accountId = testGetAccountProjectsPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountProjectsPage_getIrrelevantAccountId();
+		String accountKey =
+			testGetAccountAccountKeyProjectsPage_getAccountKey();
+		String irrelevantAccountKey =
+			testGetAccountAccountKeyProjectsPage_getIrrelevantAccountKey();
 
-		if ((irrelevantAccountId != null)) {
-			Project irrelevantProject = testGetAccountProjectsPage_addProject(
-				irrelevantAccountId, randomIrrelevantProject());
+		if ((irrelevantAccountKey != null)) {
+			Project irrelevantProject =
+				testGetAccountAccountKeyProjectsPage_addProject(
+					irrelevantAccountKey, randomIrrelevantProject());
 
-			page = projectResource.getAccountProjectsPage(
-				irrelevantAccountId, Pagination.of(1, 2));
+			page = projectResource.getAccountAccountKeyProjectsPage(
+				irrelevantAccountKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -214,14 +221,14 @@ public abstract class BaseProjectResourceTestCase {
 			assertValid(page);
 		}
 
-		Project project1 = testGetAccountProjectsPage_addProject(
-			accountId, randomProject());
+		Project project1 = testGetAccountAccountKeyProjectsPage_addProject(
+			accountKey, randomProject());
 
-		Project project2 = testGetAccountProjectsPage_addProject(
-			accountId, randomProject());
+		Project project2 = testGetAccountAccountKeyProjectsPage_addProject(
+			accountKey, randomProject());
 
-		page = projectResource.getAccountProjectsPage(
-			accountId, Pagination.of(1, 2));
+		page = projectResource.getAccountAccountKeyProjectsPage(
+			accountKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -231,27 +238,30 @@ public abstract class BaseProjectResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountProjectsPageWithPagination() throws Exception {
-		Long accountId = testGetAccountProjectsPage_getAccountId();
+	public void testGetAccountAccountKeyProjectsPageWithPagination()
+		throws Exception {
 
-		Project project1 = testGetAccountProjectsPage_addProject(
-			accountId, randomProject());
+		String accountKey =
+			testGetAccountAccountKeyProjectsPage_getAccountKey();
 
-		Project project2 = testGetAccountProjectsPage_addProject(
-			accountId, randomProject());
+		Project project1 = testGetAccountAccountKeyProjectsPage_addProject(
+			accountKey, randomProject());
 
-		Project project3 = testGetAccountProjectsPage_addProject(
-			accountId, randomProject());
+		Project project2 = testGetAccountAccountKeyProjectsPage_addProject(
+			accountKey, randomProject());
 
-		Page<Project> page1 = projectResource.getAccountProjectsPage(
-			accountId, Pagination.of(1, 2));
+		Project project3 = testGetAccountAccountKeyProjectsPage_addProject(
+			accountKey, randomProject());
+
+		Page<Project> page1 = projectResource.getAccountAccountKeyProjectsPage(
+			accountKey, Pagination.of(1, 2));
 
 		List<Project> projects1 = (List<Project>)page1.getItems();
 
 		Assert.assertEquals(projects1.toString(), 2, projects1.size());
 
-		Page<Project> page2 = projectResource.getAccountProjectsPage(
-			accountId, Pagination.of(2, 2));
+		Page<Project> page2 = projectResource.getAccountAccountKeyProjectsPage(
+			accountKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -259,119 +269,73 @@ public abstract class BaseProjectResourceTestCase {
 
 		Assert.assertEquals(projects2.toString(), 1, projects2.size());
 
-		Page<Project> page3 = projectResource.getAccountProjectsPage(
-			accountId, Pagination.of(1, 3));
+		Page<Project> page3 = projectResource.getAccountAccountKeyProjectsPage(
+			accountKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(project1, project2, project3),
 			(List<Project>)page3.getItems());
 	}
 
-	protected Project testGetAccountProjectsPage_addProject(
-			Long accountId, Project project)
+	protected Project testGetAccountAccountKeyProjectsPage_addProject(
+			String accountKey, Project project)
 		throws Exception {
 
-		return projectResource.postAccountProject(accountId, project);
-	}
-
-	protected Long testGetAccountProjectsPage_getAccountId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountProjectsPage_getIrrelevantAccountId()
+	protected String testGetAccountAccountKeyProjectsPage_getAccountKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountAccountKeyProjectsPage_getIrrelevantAccountKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostAccountProject() throws Exception {
+	public void testPostAccountAccountKeyProject() throws Exception {
 		Project randomProject = randomProject();
 
-		Project postProject = testPostAccountProject_addProject(randomProject);
+		Project postProject = testPostAccountAccountKeyProject_addProject(
+			randomProject);
 
 		assertEquals(randomProject, postProject);
 		assertValid(postProject);
 	}
 
-	protected Project testPostAccountProject_addProject(Project project)
+	protected Project testPostAccountAccountKeyProject_addProject(
+			Project project)
 		throws Exception {
 
-		return projectResource.postAccountProject(
-			testGetAccountProjectsPage_getAccountId(), project);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testDeleteProject() throws Exception {
-		Project project = testDeleteProject_addProject();
-
-		assertHttpResponseStatusCode(
-			204, projectResource.deleteProjectHttpResponse(project.getId()));
-
-		assertHttpResponseStatusCode(
-			404, projectResource.getProjectHttpResponse(project.getId()));
-
-		assertHttpResponseStatusCode(
-			404, projectResource.getProjectHttpResponse(0L));
-	}
-
-	protected Project testDeleteProject_addProject() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetProject() throws Exception {
-		Project postProject = testGetProject_addProject();
-
-		Project getProject = projectResource.getProject(postProject.getId());
-
-		assertEquals(postProject, getProject);
-		assertValid(getProject);
-	}
-
-	protected Project testGetProject_addProject() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testPutProject() throws Exception {
-		Project postProject = testPutProject_addProject();
-
-		Project randomProject = randomProject();
-
-		Project putProject = projectResource.putProject(
-			postProject.getId(), randomProject);
-
-		assertEquals(randomProject, putProject);
-		assertValid(putProject);
-
-		Project getProject = projectResource.getProject(putProject.getId());
-
-		assertEquals(randomProject, getProject);
-		assertValid(getProject);
-	}
-
-	protected Project testPutProject_addProject() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testDeleteProjectContact() throws Exception {
-		Project project = testDeleteProjectContact_addProject();
-
-		assertHttpResponseStatusCode(
-			204,
-			projectResource.deleteProjectContactHttpResponse(
-				project.getId(), null));
-	}
-
-	protected Project testDeleteProjectContact_addProject() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -380,44 +344,22 @@ public abstract class BaseProjectResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteProjectContactRole() throws Exception {
-		Project project = testDeleteProjectContactRole_addProject();
-
-		assertHttpResponseStatusCode(
-			204,
-			projectResource.deleteProjectContactRoleHttpResponse(
-				project.getId(), null, null));
-	}
-
-	protected Project testDeleteProjectContactRole_addProject()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutProjectContactRole() throws Exception {
+	public void testDeleteProjectContactContactKeyRole() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testDeleteProjectTeamRole() throws Exception {
-		Project project = testDeleteProjectTeamRole_addProject();
-
-		assertHttpResponseStatusCode(
-			204,
-			projectResource.deleteProjectTeamRoleHttpResponse(
-				project.getId(), null, null));
-	}
-
-	protected Project testDeleteProjectTeamRole_addProject() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	public void testPutProjectContactContactKeyRole() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPutProjectTeamRole() throws Exception {
+	public void testDeleteProjectTeamTeamKeyRole() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPutProjectTeamTeamKeyRole() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -480,15 +422,11 @@ public abstract class BaseProjectResourceTestCase {
 			valid = false;
 		}
 
-		if (project.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("accountId", additionalAssertFieldName)) {
-				if (project.getAccountId() == null) {
+			if (Objects.equals("accountKey", additionalAssertFieldName)) {
+				if (project.getAccountKey() == null) {
 					valid = false;
 				}
 
@@ -513,6 +451,14 @@ public abstract class BaseProjectResourceTestCase {
 
 			if (Objects.equals("industry", additionalAssertFieldName)) {
 				if (project.getIndustry() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (project.getKey() == null) {
 					valid = false;
 				}
 
@@ -600,9 +546,9 @@ public abstract class BaseProjectResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("accountId", additionalAssertFieldName)) {
+			if (Objects.equals("accountKey", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						project1.getAccountId(), project2.getAccountId())) {
+						project1.getAccountKey(), project2.getAccountKey())) {
 
 					return false;
 				}
@@ -652,18 +598,18 @@ public abstract class BaseProjectResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(project1.getId(), project2.getId())) {
+			if (Objects.equals("industry", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						project1.getIndustry(), project2.getIndustry())) {
+
 					return false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("industry", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						project1.getIndustry(), project2.getIndustry())) {
-
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(project1.getKey(), project2.getKey())) {
 					return false;
 				}
 
@@ -778,9 +724,12 @@ public abstract class BaseProjectResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("accountId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("accountKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(project.getAccountKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("code")) {
@@ -858,14 +807,17 @@ public abstract class BaseProjectResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("industry")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("industry")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(project.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -909,11 +861,11 @@ public abstract class BaseProjectResourceTestCase {
 	protected Project randomProject() throws Exception {
 		return new Project() {
 			{
-				accountId = RandomTestUtil.randomLong();
+				accountKey = RandomTestUtil.randomString();
 				code = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				notes = RandomTestUtil.randomString();
 				soldBy = RandomTestUtil.randomString();

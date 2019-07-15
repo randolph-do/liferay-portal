@@ -54,10 +54,31 @@ public class ProductPurchaseServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			addProductPurchase(
+				String accountKey, String projectKey, String productEntryKey,
+				java.util.Date startDate, java.util.Date endDate, int quantity,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addProductPurchase(
+			accountKey, projectKey, productEntryKey, startDate, endDate,
+			quantity, productFields);
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
 			deleteProductPurchase(long productPurchaseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteProductPurchase(productPurchaseId);
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			deleteProductPurchase(String productPurchaseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteProductPurchase(productPurchaseKey);
 	}
 
 	public static java.util.List
@@ -68,10 +89,25 @@ public class ProductPurchaseServiceUtil {
 		return getService().getAccountProductPurchases(accountId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+				getAccountProductPurchases(
+					String accountKey, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountProductPurchases(accountKey, start, end);
+	}
+
 	public static int getAccountProductPurchasesCount(long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAccountProductPurchasesCount(accountId);
+	}
+
+	public static int getAccountProductPurchasesCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountProductPurchasesCount(accountKey);
 	}
 
 	/**
@@ -90,6 +126,13 @@ public class ProductPurchaseServiceUtil {
 		return getService().getProductPurchase(productPurchaseId);
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			getProductPurchase(String productPurchaseKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProductPurchase(productPurchaseKey);
+	}
+
 	public static java.util.List
 		<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
 				getProjectProductPurchases(long projectId, int start, int end)
@@ -98,10 +141,25 @@ public class ProductPurchaseServiceUtil {
 		return getService().getProjectProductPurchases(projectId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.trunk.model.ProductPurchase>
+				getProjectProductPurchases(
+					String projectKey, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjectProductPurchases(projectKey, start, end);
+	}
+
 	public static int getProjectProductPurchasesCount(long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getProjectProductPurchasesCount(projectId);
+	}
+
+	public static int getProjectProductPurchasesCount(String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getProjectProductPurchasesCount(projectKey);
 	}
 
 	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
@@ -115,6 +173,19 @@ public class ProductPurchaseServiceUtil {
 
 		return getService().updateProductPurchase(
 			productPurchaseId, startDate, endDate, quantity, productFields);
+	}
+
+	public static com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+			updateProductPurchase(
+				String productPurchaseKey, java.util.Date startDate,
+				java.util.Date endDate, int quantity,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateProductPurchase(
+			productPurchaseKey, startDate, endDate, quantity, productFields);
 	}
 
 	public static ProductPurchaseService getService() {

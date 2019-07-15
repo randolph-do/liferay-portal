@@ -52,8 +52,16 @@ public interface TeamProjectRoleService extends BaseService {
 			long teamId, long projectId, long teamRoleId)
 		throws PortalException;
 
+	public TeamProjectRole addTeamProjectRole(
+			String teamKey, String projectKey, String teamRoleKey)
+		throws PortalException;
+
 	public TeamProjectRole deleteTeamProjectRole(
 			long teamId, long projectId, long teamRoleId)
+		throws PortalException;
+
+	public TeamProjectRole deleteTeamProjectRole(
+			String teamKey, String projectKey, String teamRoleKey)
 		throws PortalException;
 
 	public void deleteTeamProjectRoles(long teamId, long projectId)

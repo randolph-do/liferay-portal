@@ -53,14 +53,25 @@ public interface TeamService extends BaseService {
 	 */
 	public Team addTeam(long accountId, String name) throws PortalException;
 
+	public Team addTeam(String accountKey, String name) throws PortalException;
+
 	public Team deleteTeam(long teamId) throws PortalException;
+
+	public Team deleteTeam(String teamKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getAccountTeams(long accountId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Team> getAccountTeams(String accountKey, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountTeamsCount(long accountId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountTeamsCount(String accountKey) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -72,6 +83,11 @@ public interface TeamService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Team getTeam(long teamId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Team getTeam(String teamKey) throws PortalException;
+
 	public Team updateTeam(long teamId, String name) throws PortalException;
+
+	public Team updateTeam(String teamKey, String name) throws PortalException;
 
 }

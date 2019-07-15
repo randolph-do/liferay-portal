@@ -58,17 +58,17 @@ public abstract class BaseAuditEntryResourceImpl implements AuditEntryResource {
 	@Operation(description = "Retrieves the account's audit history.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/accounts/{accountId}/audit-entries")
+	@Path("/accounts/{accountKey}/audit-entries")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AuditEntry")})
-	public Page<AuditEntry> getAccountAuditEntriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Page<AuditEntry> getAccountAccountKeyAuditEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -79,14 +79,14 @@ public abstract class BaseAuditEntryResourceImpl implements AuditEntryResource {
 	@GET
 	@Operation(description = "Retrieves the audit entry.")
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "auditEntryId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "auditEntryKey")}
 	)
-	@Path("/audit-entries/{auditEntryId}")
+	@Path("/audit-entries/{auditEntryKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AuditEntry")})
 	public AuditEntry getAuditEntry(
-			@NotNull @Parameter(hidden = true) @PathParam("auditEntryId") Long
-				auditEntryId)
+			@NotNull @Parameter(hidden = true) @PathParam("auditEntryKey")
+				String auditEntryKey)
 		throws Exception {
 
 		return new AuditEntry();
@@ -97,17 +97,17 @@ public abstract class BaseAuditEntryResourceImpl implements AuditEntryResource {
 	@Operation(description = "Retrieves the contact role's audit history.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "contactRoleId"),
+			@Parameter(in = ParameterIn.PATH, name = "contactRoleKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/contact-roles/{contactRoleId}/audit-entries")
+	@Path("/contact-roles/{contactRoleKey}/audit-entries")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AuditEntry")})
-	public Page<AuditEntry> getContactRoleAuditEntriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("contactRoleId") Long
-				contactRoleId,
+	public Page<AuditEntry> getContactRoleContactRoleKeyAuditEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("contactRoleKey")
+				String contactRoleKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -119,17 +119,17 @@ public abstract class BaseAuditEntryResourceImpl implements AuditEntryResource {
 	@Operation(description = "Retrieves the contact's audit history.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "contactId"),
+			@Parameter(in = ParameterIn.PATH, name = "contactKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/contacts/{contactId}/audit-entries")
+	@Path("/contacts/{contactKey}/audit-entries")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AuditEntry")})
-	public Page<AuditEntry> getContactAuditEntriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId,
+	public Page<AuditEntry> getContactContactKeyAuditEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -141,17 +141,17 @@ public abstract class BaseAuditEntryResourceImpl implements AuditEntryResource {
 	@Operation(description = "Retrieves the project's audit history.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/projects/{projectId}/audit-entries")
+	@Path("/projects/{projectKey}/audit-entries")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AuditEntry")})
-	public Page<AuditEntry> getProjectAuditEntriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public Page<AuditEntry> getProjectProjectKeyAuditEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -163,17 +163,17 @@ public abstract class BaseAuditEntryResourceImpl implements AuditEntryResource {
 	@Operation(description = "Retrieves the team role's audit history.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "teamRoleId"),
+			@Parameter(in = ParameterIn.PATH, name = "teamRoleKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/team-roles/{teamRoleId}/audit-entries")
+	@Path("/team-roles/{teamRoleKey}/audit-entries")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AuditEntry")})
-	public Page<AuditEntry> getTeamRoleAuditEntriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("teamRoleId") Long
-				teamRoleId,
+	public Page<AuditEntry> getTeamRoleTeamRoleKeyAuditEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("teamRoleKey") String
+				teamRoleKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -185,16 +185,17 @@ public abstract class BaseAuditEntryResourceImpl implements AuditEntryResource {
 	@Operation(description = "Retrieves the team's audit history.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "teamId"),
+			@Parameter(in = ParameterIn.PATH, name = "teamKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/teams/{teamId}/audit-entries")
+	@Path("/teams/{teamKey}/audit-entries")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AuditEntry")})
-	public Page<AuditEntry> getTeamAuditEntriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("teamId") Long teamId,
+	public Page<AuditEntry> getTeamTeamKeyAuditEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("teamKey") String
+				teamKey,
 			@Context Pagination pagination)
 		throws Exception {
 

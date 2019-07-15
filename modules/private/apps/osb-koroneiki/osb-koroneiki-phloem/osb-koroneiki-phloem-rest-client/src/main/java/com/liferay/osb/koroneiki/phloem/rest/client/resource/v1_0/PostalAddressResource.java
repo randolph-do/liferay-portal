@@ -36,19 +36,22 @@ public interface PostalAddressResource {
 		return new Builder();
 	}
 
-	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
+	public Page<PostalAddress> getAccountAccountKeyPostalAddressesPage(
+			String accountKey)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountPostalAddressesPageHttpResponse(
-			Long accountId)
+	public HttpInvoker.HttpResponse
+			getAccountAccountKeyPostalAddressesPageHttpResponse(
+				String accountKey)
 		throws Exception;
 
-	public PostalAddress postAccountPostalAddress(
-			Long accountId, PostalAddress postalAddress)
+	public PostalAddress postAccountAccountKeyPostalAddress(
+			String accountKey, PostalAddress postalAddress)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postAccountPostalAddressHttpResponse(
-			Long accountId, PostalAddress postalAddress)
+	public HttpInvoker.HttpResponse
+			postAccountAccountKeyPostalAddressHttpResponse(
+				String accountKey, PostalAddress postalAddress)
 		throws Exception;
 
 	public void deletePostalAddress(Long postalAddressId) throws Exception;
@@ -114,11 +117,12 @@ public interface PostalAddressResource {
 	public static class PostalAddressResourceImpl
 		implements PostalAddressResource {
 
-		public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
+		public Page<PostalAddress> getAccountAccountKeyPostalAddressesPage(
+				String accountKey)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountPostalAddressesPageHttpResponse(accountId);
+				getAccountAccountKeyPostalAddressesPageHttpResponse(accountKey);
 
 			String content = httpResponse.getContent();
 
@@ -132,7 +136,8 @@ public interface PostalAddressResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAccountPostalAddressesPageHttpResponse(Long accountId)
+				getAccountAccountKeyPostalAddressesPageHttpResponse(
+					String accountKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -147,8 +152,8 @@ public interface PostalAddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/postal-addresses",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/postal-addresses",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -156,12 +161,13 @@ public interface PostalAddressResource {
 			return httpInvoker.invoke();
 		}
 
-		public PostalAddress postAccountPostalAddress(
-				Long accountId, PostalAddress postalAddress)
+		public PostalAddress postAccountAccountKeyPostalAddress(
+				String accountKey, PostalAddress postalAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountPostalAddressHttpResponse(accountId, postalAddress);
+				postAccountAccountKeyPostalAddressHttpResponse(
+					accountKey, postalAddress);
 
 			String content = httpResponse.getContent();
 
@@ -183,8 +189,9 @@ public interface PostalAddressResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAccountPostalAddressHttpResponse(
-				Long accountId, PostalAddress postalAddress)
+		public HttpInvoker.HttpResponse
+				postAccountAccountKeyPostalAddressHttpResponse(
+					String accountKey, PostalAddress postalAddress)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -201,8 +208,8 @@ public interface PostalAddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/postal-addresses",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/postal-addresses",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

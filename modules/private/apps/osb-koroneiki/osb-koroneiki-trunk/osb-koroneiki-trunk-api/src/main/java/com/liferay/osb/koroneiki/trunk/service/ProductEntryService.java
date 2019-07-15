@@ -56,6 +56,9 @@ public interface ProductEntryService extends BaseService {
 	public ProductEntry deleteProductEntry(long productEntryId)
 		throws PortalException;
 
+	public ProductEntry deleteProductEntry(String productEntryKey)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -74,7 +77,14 @@ public interface ProductEntryService extends BaseService {
 	public ProductEntry getProductEntry(long productEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ProductEntry getProductEntry(String productEntryKey)
+		throws PortalException;
+
 	public ProductEntry updateProductEntry(long productEntryId, String name)
+		throws PortalException;
+
+	public ProductEntry updateProductEntry(String productEntryKey, String name)
 		throws PortalException;
 
 }

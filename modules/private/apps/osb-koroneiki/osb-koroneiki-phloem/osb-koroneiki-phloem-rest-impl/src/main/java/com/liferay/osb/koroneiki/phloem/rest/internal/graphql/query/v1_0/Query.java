@@ -156,18 +156,18 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Account getAccount(@GraphQLName("accountId") Long accountId)
+	public Account getAccount(@GraphQLName("accountKey") String accountKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource -> accountResource.getAccount(accountId));
+			accountResource -> accountResource.getAccount(accountKey));
 	}
 
 	@GraphQLField
-	public AuditEntryPage getAccountAuditEntriesPage(
-			@GraphQLName("accountId") Long accountId,
+	public AuditEntryPage getAccountAccountKeyAuditEntriesPage(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -176,25 +176,25 @@ public class Query {
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			auditEntryResource -> new AuditEntryPage(
-				auditEntryResource.getAccountAuditEntriesPage(
-					accountId, Pagination.of(page, pageSize))));
+				auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+					accountKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
 	public AuditEntry getAuditEntry(
-			@GraphQLName("auditEntryId") Long auditEntryId)
+			@GraphQLName("auditEntryKey") String auditEntryKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			auditEntryResource -> auditEntryResource.getAuditEntry(
-				auditEntryId));
+				auditEntryKey));
 	}
 
 	@GraphQLField
-	public AuditEntryPage getContactRoleAuditEntriesPage(
-			@GraphQLName("contactRoleId") Long contactRoleId,
+	public AuditEntryPage getContactRoleContactRoleKeyAuditEntriesPage(
+			@GraphQLName("contactRoleKey") String contactRoleKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -203,13 +203,13 @@ public class Query {
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			auditEntryResource -> new AuditEntryPage(
-				auditEntryResource.getContactRoleAuditEntriesPage(
-					contactRoleId, Pagination.of(page, pageSize))));
+				auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+					contactRoleKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public AuditEntryPage getContactAuditEntriesPage(
-			@GraphQLName("contactId") Long contactId,
+	public AuditEntryPage getContactContactKeyAuditEntriesPage(
+			@GraphQLName("contactKey") String contactKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -218,13 +218,13 @@ public class Query {
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			auditEntryResource -> new AuditEntryPage(
-				auditEntryResource.getContactAuditEntriesPage(
-					contactId, Pagination.of(page, pageSize))));
+				auditEntryResource.getContactContactKeyAuditEntriesPage(
+					contactKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public AuditEntryPage getProjectAuditEntriesPage(
-			@GraphQLName("projectId") Long projectId,
+	public AuditEntryPage getProjectProjectKeyAuditEntriesPage(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -233,13 +233,13 @@ public class Query {
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			auditEntryResource -> new AuditEntryPage(
-				auditEntryResource.getProjectAuditEntriesPage(
-					projectId, Pagination.of(page, pageSize))));
+				auditEntryResource.getProjectProjectKeyAuditEntriesPage(
+					projectKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public AuditEntryPage getTeamRoleAuditEntriesPage(
-			@GraphQLName("teamRoleId") Long teamRoleId,
+	public AuditEntryPage getTeamRoleTeamRoleKeyAuditEntriesPage(
+			@GraphQLName("teamRoleKey") String teamRoleKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -248,13 +248,13 @@ public class Query {
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			auditEntryResource -> new AuditEntryPage(
-				auditEntryResource.getTeamRoleAuditEntriesPage(
-					teamRoleId, Pagination.of(page, pageSize))));
+				auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+					teamRoleKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public AuditEntryPage getTeamAuditEntriesPage(
-			@GraphQLName("teamId") Long teamId,
+	public AuditEntryPage getTeamTeamKeyAuditEntriesPage(
+			@GraphQLName("teamKey") String teamKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -263,13 +263,13 @@ public class Query {
 			_auditEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			auditEntryResource -> new AuditEntryPage(
-				auditEntryResource.getTeamAuditEntriesPage(
-					teamId, Pagination.of(page, pageSize))));
+				auditEntryResource.getTeamTeamKeyAuditEntriesPage(
+					teamKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public ContactPage getAccountContactsPage(
-			@GraphQLName("accountId") Long accountId,
+	public ContactPage getAccountAccountKeyContactsPage(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -278,23 +278,23 @@ public class Query {
 			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contactResource -> new ContactPage(
-				contactResource.getAccountContactsPage(
-					accountId, Pagination.of(page, pageSize))));
+				contactResource.getAccountAccountKeyContactsPage(
+					accountKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public Contact getContact(@GraphQLName("contactId") Long contactId)
+	public Contact getContact(@GraphQLName("contactKey") String contactKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			contactResource -> contactResource.getContact(contactId));
+			contactResource -> contactResource.getContact(contactKey));
 	}
 
 	@GraphQLField
-	public ContactPage getProjectContactsPage(
-			@GraphQLName("projectId") Long projectId,
+	public ContactPage getProjectProjectKeyContactsPage(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -303,25 +303,25 @@ public class Query {
 			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contactResource -> new ContactPage(
-				contactResource.getProjectContactsPage(
-					projectId, Pagination.of(page, pageSize))));
+				contactResource.getProjectProjectKeyContactsPage(
+					projectKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
 	public ContactRole getContactRole(
-			@GraphQLName("contactRoleId") Long contactRoleId)
+			@GraphQLName("contactRoleKey") String contactRoleKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_contactRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contactRoleResource -> contactRoleResource.getContactRole(
-				contactRoleId));
+				contactRoleKey));
 	}
 
 	@GraphQLField
-	public ExternalLinkPage getAccountExternalLinksPage(
-			@GraphQLName("accountId") Long accountId,
+	public ExternalLinkPage getAccountAccountKeyExternalLinksPage(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -330,13 +330,13 @@ public class Query {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource -> new ExternalLinkPage(
-				externalLinkResource.getAccountExternalLinksPage(
-					accountId, Pagination.of(page, pageSize))));
+				externalLinkResource.getAccountAccountKeyExternalLinksPage(
+					accountKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public ExternalLinkPage getContactExternalLinksPage(
-			@GraphQLName("contactId") Long contactId,
+	public ExternalLinkPage getContactContactKeyExternalLinksPage(
+			@GraphQLName("contactKey") String contactKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -345,25 +345,60 @@ public class Query {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource -> new ExternalLinkPage(
-				externalLinkResource.getContactExternalLinksPage(
-					contactId, Pagination.of(page, pageSize))));
+				externalLinkResource.getContactContactKeyExternalLinksPage(
+					contactKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
 	public ExternalLink getExternalLink(
-			@GraphQLName("externalLinkId") Long externalLinkId)
+			@GraphQLName("externalLinkKey") String externalLinkKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource -> externalLinkResource.getExternalLink(
-				externalLinkId));
+				externalLinkKey));
 	}
 
 	@GraphQLField
-	public ExternalLinkPage getProductConsumptionExternalLinksPage(
-			@GraphQLName("productConsumptionId") Long productConsumptionId,
+	public ExternalLinkPage
+			getProductConsumptionProductConsumptionKeyExternalLinksPage(
+				@GraphQLName("productConsumptionKey") String
+					productConsumptionKey,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.
+					getProductConsumptionProductConsumptionKeyExternalLinksPage(
+						productConsumptionKey, Pagination.of(page, pageSize))));
+	}
+
+	@GraphQLField
+	public ExternalLinkPage
+			getProductPurchaseProductPurchaseKeyExternalLinksPage(
+				@GraphQLName("productPurchaseKey") String productPurchaseKey,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_externalLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			externalLinkResource -> new ExternalLinkPage(
+				externalLinkResource.
+					getProductPurchaseProductPurchaseKeyExternalLinksPage(
+						productPurchaseKey, Pagination.of(page, pageSize))));
+	}
+
+	@GraphQLField
+	public ExternalLinkPage getProductProductKeyExternalLinksPage(
+			@GraphQLName("productKey") String productKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -372,13 +407,13 @@ public class Query {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource -> new ExternalLinkPage(
-				externalLinkResource.getProductConsumptionExternalLinksPage(
-					productConsumptionId, Pagination.of(page, pageSize))));
+				externalLinkResource.getProductProductKeyExternalLinksPage(
+					productKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public ExternalLinkPage getProductPurchaseExternalLinksPage(
-			@GraphQLName("productPurchaseId") Long productPurchaseId,
+	public ExternalLinkPage getProjectProjectKeyExternalLinksPage(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -387,13 +422,13 @@ public class Query {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource -> new ExternalLinkPage(
-				externalLinkResource.getProductPurchaseExternalLinksPage(
-					productPurchaseId, Pagination.of(page, pageSize))));
+				externalLinkResource.getProjectProjectKeyExternalLinksPage(
+					projectKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public ExternalLinkPage getProductExternalLinksPage(
-			@GraphQLName("productId") Long productId,
+	public ExternalLinkPage getTeamTeamKeyExternalLinksPage(
+			@GraphQLName("teamKey") String teamKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -402,51 +437,21 @@ public class Query {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource -> new ExternalLinkPage(
-				externalLinkResource.getProductExternalLinksPage(
-					productId, Pagination.of(page, pageSize))));
+				externalLinkResource.getTeamTeamKeyExternalLinksPage(
+					teamKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public ExternalLinkPage getProjectExternalLinksPage(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_externalLinkResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			externalLinkResource -> new ExternalLinkPage(
-				externalLinkResource.getProjectExternalLinksPage(
-					projectId, Pagination.of(page, pageSize))));
-	}
-
-	@GraphQLField
-	public ExternalLinkPage getTeamExternalLinksPage(
-			@GraphQLName("teamId") Long teamId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_externalLinkResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			externalLinkResource -> new ExternalLinkPage(
-				externalLinkResource.getTeamExternalLinksPage(
-					teamId, Pagination.of(page, pageSize))));
-	}
-
-	@GraphQLField
-	public PostalAddressPage getAccountPostalAddressesPage(
-			@GraphQLName("accountId") Long accountId)
+	public PostalAddressPage getAccountAccountKeyPostalAddressesPage(
+			@GraphQLName("accountKey") String accountKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			postalAddressResource -> new PostalAddressPage(
-				postalAddressResource.getAccountPostalAddressesPage(
-					accountId)));
+				postalAddressResource.getAccountAccountKeyPostalAddressesPage(
+					accountKey)));
 	}
 
 	@GraphQLField
@@ -476,18 +481,18 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Product getProduct(@GraphQLName("productId") Long productId)
+	public Product getProduct(@GraphQLName("productKey") String productKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productResource -> productResource.getProduct(productId));
+			productResource -> productResource.getProduct(productKey));
 	}
 
 	@GraphQLField
-	public ProductConsumptionPage getAccountProductConsumptionsPage(
-			@GraphQLName("accountId") Long accountId,
+	public ProductConsumptionPage getAccountAccountKeyProductConsumptionsPage(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -496,13 +501,14 @@ public class Query {
 			_productConsumptionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productConsumptionResource -> new ProductConsumptionPage(
-				productConsumptionResource.getAccountProductConsumptionsPage(
-					accountId, Pagination.of(page, pageSize))));
+				productConsumptionResource.
+					getAccountAccountKeyProductConsumptionsPage(
+						accountKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
 	public ProductConsumption getProductConsumption(
-			@GraphQLName("productConsumptionId") Long productConsumptionId)
+			@GraphQLName("productConsumptionKey") String productConsumptionKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -510,12 +516,12 @@ public class Query {
 			this::_populateResourceContext,
 			productConsumptionResource ->
 				productConsumptionResource.getProductConsumption(
-					productConsumptionId));
+					productConsumptionKey));
 	}
 
 	@GraphQLField
-	public ProductConsumptionPage getProjectProductConsumptionsPage(
-			@GraphQLName("projectId") Long projectId,
+	public ProductConsumptionPage getProjectProjectKeyProductConsumptionsPage(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -524,13 +530,14 @@ public class Query {
 			_productConsumptionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productConsumptionResource -> new ProductConsumptionPage(
-				productConsumptionResource.getProjectProductConsumptionsPage(
-					projectId, Pagination.of(page, pageSize))));
+				productConsumptionResource.
+					getProjectProjectKeyProductConsumptionsPage(
+						projectKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public ProductPurchasePage getAccountProductPurchasesPage(
-			@GraphQLName("accountId") Long accountId,
+	public ProductPurchasePage getAccountAccountKeyProductPurchasesPage(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -539,25 +546,26 @@ public class Query {
 			_productPurchaseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productPurchaseResource -> new ProductPurchasePage(
-				productPurchaseResource.getAccountProductPurchasesPage(
-					accountId, Pagination.of(page, pageSize))));
+				productPurchaseResource.
+					getAccountAccountKeyProductPurchasesPage(
+						accountKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
 	public ProductPurchase getProductPurchase(
-			@GraphQLName("productPurchaseId") Long productPurchaseId)
+			@GraphQLName("productPurchaseKey") String productPurchaseKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_productPurchaseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productPurchaseResource ->
-				productPurchaseResource.getProductPurchase(productPurchaseId));
+				productPurchaseResource.getProductPurchase(productPurchaseKey));
 	}
 
 	@GraphQLField
-	public ProductPurchasePage getProjectProductPurchasesPage(
-			@GraphQLName("projectId") Long projectId,
+	public ProductPurchasePage getProjectProjectKeyProductPurchasesPage(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -566,13 +574,14 @@ public class Query {
 			_productPurchaseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productPurchaseResource -> new ProductPurchasePage(
-				productPurchaseResource.getProjectProductPurchasesPage(
-					projectId, Pagination.of(page, pageSize))));
+				productPurchaseResource.
+					getProjectProjectKeyProductPurchasesPage(
+						projectKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public ProjectPage getAccountProjectsPage(
-			@GraphQLName("accountId") Long accountId,
+	public ProjectPage getAccountAccountKeyProjectsPage(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -581,23 +590,23 @@ public class Query {
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			projectResource -> new ProjectPage(
-				projectResource.getAccountProjectsPage(
-					accountId, Pagination.of(page, pageSize))));
+				projectResource.getAccountAccountKeyProjectsPage(
+					accountKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public Project getProject(@GraphQLName("projectId") Long projectId)
+	public Project getProject(@GraphQLName("projectKey") String projectKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.getProject(projectId));
+			projectResource -> projectResource.getProject(projectKey));
 	}
 
 	@GraphQLField
-	public TeamPage getAccountTeamsPage(
-			@GraphQLName("accountId") Long accountId,
+	public TeamPage getAccountAccountKeyTeamsPage(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -606,26 +615,28 @@ public class Query {
 			_teamResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			teamResource -> new TeamPage(
-				teamResource.getAccountTeamsPage(
-					accountId, Pagination.of(page, pageSize))));
+				teamResource.getAccountAccountKeyTeamsPage(
+					accountKey, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public Team getTeam(@GraphQLName("teamId") Long teamId) throws Exception {
+	public Team getTeam(@GraphQLName("teamKey") String teamKey)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_teamResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			teamResource -> teamResource.getTeam(teamId));
+			teamResource -> teamResource.getTeam(teamKey));
 	}
 
 	@GraphQLField
-	public TeamRole getTeamRole(@GraphQLName("teamRoleId") Long teamRoleId)
+	public TeamRole getTeamRole(@GraphQLName("teamRoleKey") String teamRoleKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_teamRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			teamRoleResource -> teamRoleResource.getTeamRole(teamRoleId));
+			teamRoleResource -> teamRoleResource.getTeamRole(teamRoleKey));
 	}
 
 	@GraphQLName("AccountPage")

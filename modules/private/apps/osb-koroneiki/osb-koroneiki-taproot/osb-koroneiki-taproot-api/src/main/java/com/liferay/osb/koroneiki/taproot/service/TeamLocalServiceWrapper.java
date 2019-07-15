@@ -97,10 +97,12 @@ public class TeamLocalServiceWrapper
 	 *
 	 * @param team the team
 	 * @return the team that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Team deleteTeam(
-		com.liferay.osb.koroneiki.taproot.model.Team team) {
+			com.liferay.osb.koroneiki.taproot.model.Team team)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamLocalService.deleteTeam(team);
 	}

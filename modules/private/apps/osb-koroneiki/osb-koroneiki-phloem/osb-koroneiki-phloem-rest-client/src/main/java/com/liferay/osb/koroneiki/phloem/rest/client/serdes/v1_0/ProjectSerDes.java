@@ -61,14 +61,18 @@ public class ProjectSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (project.getAccountId() != null) {
+		if (project.getAccountKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"accountId\": ");
+			sb.append("\"accountKey\": ");
 
-			sb.append(project.getAccountId());
+			sb.append("\"");
+
+			sb.append(_escape(project.getAccountKey()));
+
+			sb.append("\"");
 		}
 
 		if (project.getCode() != null) {
@@ -134,16 +138,6 @@ public class ProjectSerDes {
 			sb.append("]");
 		}
 
-		if (project.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(project.getId());
-		}
-
 		if (project.getIndustry() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -154,6 +148,20 @@ public class ProjectSerDes {
 			sb.append("\"");
 
 			sb.append(project.getIndustry());
+
+			sb.append("\"");
+		}
+
+		if (project.getKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(project.getKey()));
 
 			sb.append("\"");
 		}
@@ -249,11 +257,11 @@ public class ProjectSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (project.getAccountId() == null) {
-			map.put("accountId", null);
+		if (project.getAccountKey() == null) {
+			map.put("accountKey", null);
 		}
 		else {
-			map.put("accountId", String.valueOf(project.getAccountId()));
+			map.put("accountKey", String.valueOf(project.getAccountKey()));
 		}
 
 		if (project.getCode() == null) {
@@ -279,18 +287,18 @@ public class ProjectSerDes {
 				"externalLinks", String.valueOf(project.getExternalLinks()));
 		}
 
-		if (project.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(project.getId()));
-		}
-
 		if (project.getIndustry() == null) {
 			map.put("industry", null);
 		}
 		else {
 			map.put("industry", String.valueOf(project.getIndustry()));
+		}
+
+		if (project.getKey() == null) {
+			map.put("key", null);
+		}
+		else {
+			map.put("key", String.valueOf(project.getKey()));
 		}
 
 		if (project.getName() == null) {
@@ -385,10 +393,9 @@ public class ProjectSerDes {
 			Project project, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "accountId")) {
+			if (Objects.equals(jsonParserFieldName, "accountKey")) {
 				if (jsonParserFieldValue != null) {
-					project.setAccountId(
-						Long.valueOf((String)jsonParserFieldValue));
+					project.setAccountKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "code")) {
@@ -420,15 +427,15 @@ public class ProjectSerDes {
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					project.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "industry")) {
 				if (jsonParserFieldValue != null) {
 					project.setIndustry(
 						Project.Industry.create((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "key")) {
+				if (jsonParserFieldValue != null) {
+					project.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

@@ -132,11 +132,13 @@ public abstract class ProductConsumptionLocalServiceBaseImpl
 	 *
 	 * @param productConsumption the product consumption
 	 * @return the product consumption that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ProductConsumption deleteProductConsumption(
-		ProductConsumption productConsumption) {
+			ProductConsumption productConsumption)
+		throws PortalException {
 
 		return productConsumptionPersistence.remove(productConsumption);
 	}

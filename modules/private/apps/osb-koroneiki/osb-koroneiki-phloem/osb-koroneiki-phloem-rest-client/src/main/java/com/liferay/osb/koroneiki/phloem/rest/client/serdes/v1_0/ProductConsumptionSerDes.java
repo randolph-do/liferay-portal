@@ -63,14 +63,18 @@ public class ProductConsumptionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (productConsumption.getAccountId() != null) {
+		if (productConsumption.getAccountKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"accountId\": ");
+			sb.append("\"accountKey\": ");
 
-			sb.append(productConsumption.getAccountId());
+			sb.append("\"");
+
+			sb.append(_escape(productConsumption.getAccountKey()));
+
+			sb.append("\"");
 		}
 
 		if (productConsumption.getDateCreated() != null) {
@@ -112,34 +116,46 @@ public class ProductConsumptionSerDes {
 			sb.append("]");
 		}
 
-		if (productConsumption.getId() != null) {
+		if (productConsumption.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(productConsumption.getId());
+			sb.append("\"");
+
+			sb.append(_escape(productConsumption.getKey()));
+
+			sb.append("\"");
 		}
 
-		if (productConsumption.getProductId() != null) {
+		if (productConsumption.getProductKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"productId\": ");
+			sb.append("\"productKey\": ");
 
-			sb.append(productConsumption.getProductId());
+			sb.append("\"");
+
+			sb.append(_escape(productConsumption.getProductKey()));
+
+			sb.append("\"");
 		}
 
-		if (productConsumption.getProjectId() != null) {
+		if (productConsumption.getProjectKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"projectId\": ");
+			sb.append("\"projectKey\": ");
 
-			sb.append(productConsumption.getProjectId());
+			sb.append("\"");
+
+			sb.append(_escape(productConsumption.getProjectKey()));
+
+			sb.append("\"");
 		}
 
 		if (productConsumption.getProperties() != null) {
@@ -176,12 +192,13 @@ public class ProductConsumptionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (productConsumption.getAccountId() == null) {
-			map.put("accountId", null);
+		if (productConsumption.getAccountKey() == null) {
+			map.put("accountKey", null);
 		}
 		else {
 			map.put(
-				"accountId", String.valueOf(productConsumption.getAccountId()));
+				"accountKey",
+				String.valueOf(productConsumption.getAccountKey()));
 		}
 
 		map.put(
@@ -198,27 +215,29 @@ public class ProductConsumptionSerDes {
 				String.valueOf(productConsumption.getExternalLinks()));
 		}
 
-		if (productConsumption.getId() == null) {
-			map.put("id", null);
+		if (productConsumption.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(productConsumption.getId()));
+			map.put("key", String.valueOf(productConsumption.getKey()));
 		}
 
-		if (productConsumption.getProductId() == null) {
-			map.put("productId", null);
+		if (productConsumption.getProductKey() == null) {
+			map.put("productKey", null);
 		}
 		else {
 			map.put(
-				"productId", String.valueOf(productConsumption.getProductId()));
+				"productKey",
+				String.valueOf(productConsumption.getProductKey()));
 		}
 
-		if (productConsumption.getProjectId() == null) {
-			map.put("projectId", null);
+		if (productConsumption.getProjectKey() == null) {
+			map.put("projectKey", null);
 		}
 		else {
 			map.put(
-				"projectId", String.valueOf(productConsumption.getProjectId()));
+				"projectKey",
+				String.valueOf(productConsumption.getProjectKey()));
 		}
 
 		if (productConsumption.getProperties() == null) {
@@ -288,10 +307,10 @@ public class ProductConsumptionSerDes {
 			ProductConsumption productConsumption, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "accountId")) {
+			if (Objects.equals(jsonParserFieldName, "accountKey")) {
 				if (jsonParserFieldValue != null) {
-					productConsumption.setAccountId(
-						Long.valueOf((String)jsonParserFieldValue));
+					productConsumption.setAccountKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -312,22 +331,21 @@ public class ProductConsumptionSerDes {
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					productConsumption.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					productConsumption.setKey((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "productId")) {
+			else if (Objects.equals(jsonParserFieldName, "productKey")) {
 				if (jsonParserFieldValue != null) {
-					productConsumption.setProductId(
-						Long.valueOf((String)jsonParserFieldValue));
+					productConsumption.setProductKey(
+						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "projectId")) {
+			else if (Objects.equals(jsonParserFieldName, "projectKey")) {
 				if (jsonParserFieldValue != null) {
-					productConsumption.setProjectId(
-						Long.valueOf((String)jsonParserFieldValue));
+					productConsumption.setProjectKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "properties")) {

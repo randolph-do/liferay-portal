@@ -59,8 +59,15 @@ public interface ExternalLinkService extends BaseService {
 	public ExternalLink deleteExternalLink(long externalLinkId)
 		throws PortalException;
 
+	public ExternalLink deleteExternalLink(String externalLinkKey)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExternalLink getExternalLink(long externalLinkId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExternalLink getExternalLink(String externalLinkKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

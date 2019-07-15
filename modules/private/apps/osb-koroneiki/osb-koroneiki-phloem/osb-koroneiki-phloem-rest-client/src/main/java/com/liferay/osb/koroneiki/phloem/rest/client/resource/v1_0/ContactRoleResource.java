@@ -41,24 +41,24 @@ public interface ContactRoleResource {
 			ContactRole contactRole)
 		throws Exception;
 
-	public void deleteContactRole(Long contactRoleId) throws Exception;
+	public void deleteContactRole(String contactRoleKey) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteContactRoleHttpResponse(
-			Long contactRoleId)
+			String contactRoleKey)
 		throws Exception;
 
-	public ContactRole getContactRole(Long contactRoleId) throws Exception;
+	public ContactRole getContactRole(String contactRoleKey) throws Exception;
 
 	public HttpInvoker.HttpResponse getContactRoleHttpResponse(
-			Long contactRoleId)
+			String contactRoleKey)
 		throws Exception;
 
 	public ContactRole putContactRole(
-			Long contactRoleId, ContactRole contactRole)
+			String contactRoleKey, ContactRole contactRole)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putContactRoleHttpResponse(
-			Long contactRoleId, ContactRole contactRole)
+			String contactRoleKey, ContactRole contactRole)
 		throws Exception;
 
 	public static class Builder {
@@ -154,9 +154,9 @@ public interface ContactRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteContactRole(Long contactRoleId) throws Exception {
+		public void deleteContactRole(String contactRoleKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				deleteContactRoleHttpResponse(contactRoleId);
+				deleteContactRoleHttpResponse(contactRoleKey);
 
 			String content = httpResponse.getContent();
 
@@ -168,7 +168,7 @@ public interface ContactRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteContactRoleHttpResponse(
-				Long contactRoleId)
+				String contactRoleKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -183,8 +183,8 @@ public interface ContactRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleId}",
-				contactRoleId);
+						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleKey}",
+				contactRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -192,9 +192,11 @@ public interface ContactRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public ContactRole getContactRole(Long contactRoleId) throws Exception {
+		public ContactRole getContactRole(String contactRoleKey)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getContactRoleHttpResponse(
-				contactRoleId);
+				contactRoleKey);
 
 			String content = httpResponse.getContent();
 
@@ -218,7 +220,7 @@ public interface ContactRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse getContactRoleHttpResponse(
-				Long contactRoleId)
+				String contactRoleKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -233,8 +235,8 @@ public interface ContactRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleId}",
-				contactRoleId);
+						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleKey}",
+				contactRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -243,11 +245,11 @@ public interface ContactRoleResource {
 		}
 
 		public ContactRole putContactRole(
-				Long contactRoleId, ContactRole contactRole)
+				String contactRoleKey, ContactRole contactRole)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putContactRoleHttpResponse(
-				contactRoleId, contactRole);
+				contactRoleKey, contactRole);
 
 			String content = httpResponse.getContent();
 
@@ -271,7 +273,7 @@ public interface ContactRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse putContactRoleHttpResponse(
-				Long contactRoleId, ContactRole contactRole)
+				String contactRoleKey, ContactRole contactRole)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -288,8 +290,8 @@ public interface ContactRoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleId}",
-				contactRoleId);
+						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleKey}",
+				contactRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -173,14 +173,18 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
-		if (account.getId() != null) {
+		if (account.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(account.getId());
+			sb.append("\"");
+
+			sb.append(_escape(account.getKey()));
+
+			sb.append("\"");
 		}
 
 		if (account.getName() != null) {
@@ -320,11 +324,11 @@ public class AccountSerDes {
 			map.put("faxNumber", String.valueOf(account.getFaxNumber()));
 		}
 
-		if (account.getId() == null) {
-			map.put("id", null);
+		if (account.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(account.getId()));
+			map.put("key", String.valueOf(account.getKey()));
 		}
 
 		if (account.getName() == null) {
@@ -475,9 +479,9 @@ public class AccountSerDes {
 					account.setFaxNumber((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					account.setId(Long.valueOf((String)jsonParserFieldValue));
+					account.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

@@ -195,24 +195,26 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountPostalAddressesPage() throws Exception {
+	public void testGetAccountAccountKeyPostalAddressesPage() throws Exception {
 		Page<PostalAddress> page =
-			postalAddressResource.getAccountPostalAddressesPage(
-				testGetAccountPostalAddressesPage_getAccountId());
+			postalAddressResource.getAccountAccountKeyPostalAddressesPage(
+				testGetAccountAccountKeyPostalAddressesPage_getAccountKey());
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long accountId = testGetAccountPostalAddressesPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountPostalAddressesPage_getIrrelevantAccountId();
+		String accountKey =
+			testGetAccountAccountKeyPostalAddressesPage_getAccountKey();
+		String irrelevantAccountKey =
+			testGetAccountAccountKeyPostalAddressesPage_getIrrelevantAccountKey();
 
-		if ((irrelevantAccountId != null)) {
+		if ((irrelevantAccountKey != null)) {
 			PostalAddress irrelevantPostalAddress =
-				testGetAccountPostalAddressesPage_addPostalAddress(
-					irrelevantAccountId, randomIrrelevantPostalAddress());
+				testGetAccountAccountKeyPostalAddressesPage_addPostalAddress(
+					irrelevantAccountKey, randomIrrelevantPostalAddress());
 
-			page = postalAddressResource.getAccountPostalAddressesPage(
-				irrelevantAccountId);
+			page =
+				postalAddressResource.getAccountAccountKeyPostalAddressesPage(
+					irrelevantAccountKey);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -223,14 +225,15 @@ public abstract class BasePostalAddressResourceTestCase {
 		}
 
 		PostalAddress postalAddress1 =
-			testGetAccountPostalAddressesPage_addPostalAddress(
-				accountId, randomPostalAddress());
+			testGetAccountAccountKeyPostalAddressesPage_addPostalAddress(
+				accountKey, randomPostalAddress());
 
 		PostalAddress postalAddress2 =
-			testGetAccountPostalAddressesPage_addPostalAddress(
-				accountId, randomPostalAddress());
+			testGetAccountAccountKeyPostalAddressesPage_addPostalAddress(
+				accountKey, randomPostalAddress());
 
-		page = postalAddressResource.getAccountPostalAddressesPage(accountId);
+		page = postalAddressResource.getAccountAccountKeyPostalAddressesPage(
+			accountKey);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -240,44 +243,48 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertValid(page);
 	}
 
-	protected PostalAddress testGetAccountPostalAddressesPage_addPostalAddress(
-			Long accountId, PostalAddress postalAddress)
-		throws Exception {
-
-		return postalAddressResource.postAccountPostalAddress(
-			accountId, postalAddress);
-	}
-
-	protected Long testGetAccountPostalAddressesPage_getAccountId()
+	protected PostalAddress
+			testGetAccountAccountKeyPostalAddressesPage_addPostalAddress(
+				String accountKey, PostalAddress postalAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountPostalAddressesPage_getIrrelevantAccountId()
+	protected String testGetAccountAccountKeyPostalAddressesPage_getAccountKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountAccountKeyPostalAddressesPage_getIrrelevantAccountKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostAccountPostalAddress() throws Exception {
+	public void testPostAccountAccountKeyPostalAddress() throws Exception {
 		PostalAddress randomPostalAddress = randomPostalAddress();
 
 		PostalAddress postPostalAddress =
-			testPostAccountPostalAddress_addPostalAddress(randomPostalAddress);
+			testPostAccountAccountKeyPostalAddress_addPostalAddress(
+				randomPostalAddress);
 
 		assertEquals(randomPostalAddress, postPostalAddress);
 		assertValid(postPostalAddress);
 	}
 
-	protected PostalAddress testPostAccountPostalAddress_addPostalAddress(
-			PostalAddress postalAddress)
+	protected PostalAddress
+			testPostAccountAccountKeyPostalAddress_addPostalAddress(
+				PostalAddress postalAddress)
 		throws Exception {
 
-		return postalAddressResource.postAccountPostalAddress(
-			testGetAccountPostalAddressesPage_getAccountId(), postalAddress);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

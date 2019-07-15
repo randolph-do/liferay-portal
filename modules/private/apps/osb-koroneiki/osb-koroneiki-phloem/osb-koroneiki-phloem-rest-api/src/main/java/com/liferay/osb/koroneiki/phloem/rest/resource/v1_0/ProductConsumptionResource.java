@@ -37,26 +37,27 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductConsumptionResource {
 
-	public Page<ProductConsumption> getAccountProductConsumptionsPage(
-			Long accountId, Pagination pagination)
+	public Page<ProductConsumption> getAccountAccountKeyProductConsumptionsPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public ProductConsumption postAccountProductConsumption(
-			Long accountId, ProductConsumption productConsumption)
+	public ProductConsumption postAccountAccountKeyProductConsumption(
+			String accountKey, ProductConsumption productConsumption)
 		throws Exception;
 
-	public void deleteProductConsumption(Long productConsumptionId)
+	public void deleteProductConsumption(String productConsumptionKey)
 		throws Exception;
 
-	public ProductConsumption getProductConsumption(Long productConsumptionId)
+	public ProductConsumption getProductConsumption(
+			String productConsumptionKey)
 		throws Exception;
 
-	public Page<ProductConsumption> getProjectProductConsumptionsPage(
-			Long projectId, Pagination pagination)
+	public Page<ProductConsumption> getProjectProjectKeyProductConsumptionsPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public ProductConsumption postProjectProductConsumption(
-			Long projectId, ProductConsumption productConsumption)
+	public ProductConsumption postProjectProjectKeyProductConsumption(
+			String projectKey, ProductConsumption productConsumption)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

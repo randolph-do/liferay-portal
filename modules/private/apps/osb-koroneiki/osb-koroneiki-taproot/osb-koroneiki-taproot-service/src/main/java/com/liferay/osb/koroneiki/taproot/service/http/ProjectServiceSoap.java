@@ -87,6 +87,28 @@ public class ProjectServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
+			addProject(
+				String accountKey, String name, String code, String industry,
+				String tier, String notes, String soldBy, int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
+				ProjectServiceUtil.addProject(
+					accountKey, name, code, industry, tier, notes, soldBy,
+					status);
+
+			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
 			deleteProject(long projectId)
 		throws RemoteException {
 
@@ -105,12 +127,48 @@ public class ProjectServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
+			deleteProject(String projectKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
+				ProjectServiceUtil.deleteProject(projectKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
 			getProject(long projectId)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
 				ProjectServiceUtil.getProject(projectId);
+
+			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
+			getProject(String projectKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
+				ProjectServiceUtil.getProject(projectKey);
 
 			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
 				toSoapModel(returnValue);
@@ -141,9 +199,43 @@ public class ProjectServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap[]
+			getProjects(String accountKey, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.osb.koroneiki.taproot.model.Project>
+				returnValue = ProjectServiceUtil.getProjects(
+					accountKey, start, end);
+
+			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getProjectsCount(long accountId) throws RemoteException {
 		try {
 			int returnValue = ProjectServiceUtil.getProjectsCount(accountId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getProjectsCount(String accountKey)
+		throws RemoteException {
+
+		try {
+			int returnValue = ProjectServiceUtil.getProjectsCount(accountKey);
 
 			return returnValue;
 		}
@@ -164,6 +256,28 @@ public class ProjectServiceSoap {
 			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
 				ProjectServiceUtil.updateProject(
 					projectId, name, code, industry, tier, notes, soldBy,
+					status);
+
+			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ProjectSoap
+			updateProject(
+				String projectKey, String name, String code, String industry,
+				String tier, String notes, String soldBy, int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Project returnValue =
+				ProjectServiceUtil.updateProject(
+					projectKey, name, code, industry, tier, notes, soldBy,
 					status);
 
 			return com.liferay.osb.koroneiki.taproot.model.ProjectSoap.

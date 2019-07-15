@@ -104,9 +104,11 @@ public class ProjectLocalServiceUtil {
 	 *
 	 * @param project the project
 	 * @return the project that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.osb.koroneiki.taproot.model.Project deleteProject(
-		com.liferay.osb.koroneiki.taproot.model.Project project) {
+			com.liferay.osb.koroneiki.taproot.model.Project project)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteProject(project);
 	}

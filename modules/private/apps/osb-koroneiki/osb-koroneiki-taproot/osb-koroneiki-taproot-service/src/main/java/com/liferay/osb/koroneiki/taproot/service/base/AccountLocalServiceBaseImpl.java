@@ -142,10 +142,11 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @param account the account
 	 * @return the account that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Account deleteAccount(Account account) {
+	public Account deleteAccount(Account account) throws PortalException {
 		return accountPersistence.remove(account);
 	}
 

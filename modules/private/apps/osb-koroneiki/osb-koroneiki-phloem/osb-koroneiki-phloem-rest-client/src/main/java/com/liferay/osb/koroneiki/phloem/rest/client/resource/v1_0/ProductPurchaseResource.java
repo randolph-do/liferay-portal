@@ -37,57 +37,62 @@ public interface ProductPurchaseResource {
 		return new Builder();
 	}
 
-	public Page<ProductPurchase> getAccountProductPurchasesPage(
-			Long accountId, Pagination pagination)
+	public Page<ProductPurchase> getAccountAccountKeyProductPurchasesPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountProductPurchasesPageHttpResponse(
-			Long accountId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getAccountAccountKeyProductPurchasesPageHttpResponse(
+				String accountKey, Pagination pagination)
 		throws Exception;
 
-	public ProductPurchase postAccountProductPurchase(
-			Long accountId, ProductPurchase productPurchase)
+	public ProductPurchase postAccountAccountKeyProductPurchase(
+			String accountKey, ProductPurchase productPurchase)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postAccountProductPurchaseHttpResponse(
-			Long accountId, ProductPurchase productPurchase)
+	public HttpInvoker.HttpResponse
+			postAccountAccountKeyProductPurchaseHttpResponse(
+				String accountKey, ProductPurchase productPurchase)
 		throws Exception;
 
-	public void deleteProductPurchase(Long productPurchaseId) throws Exception;
+	public void deleteProductPurchase(String productPurchaseKey)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteProductPurchaseHttpResponse(
-			Long productPurchaseId)
+			String productPurchaseKey)
 		throws Exception;
 
-	public ProductPurchase getProductPurchase(Long productPurchaseId)
+	public ProductPurchase getProductPurchase(String productPurchaseKey)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProductPurchaseHttpResponse(
-			Long productPurchaseId)
+			String productPurchaseKey)
 		throws Exception;
 
 	public ProductPurchase putProductPurchase(
-			Long productPurchaseId, ProductPurchase productPurchase)
+			String productPurchaseKey, ProductPurchase productPurchase)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putProductPurchaseHttpResponse(
-			Long productPurchaseId, ProductPurchase productPurchase)
+			String productPurchaseKey, ProductPurchase productPurchase)
 		throws Exception;
 
-	public Page<ProductPurchase> getProjectProductPurchasesPage(
-			Long projectId, Pagination pagination)
+	public Page<ProductPurchase> getProjectProjectKeyProductPurchasesPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProjectProductPurchasesPageHttpResponse(
-			Long projectId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getProjectProjectKeyProductPurchasesPageHttpResponse(
+				String projectKey, Pagination pagination)
 		throws Exception;
 
-	public ProductPurchase postProjectProductPurchase(
-			Long projectId, ProductPurchase productPurchase)
+	public ProductPurchase postProjectProjectKeyProductPurchase(
+			String projectKey, ProductPurchase productPurchase)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postProjectProductPurchaseHttpResponse(
-			Long projectId, ProductPurchase productPurchase)
+	public HttpInvoker.HttpResponse
+			postProjectProjectKeyProductPurchaseHttpResponse(
+				String projectKey, ProductPurchase productPurchase)
 		throws Exception;
 
 	public static class Builder {
@@ -132,13 +137,13 @@ public interface ProductPurchaseResource {
 	public static class ProductPurchaseResourceImpl
 		implements ProductPurchaseResource {
 
-		public Page<ProductPurchase> getAccountProductPurchasesPage(
-				Long accountId, Pagination pagination)
+		public Page<ProductPurchase> getAccountAccountKeyProductPurchasesPage(
+				String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountProductPurchasesPageHttpResponse(
-					accountId, pagination);
+				getAccountAccountKeyProductPurchasesPageHttpResponse(
+					accountKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -152,8 +157,8 @@ public interface ProductPurchaseResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAccountProductPurchasesPageHttpResponse(
-					Long accountId, Pagination pagination)
+				getAccountAccountKeyProductPurchasesPageHttpResponse(
+					String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -175,8 +180,8 @@ public interface ProductPurchaseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-purchases",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/product-purchases",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -184,13 +189,13 @@ public interface ProductPurchaseResource {
 			return httpInvoker.invoke();
 		}
 
-		public ProductPurchase postAccountProductPurchase(
-				Long accountId, ProductPurchase productPurchase)
+		public ProductPurchase postAccountAccountKeyProductPurchase(
+				String accountKey, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountProductPurchaseHttpResponse(
-					accountId, productPurchase);
+				postAccountAccountKeyProductPurchaseHttpResponse(
+					accountKey, productPurchase);
 
 			String content = httpResponse.getContent();
 
@@ -212,8 +217,9 @@ public interface ProductPurchaseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAccountProductPurchaseHttpResponse(
-				Long accountId, ProductPurchase productPurchase)
+		public HttpInvoker.HttpResponse
+				postAccountAccountKeyProductPurchaseHttpResponse(
+					String accountKey, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -230,8 +236,8 @@ public interface ProductPurchaseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/product-purchases",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/product-purchases",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -239,11 +245,11 @@ public interface ProductPurchaseResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteProductPurchase(Long productPurchaseId)
+		public void deleteProductPurchase(String productPurchaseKey)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteProductPurchaseHttpResponse(productPurchaseId);
+				deleteProductPurchaseHttpResponse(productPurchaseKey);
 
 			String content = httpResponse.getContent();
 
@@ -255,7 +261,7 @@ public interface ProductPurchaseResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteProductPurchaseHttpResponse(
-				Long productPurchaseId)
+				String productPurchaseKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -270,8 +276,8 @@ public interface ProductPurchaseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
-				productPurchaseId);
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseKey}",
+				productPurchaseKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -279,11 +285,11 @@ public interface ProductPurchaseResource {
 			return httpInvoker.invoke();
 		}
 
-		public ProductPurchase getProductPurchase(Long productPurchaseId)
+		public ProductPurchase getProductPurchase(String productPurchaseKey)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProductPurchaseHttpResponse(productPurchaseId);
+				getProductPurchaseHttpResponse(productPurchaseKey);
 
 			String content = httpResponse.getContent();
 
@@ -306,7 +312,7 @@ public interface ProductPurchaseResource {
 		}
 
 		public HttpInvoker.HttpResponse getProductPurchaseHttpResponse(
-				Long productPurchaseId)
+				String productPurchaseKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -321,8 +327,8 @@ public interface ProductPurchaseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
-				productPurchaseId);
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseKey}",
+				productPurchaseKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -331,12 +337,12 @@ public interface ProductPurchaseResource {
 		}
 
 		public ProductPurchase putProductPurchase(
-				Long productPurchaseId, ProductPurchase productPurchase)
+				String productPurchaseKey, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putProductPurchaseHttpResponse(
-					productPurchaseId, productPurchase);
+					productPurchaseKey, productPurchase);
 
 			String content = httpResponse.getContent();
 
@@ -359,7 +365,7 @@ public interface ProductPurchaseResource {
 		}
 
 		public HttpInvoker.HttpResponse putProductPurchaseHttpResponse(
-				Long productPurchaseId, ProductPurchase productPurchase)
+				String productPurchaseKey, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -376,8 +382,8 @@ public interface ProductPurchaseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseId}",
-				productPurchaseId);
+						"/o/koroneiki-rest/v1.0/product-purchases/{productPurchaseKey}",
+				productPurchaseKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -385,13 +391,13 @@ public interface ProductPurchaseResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<ProductPurchase> getProjectProductPurchasesPage(
-				Long projectId, Pagination pagination)
+		public Page<ProductPurchase> getProjectProjectKeyProductPurchasesPage(
+				String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProjectProductPurchasesPageHttpResponse(
-					projectId, pagination);
+				getProjectProjectKeyProductPurchasesPageHttpResponse(
+					projectKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -405,8 +411,8 @@ public interface ProductPurchaseResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getProjectProductPurchasesPageHttpResponse(
-					Long projectId, Pagination pagination)
+				getProjectProjectKeyProductPurchasesPageHttpResponse(
+					String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -428,8 +434,8 @@ public interface ProductPurchaseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-purchases",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/product-purchases",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -437,13 +443,13 @@ public interface ProductPurchaseResource {
 			return httpInvoker.invoke();
 		}
 
-		public ProductPurchase postProjectProductPurchase(
-				Long projectId, ProductPurchase productPurchase)
+		public ProductPurchase postProjectProjectKeyProductPurchase(
+				String projectKey, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProjectProductPurchaseHttpResponse(
-					projectId, productPurchase);
+				postProjectProjectKeyProductPurchaseHttpResponse(
+					projectKey, productPurchase);
 
 			String content = httpResponse.getContent();
 
@@ -465,8 +471,9 @@ public interface ProductPurchaseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postProjectProductPurchaseHttpResponse(
-				Long projectId, ProductPurchase productPurchase)
+		public HttpInvoker.HttpResponse
+				postProjectProjectKeyProductPurchaseHttpResponse(
+					String projectKey, ProductPurchase productPurchase)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -483,8 +490,8 @@ public interface ProductPurchaseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/product-purchases",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/product-purchases",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

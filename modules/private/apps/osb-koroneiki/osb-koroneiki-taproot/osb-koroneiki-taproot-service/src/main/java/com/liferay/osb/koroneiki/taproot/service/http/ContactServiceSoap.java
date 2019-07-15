@@ -103,6 +103,24 @@ public class ContactServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.ContactSoap
+			deleteContact(String contactKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Contact returnValue =
+				ContactServiceUtil.deleteContact(contactKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.ContactSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.ContactSoap[]
 			getAccountContacts(long accountId, int start, int end)
 		throws RemoteException {
@@ -111,6 +129,25 @@ public class ContactServiceSoap {
 			java.util.List<com.liferay.osb.koroneiki.taproot.model.Contact>
 				returnValue = ContactServiceUtil.getAccountContacts(
 					accountId, start, end);
+
+			return com.liferay.osb.koroneiki.taproot.model.ContactSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactSoap[]
+			getAccountContacts(String accountKey, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.osb.koroneiki.taproot.model.Contact>
+				returnValue = ContactServiceUtil.getAccountContacts(
+					accountKey, start, end);
 
 			return com.liferay.osb.koroneiki.taproot.model.ContactSoap.
 				toSoapModels(returnValue);
@@ -138,6 +175,22 @@ public class ContactServiceSoap {
 		}
 	}
 
+	public static int getAccountContactsCount(String accountKey)
+		throws RemoteException {
+
+		try {
+			int returnValue = ContactServiceUtil.getAccountContactsCount(
+				accountKey);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.ContactSoap
 			getContact(long contactId)
 		throws RemoteException {
@@ -145,6 +198,24 @@ public class ContactServiceSoap {
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Contact returnValue =
 				ContactServiceUtil.getContact(contactId);
+
+			return com.liferay.osb.koroneiki.taproot.model.ContactSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactSoap
+			getContactByContactKey(String contactKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Contact returnValue =
+				ContactServiceUtil.getContactByContactKey(contactKey);
 
 			return com.liferay.osb.koroneiki.taproot.model.ContactSoap.
 				toSoapModel(returnValue);
@@ -175,12 +246,47 @@ public class ContactServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.ContactSoap[]
+			getProjectContacts(String projectKey, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.osb.koroneiki.taproot.model.Contact>
+				returnValue = ContactServiceUtil.getProjectContacts(
+					projectKey, start, end);
+
+			return com.liferay.osb.koroneiki.taproot.model.ContactSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getProjectContactsCount(long projectId)
 		throws RemoteException {
 
 		try {
 			int returnValue = ContactServiceUtil.getProjectContactsCount(
 				projectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getProjectContactsCount(String projectKey)
+		throws RemoteException {
+
+		try {
+			int returnValue = ContactServiceUtil.getProjectContactsCount(
+				projectKey);
 
 			return returnValue;
 		}

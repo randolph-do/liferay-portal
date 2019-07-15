@@ -96,6 +96,47 @@ public class TeamProjectRoleServiceHttp {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+			addTeamProjectRole(
+				HttpPrincipal httpPrincipal, String teamKey, String projectKey,
+				String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamProjectRoleServiceUtil.class, "addTeamProjectRole",
+				_addTeamProjectRoleParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, teamKey, projectKey, teamRoleKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.TeamProjectRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
 			deleteTeamProjectRole(
 				HttpPrincipal httpPrincipal, long teamId, long projectId,
 				long teamRoleId)
@@ -104,10 +145,51 @@ public class TeamProjectRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamProjectRoleServiceUtil.class, "deleteTeamProjectRole",
-				_deleteTeamProjectRoleParameterTypes1);
+				_deleteTeamProjectRoleParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, teamId, projectId, teamRoleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.TeamProjectRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+			deleteTeamProjectRole(
+				HttpPrincipal httpPrincipal, String teamKey, String projectKey,
+				String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TeamProjectRoleServiceUtil.class, "deleteTeamProjectRole",
+				_deleteTeamProjectRoleParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, teamKey, projectKey, teamRoleKey);
 
 			Object returnObj = null;
 
@@ -143,7 +225,7 @@ public class TeamProjectRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamProjectRoleServiceUtil.class, "deleteTeamProjectRoles",
-				_deleteTeamProjectRolesParameterTypes2);
+				_deleteTeamProjectRolesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, teamId, projectId);
@@ -175,9 +257,13 @@ public class TeamProjectRoleServiceHttp {
 
 	private static final Class<?>[] _addTeamProjectRoleParameterTypes0 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _deleteTeamProjectRoleParameterTypes1 =
+	private static final Class<?>[] _addTeamProjectRoleParameterTypes1 =
+		new Class[] {String.class, String.class, String.class};
+	private static final Class<?>[] _deleteTeamProjectRoleParameterTypes2 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _deleteTeamProjectRolesParameterTypes2 =
+	private static final Class<?>[] _deleteTeamProjectRoleParameterTypes3 =
+		new Class[] {String.class, String.class, String.class};
+	private static final Class<?>[] _deleteTeamProjectRolesParameterTypes4 =
 		new Class[] {long.class, long.class};
 
 }

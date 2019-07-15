@@ -103,14 +103,18 @@ public class TeamRoleSerDes {
 			sb.append("\"");
 		}
 
-		if (teamRole.getId() != null) {
+		if (teamRole.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(teamRole.getId());
+			sb.append("\"");
+
+			sb.append(_escape(teamRole.getKey()));
+
+			sb.append("\"");
 		}
 
 		if (teamRole.getName() != null) {
@@ -177,11 +181,11 @@ public class TeamRoleSerDes {
 			map.put("description", String.valueOf(teamRole.getDescription()));
 		}
 
-		if (teamRole.getId() == null) {
-			map.put("id", null);
+		if (teamRole.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(teamRole.getId()));
+			map.put("key", String.valueOf(teamRole.getKey()));
 		}
 
 		if (teamRole.getName() == null) {
@@ -272,9 +276,9 @@ public class TeamRoleSerDes {
 					teamRole.setDescription((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					teamRole.setId(Long.valueOf((String)jsonParserFieldValue));
+					teamRole.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

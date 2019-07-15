@@ -36,11 +36,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PostalAddressResource {
 
-	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
+	public Page<PostalAddress> getAccountAccountKeyPostalAddressesPage(
+			String accountKey)
 		throws Exception;
 
-	public PostalAddress postAccountPostalAddress(
-			Long accountId, PostalAddress postalAddress)
+	public PostalAddress postAccountAccountKeyPostalAddress(
+			String accountKey, PostalAddress postalAddress)
 		throws Exception;
 
 	public void deletePostalAddress(Long postalAddressId) throws Exception;

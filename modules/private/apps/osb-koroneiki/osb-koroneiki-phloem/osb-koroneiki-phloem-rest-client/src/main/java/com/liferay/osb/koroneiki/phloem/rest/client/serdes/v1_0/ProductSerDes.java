@@ -110,14 +110,18 @@ public class ProductSerDes {
 			sb.append("]");
 		}
 
-		if (product.getId() != null) {
+		if (product.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(product.getId());
+			sb.append("\"");
+
+			sb.append(_escape(product.getKey()));
+
+			sb.append("\"");
 		}
 
 		if (product.getName() != null) {
@@ -171,11 +175,11 @@ public class ProductSerDes {
 				"externalLinks", String.valueOf(product.getExternalLinks()));
 		}
 
-		if (product.getId() == null) {
-			map.put("id", null);
+		if (product.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(product.getId()));
+			map.put("key", String.valueOf(product.getKey()));
 		}
 
 		if (product.getName() == null) {
@@ -266,9 +270,9 @@ public class ProductSerDes {
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					product.setId(Long.valueOf((String)jsonParserFieldValue));
+					product.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

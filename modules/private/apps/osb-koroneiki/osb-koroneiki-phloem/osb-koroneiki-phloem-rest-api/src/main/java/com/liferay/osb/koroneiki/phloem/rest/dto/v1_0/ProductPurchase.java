@@ -36,7 +36,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -47,25 +47,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("ProductPurchase")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"productId"})
+@Schema(requiredProperties = {"productKey"})
 @XmlRootElement(name = "ProductPurchase")
 public class ProductPurchase {
 
-	@Schema(description = "The ID of the account purchasing the product.")
-	public Long getAccountId() {
-		return accountId;
+	@Schema(description = "The key of the account purchasing the product.")
+	public String getAccountKey() {
+		return accountKey;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
 	}
 
 	@JsonIgnore
-	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
 		try {
-			accountId = accountIdUnsafeSupplier.get();
+			accountKey = accountKeyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,7 +77,7 @@ public class ProductPurchase {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long accountId;
+	protected String accountKey;
 
 	@Schema(description = "The product purchase's creation date.")
 	public Date getDateCreated() {
@@ -165,19 +165,19 @@ public class ProductPurchase {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ExternalLink[] externalLinks;
 
-	@Schema(description = "The product purchase's ID.")
-	public Long getId() {
-		return id;
+	@Schema(description = "The product purchase's key.")
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -189,23 +189,23 @@ public class ProductPurchase {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected String key;
 
-	@Schema(description = "The ID of the product being purchased.")
-	public Long getProductId() {
-		return productId;
+	@Schema(description = "The key of the product being purchased.")
+	public String getProductKey() {
+		return productKey;
 	}
 
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setProductKey(String productKey) {
+		this.productKey = productKey;
 	}
 
 	@JsonIgnore
-	public void setProductId(
-		UnsafeSupplier<Long, Exception> productIdUnsafeSupplier) {
+	public void setProductKey(
+		UnsafeSupplier<String, Exception> productKeyUnsafeSupplier) {
 
 		try {
-			productId = productIdUnsafeSupplier.get();
+			productKey = productKeyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -217,24 +217,24 @@ public class ProductPurchase {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Long productId;
+	@NotEmpty
+	protected String productKey;
 
-	@Schema(description = "The ID of the project purchasing the product.")
-	public Long getProjectId() {
-		return projectId;
+	@Schema(description = "The key of the project purchasing the product.")
+	public String getProjectKey() {
+		return projectKey;
 	}
 
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
+	public void setProjectKey(String projectKey) {
+		this.projectKey = projectKey;
 	}
 
 	@JsonIgnore
-	public void setProjectId(
-		UnsafeSupplier<Long, Exception> projectIdUnsafeSupplier) {
+	public void setProjectKey(
+		UnsafeSupplier<String, Exception> projectKeyUnsafeSupplier) {
 
 		try {
-			projectId = projectIdUnsafeSupplier.get();
+			projectKey = projectKeyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -246,7 +246,7 @@ public class ProductPurchase {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long projectId;
+	protected String projectKey;
 
 	@Schema
 	public Map<String, String> getProperties() {
@@ -363,14 +363,18 @@ public class ProductPurchase {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (accountId != null) {
+		if (accountKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"accountId\": ");
+			sb.append("\"accountKey\": ");
 
-			sb.append(accountId);
+			sb.append("\"");
+
+			sb.append(_escape(accountKey));
+
+			sb.append("\"");
 		}
 
 		if (dateCreated != null) {
@@ -421,34 +425,46 @@ public class ProductPurchase {
 			sb.append("]");
 		}
 
-		if (id != null) {
+		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
-		if (productId != null) {
+		if (productKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"productId\": ");
+			sb.append("\"productKey\": ");
 
-			sb.append(productId);
+			sb.append("\"");
+
+			sb.append(_escape(productKey));
+
+			sb.append("\"");
 		}
 
-		if (projectId != null) {
+		if (projectKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"projectId\": ");
+			sb.append("\"projectKey\": ");
 
-			sb.append(projectId);
+			sb.append("\"");
+
+			sb.append(_escape(projectKey));
+
+			sb.append("\"");
 		}
 
 		if (properties != null) {

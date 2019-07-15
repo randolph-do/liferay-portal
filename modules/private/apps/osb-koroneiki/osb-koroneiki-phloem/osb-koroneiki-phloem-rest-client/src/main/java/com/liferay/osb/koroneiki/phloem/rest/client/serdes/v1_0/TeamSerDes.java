@@ -61,14 +61,18 @@ public class TeamSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (team.getAccountId() != null) {
+		if (team.getAccountKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"accountId\": ");
+			sb.append("\"accountKey\": ");
 
-			sb.append(team.getAccountId());
+			sb.append("\"");
+
+			sb.append(_escape(team.getAccountKey()));
+
+			sb.append("\"");
 		}
 
 		if (team.getDateCreated() != null) {
@@ -119,14 +123,18 @@ public class TeamSerDes {
 			sb.append("]");
 		}
 
-		if (team.getId() != null) {
+		if (team.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(team.getId());
+			sb.append("\"");
+
+			sb.append(_escape(team.getKey()));
+
+			sb.append("\"");
 		}
 
 		if (team.getName() != null) {
@@ -164,11 +172,11 @@ public class TeamSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (team.getAccountId() == null) {
-			map.put("accountId", null);
+		if (team.getAccountKey() == null) {
+			map.put("accountKey", null);
 		}
 		else {
-			map.put("accountId", String.valueOf(team.getAccountId()));
+			map.put("accountKey", String.valueOf(team.getAccountKey()));
 		}
 
 		map.put(
@@ -186,11 +194,11 @@ public class TeamSerDes {
 			map.put("externalLinks", String.valueOf(team.getExternalLinks()));
 		}
 
-		if (team.getId() == null) {
-			map.put("id", null);
+		if (team.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(team.getId()));
+			map.put("key", String.valueOf(team.getKey()));
 		}
 
 		if (team.getName() == null) {
@@ -257,10 +265,9 @@ public class TeamSerDes {
 			Team team, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "accountId")) {
+			if (Objects.equals(jsonParserFieldName, "accountKey")) {
 				if (jsonParserFieldValue != null) {
-					team.setAccountId(
-						Long.valueOf((String)jsonParserFieldValue));
+					team.setAccountKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -285,9 +292,9 @@ public class TeamSerDes {
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					team.setId(Long.valueOf((String)jsonParserFieldValue));
+					team.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

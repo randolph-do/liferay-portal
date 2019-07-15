@@ -170,6 +170,7 @@ public abstract class BaseTeamRoleResourceTestCase {
 		TeamRole teamRole = randomTeamRole();
 
 		teamRole.setDescription(regex);
+		teamRole.setKey(regex);
 		teamRole.setName(regex);
 
 		String json = TeamRoleSerDes.toJSON(teamRole);
@@ -179,6 +180,7 @@ public abstract class BaseTeamRoleResourceTestCase {
 		teamRole = TeamRoleSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, teamRole.getDescription());
+		Assert.assertEquals(regex, teamRole.getKey());
 		Assert.assertEquals(regex, teamRole.getName());
 	}
 
@@ -201,61 +203,17 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 	@Test
 	public void testDeleteTeamRole() throws Exception {
-		TeamRole teamRole = testDeleteTeamRole_addTeamRole();
-
-		assertHttpResponseStatusCode(
-			204, teamRoleResource.deleteTeamRoleHttpResponse(teamRole.getId()));
-
-		assertHttpResponseStatusCode(
-			404, teamRoleResource.getTeamRoleHttpResponse(teamRole.getId()));
-
-		assertHttpResponseStatusCode(
-			404, teamRoleResource.getTeamRoleHttpResponse(0L));
-	}
-
-	protected TeamRole testDeleteTeamRole_addTeamRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetTeamRole() throws Exception {
-		TeamRole postTeamRole = testGetTeamRole_addTeamRole();
-
-		TeamRole getTeamRole = teamRoleResource.getTeamRole(
-			postTeamRole.getId());
-
-		assertEquals(postTeamRole, getTeamRole);
-		assertValid(getTeamRole);
-	}
-
-	protected TeamRole testGetTeamRole_addTeamRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testPutTeamRole() throws Exception {
-		TeamRole postTeamRole = testPutTeamRole_addTeamRole();
-
-		TeamRole randomTeamRole = randomTeamRole();
-
-		TeamRole putTeamRole = teamRoleResource.putTeamRole(
-			postTeamRole.getId(), randomTeamRole);
-
-		assertEquals(randomTeamRole, putTeamRole);
-		assertValid(putTeamRole);
-
-		TeamRole getTeamRole = teamRoleResource.getTeamRole(
-			putTeamRole.getId());
-
-		assertEquals(randomTeamRole, getTeamRole);
-		assertValid(getTeamRole);
-	}
-
-	protected TeamRole testPutTeamRole_addTeamRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -317,15 +275,19 @@ public abstract class BaseTeamRoleResourceTestCase {
 			valid = false;
 		}
 
-		if (teamRole.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (teamRole.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (teamRole.getKey() == null) {
 					valid = false;
 				}
 
@@ -422,8 +384,10 @@ public abstract class BaseTeamRoleResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(teamRole1.getId(), teamRole2.getId())) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						teamRole1.getKey(), teamRole2.getKey())) {
+
 					return false;
 				}
 
@@ -578,9 +542,12 @@ public abstract class BaseTeamRoleResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(teamRole.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -606,7 +573,7 @@ public abstract class BaseTeamRoleResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 			}
 		};

@@ -95,6 +95,47 @@ public class ProjectServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Project addProject(
+			HttpPrincipal httpPrincipal, String accountKey, String name,
+			String code, String industry, String tier, String notes,
+			String soldBy, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProjectServiceUtil.class, "addProject",
+				_addProjectParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey, name, code, industry, tier, notes,
+				soldBy, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Project)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Project deleteProject(
 			HttpPrincipal httpPrincipal, long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -102,10 +143,48 @@ public class ProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProjectServiceUtil.class, "deleteProject",
-				_deleteProjectParameterTypes1);
+				_deleteProjectParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, projectId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Project)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Project deleteProject(
+			HttpPrincipal httpPrincipal, String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProjectServiceUtil.class, "deleteProject",
+				_deleteProjectParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, projectKey);
 
 			Object returnObj = null;
 
@@ -140,10 +219,48 @@ public class ProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProjectServiceUtil.class, "getProject",
-				_getProjectParameterTypes2);
+				_getProjectParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, projectId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Project)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Project getProject(
+			HttpPrincipal httpPrincipal, String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProjectServiceUtil.class, "getProject",
+				_getProjectParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, projectKey);
 
 			Object returnObj = null;
 
@@ -179,10 +296,51 @@ public class ProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProjectServiceUtil.class, "getProjects",
-				_getProjectsParameterTypes3);
+				_getProjectsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.osb.koroneiki.taproot.model.Project>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.Project> getProjects(
+				HttpPrincipal httpPrincipal, String accountKey, int start,
+				int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProjectServiceUtil.class, "getProjects",
+				_getProjectsParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey, start, end);
 
 			Object returnObj = null;
 
@@ -218,10 +376,48 @@ public class ProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProjectServiceUtil.class, "getProjectsCount",
-				_getProjectsCountParameterTypes4);
+				_getProjectsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getProjectsCount(
+			HttpPrincipal httpPrincipal, String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProjectServiceUtil.class, "getProjectsCount",
+				_getProjectsCountParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountKey);
 
 			Object returnObj = null;
 
@@ -258,11 +454,52 @@ public class ProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ProjectServiceUtil.class, "updateProject",
-				_updateProjectParameterTypes5);
+				_updateProjectParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, projectId, name, code, industry, tier, notes, soldBy,
 				status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.Project)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Project updateProject(
+			HttpPrincipal httpPrincipal, String projectKey, String name,
+			String code, String industry, String tier, String notes,
+			String soldBy, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProjectServiceUtil.class, "updateProject",
+				_updateProjectParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, projectKey, name, code, industry, tier, notes,
+				soldBy, status);
 
 			Object returnObj = null;
 
@@ -296,20 +533,39 @@ public class ProjectServiceHttp {
 		long.class, String.class, String.class, String.class, String.class,
 		String.class, String.class, int.class
 	};
-	private static final Class<?>[] _deleteProjectParameterTypes1 =
+	private static final Class<?>[] _addProjectParameterTypes1 = new Class[] {
+		String.class, String.class, String.class, String.class, String.class,
+		String.class, String.class, int.class
+	};
+	private static final Class<?>[] _deleteProjectParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getProjectParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteProjectParameterTypes3 =
+		new Class[] {String.class};
+	private static final Class<?>[] _getProjectParameterTypes4 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getProjectsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getProjectParameterTypes5 = new Class[] {
+		String.class
+	};
+	private static final Class<?>[] _getProjectsParameterTypes6 = new Class[] {
 		long.class, int.class, int.class
 	};
-	private static final Class<?>[] _getProjectsCountParameterTypes4 =
+	private static final Class<?>[] _getProjectsParameterTypes7 = new Class[] {
+		String.class, int.class, int.class
+	};
+	private static final Class<?>[] _getProjectsCountParameterTypes8 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateProjectParameterTypes5 =
+	private static final Class<?>[] _getProjectsCountParameterTypes9 =
+		new Class[] {String.class};
+	private static final Class<?>[] _updateProjectParameterTypes10 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class, String.class, int.class
+		};
+	private static final Class<?>[] _updateProjectParameterTypes11 =
+		new Class[] {
+			String.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, int.class
 		};
 
 }

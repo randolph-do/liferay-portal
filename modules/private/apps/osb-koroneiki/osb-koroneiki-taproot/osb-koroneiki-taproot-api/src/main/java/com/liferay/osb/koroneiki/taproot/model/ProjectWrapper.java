@@ -203,6 +203,13 @@ public class ProjectWrapper
 		return model.getAccountId();
 	}
 
+	@Override
+	public String getAccountKey()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAccountKey();
+	}
+
 	/**
 	 * Returns the code of this project.
 	 *

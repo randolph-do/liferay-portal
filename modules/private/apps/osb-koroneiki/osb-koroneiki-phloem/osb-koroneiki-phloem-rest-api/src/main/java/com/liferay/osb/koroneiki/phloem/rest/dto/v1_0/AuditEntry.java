@@ -348,19 +348,19 @@ public class AuditEntry {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long fieldClassPK;
 
-	@Schema(description = "The audit entry's ID.")
-	public Long getId() {
-		return id;
+	@Schema(description = "The audit entry's key.")
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -372,7 +372,7 @@ public class AuditEntry {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected String key;
 
 	@Schema(description = "The new value of the field on the audited object.")
 	public String getNewValue() {
@@ -632,14 +632,18 @@ public class AuditEntry {
 			sb.append(fieldClassPK);
 		}
 
-		if (id != null) {
+		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
 		if (newValue != null) {

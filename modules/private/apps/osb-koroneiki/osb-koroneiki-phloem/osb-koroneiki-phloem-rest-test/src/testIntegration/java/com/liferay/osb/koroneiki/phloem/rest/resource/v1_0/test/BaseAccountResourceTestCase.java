@@ -172,6 +172,7 @@ public abstract class BaseAccountResourceTestCase {
 		account.setContactEmailAddress(regex);
 		account.setDescription(regex);
 		account.setFaxNumber(regex);
+		account.setKey(regex);
 		account.setName(regex);
 		account.setPhoneNumber(regex);
 		account.setProfileEmailAddress(regex);
@@ -186,6 +187,7 @@ public abstract class BaseAccountResourceTestCase {
 		Assert.assertEquals(regex, account.getContactEmailAddress());
 		Assert.assertEquals(regex, account.getDescription());
 		Assert.assertEquals(regex, account.getFaxNumber());
+		Assert.assertEquals(regex, account.getKey());
 		Assert.assertEquals(regex, account.getName());
 		Assert.assertEquals(regex, account.getPhoneNumber());
 		Assert.assertEquals(regex, account.getProfileEmailAddress());
@@ -211,74 +213,22 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testDeleteAccount() throws Exception {
-		Account account = testDeleteAccount_addAccount();
-
-		assertHttpResponseStatusCode(
-			204, accountResource.deleteAccountHttpResponse(account.getId()));
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(account.getId()));
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(0L));
-	}
-
-	protected Account testDeleteAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetAccount() throws Exception {
-		Account postAccount = testGetAccount_addAccount();
-
-		Account getAccount = accountResource.getAccount(postAccount.getId());
-
-		assertEquals(postAccount, getAccount);
-		assertValid(getAccount);
-	}
-
-	protected Account testGetAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testPutAccount() throws Exception {
-		Account postAccount = testPutAccount_addAccount();
-
-		Account randomAccount = randomAccount();
-
-		Account putAccount = accountResource.putAccount(
-			postAccount.getId(), randomAccount);
-
-		assertEquals(randomAccount, putAccount);
-		assertValid(putAccount);
-
-		Account getAccount = accountResource.getAccount(putAccount.getId());
-
-		assertEquals(randomAccount, getAccount);
-		assertValid(getAccount);
-	}
-
-	protected Account testPutAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testDeleteAccountContact() throws Exception {
-		Account account = testDeleteAccountContact_addAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountResource.deleteAccountContactHttpResponse(
-				account.getId(), null));
-	}
-
-	protected Account testDeleteAccountContact_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -287,24 +237,12 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountContactRole() throws Exception {
-		Account account = testDeleteAccountContactRole_addAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountResource.deleteAccountContactRoleHttpResponse(
-				account.getId(), null, null));
-	}
-
-	protected Account testDeleteAccountContactRole_addAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	public void testDeleteAccountContactContactKeyRole() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPutAccountContactRole() throws Exception {
+	public void testPutAccountContactContactKeyRole() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -367,10 +305,6 @@ public abstract class BaseAccountResourceTestCase {
 			valid = false;
 		}
 
-		if (account.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -410,6 +344,14 @@ public abstract class BaseAccountResourceTestCase {
 
 			if (Objects.equals("faxNumber", additionalAssertFieldName)) {
 				if (account.getFaxNumber() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (account.getKey() == null) {
 					valid = false;
 				}
 
@@ -574,8 +516,8 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(account1.getId(), account2.getId())) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(account1.getKey(), account2.getKey())) {
 					return false;
 				}
 
@@ -789,9 +731,12 @@ public abstract class BaseAccountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -843,7 +788,7 @@ public abstract class BaseAccountResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
 				faxNumber = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				phoneNumber = RandomTestUtil.randomString();
 				profileEmailAddress = RandomTestUtil.randomString();

@@ -105,9 +105,10 @@ public interface TeamLocalService
 	 *
 	 * @param team the team
 	 * @return the team that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public Team deleteTeam(Team team);
+	public Team deleteTeam(Team team) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

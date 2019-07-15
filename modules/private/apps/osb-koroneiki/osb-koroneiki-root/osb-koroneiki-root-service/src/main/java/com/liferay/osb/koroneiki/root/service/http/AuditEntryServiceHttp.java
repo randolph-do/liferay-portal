@@ -171,6 +171,44 @@ public class AuditEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.root.model.AuditEntry getAuditEntry(
+			HttpPrincipal httpPrincipal, String auditEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AuditEntryServiceUtil.class, "getAuditEntry",
+				_getAuditEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, auditEntryKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.root.model.AuditEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AuditEntryServiceHttp.class);
 
@@ -180,5 +218,7 @@ public class AuditEntryServiceHttp {
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getAuditEntryParameterTypes2 =
 		new Class[] {long.class};
+	private static final Class<?>[] _getAuditEntryParameterTypes3 =
+		new Class[] {String.class};
 
 }

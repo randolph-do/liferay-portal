@@ -42,10 +42,26 @@ public class TeamServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Team addTeam(
+			String accountKey, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.addTeam(accountKey, name);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Team deleteTeam(long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamService.deleteTeam(teamId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Team deleteTeam(
+			String teamKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.deleteTeam(teamKey);
 	}
 
 	@Override
@@ -57,10 +73,25 @@ public class TeamServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Team>
+			getAccountTeams(String accountKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.getAccountTeams(accountKey, start, end);
+	}
+
+	@Override
 	public int getAccountTeamsCount(long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamService.getAccountTeamsCount(accountId);
+	}
+
+	@Override
+	public int getAccountTeamsCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.getAccountTeamsCount(accountKey);
 	}
 
 	/**
@@ -81,11 +112,26 @@ public class TeamServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Team getTeam(String teamKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.getTeam(teamKey);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
 			long teamId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamService.updateTeam(teamId, name);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Team updateTeam(
+			String teamKey, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamService.updateTeam(teamKey, name);
 	}
 
 	@Override

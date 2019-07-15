@@ -37,29 +37,30 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductPurchaseResource {
 
-	public Page<ProductPurchase> getAccountProductPurchasesPage(
-			Long accountId, Pagination pagination)
+	public Page<ProductPurchase> getAccountAccountKeyProductPurchasesPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public ProductPurchase postAccountProductPurchase(
-			Long accountId, ProductPurchase productPurchase)
+	public ProductPurchase postAccountAccountKeyProductPurchase(
+			String accountKey, ProductPurchase productPurchase)
 		throws Exception;
 
-	public void deleteProductPurchase(Long productPurchaseId) throws Exception;
+	public void deleteProductPurchase(String productPurchaseKey)
+		throws Exception;
 
-	public ProductPurchase getProductPurchase(Long productPurchaseId)
+	public ProductPurchase getProductPurchase(String productPurchaseKey)
 		throws Exception;
 
 	public ProductPurchase putProductPurchase(
-			Long productPurchaseId, ProductPurchase productPurchase)
+			String productPurchaseKey, ProductPurchase productPurchase)
 		throws Exception;
 
-	public Page<ProductPurchase> getProjectProductPurchasesPage(
-			Long projectId, Pagination pagination)
+	public Page<ProductPurchase> getProjectProjectKeyProductPurchasesPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public ProductPurchase postProjectProductPurchase(
-			Long projectId, ProductPurchase productPurchase)
+	public ProductPurchase postProjectProjectKeyProductPurchase(
+			String projectKey, ProductPurchase productPurchase)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

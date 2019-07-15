@@ -175,6 +175,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 		auditEntry.setDescription(regex);
 		auditEntry.setField(regex);
 		auditEntry.setFieldClassName(regex);
+		auditEntry.setKey(regex);
 		auditEntry.setNewValue(regex);
 		auditEntry.setOldValue(regex);
 		auditEntry.setUserName(regex);
@@ -189,152 +190,33 @@ public abstract class BaseAuditEntryResourceTestCase {
 		Assert.assertEquals(regex, auditEntry.getDescription());
 		Assert.assertEquals(regex, auditEntry.getField());
 		Assert.assertEquals(regex, auditEntry.getFieldClassName());
+		Assert.assertEquals(regex, auditEntry.getKey());
 		Assert.assertEquals(regex, auditEntry.getNewValue());
 		Assert.assertEquals(regex, auditEntry.getOldValue());
 		Assert.assertEquals(regex, auditEntry.getUserName());
 	}
 
 	@Test
-	public void testGetAccountAuditEntriesPage() throws Exception {
-		Page<AuditEntry> page = auditEntryResource.getAccountAuditEntriesPage(
-			testGetAccountAuditEntriesPage_getAccountId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
-		Long accountId = testGetAccountAuditEntriesPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountAuditEntriesPage_getIrrelevantAccountId();
-
-		if ((irrelevantAccountId != null)) {
-			AuditEntry irrelevantAuditEntry =
-				testGetAccountAuditEntriesPage_addAuditEntry(
-					irrelevantAccountId, randomIrrelevantAuditEntry());
-
-			page = auditEntryResource.getAccountAuditEntriesPage(
-				irrelevantAccountId, Pagination.of(1, 2));
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantAuditEntry),
-				(List<AuditEntry>)page.getItems());
-			assertValid(page);
-		}
-
-		AuditEntry auditEntry1 = testGetAccountAuditEntriesPage_addAuditEntry(
-			accountId, randomAuditEntry());
-
-		AuditEntry auditEntry2 = testGetAccountAuditEntriesPage_addAuditEntry(
-			accountId, randomAuditEntry());
-
-		page = auditEntryResource.getAccountAuditEntriesPage(
-			accountId, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2),
-			(List<AuditEntry>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetAccountAuditEntriesPageWithPagination()
-		throws Exception {
-
-		Long accountId = testGetAccountAuditEntriesPage_getAccountId();
-
-		AuditEntry auditEntry1 = testGetAccountAuditEntriesPage_addAuditEntry(
-			accountId, randomAuditEntry());
-
-		AuditEntry auditEntry2 = testGetAccountAuditEntriesPage_addAuditEntry(
-			accountId, randomAuditEntry());
-
-		AuditEntry auditEntry3 = testGetAccountAuditEntriesPage_addAuditEntry(
-			accountId, randomAuditEntry());
-
-		Page<AuditEntry> page1 = auditEntryResource.getAccountAuditEntriesPage(
-			accountId, Pagination.of(1, 2));
-
-		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
-
-		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
-
-		Page<AuditEntry> page2 = auditEntryResource.getAccountAuditEntriesPage(
-			accountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<AuditEntry> auditEntries2 = (List<AuditEntry>)page2.getItems();
-
-		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
-
-		Page<AuditEntry> page3 = auditEntryResource.getAccountAuditEntriesPage(
-			accountId, Pagination.of(1, 3));
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			(List<AuditEntry>)page3.getItems());
-	}
-
-	protected AuditEntry testGetAccountAuditEntriesPage_addAuditEntry(
-			Long accountId, AuditEntry auditEntry)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountAuditEntriesPage_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountAuditEntriesPage_getIrrelevantAccountId()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testGetAuditEntry() throws Exception {
-		AuditEntry postAuditEntry = testGetAuditEntry_addAuditEntry();
-
-		AuditEntry getAuditEntry = auditEntryResource.getAuditEntry(
-			postAuditEntry.getId());
-
-		assertEquals(postAuditEntry, getAuditEntry);
-		assertValid(getAuditEntry);
-	}
-
-	protected AuditEntry testGetAuditEntry_addAuditEntry() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetContactRoleAuditEntriesPage() throws Exception {
+	public void testGetAccountAccountKeyAuditEntriesPage() throws Exception {
 		Page<AuditEntry> page =
-			auditEntryResource.getContactRoleAuditEntriesPage(
-				testGetContactRoleAuditEntriesPage_getContactRoleId(),
+			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+				testGetAccountAccountKeyAuditEntriesPage_getAccountKey(),
 				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long contactRoleId =
-			testGetContactRoleAuditEntriesPage_getContactRoleId();
-		Long irrelevantContactRoleId =
-			testGetContactRoleAuditEntriesPage_getIrrelevantContactRoleId();
+		String accountKey =
+			testGetAccountAccountKeyAuditEntriesPage_getAccountKey();
+		String irrelevantAccountKey =
+			testGetAccountAccountKeyAuditEntriesPage_getIrrelevantAccountKey();
 
-		if ((irrelevantContactRoleId != null)) {
+		if ((irrelevantAccountKey != null)) {
 			AuditEntry irrelevantAuditEntry =
-				testGetContactRoleAuditEntriesPage_addAuditEntry(
-					irrelevantContactRoleId, randomIrrelevantAuditEntry());
+				testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
+					irrelevantAccountKey, randomIrrelevantAuditEntry());
 
-			page = auditEntryResource.getContactRoleAuditEntriesPage(
-				irrelevantContactRoleId, Pagination.of(1, 2));
+			page = auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+				irrelevantAccountKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -345,15 +227,15 @@ public abstract class BaseAuditEntryResourceTestCase {
 		}
 
 		AuditEntry auditEntry1 =
-			testGetContactRoleAuditEntriesPage_addAuditEntry(
-				contactRoleId, randomAuditEntry());
+			testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
+				accountKey, randomAuditEntry());
 
 		AuditEntry auditEntry2 =
-			testGetContactRoleAuditEntriesPage_addAuditEntry(
-				contactRoleId, randomAuditEntry());
+			testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
+				accountKey, randomAuditEntry());
 
-		page = auditEntryResource.getContactRoleAuditEntriesPage(
-			contactRoleId, Pagination.of(1, 2));
+		page = auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+			accountKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -364,35 +246,35 @@ public abstract class BaseAuditEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetContactRoleAuditEntriesPageWithPagination()
+	public void testGetAccountAccountKeyAuditEntriesPageWithPagination()
 		throws Exception {
 
-		Long contactRoleId =
-			testGetContactRoleAuditEntriesPage_getContactRoleId();
+		String accountKey =
+			testGetAccountAccountKeyAuditEntriesPage_getAccountKey();
 
 		AuditEntry auditEntry1 =
-			testGetContactRoleAuditEntriesPage_addAuditEntry(
-				contactRoleId, randomAuditEntry());
+			testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
+				accountKey, randomAuditEntry());
 
 		AuditEntry auditEntry2 =
-			testGetContactRoleAuditEntriesPage_addAuditEntry(
-				contactRoleId, randomAuditEntry());
+			testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
+				accountKey, randomAuditEntry());
 
 		AuditEntry auditEntry3 =
-			testGetContactRoleAuditEntriesPage_addAuditEntry(
-				contactRoleId, randomAuditEntry());
+			testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
+				accountKey, randomAuditEntry());
 
 		Page<AuditEntry> page1 =
-			auditEntryResource.getContactRoleAuditEntriesPage(
-				contactRoleId, Pagination.of(1, 2));
+			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+				accountKey, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
 		Page<AuditEntry> page2 =
-			auditEntryResource.getContactRoleAuditEntriesPage(
-				contactRoleId, Pagination.of(2, 2));
+			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+				accountKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -401,54 +283,65 @@ public abstract class BaseAuditEntryResourceTestCase {
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
 		Page<AuditEntry> page3 =
-			auditEntryResource.getContactRoleAuditEntriesPage(
-				contactRoleId, Pagination.of(1, 3));
+			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+				accountKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
 			(List<AuditEntry>)page3.getItems());
 	}
 
-	protected AuditEntry testGetContactRoleAuditEntriesPage_addAuditEntry(
-			Long contactRoleId, AuditEntry auditEntry)
+	protected AuditEntry testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
+			String accountKey, AuditEntry auditEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContactRoleAuditEntriesPage_getContactRoleId()
+	protected String testGetAccountAccountKeyAuditEntriesPage_getAccountKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
-			testGetContactRoleAuditEntriesPage_getIrrelevantContactRoleId()
+	protected String
+			testGetAccountAccountKeyAuditEntriesPage_getIrrelevantAccountKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testGetContactAuditEntriesPage() throws Exception {
-		Page<AuditEntry> page = auditEntryResource.getContactAuditEntriesPage(
-			testGetContactAuditEntriesPage_getContactId(), Pagination.of(1, 2));
+	public void testGetAuditEntry() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContactRoleContactRoleKeyAuditEntriesPage()
+		throws Exception {
+
+		Page<AuditEntry> page =
+			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+				testGetContactRoleContactRoleKeyAuditEntriesPage_getContactRoleKey(),
+				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long contactId = testGetContactAuditEntriesPage_getContactId();
-		Long irrelevantContactId =
-			testGetContactAuditEntriesPage_getIrrelevantContactId();
+		String contactRoleKey =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_getContactRoleKey();
+		String irrelevantContactRoleKey =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_getIrrelevantContactRoleKey();
 
-		if ((irrelevantContactId != null)) {
+		if ((irrelevantContactRoleKey != null)) {
 			AuditEntry irrelevantAuditEntry =
-				testGetContactAuditEntriesPage_addAuditEntry(
-					irrelevantContactId, randomIrrelevantAuditEntry());
+				testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
+					irrelevantContactRoleKey, randomIrrelevantAuditEntry());
 
-			page = auditEntryResource.getContactAuditEntriesPage(
-				irrelevantContactId, Pagination.of(1, 2));
+			page =
+				auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+					irrelevantContactRoleKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -458,14 +351,16 @@ public abstract class BaseAuditEntryResourceTestCase {
 			assertValid(page);
 		}
 
-		AuditEntry auditEntry1 = testGetContactAuditEntriesPage_addAuditEntry(
-			contactId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
+				contactRoleKey, randomAuditEntry());
 
-		AuditEntry auditEntry2 = testGetContactAuditEntriesPage_addAuditEntry(
-			contactId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
+				contactRoleKey, randomAuditEntry());
 
-		page = auditEntryResource.getContactAuditEntriesPage(
-			contactId, Pagination.of(1, 2));
+		page = auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+			contactRoleKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -476,29 +371,35 @@ public abstract class BaseAuditEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetContactAuditEntriesPageWithPagination()
+	public void testGetContactRoleContactRoleKeyAuditEntriesPageWithPagination()
 		throws Exception {
 
-		Long contactId = testGetContactAuditEntriesPage_getContactId();
+		String contactRoleKey =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_getContactRoleKey();
 
-		AuditEntry auditEntry1 = testGetContactAuditEntriesPage_addAuditEntry(
-			contactId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
+				contactRoleKey, randomAuditEntry());
 
-		AuditEntry auditEntry2 = testGetContactAuditEntriesPage_addAuditEntry(
-			contactId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
+				contactRoleKey, randomAuditEntry());
 
-		AuditEntry auditEntry3 = testGetContactAuditEntriesPage_addAuditEntry(
-			contactId, randomAuditEntry());
+		AuditEntry auditEntry3 =
+			testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
+				contactRoleKey, randomAuditEntry());
 
-		Page<AuditEntry> page1 = auditEntryResource.getContactAuditEntriesPage(
-			contactId, Pagination.of(1, 2));
+		Page<AuditEntry> page1 =
+			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+				contactRoleKey, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = auditEntryResource.getContactAuditEntriesPage(
-			contactId, Pagination.of(2, 2));
+		Page<AuditEntry> page2 =
+			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+				contactRoleKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -506,53 +407,60 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
-		Page<AuditEntry> page3 = auditEntryResource.getContactAuditEntriesPage(
-			contactId, Pagination.of(1, 3));
+		Page<AuditEntry> page3 =
+			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+				contactRoleKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
 			(List<AuditEntry>)page3.getItems());
 	}
 
-	protected AuditEntry testGetContactAuditEntriesPage_addAuditEntry(
-			Long contactId, AuditEntry auditEntry)
+	protected AuditEntry
+			testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
+				String contactRoleKey, AuditEntry auditEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContactAuditEntriesPage_getContactId()
+	protected String
+			testGetContactRoleContactRoleKeyAuditEntriesPage_getContactRoleKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContactAuditEntriesPage_getIrrelevantContactId()
+	protected String
+			testGetContactRoleContactRoleKeyAuditEntriesPage_getIrrelevantContactRoleKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testGetProjectAuditEntriesPage() throws Exception {
-		Page<AuditEntry> page = auditEntryResource.getProjectAuditEntriesPage(
-			testGetProjectAuditEntriesPage_getProjectId(), Pagination.of(1, 2));
+	public void testGetContactContactKeyAuditEntriesPage() throws Exception {
+		Page<AuditEntry> page =
+			auditEntryResource.getContactContactKeyAuditEntriesPage(
+				testGetContactContactKeyAuditEntriesPage_getContactKey(),
+				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long projectId = testGetProjectAuditEntriesPage_getProjectId();
-		Long irrelevantProjectId =
-			testGetProjectAuditEntriesPage_getIrrelevantProjectId();
+		String contactKey =
+			testGetContactContactKeyAuditEntriesPage_getContactKey();
+		String irrelevantContactKey =
+			testGetContactContactKeyAuditEntriesPage_getIrrelevantContactKey();
 
-		if ((irrelevantProjectId != null)) {
+		if ((irrelevantContactKey != null)) {
 			AuditEntry irrelevantAuditEntry =
-				testGetProjectAuditEntriesPage_addAuditEntry(
-					irrelevantProjectId, randomIrrelevantAuditEntry());
+				testGetContactContactKeyAuditEntriesPage_addAuditEntry(
+					irrelevantContactKey, randomIrrelevantAuditEntry());
 
-			page = auditEntryResource.getProjectAuditEntriesPage(
-				irrelevantProjectId, Pagination.of(1, 2));
+			page = auditEntryResource.getContactContactKeyAuditEntriesPage(
+				irrelevantContactKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -562,14 +470,16 @@ public abstract class BaseAuditEntryResourceTestCase {
 			assertValid(page);
 		}
 
-		AuditEntry auditEntry1 = testGetProjectAuditEntriesPage_addAuditEntry(
-			projectId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetContactContactKeyAuditEntriesPage_addAuditEntry(
+				contactKey, randomAuditEntry());
 
-		AuditEntry auditEntry2 = testGetProjectAuditEntriesPage_addAuditEntry(
-			projectId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetContactContactKeyAuditEntriesPage_addAuditEntry(
+				contactKey, randomAuditEntry());
 
-		page = auditEntryResource.getProjectAuditEntriesPage(
-			projectId, Pagination.of(1, 2));
+		page = auditEntryResource.getContactContactKeyAuditEntriesPage(
+			contactKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -580,29 +490,35 @@ public abstract class BaseAuditEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetProjectAuditEntriesPageWithPagination()
+	public void testGetContactContactKeyAuditEntriesPageWithPagination()
 		throws Exception {
 
-		Long projectId = testGetProjectAuditEntriesPage_getProjectId();
+		String contactKey =
+			testGetContactContactKeyAuditEntriesPage_getContactKey();
 
-		AuditEntry auditEntry1 = testGetProjectAuditEntriesPage_addAuditEntry(
-			projectId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetContactContactKeyAuditEntriesPage_addAuditEntry(
+				contactKey, randomAuditEntry());
 
-		AuditEntry auditEntry2 = testGetProjectAuditEntriesPage_addAuditEntry(
-			projectId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetContactContactKeyAuditEntriesPage_addAuditEntry(
+				contactKey, randomAuditEntry());
 
-		AuditEntry auditEntry3 = testGetProjectAuditEntriesPage_addAuditEntry(
-			projectId, randomAuditEntry());
+		AuditEntry auditEntry3 =
+			testGetContactContactKeyAuditEntriesPage_addAuditEntry(
+				contactKey, randomAuditEntry());
 
-		Page<AuditEntry> page1 = auditEntryResource.getProjectAuditEntriesPage(
-			projectId, Pagination.of(1, 2));
+		Page<AuditEntry> page1 =
+			auditEntryResource.getContactContactKeyAuditEntriesPage(
+				contactKey, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = auditEntryResource.getProjectAuditEntriesPage(
-			projectId, Pagination.of(2, 2));
+		Page<AuditEntry> page2 =
+			auditEntryResource.getContactContactKeyAuditEntriesPage(
+				contactKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -610,54 +526,58 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
-		Page<AuditEntry> page3 = auditEntryResource.getProjectAuditEntriesPage(
-			projectId, Pagination.of(1, 3));
+		Page<AuditEntry> page3 =
+			auditEntryResource.getContactContactKeyAuditEntriesPage(
+				contactKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
 			(List<AuditEntry>)page3.getItems());
 	}
 
-	protected AuditEntry testGetProjectAuditEntriesPage_addAuditEntry(
-			Long projectId, AuditEntry auditEntry)
+	protected AuditEntry testGetContactContactKeyAuditEntriesPage_addAuditEntry(
+			String contactKey, AuditEntry auditEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProjectAuditEntriesPage_getProjectId()
+	protected String testGetContactContactKeyAuditEntriesPage_getContactKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProjectAuditEntriesPage_getIrrelevantProjectId()
+	protected String
+			testGetContactContactKeyAuditEntriesPage_getIrrelevantContactKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testGetTeamRoleAuditEntriesPage() throws Exception {
-		Page<AuditEntry> page = auditEntryResource.getTeamRoleAuditEntriesPage(
-			testGetTeamRoleAuditEntriesPage_getTeamRoleId(),
-			Pagination.of(1, 2));
+	public void testGetProjectProjectKeyAuditEntriesPage() throws Exception {
+		Page<AuditEntry> page =
+			auditEntryResource.getProjectProjectKeyAuditEntriesPage(
+				testGetProjectProjectKeyAuditEntriesPage_getProjectKey(),
+				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long teamRoleId = testGetTeamRoleAuditEntriesPage_getTeamRoleId();
-		Long irrelevantTeamRoleId =
-			testGetTeamRoleAuditEntriesPage_getIrrelevantTeamRoleId();
+		String projectKey =
+			testGetProjectProjectKeyAuditEntriesPage_getProjectKey();
+		String irrelevantProjectKey =
+			testGetProjectProjectKeyAuditEntriesPage_getIrrelevantProjectKey();
 
-		if ((irrelevantTeamRoleId != null)) {
+		if ((irrelevantProjectKey != null)) {
 			AuditEntry irrelevantAuditEntry =
-				testGetTeamRoleAuditEntriesPage_addAuditEntry(
-					irrelevantTeamRoleId, randomIrrelevantAuditEntry());
+				testGetProjectProjectKeyAuditEntriesPage_addAuditEntry(
+					irrelevantProjectKey, randomIrrelevantAuditEntry());
 
-			page = auditEntryResource.getTeamRoleAuditEntriesPage(
-				irrelevantTeamRoleId, Pagination.of(1, 2));
+			page = auditEntryResource.getProjectProjectKeyAuditEntriesPage(
+				irrelevantProjectKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -667,14 +587,16 @@ public abstract class BaseAuditEntryResourceTestCase {
 			assertValid(page);
 		}
 
-		AuditEntry auditEntry1 = testGetTeamRoleAuditEntriesPage_addAuditEntry(
-			teamRoleId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetProjectProjectKeyAuditEntriesPage_addAuditEntry(
+				projectKey, randomAuditEntry());
 
-		AuditEntry auditEntry2 = testGetTeamRoleAuditEntriesPage_addAuditEntry(
-			teamRoleId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetProjectProjectKeyAuditEntriesPage_addAuditEntry(
+				projectKey, randomAuditEntry());
 
-		page = auditEntryResource.getTeamRoleAuditEntriesPage(
-			teamRoleId, Pagination.of(1, 2));
+		page = auditEntryResource.getProjectProjectKeyAuditEntriesPage(
+			projectKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -685,29 +607,35 @@ public abstract class BaseAuditEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetTeamRoleAuditEntriesPageWithPagination()
+	public void testGetProjectProjectKeyAuditEntriesPageWithPagination()
 		throws Exception {
 
-		Long teamRoleId = testGetTeamRoleAuditEntriesPage_getTeamRoleId();
+		String projectKey =
+			testGetProjectProjectKeyAuditEntriesPage_getProjectKey();
 
-		AuditEntry auditEntry1 = testGetTeamRoleAuditEntriesPage_addAuditEntry(
-			teamRoleId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetProjectProjectKeyAuditEntriesPage_addAuditEntry(
+				projectKey, randomAuditEntry());
 
-		AuditEntry auditEntry2 = testGetTeamRoleAuditEntriesPage_addAuditEntry(
-			teamRoleId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetProjectProjectKeyAuditEntriesPage_addAuditEntry(
+				projectKey, randomAuditEntry());
 
-		AuditEntry auditEntry3 = testGetTeamRoleAuditEntriesPage_addAuditEntry(
-			teamRoleId, randomAuditEntry());
+		AuditEntry auditEntry3 =
+			testGetProjectProjectKeyAuditEntriesPage_addAuditEntry(
+				projectKey, randomAuditEntry());
 
-		Page<AuditEntry> page1 = auditEntryResource.getTeamRoleAuditEntriesPage(
-			teamRoleId, Pagination.of(1, 2));
+		Page<AuditEntry> page1 =
+			auditEntryResource.getProjectProjectKeyAuditEntriesPage(
+				projectKey, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = auditEntryResource.getTeamRoleAuditEntriesPage(
-			teamRoleId, Pagination.of(2, 2));
+		Page<AuditEntry> page2 =
+			auditEntryResource.getProjectProjectKeyAuditEntriesPage(
+				projectKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -715,53 +643,58 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
-		Page<AuditEntry> page3 = auditEntryResource.getTeamRoleAuditEntriesPage(
-			teamRoleId, Pagination.of(1, 3));
+		Page<AuditEntry> page3 =
+			auditEntryResource.getProjectProjectKeyAuditEntriesPage(
+				projectKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
 			(List<AuditEntry>)page3.getItems());
 	}
 
-	protected AuditEntry testGetTeamRoleAuditEntriesPage_addAuditEntry(
-			Long teamRoleId, AuditEntry auditEntry)
+	protected AuditEntry testGetProjectProjectKeyAuditEntriesPage_addAuditEntry(
+			String projectKey, AuditEntry auditEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetTeamRoleAuditEntriesPage_getTeamRoleId()
+	protected String testGetProjectProjectKeyAuditEntriesPage_getProjectKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetTeamRoleAuditEntriesPage_getIrrelevantTeamRoleId()
+	protected String
+			testGetProjectProjectKeyAuditEntriesPage_getIrrelevantProjectKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testGetTeamAuditEntriesPage() throws Exception {
-		Page<AuditEntry> page = auditEntryResource.getTeamAuditEntriesPage(
-			testGetTeamAuditEntriesPage_getTeamId(), Pagination.of(1, 2));
+	public void testGetTeamRoleTeamRoleKeyAuditEntriesPage() throws Exception {
+		Page<AuditEntry> page =
+			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+				testGetTeamRoleTeamRoleKeyAuditEntriesPage_getTeamRoleKey(),
+				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long teamId = testGetTeamAuditEntriesPage_getTeamId();
-		Long irrelevantTeamId =
-			testGetTeamAuditEntriesPage_getIrrelevantTeamId();
+		String teamRoleKey =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_getTeamRoleKey();
+		String irrelevantTeamRoleKey =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_getIrrelevantTeamRoleKey();
 
-		if ((irrelevantTeamId != null)) {
+		if ((irrelevantTeamRoleKey != null)) {
 			AuditEntry irrelevantAuditEntry =
-				testGetTeamAuditEntriesPage_addAuditEntry(
-					irrelevantTeamId, randomIrrelevantAuditEntry());
+				testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
+					irrelevantTeamRoleKey, randomIrrelevantAuditEntry());
 
-			page = auditEntryResource.getTeamAuditEntriesPage(
-				irrelevantTeamId, Pagination.of(1, 2));
+			page = auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+				irrelevantTeamRoleKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -771,14 +704,16 @@ public abstract class BaseAuditEntryResourceTestCase {
 			assertValid(page);
 		}
 
-		AuditEntry auditEntry1 = testGetTeamAuditEntriesPage_addAuditEntry(
-			teamId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
+				teamRoleKey, randomAuditEntry());
 
-		AuditEntry auditEntry2 = testGetTeamAuditEntriesPage_addAuditEntry(
-			teamId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
+				teamRoleKey, randomAuditEntry());
 
-		page = auditEntryResource.getTeamAuditEntriesPage(
-			teamId, Pagination.of(1, 2));
+		page = auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+			teamRoleKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -789,27 +724,35 @@ public abstract class BaseAuditEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetTeamAuditEntriesPageWithPagination() throws Exception {
-		Long teamId = testGetTeamAuditEntriesPage_getTeamId();
+	public void testGetTeamRoleTeamRoleKeyAuditEntriesPageWithPagination()
+		throws Exception {
 
-		AuditEntry auditEntry1 = testGetTeamAuditEntriesPage_addAuditEntry(
-			teamId, randomAuditEntry());
+		String teamRoleKey =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_getTeamRoleKey();
 
-		AuditEntry auditEntry2 = testGetTeamAuditEntriesPage_addAuditEntry(
-			teamId, randomAuditEntry());
+		AuditEntry auditEntry1 =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
+				teamRoleKey, randomAuditEntry());
 
-		AuditEntry auditEntry3 = testGetTeamAuditEntriesPage_addAuditEntry(
-			teamId, randomAuditEntry());
+		AuditEntry auditEntry2 =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
+				teamRoleKey, randomAuditEntry());
 
-		Page<AuditEntry> page1 = auditEntryResource.getTeamAuditEntriesPage(
-			teamId, Pagination.of(1, 2));
+		AuditEntry auditEntry3 =
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
+				teamRoleKey, randomAuditEntry());
+
+		Page<AuditEntry> page1 =
+			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+				teamRoleKey, Pagination.of(1, 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
 		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
 
-		Page<AuditEntry> page2 = auditEntryResource.getTeamAuditEntriesPage(
-			teamId, Pagination.of(2, 2));
+		Page<AuditEntry> page2 =
+			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+				teamRoleKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -817,28 +760,147 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
 
-		Page<AuditEntry> page3 = auditEntryResource.getTeamAuditEntriesPage(
-			teamId, Pagination.of(1, 3));
+		Page<AuditEntry> page3 =
+			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+				teamRoleKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
 			(List<AuditEntry>)page3.getItems());
 	}
 
-	protected AuditEntry testGetTeamAuditEntriesPage_addAuditEntry(
-			Long teamId, AuditEntry auditEntry)
+	protected AuditEntry
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
+				String teamRoleKey, AuditEntry auditEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetTeamAuditEntriesPage_getTeamId() throws Exception {
+	protected String testGetTeamRoleTeamRoleKeyAuditEntriesPage_getTeamRoleKey()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetTeamAuditEntriesPage_getIrrelevantTeamId()
+	protected String
+			testGetTeamRoleTeamRoleKeyAuditEntriesPage_getIrrelevantTeamRoleKey()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetTeamTeamKeyAuditEntriesPage() throws Exception {
+		Page<AuditEntry> page =
+			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
+				testGetTeamTeamKeyAuditEntriesPage_getTeamKey(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		String teamKey = testGetTeamTeamKeyAuditEntriesPage_getTeamKey();
+		String irrelevantTeamKey =
+			testGetTeamTeamKeyAuditEntriesPage_getIrrelevantTeamKey();
+
+		if ((irrelevantTeamKey != null)) {
+			AuditEntry irrelevantAuditEntry =
+				testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
+					irrelevantTeamKey, randomIrrelevantAuditEntry());
+
+			page = auditEntryResource.getTeamTeamKeyAuditEntriesPage(
+				irrelevantTeamKey, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantAuditEntry),
+				(List<AuditEntry>)page.getItems());
+			assertValid(page);
+		}
+
+		AuditEntry auditEntry1 =
+			testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
+				teamKey, randomAuditEntry());
+
+		AuditEntry auditEntry2 =
+			testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
+				teamKey, randomAuditEntry());
+
+		page = auditEntryResource.getTeamTeamKeyAuditEntriesPage(
+			teamKey, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(auditEntry1, auditEntry2),
+			(List<AuditEntry>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetTeamTeamKeyAuditEntriesPageWithPagination()
+		throws Exception {
+
+		String teamKey = testGetTeamTeamKeyAuditEntriesPage_getTeamKey();
+
+		AuditEntry auditEntry1 =
+			testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
+				teamKey, randomAuditEntry());
+
+		AuditEntry auditEntry2 =
+			testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
+				teamKey, randomAuditEntry());
+
+		AuditEntry auditEntry3 =
+			testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
+				teamKey, randomAuditEntry());
+
+		Page<AuditEntry> page1 =
+			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
+				teamKey, Pagination.of(1, 2));
+
+		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
+
+		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
+
+		Page<AuditEntry> page2 =
+			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
+				teamKey, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AuditEntry> auditEntries2 = (List<AuditEntry>)page2.getItems();
+
+		Assert.assertEquals(auditEntries2.toString(), 1, auditEntries2.size());
+
+		Page<AuditEntry> page3 =
+			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
+				teamKey, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
+			(List<AuditEntry>)page3.getItems());
+	}
+
+	protected AuditEntry testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
+			String teamKey, AuditEntry auditEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetTeamTeamKeyAuditEntriesPage_getTeamKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetTeamTeamKeyAuditEntriesPage_getIrrelevantTeamKey()
 		throws Exception {
 
 		return null;
@@ -898,10 +960,6 @@ public abstract class BaseAuditEntryResourceTestCase {
 		boolean valid = true;
 
 		if (auditEntry.getDateCreated() == null) {
-			valid = false;
-		}
-
-		if (auditEntry.getId() == null) {
 			valid = false;
 		}
 
@@ -966,6 +1024,14 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 			if (Objects.equals("fieldClassPK", additionalAssertFieldName)) {
 				if (auditEntry.getFieldClassPK() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (auditEntry.getKey() == null) {
 					valid = false;
 				}
 
@@ -1141,9 +1207,9 @@ public abstract class BaseAuditEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						auditEntry1.getId(), auditEntry2.getId())) {
+						auditEntry1.getKey(), auditEntry2.getKey())) {
 
 					return false;
 				}
@@ -1332,9 +1398,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(auditEntry.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("newValue")) {
@@ -1381,7 +1450,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 				field = RandomTestUtil.randomString();
 				fieldClassName = RandomTestUtil.randomString();
 				fieldClassPK = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				newValue = RandomTestUtil.randomString();
 				oldValue = RandomTestUtil.randomString();
 				userId = RandomTestUtil.randomLong();

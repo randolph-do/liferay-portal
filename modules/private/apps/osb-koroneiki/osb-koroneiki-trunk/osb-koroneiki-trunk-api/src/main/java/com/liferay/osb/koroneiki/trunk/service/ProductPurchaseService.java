@@ -58,7 +58,16 @@ public interface ProductPurchaseService extends BaseService {
 			Date endDate, int quantity, List<ProductField> productFields)
 		throws PortalException;
 
+	public ProductPurchase addProductPurchase(
+			String accountKey, String projectKey, String productEntryKey,
+			Date startDate, Date endDate, int quantity,
+			List<ProductField> productFields)
+		throws PortalException;
+
 	public ProductPurchase deleteProductPurchase(long productPurchaseId)
+		throws PortalException;
+
+	public ProductPurchase deleteProductPurchase(String productPurchaseKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -67,7 +76,16 @@ public interface ProductPurchaseService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductPurchase> getAccountProductPurchases(
+			String accountKey, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountProductPurchasesCount(long accountId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountProductPurchasesCount(String accountKey)
 		throws PortalException;
 
 	/**
@@ -82,17 +100,35 @@ public interface ProductPurchaseService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ProductPurchase getProductPurchase(String productPurchaseKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ProductPurchase> getProjectProductPurchases(
 			long projectId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ProductPurchase> getProjectProductPurchases(
+			String projectKey, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getProjectProductPurchasesCount(long projectId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProjectProductPurchasesCount(String projectKey)
+		throws PortalException;
+
 	public ProductPurchase updateProductPurchase(
 			long productPurchaseId, Date startDate, Date endDate, int quantity,
 			List<ProductField> productFields)
+		throws PortalException;
+
+	public ProductPurchase updateProductPurchase(
+			String productPurchaseKey, Date startDate, Date endDate,
+			int quantity, List<ProductField> productFields)
 		throws PortalException;
 
 }

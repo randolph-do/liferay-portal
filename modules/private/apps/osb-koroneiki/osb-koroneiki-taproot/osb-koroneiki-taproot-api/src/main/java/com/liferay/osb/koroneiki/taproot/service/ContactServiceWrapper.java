@@ -52,11 +52,27 @@ public class ContactServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Contact deleteContact(
+			String contactKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.deleteContact(contactKey);
+	}
+
+	@Override
 	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Contact>
 			getAccountContacts(long accountId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _contactService.getAccountContacts(accountId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Contact>
+			getAccountContacts(String accountKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.getAccountContacts(accountKey, start, end);
 	}
 
 	@Override
@@ -67,11 +83,26 @@ public class ContactServiceWrapper
 	}
 
 	@Override
+	public int getAccountContactsCount(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.getAccountContactsCount(accountKey);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Contact getContact(
 			long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _contactService.getContact(contactId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Contact
+			getContactByContactKey(String contactKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.getContactByContactKey(contactKey);
 	}
 
 	/**
@@ -93,10 +124,25 @@ public class ContactServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.koroneiki.taproot.model.Contact>
+			getProjectContacts(String projectKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.getProjectContacts(projectKey, start, end);
+	}
+
+	@Override
 	public int getProjectContactsCount(long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _contactService.getProjectContactsCount(projectId);
+	}
+
+	@Override
+	public int getProjectContactsCount(String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.getProjectContactsCount(projectKey);
 	}
 
 	@Override

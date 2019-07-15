@@ -171,6 +171,8 @@ public abstract class BaseTeamResourceTestCase {
 
 		Team team = randomTeam();
 
+		team.setAccountKey(regex);
+		team.setKey(regex);
 		team.setName(regex);
 
 		String json = TeamSerDes.toJSON(team);
@@ -179,26 +181,29 @@ public abstract class BaseTeamResourceTestCase {
 
 		team = TeamSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, team.getAccountKey());
+		Assert.assertEquals(regex, team.getKey());
 		Assert.assertEquals(regex, team.getName());
 	}
 
 	@Test
-	public void testGetAccountTeamsPage() throws Exception {
-		Page<Team> page = teamResource.getAccountTeamsPage(
-			testGetAccountTeamsPage_getAccountId(), Pagination.of(1, 2));
+	public void testGetAccountAccountKeyTeamsPage() throws Exception {
+		Page<Team> page = teamResource.getAccountAccountKeyTeamsPage(
+			testGetAccountAccountKeyTeamsPage_getAccountKey(),
+			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long accountId = testGetAccountTeamsPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountTeamsPage_getIrrelevantAccountId();
+		String accountKey = testGetAccountAccountKeyTeamsPage_getAccountKey();
+		String irrelevantAccountKey =
+			testGetAccountAccountKeyTeamsPage_getIrrelevantAccountKey();
 
-		if ((irrelevantAccountId != null)) {
-			Team irrelevantTeam = testGetAccountTeamsPage_addTeam(
-				irrelevantAccountId, randomIrrelevantTeam());
+		if ((irrelevantAccountKey != null)) {
+			Team irrelevantTeam = testGetAccountAccountKeyTeamsPage_addTeam(
+				irrelevantAccountKey, randomIrrelevantTeam());
 
-			page = teamResource.getAccountTeamsPage(
-				irrelevantAccountId, Pagination.of(1, 2));
+			page = teamResource.getAccountAccountKeyTeamsPage(
+				irrelevantAccountKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -207,11 +212,14 @@ public abstract class BaseTeamResourceTestCase {
 			assertValid(page);
 		}
 
-		Team team1 = testGetAccountTeamsPage_addTeam(accountId, randomTeam());
+		Team team1 = testGetAccountAccountKeyTeamsPage_addTeam(
+			accountKey, randomTeam());
 
-		Team team2 = testGetAccountTeamsPage_addTeam(accountId, randomTeam());
+		Team team2 = testGetAccountAccountKeyTeamsPage_addTeam(
+			accountKey, randomTeam());
 
-		page = teamResource.getAccountTeamsPage(accountId, Pagination.of(1, 2));
+		page = teamResource.getAccountAccountKeyTeamsPage(
+			accountKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -221,24 +229,29 @@ public abstract class BaseTeamResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountTeamsPageWithPagination() throws Exception {
-		Long accountId = testGetAccountTeamsPage_getAccountId();
+	public void testGetAccountAccountKeyTeamsPageWithPagination()
+		throws Exception {
 
-		Team team1 = testGetAccountTeamsPage_addTeam(accountId, randomTeam());
+		String accountKey = testGetAccountAccountKeyTeamsPage_getAccountKey();
 
-		Team team2 = testGetAccountTeamsPage_addTeam(accountId, randomTeam());
+		Team team1 = testGetAccountAccountKeyTeamsPage_addTeam(
+			accountKey, randomTeam());
 
-		Team team3 = testGetAccountTeamsPage_addTeam(accountId, randomTeam());
+		Team team2 = testGetAccountAccountKeyTeamsPage_addTeam(
+			accountKey, randomTeam());
 
-		Page<Team> page1 = teamResource.getAccountTeamsPage(
-			accountId, Pagination.of(1, 2));
+		Team team3 = testGetAccountAccountKeyTeamsPage_addTeam(
+			accountKey, randomTeam());
+
+		Page<Team> page1 = teamResource.getAccountAccountKeyTeamsPage(
+			accountKey, Pagination.of(1, 2));
 
 		List<Team> teams1 = (List<Team>)page1.getItems();
 
 		Assert.assertEquals(teams1.toString(), 2, teams1.size());
 
-		Page<Team> page2 = teamResource.getAccountTeamsPage(
-			accountId, Pagination.of(2, 2));
+		Page<Team> page2 = teamResource.getAccountAccountKeyTeamsPage(
+			accountKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -246,98 +259,64 @@ public abstract class BaseTeamResourceTestCase {
 
 		Assert.assertEquals(teams2.toString(), 1, teams2.size());
 
-		Page<Team> page3 = teamResource.getAccountTeamsPage(
-			accountId, Pagination.of(1, 3));
+		Page<Team> page3 = teamResource.getAccountAccountKeyTeamsPage(
+			accountKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(team1, team2, team3), (List<Team>)page3.getItems());
 	}
 
-	protected Team testGetAccountTeamsPage_addTeam(Long accountId, Team team)
+	protected Team testGetAccountAccountKeyTeamsPage_addTeam(
+			String accountKey, Team team)
 		throws Exception {
 
-		return teamResource.postAccountTeam(accountId, team);
-	}
-
-	protected Long testGetAccountTeamsPage_getAccountId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountTeamsPage_getIrrelevantAccountId()
+	protected String testGetAccountAccountKeyTeamsPage_getAccountKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetAccountAccountKeyTeamsPage_getIrrelevantAccountKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostAccountTeam() throws Exception {
+	public void testPostAccountAccountKeyTeam() throws Exception {
 		Team randomTeam = randomTeam();
 
-		Team postTeam = testPostAccountTeam_addTeam(randomTeam);
+		Team postTeam = testPostAccountAccountKeyTeam_addTeam(randomTeam);
 
 		assertEquals(randomTeam, postTeam);
 		assertValid(postTeam);
 	}
 
-	protected Team testPostAccountTeam_addTeam(Team team) throws Exception {
-		return teamResource.postAccountTeam(
-			testGetAccountTeamsPage_getAccountId(), team);
+	protected Team testPostAccountAccountKeyTeam_addTeam(Team team)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testDeleteTeam() throws Exception {
-		Team team = testDeleteTeam_addTeam();
-
-		assertHttpResponseStatusCode(
-			204, teamResource.deleteTeamHttpResponse(team.getId()));
-
-		assertHttpResponseStatusCode(
-			404, teamResource.getTeamHttpResponse(team.getId()));
-
-		assertHttpResponseStatusCode(404, teamResource.getTeamHttpResponse(0L));
-	}
-
-	protected Team testDeleteTeam_addTeam() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetTeam() throws Exception {
-		Team postTeam = testGetTeam_addTeam();
-
-		Team getTeam = teamResource.getTeam(postTeam.getId());
-
-		assertEquals(postTeam, getTeam);
-		assertValid(getTeam);
-	}
-
-	protected Team testGetTeam_addTeam() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testPutTeam() throws Exception {
-		Team postTeam = testPutTeam_addTeam();
-
-		Team randomTeam = randomTeam();
-
-		Team putTeam = teamResource.putTeam(postTeam.getId(), randomTeam);
-
-		assertEquals(randomTeam, putTeam);
-		assertValid(putTeam);
-
-		Team getTeam = teamResource.getTeam(putTeam.getId());
-
-		assertEquals(randomTeam, getTeam);
-		assertValid(getTeam);
-	}
-
-	protected Team testPutTeam_addTeam() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -395,15 +374,11 @@ public abstract class BaseTeamResourceTestCase {
 			valid = false;
 		}
 
-		if (team.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("accountId", additionalAssertFieldName)) {
-				if (team.getAccountId() == null) {
+			if (Objects.equals("accountKey", additionalAssertFieldName)) {
+				if (team.getAccountKey() == null) {
 					valid = false;
 				}
 
@@ -412,6 +387,14 @@ public abstract class BaseTeamResourceTestCase {
 
 			if (Objects.equals("externalLinks", additionalAssertFieldName)) {
 				if (team.getExternalLinks() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (team.getKey() == null) {
 					valid = false;
 				}
 
@@ -467,9 +450,9 @@ public abstract class BaseTeamResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("accountId", additionalAssertFieldName)) {
+			if (Objects.equals("accountKey", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						team1.getAccountId(), team2.getAccountId())) {
+						team1.getAccountKey(), team2.getAccountKey())) {
 
 					return false;
 				}
@@ -507,8 +490,8 @@ public abstract class BaseTeamResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(team1.getId(), team2.getId())) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(team1.getKey(), team2.getKey())) {
 					return false;
 				}
 
@@ -581,9 +564,12 @@ public abstract class BaseTeamResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("accountId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("accountKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(team.getAccountKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
@@ -653,9 +639,12 @@ public abstract class BaseTeamResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(team.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -673,10 +662,10 @@ public abstract class BaseTeamResourceTestCase {
 	protected Team randomTeam() throws Exception {
 		return new Team() {
 			{
-				accountId = RandomTestUtil.randomLong();
+				accountKey = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 			}
 		};

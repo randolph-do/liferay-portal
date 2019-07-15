@@ -118,11 +118,13 @@ public class ProductConsumptionLocalServiceUtil {
 	 *
 	 * @param productConsumption the product consumption
 	 * @return the product consumption that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption
-		deleteProductConsumption(
-			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
-				productConsumption) {
+			deleteProductConsumption(
+				com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+					productConsumption)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteProductConsumption(productConsumption);
 	}

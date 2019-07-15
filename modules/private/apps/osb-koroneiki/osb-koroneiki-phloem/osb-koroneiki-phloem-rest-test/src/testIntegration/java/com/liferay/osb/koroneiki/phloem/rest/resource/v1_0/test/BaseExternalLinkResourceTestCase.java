@@ -174,6 +174,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 		externalLink.setDomain(regex);
 		externalLink.setEntityId(regex);
 		externalLink.setEntityName(regex);
+		externalLink.setKey(regex);
 
 		String json = ExternalLinkSerDes.toJSON(externalLink);
 
@@ -184,28 +185,30 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Assert.assertEquals(regex, externalLink.getDomain());
 		Assert.assertEquals(regex, externalLink.getEntityId());
 		Assert.assertEquals(regex, externalLink.getEntityName());
+		Assert.assertEquals(regex, externalLink.getKey());
 	}
 
 	@Test
-	public void testGetAccountExternalLinksPage() throws Exception {
+	public void testGetAccountAccountKeyExternalLinksPage() throws Exception {
 		Page<ExternalLink> page =
-			externalLinkResource.getAccountExternalLinksPage(
-				testGetAccountExternalLinksPage_getAccountId(),
+			externalLinkResource.getAccountAccountKeyExternalLinksPage(
+				testGetAccountAccountKeyExternalLinksPage_getAccountKey(),
 				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long accountId = testGetAccountExternalLinksPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountExternalLinksPage_getIrrelevantAccountId();
+		String accountKey =
+			testGetAccountAccountKeyExternalLinksPage_getAccountKey();
+		String irrelevantAccountKey =
+			testGetAccountAccountKeyExternalLinksPage_getIrrelevantAccountKey();
 
-		if ((irrelevantAccountId != null)) {
+		if ((irrelevantAccountKey != null)) {
 			ExternalLink irrelevantExternalLink =
-				testGetAccountExternalLinksPage_addExternalLink(
-					irrelevantAccountId, randomIrrelevantExternalLink());
+				testGetAccountAccountKeyExternalLinksPage_addExternalLink(
+					irrelevantAccountKey, randomIrrelevantExternalLink());
 
-			page = externalLinkResource.getAccountExternalLinksPage(
-				irrelevantAccountId, Pagination.of(1, 2));
+			page = externalLinkResource.getAccountAccountKeyExternalLinksPage(
+				irrelevantAccountKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -216,15 +219,15 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		ExternalLink externalLink1 =
-			testGetAccountExternalLinksPage_addExternalLink(
-				accountId, randomExternalLink());
+			testGetAccountAccountKeyExternalLinksPage_addExternalLink(
+				accountKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetAccountExternalLinksPage_addExternalLink(
-				accountId, randomExternalLink());
+			testGetAccountAccountKeyExternalLinksPage_addExternalLink(
+				accountKey, randomExternalLink());
 
-		page = externalLinkResource.getAccountExternalLinksPage(
-			accountId, Pagination.of(1, 2));
+		page = externalLinkResource.getAccountAccountKeyExternalLinksPage(
+			accountKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -235,26 +238,27 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountExternalLinksPageWithPagination()
+	public void testGetAccountAccountKeyExternalLinksPageWithPagination()
 		throws Exception {
 
-		Long accountId = testGetAccountExternalLinksPage_getAccountId();
+		String accountKey =
+			testGetAccountAccountKeyExternalLinksPage_getAccountKey();
 
 		ExternalLink externalLink1 =
-			testGetAccountExternalLinksPage_addExternalLink(
-				accountId, randomExternalLink());
+			testGetAccountAccountKeyExternalLinksPage_addExternalLink(
+				accountKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetAccountExternalLinksPage_addExternalLink(
-				accountId, randomExternalLink());
+			testGetAccountAccountKeyExternalLinksPage_addExternalLink(
+				accountKey, randomExternalLink());
 
 		ExternalLink externalLink3 =
-			testGetAccountExternalLinksPage_addExternalLink(
-				accountId, randomExternalLink());
+			testGetAccountAccountKeyExternalLinksPage_addExternalLink(
+				accountKey, randomExternalLink());
 
 		Page<ExternalLink> page1 =
-			externalLinkResource.getAccountExternalLinksPage(
-				accountId, Pagination.of(1, 2));
+			externalLinkResource.getAccountAccountKeyExternalLinksPage(
+				accountKey, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -263,8 +267,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks1.toString(), 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
-			externalLinkResource.getAccountExternalLinksPage(
-				accountId, Pagination.of(2, 2));
+			externalLinkResource.getAccountAccountKeyExternalLinksPage(
+				accountKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -275,74 +279,79 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks2.toString(), 1, externalLinks2.size());
 
 		Page<ExternalLink> page3 =
-			externalLinkResource.getAccountExternalLinksPage(
-				accountId, Pagination.of(1, 3));
+			externalLinkResource.getAccountAccountKeyExternalLinksPage(
+				accountKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
 			(List<ExternalLink>)page3.getItems());
 	}
 
-	protected ExternalLink testGetAccountExternalLinksPage_addExternalLink(
-			Long accountId, ExternalLink externalLink)
-		throws Exception {
-
-		return externalLinkResource.postAccountExternalLink(
-			accountId, externalLink);
-	}
-
-	protected Long testGetAccountExternalLinksPage_getAccountId()
+	protected ExternalLink
+			testGetAccountAccountKeyExternalLinksPage_addExternalLink(
+				String accountKey, ExternalLink externalLink)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAccountExternalLinksPage_getIrrelevantAccountId()
+	protected String testGetAccountAccountKeyExternalLinksPage_getAccountKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountAccountKeyExternalLinksPage_getIrrelevantAccountKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostAccountExternalLink() throws Exception {
+	public void testPostAccountAccountKeyExternalLink() throws Exception {
 		ExternalLink randomExternalLink = randomExternalLink();
 
 		ExternalLink postExternalLink =
-			testPostAccountExternalLink_addExternalLink(randomExternalLink);
+			testPostAccountAccountKeyExternalLink_addExternalLink(
+				randomExternalLink);
 
 		assertEquals(randomExternalLink, postExternalLink);
 		assertValid(postExternalLink);
 	}
 
-	protected ExternalLink testPostAccountExternalLink_addExternalLink(
-			ExternalLink externalLink)
+	protected ExternalLink
+			testPostAccountAccountKeyExternalLink_addExternalLink(
+				ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postAccountExternalLink(
-			testGetAccountExternalLinksPage_getAccountId(), externalLink);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGetContactExternalLinksPage() throws Exception {
+	public void testGetContactContactKeyExternalLinksPage() throws Exception {
 		Page<ExternalLink> page =
-			externalLinkResource.getContactExternalLinksPage(
-				testGetContactExternalLinksPage_getContactId(),
+			externalLinkResource.getContactContactKeyExternalLinksPage(
+				testGetContactContactKeyExternalLinksPage_getContactKey(),
 				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long contactId = testGetContactExternalLinksPage_getContactId();
-		Long irrelevantContactId =
-			testGetContactExternalLinksPage_getIrrelevantContactId();
+		String contactKey =
+			testGetContactContactKeyExternalLinksPage_getContactKey();
+		String irrelevantContactKey =
+			testGetContactContactKeyExternalLinksPage_getIrrelevantContactKey();
 
-		if ((irrelevantContactId != null)) {
+		if ((irrelevantContactKey != null)) {
 			ExternalLink irrelevantExternalLink =
-				testGetContactExternalLinksPage_addExternalLink(
-					irrelevantContactId, randomIrrelevantExternalLink());
+				testGetContactContactKeyExternalLinksPage_addExternalLink(
+					irrelevantContactKey, randomIrrelevantExternalLink());
 
-			page = externalLinkResource.getContactExternalLinksPage(
-				irrelevantContactId, Pagination.of(1, 2));
+			page = externalLinkResource.getContactContactKeyExternalLinksPage(
+				irrelevantContactKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -353,15 +362,15 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		ExternalLink externalLink1 =
-			testGetContactExternalLinksPage_addExternalLink(
-				contactId, randomExternalLink());
+			testGetContactContactKeyExternalLinksPage_addExternalLink(
+				contactKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetContactExternalLinksPage_addExternalLink(
-				contactId, randomExternalLink());
+			testGetContactContactKeyExternalLinksPage_addExternalLink(
+				contactKey, randomExternalLink());
 
-		page = externalLinkResource.getContactExternalLinksPage(
-			contactId, Pagination.of(1, 2));
+		page = externalLinkResource.getContactContactKeyExternalLinksPage(
+			contactKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -372,26 +381,27 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetContactExternalLinksPageWithPagination()
+	public void testGetContactContactKeyExternalLinksPageWithPagination()
 		throws Exception {
 
-		Long contactId = testGetContactExternalLinksPage_getContactId();
+		String contactKey =
+			testGetContactContactKeyExternalLinksPage_getContactKey();
 
 		ExternalLink externalLink1 =
-			testGetContactExternalLinksPage_addExternalLink(
-				contactId, randomExternalLink());
+			testGetContactContactKeyExternalLinksPage_addExternalLink(
+				contactKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetContactExternalLinksPage_addExternalLink(
-				contactId, randomExternalLink());
+			testGetContactContactKeyExternalLinksPage_addExternalLink(
+				contactKey, randomExternalLink());
 
 		ExternalLink externalLink3 =
-			testGetContactExternalLinksPage_addExternalLink(
-				contactId, randomExternalLink());
+			testGetContactContactKeyExternalLinksPage_addExternalLink(
+				contactKey, randomExternalLink());
 
 		Page<ExternalLink> page1 =
-			externalLinkResource.getContactExternalLinksPage(
-				contactId, Pagination.of(1, 2));
+			externalLinkResource.getContactContactKeyExternalLinksPage(
+				contactKey, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -400,8 +410,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks1.toString(), 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
-			externalLinkResource.getContactExternalLinksPage(
-				contactId, Pagination.of(2, 2));
+			externalLinkResource.getContactContactKeyExternalLinksPage(
+				contactKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -412,119 +422,95 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks2.toString(), 1, externalLinks2.size());
 
 		Page<ExternalLink> page3 =
-			externalLinkResource.getContactExternalLinksPage(
-				contactId, Pagination.of(1, 3));
+			externalLinkResource.getContactContactKeyExternalLinksPage(
+				contactKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
 			(List<ExternalLink>)page3.getItems());
 	}
 
-	protected ExternalLink testGetContactExternalLinksPage_addExternalLink(
-			Long contactId, ExternalLink externalLink)
-		throws Exception {
-
-		return externalLinkResource.postContactExternalLink(
-			contactId, externalLink);
-	}
-
-	protected Long testGetContactExternalLinksPage_getContactId()
+	protected ExternalLink
+			testGetContactContactKeyExternalLinksPage_addExternalLink(
+				String contactKey, ExternalLink externalLink)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContactExternalLinksPage_getIrrelevantContactId()
+	protected String testGetContactContactKeyExternalLinksPage_getContactKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetContactContactKeyExternalLinksPage_getIrrelevantContactKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostContactExternalLink() throws Exception {
+	public void testPostContactContactKeyExternalLink() throws Exception {
 		ExternalLink randomExternalLink = randomExternalLink();
 
 		ExternalLink postExternalLink =
-			testPostContactExternalLink_addExternalLink(randomExternalLink);
+			testPostContactContactKeyExternalLink_addExternalLink(
+				randomExternalLink);
 
 		assertEquals(randomExternalLink, postExternalLink);
 		assertValid(postExternalLink);
 	}
 
-	protected ExternalLink testPostContactExternalLink_addExternalLink(
-			ExternalLink externalLink)
+	protected ExternalLink
+			testPostContactContactKeyExternalLink_addExternalLink(
+				ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postContactExternalLink(
-			testGetContactExternalLinksPage_getContactId(), externalLink);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testDeleteExternalLink() throws Exception {
-		ExternalLink externalLink = testDeleteExternalLink_addExternalLink();
-
-		assertHttpResponseStatusCode(
-			204,
-			externalLinkResource.deleteExternalLinkHttpResponse(
-				externalLink.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			externalLinkResource.getExternalLinkHttpResponse(
-				externalLink.getId()));
-
-		assertHttpResponseStatusCode(
-			404, externalLinkResource.getExternalLinkHttpResponse(0L));
-	}
-
-	protected ExternalLink testDeleteExternalLink_addExternalLink()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetExternalLink() throws Exception {
-		ExternalLink postExternalLink = testGetExternalLink_addExternalLink();
-
-		ExternalLink getExternalLink = externalLinkResource.getExternalLink(
-			postExternalLink.getId());
-
-		assertEquals(postExternalLink, getExternalLink);
-		assertValid(getExternalLink);
-	}
-
-	protected ExternalLink testGetExternalLink_addExternalLink()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetProductConsumptionExternalLinksPage() throws Exception {
+	public void testGetProductConsumptionProductConsumptionKeyExternalLinksPage()
+		throws Exception {
+
 		Page<ExternalLink> page =
-			externalLinkResource.getProductConsumptionExternalLinksPage(
-				testGetProductConsumptionExternalLinksPage_getProductConsumptionId(),
-				Pagination.of(1, 2));
+			externalLinkResource.
+				getProductConsumptionProductConsumptionKeyExternalLinksPage(
+					testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getProductConsumptionKey(),
+					Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long productConsumptionId =
-			testGetProductConsumptionExternalLinksPage_getProductConsumptionId();
-		Long irrelevantProductConsumptionId =
-			testGetProductConsumptionExternalLinksPage_getIrrelevantProductConsumptionId();
+		String productConsumptionKey =
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getProductConsumptionKey();
+		String irrelevantProductConsumptionKey =
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getIrrelevantProductConsumptionKey();
 
-		if ((irrelevantProductConsumptionId != null)) {
+		if ((irrelevantProductConsumptionKey != null)) {
 			ExternalLink irrelevantExternalLink =
-				testGetProductConsumptionExternalLinksPage_addExternalLink(
-					irrelevantProductConsumptionId,
+				testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
+					irrelevantProductConsumptionKey,
 					randomIrrelevantExternalLink());
 
-			page = externalLinkResource.getProductConsumptionExternalLinksPage(
-				irrelevantProductConsumptionId, Pagination.of(1, 2));
+			page =
+				externalLinkResource.
+					getProductConsumptionProductConsumptionKeyExternalLinksPage(
+						irrelevantProductConsumptionKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -535,15 +521,17 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		ExternalLink externalLink1 =
-			testGetProductConsumptionExternalLinksPage_addExternalLink(
-				productConsumptionId, randomExternalLink());
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
+				productConsumptionKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProductConsumptionExternalLinksPage_addExternalLink(
-				productConsumptionId, randomExternalLink());
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
+				productConsumptionKey, randomExternalLink());
 
-		page = externalLinkResource.getProductConsumptionExternalLinksPage(
-			productConsumptionId, Pagination.of(1, 2));
+		page =
+			externalLinkResource.
+				getProductConsumptionProductConsumptionKeyExternalLinksPage(
+					productConsumptionKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -554,27 +542,28 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetProductConsumptionExternalLinksPageWithPagination()
+	public void testGetProductConsumptionProductConsumptionKeyExternalLinksPageWithPagination()
 		throws Exception {
 
-		Long productConsumptionId =
-			testGetProductConsumptionExternalLinksPage_getProductConsumptionId();
+		String productConsumptionKey =
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getProductConsumptionKey();
 
 		ExternalLink externalLink1 =
-			testGetProductConsumptionExternalLinksPage_addExternalLink(
-				productConsumptionId, randomExternalLink());
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
+				productConsumptionKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProductConsumptionExternalLinksPage_addExternalLink(
-				productConsumptionId, randomExternalLink());
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
+				productConsumptionKey, randomExternalLink());
 
 		ExternalLink externalLink3 =
-			testGetProductConsumptionExternalLinksPage_addExternalLink(
-				productConsumptionId, randomExternalLink());
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
+				productConsumptionKey, randomExternalLink());
 
 		Page<ExternalLink> page1 =
-			externalLinkResource.getProductConsumptionExternalLinksPage(
-				productConsumptionId, Pagination.of(1, 2));
+			externalLinkResource.
+				getProductConsumptionProductConsumptionKeyExternalLinksPage(
+					productConsumptionKey, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -583,8 +572,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks1.toString(), 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
-			externalLinkResource.getProductConsumptionExternalLinksPage(
-				productConsumptionId, Pagination.of(2, 2));
+			externalLinkResource.
+				getProductConsumptionProductConsumptionKeyExternalLinksPage(
+					productConsumptionKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -595,8 +585,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks2.toString(), 1, externalLinks2.size());
 
 		Page<ExternalLink> page3 =
-			externalLinkResource.getProductConsumptionExternalLinksPage(
-				productConsumptionId, Pagination.of(1, 3));
+			externalLinkResource.
+				getProductConsumptionProductConsumptionKeyExternalLinksPage(
+					productConsumptionKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
@@ -604,35 +595,37 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	protected ExternalLink
-			testGetProductConsumptionExternalLinksPage_addExternalLink(
-				Long productConsumptionId, ExternalLink externalLink)
-		throws Exception {
-
-		return externalLinkResource.postProductConsumptionExternalLink(
-			productConsumptionId, externalLink);
-	}
-
-	protected Long
-			testGetProductConsumptionExternalLinksPage_getProductConsumptionId()
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
+				String productConsumptionKey, ExternalLink externalLink)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
-			testGetProductConsumptionExternalLinksPage_getIrrelevantProductConsumptionId()
+	protected String
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getProductConsumptionKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getIrrelevantProductConsumptionKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostProductConsumptionExternalLink() throws Exception {
+	public void testPostProductConsumptionProductConsumptionKeyExternalLink()
+		throws Exception {
+
 		ExternalLink randomExternalLink = randomExternalLink();
 
 		ExternalLink postExternalLink =
-			testPostProductConsumptionExternalLink_addExternalLink(
+			testPostProductConsumptionProductConsumptionKeyExternalLink_addExternalLink(
 				randomExternalLink);
 
 		assertEquals(randomExternalLink, postExternalLink);
@@ -640,37 +633,41 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	protected ExternalLink
-			testPostProductConsumptionExternalLink_addExternalLink(
+			testPostProductConsumptionProductConsumptionKeyExternalLink_addExternalLink(
 				ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postProductConsumptionExternalLink(
-			testGetProductConsumptionExternalLinksPage_getProductConsumptionId(),
-			externalLink);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGetProductPurchaseExternalLinksPage() throws Exception {
+	public void testGetProductPurchaseProductPurchaseKeyExternalLinksPage()
+		throws Exception {
+
 		Page<ExternalLink> page =
-			externalLinkResource.getProductPurchaseExternalLinksPage(
-				testGetProductPurchaseExternalLinksPage_getProductPurchaseId(),
-				Pagination.of(1, 2));
+			externalLinkResource.
+				getProductPurchaseProductPurchaseKeyExternalLinksPage(
+					testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getProductPurchaseKey(),
+					Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long productPurchaseId =
-			testGetProductPurchaseExternalLinksPage_getProductPurchaseId();
-		Long irrelevantProductPurchaseId =
-			testGetProductPurchaseExternalLinksPage_getIrrelevantProductPurchaseId();
+		String productPurchaseKey =
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getProductPurchaseKey();
+		String irrelevantProductPurchaseKey =
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getIrrelevantProductPurchaseKey();
 
-		if ((irrelevantProductPurchaseId != null)) {
+		if ((irrelevantProductPurchaseKey != null)) {
 			ExternalLink irrelevantExternalLink =
-				testGetProductPurchaseExternalLinksPage_addExternalLink(
-					irrelevantProductPurchaseId,
+				testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
+					irrelevantProductPurchaseKey,
 					randomIrrelevantExternalLink());
 
-			page = externalLinkResource.getProductPurchaseExternalLinksPage(
-				irrelevantProductPurchaseId, Pagination.of(1, 2));
+			page =
+				externalLinkResource.
+					getProductPurchaseProductPurchaseKeyExternalLinksPage(
+						irrelevantProductPurchaseKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -681,15 +678,17 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		ExternalLink externalLink1 =
-			testGetProductPurchaseExternalLinksPage_addExternalLink(
-				productPurchaseId, randomExternalLink());
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
+				productPurchaseKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProductPurchaseExternalLinksPage_addExternalLink(
-				productPurchaseId, randomExternalLink());
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
+				productPurchaseKey, randomExternalLink());
 
-		page = externalLinkResource.getProductPurchaseExternalLinksPage(
-			productPurchaseId, Pagination.of(1, 2));
+		page =
+			externalLinkResource.
+				getProductPurchaseProductPurchaseKeyExternalLinksPage(
+					productPurchaseKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -700,27 +699,28 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetProductPurchaseExternalLinksPageWithPagination()
+	public void testGetProductPurchaseProductPurchaseKeyExternalLinksPageWithPagination()
 		throws Exception {
 
-		Long productPurchaseId =
-			testGetProductPurchaseExternalLinksPage_getProductPurchaseId();
+		String productPurchaseKey =
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getProductPurchaseKey();
 
 		ExternalLink externalLink1 =
-			testGetProductPurchaseExternalLinksPage_addExternalLink(
-				productPurchaseId, randomExternalLink());
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
+				productPurchaseKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProductPurchaseExternalLinksPage_addExternalLink(
-				productPurchaseId, randomExternalLink());
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
+				productPurchaseKey, randomExternalLink());
 
 		ExternalLink externalLink3 =
-			testGetProductPurchaseExternalLinksPage_addExternalLink(
-				productPurchaseId, randomExternalLink());
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
+				productPurchaseKey, randomExternalLink());
 
 		Page<ExternalLink> page1 =
-			externalLinkResource.getProductPurchaseExternalLinksPage(
-				productPurchaseId, Pagination.of(1, 2));
+			externalLinkResource.
+				getProductPurchaseProductPurchaseKeyExternalLinksPage(
+					productPurchaseKey, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -729,8 +729,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks1.toString(), 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
-			externalLinkResource.getProductPurchaseExternalLinksPage(
-				productPurchaseId, Pagination.of(2, 2));
+			externalLinkResource.
+				getProductPurchaseProductPurchaseKeyExternalLinksPage(
+					productPurchaseKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -741,8 +742,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks2.toString(), 1, externalLinks2.size());
 
 		Page<ExternalLink> page3 =
-			externalLinkResource.getProductPurchaseExternalLinksPage(
-				productPurchaseId, Pagination.of(1, 3));
+			externalLinkResource.
+				getProductPurchaseProductPurchaseKeyExternalLinksPage(
+					productPurchaseKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
@@ -750,70 +752,73 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	protected ExternalLink
-			testGetProductPurchaseExternalLinksPage_addExternalLink(
-				Long productPurchaseId, ExternalLink externalLink)
-		throws Exception {
-
-		return externalLinkResource.postProductPurchaseExternalLink(
-			productPurchaseId, externalLink);
-	}
-
-	protected Long
-			testGetProductPurchaseExternalLinksPage_getProductPurchaseId()
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
+				String productPurchaseKey, ExternalLink externalLink)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
-			testGetProductPurchaseExternalLinksPage_getIrrelevantProductPurchaseId()
+	protected String
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getProductPurchaseKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getIrrelevantProductPurchaseKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostProductPurchaseExternalLink() throws Exception {
+	public void testPostProductPurchaseProductPurchaseKeyExternalLink()
+		throws Exception {
+
 		ExternalLink randomExternalLink = randomExternalLink();
 
 		ExternalLink postExternalLink =
-			testPostProductPurchaseExternalLink_addExternalLink(
+			testPostProductPurchaseProductPurchaseKeyExternalLink_addExternalLink(
 				randomExternalLink);
 
 		assertEquals(randomExternalLink, postExternalLink);
 		assertValid(postExternalLink);
 	}
 
-	protected ExternalLink testPostProductPurchaseExternalLink_addExternalLink(
-			ExternalLink externalLink)
+	protected ExternalLink
+			testPostProductPurchaseProductPurchaseKeyExternalLink_addExternalLink(
+				ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postProductPurchaseExternalLink(
-			testGetProductPurchaseExternalLinksPage_getProductPurchaseId(),
-			externalLink);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGetProductExternalLinksPage() throws Exception {
+	public void testGetProductProductKeyExternalLinksPage() throws Exception {
 		Page<ExternalLink> page =
-			externalLinkResource.getProductExternalLinksPage(
-				testGetProductExternalLinksPage_getProductId(),
+			externalLinkResource.getProductProductKeyExternalLinksPage(
+				testGetProductProductKeyExternalLinksPage_getProductKey(),
 				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long productId = testGetProductExternalLinksPage_getProductId();
-		Long irrelevantProductId =
-			testGetProductExternalLinksPage_getIrrelevantProductId();
+		String productKey =
+			testGetProductProductKeyExternalLinksPage_getProductKey();
+		String irrelevantProductKey =
+			testGetProductProductKeyExternalLinksPage_getIrrelevantProductKey();
 
-		if ((irrelevantProductId != null)) {
+		if ((irrelevantProductKey != null)) {
 			ExternalLink irrelevantExternalLink =
-				testGetProductExternalLinksPage_addExternalLink(
-					irrelevantProductId, randomIrrelevantExternalLink());
+				testGetProductProductKeyExternalLinksPage_addExternalLink(
+					irrelevantProductKey, randomIrrelevantExternalLink());
 
-			page = externalLinkResource.getProductExternalLinksPage(
-				irrelevantProductId, Pagination.of(1, 2));
+			page = externalLinkResource.getProductProductKeyExternalLinksPage(
+				irrelevantProductKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -824,15 +829,15 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		ExternalLink externalLink1 =
-			testGetProductExternalLinksPage_addExternalLink(
-				productId, randomExternalLink());
+			testGetProductProductKeyExternalLinksPage_addExternalLink(
+				productKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProductExternalLinksPage_addExternalLink(
-				productId, randomExternalLink());
+			testGetProductProductKeyExternalLinksPage_addExternalLink(
+				productKey, randomExternalLink());
 
-		page = externalLinkResource.getProductExternalLinksPage(
-			productId, Pagination.of(1, 2));
+		page = externalLinkResource.getProductProductKeyExternalLinksPage(
+			productKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -843,26 +848,27 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetProductExternalLinksPageWithPagination()
+	public void testGetProductProductKeyExternalLinksPageWithPagination()
 		throws Exception {
 
-		Long productId = testGetProductExternalLinksPage_getProductId();
+		String productKey =
+			testGetProductProductKeyExternalLinksPage_getProductKey();
 
 		ExternalLink externalLink1 =
-			testGetProductExternalLinksPage_addExternalLink(
-				productId, randomExternalLink());
+			testGetProductProductKeyExternalLinksPage_addExternalLink(
+				productKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProductExternalLinksPage_addExternalLink(
-				productId, randomExternalLink());
+			testGetProductProductKeyExternalLinksPage_addExternalLink(
+				productKey, randomExternalLink());
 
 		ExternalLink externalLink3 =
-			testGetProductExternalLinksPage_addExternalLink(
-				productId, randomExternalLink());
+			testGetProductProductKeyExternalLinksPage_addExternalLink(
+				productKey, randomExternalLink());
 
 		Page<ExternalLink> page1 =
-			externalLinkResource.getProductExternalLinksPage(
-				productId, Pagination.of(1, 2));
+			externalLinkResource.getProductProductKeyExternalLinksPage(
+				productKey, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -871,8 +877,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks1.toString(), 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
-			externalLinkResource.getProductExternalLinksPage(
-				productId, Pagination.of(2, 2));
+			externalLinkResource.getProductProductKeyExternalLinksPage(
+				productKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -883,74 +889,79 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks2.toString(), 1, externalLinks2.size());
 
 		Page<ExternalLink> page3 =
-			externalLinkResource.getProductExternalLinksPage(
-				productId, Pagination.of(1, 3));
+			externalLinkResource.getProductProductKeyExternalLinksPage(
+				productKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
 			(List<ExternalLink>)page3.getItems());
 	}
 
-	protected ExternalLink testGetProductExternalLinksPage_addExternalLink(
-			Long productId, ExternalLink externalLink)
-		throws Exception {
-
-		return externalLinkResource.postProductExternalLink(
-			productId, externalLink);
-	}
-
-	protected Long testGetProductExternalLinksPage_getProductId()
+	protected ExternalLink
+			testGetProductProductKeyExternalLinksPage_addExternalLink(
+				String productKey, ExternalLink externalLink)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProductExternalLinksPage_getIrrelevantProductId()
+	protected String testGetProductProductKeyExternalLinksPage_getProductKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductProductKeyExternalLinksPage_getIrrelevantProductKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostProductExternalLink() throws Exception {
+	public void testPostProductProductKeyExternalLink() throws Exception {
 		ExternalLink randomExternalLink = randomExternalLink();
 
 		ExternalLink postExternalLink =
-			testPostProductExternalLink_addExternalLink(randomExternalLink);
+			testPostProductProductKeyExternalLink_addExternalLink(
+				randomExternalLink);
 
 		assertEquals(randomExternalLink, postExternalLink);
 		assertValid(postExternalLink);
 	}
 
-	protected ExternalLink testPostProductExternalLink_addExternalLink(
-			ExternalLink externalLink)
+	protected ExternalLink
+			testPostProductProductKeyExternalLink_addExternalLink(
+				ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postProductExternalLink(
-			testGetProductExternalLinksPage_getProductId(), externalLink);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGetProjectExternalLinksPage() throws Exception {
+	public void testGetProjectProjectKeyExternalLinksPage() throws Exception {
 		Page<ExternalLink> page =
-			externalLinkResource.getProjectExternalLinksPage(
-				testGetProjectExternalLinksPage_getProjectId(),
+			externalLinkResource.getProjectProjectKeyExternalLinksPage(
+				testGetProjectProjectKeyExternalLinksPage_getProjectKey(),
 				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long projectId = testGetProjectExternalLinksPage_getProjectId();
-		Long irrelevantProjectId =
-			testGetProjectExternalLinksPage_getIrrelevantProjectId();
+		String projectKey =
+			testGetProjectProjectKeyExternalLinksPage_getProjectKey();
+		String irrelevantProjectKey =
+			testGetProjectProjectKeyExternalLinksPage_getIrrelevantProjectKey();
 
-		if ((irrelevantProjectId != null)) {
+		if ((irrelevantProjectKey != null)) {
 			ExternalLink irrelevantExternalLink =
-				testGetProjectExternalLinksPage_addExternalLink(
-					irrelevantProjectId, randomIrrelevantExternalLink());
+				testGetProjectProjectKeyExternalLinksPage_addExternalLink(
+					irrelevantProjectKey, randomIrrelevantExternalLink());
 
-			page = externalLinkResource.getProjectExternalLinksPage(
-				irrelevantProjectId, Pagination.of(1, 2));
+			page = externalLinkResource.getProjectProjectKeyExternalLinksPage(
+				irrelevantProjectKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -961,15 +972,15 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		ExternalLink externalLink1 =
-			testGetProjectExternalLinksPage_addExternalLink(
-				projectId, randomExternalLink());
+			testGetProjectProjectKeyExternalLinksPage_addExternalLink(
+				projectKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProjectExternalLinksPage_addExternalLink(
-				projectId, randomExternalLink());
+			testGetProjectProjectKeyExternalLinksPage_addExternalLink(
+				projectKey, randomExternalLink());
 
-		page = externalLinkResource.getProjectExternalLinksPage(
-			projectId, Pagination.of(1, 2));
+		page = externalLinkResource.getProjectProjectKeyExternalLinksPage(
+			projectKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -980,26 +991,27 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetProjectExternalLinksPageWithPagination()
+	public void testGetProjectProjectKeyExternalLinksPageWithPagination()
 		throws Exception {
 
-		Long projectId = testGetProjectExternalLinksPage_getProjectId();
+		String projectKey =
+			testGetProjectProjectKeyExternalLinksPage_getProjectKey();
 
 		ExternalLink externalLink1 =
-			testGetProjectExternalLinksPage_addExternalLink(
-				projectId, randomExternalLink());
+			testGetProjectProjectKeyExternalLinksPage_addExternalLink(
+				projectKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetProjectExternalLinksPage_addExternalLink(
-				projectId, randomExternalLink());
+			testGetProjectProjectKeyExternalLinksPage_addExternalLink(
+				projectKey, randomExternalLink());
 
 		ExternalLink externalLink3 =
-			testGetProjectExternalLinksPage_addExternalLink(
-				projectId, randomExternalLink());
+			testGetProjectProjectKeyExternalLinksPage_addExternalLink(
+				projectKey, randomExternalLink());
 
 		Page<ExternalLink> page1 =
-			externalLinkResource.getProjectExternalLinksPage(
-				projectId, Pagination.of(1, 2));
+			externalLinkResource.getProjectProjectKeyExternalLinksPage(
+				projectKey, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -1008,8 +1020,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks1.toString(), 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
-			externalLinkResource.getProjectExternalLinksPage(
-				projectId, Pagination.of(2, 2));
+			externalLinkResource.getProjectProjectKeyExternalLinksPage(
+				projectKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1020,72 +1032,78 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks2.toString(), 1, externalLinks2.size());
 
 		Page<ExternalLink> page3 =
-			externalLinkResource.getProjectExternalLinksPage(
-				projectId, Pagination.of(1, 3));
+			externalLinkResource.getProjectProjectKeyExternalLinksPage(
+				projectKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
 			(List<ExternalLink>)page3.getItems());
 	}
 
-	protected ExternalLink testGetProjectExternalLinksPage_addExternalLink(
-			Long projectId, ExternalLink externalLink)
-		throws Exception {
-
-		return externalLinkResource.postProjectExternalLink(
-			projectId, externalLink);
-	}
-
-	protected Long testGetProjectExternalLinksPage_getProjectId()
+	protected ExternalLink
+			testGetProjectProjectKeyExternalLinksPage_addExternalLink(
+				String projectKey, ExternalLink externalLink)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProjectExternalLinksPage_getIrrelevantProjectId()
+	protected String testGetProjectProjectKeyExternalLinksPage_getProjectKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProjectProjectKeyExternalLinksPage_getIrrelevantProjectKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostProjectExternalLink() throws Exception {
+	public void testPostProjectProjectKeyExternalLink() throws Exception {
 		ExternalLink randomExternalLink = randomExternalLink();
 
 		ExternalLink postExternalLink =
-			testPostProjectExternalLink_addExternalLink(randomExternalLink);
+			testPostProjectProjectKeyExternalLink_addExternalLink(
+				randomExternalLink);
 
 		assertEquals(randomExternalLink, postExternalLink);
 		assertValid(postExternalLink);
 	}
 
-	protected ExternalLink testPostProjectExternalLink_addExternalLink(
-			ExternalLink externalLink)
+	protected ExternalLink
+			testPostProjectProjectKeyExternalLink_addExternalLink(
+				ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postProjectExternalLink(
-			testGetProjectExternalLinksPage_getProjectId(), externalLink);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGetTeamExternalLinksPage() throws Exception {
-		Page<ExternalLink> page = externalLinkResource.getTeamExternalLinksPage(
-			testGetTeamExternalLinksPage_getTeamId(), Pagination.of(1, 2));
+	public void testGetTeamTeamKeyExternalLinksPage() throws Exception {
+		Page<ExternalLink> page =
+			externalLinkResource.getTeamTeamKeyExternalLinksPage(
+				testGetTeamTeamKeyExternalLinksPage_getTeamKey(),
+				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long teamId = testGetTeamExternalLinksPage_getTeamId();
-		Long irrelevantTeamId =
-			testGetTeamExternalLinksPage_getIrrelevantTeamId();
+		String teamKey = testGetTeamTeamKeyExternalLinksPage_getTeamKey();
+		String irrelevantTeamKey =
+			testGetTeamTeamKeyExternalLinksPage_getIrrelevantTeamKey();
 
-		if ((irrelevantTeamId != null)) {
+		if ((irrelevantTeamKey != null)) {
 			ExternalLink irrelevantExternalLink =
-				testGetTeamExternalLinksPage_addExternalLink(
-					irrelevantTeamId, randomIrrelevantExternalLink());
+				testGetTeamTeamKeyExternalLinksPage_addExternalLink(
+					irrelevantTeamKey, randomIrrelevantExternalLink());
 
-			page = externalLinkResource.getTeamExternalLinksPage(
-				irrelevantTeamId, Pagination.of(1, 2));
+			page = externalLinkResource.getTeamTeamKeyExternalLinksPage(
+				irrelevantTeamKey, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -1096,15 +1114,15 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		ExternalLink externalLink1 =
-			testGetTeamExternalLinksPage_addExternalLink(
-				teamId, randomExternalLink());
+			testGetTeamTeamKeyExternalLinksPage_addExternalLink(
+				teamKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetTeamExternalLinksPage_addExternalLink(
-				teamId, randomExternalLink());
+			testGetTeamTeamKeyExternalLinksPage_addExternalLink(
+				teamKey, randomExternalLink());
 
-		page = externalLinkResource.getTeamExternalLinksPage(
-			teamId, Pagination.of(1, 2));
+		page = externalLinkResource.getTeamTeamKeyExternalLinksPage(
+			teamKey, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -1115,24 +1133,26 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	@Test
-	public void testGetTeamExternalLinksPageWithPagination() throws Exception {
-		Long teamId = testGetTeamExternalLinksPage_getTeamId();
+	public void testGetTeamTeamKeyExternalLinksPageWithPagination()
+		throws Exception {
+
+		String teamKey = testGetTeamTeamKeyExternalLinksPage_getTeamKey();
 
 		ExternalLink externalLink1 =
-			testGetTeamExternalLinksPage_addExternalLink(
-				teamId, randomExternalLink());
+			testGetTeamTeamKeyExternalLinksPage_addExternalLink(
+				teamKey, randomExternalLink());
 
 		ExternalLink externalLink2 =
-			testGetTeamExternalLinksPage_addExternalLink(
-				teamId, randomExternalLink());
+			testGetTeamTeamKeyExternalLinksPage_addExternalLink(
+				teamKey, randomExternalLink());
 
 		ExternalLink externalLink3 =
-			testGetTeamExternalLinksPage_addExternalLink(
-				teamId, randomExternalLink());
+			testGetTeamTeamKeyExternalLinksPage_addExternalLink(
+				teamKey, randomExternalLink());
 
 		Page<ExternalLink> page1 =
-			externalLinkResource.getTeamExternalLinksPage(
-				teamId, Pagination.of(1, 2));
+			externalLinkResource.getTeamTeamKeyExternalLinksPage(
+				teamKey, Pagination.of(1, 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
@@ -1141,8 +1161,8 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks1.toString(), 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
-			externalLinkResource.getTeamExternalLinksPage(
-				teamId, Pagination.of(2, 2));
+			externalLinkResource.getTeamTeamKeyExternalLinksPage(
+				teamKey, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1153,49 +1173,52 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinks2.toString(), 1, externalLinks2.size());
 
 		Page<ExternalLink> page3 =
-			externalLinkResource.getTeamExternalLinksPage(
-				teamId, Pagination.of(1, 3));
+			externalLinkResource.getTeamTeamKeyExternalLinksPage(
+				teamKey, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2, externalLink3),
 			(List<ExternalLink>)page3.getItems());
 	}
 
-	protected ExternalLink testGetTeamExternalLinksPage_addExternalLink(
-			Long teamId, ExternalLink externalLink)
+	protected ExternalLink testGetTeamTeamKeyExternalLinksPage_addExternalLink(
+			String teamKey, ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postTeamExternalLink(teamId, externalLink);
-	}
-
-	protected Long testGetTeamExternalLinksPage_getTeamId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetTeamExternalLinksPage_getIrrelevantTeamId()
+	protected String testGetTeamTeamKeyExternalLinksPage_getTeamKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetTeamTeamKeyExternalLinksPage_getIrrelevantTeamKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostTeamExternalLink() throws Exception {
+	public void testPostTeamTeamKeyExternalLink() throws Exception {
 		ExternalLink randomExternalLink = randomExternalLink();
 
 		ExternalLink postExternalLink =
-			testPostTeamExternalLink_addExternalLink(randomExternalLink);
+			testPostTeamTeamKeyExternalLink_addExternalLink(randomExternalLink);
 
 		assertEquals(randomExternalLink, postExternalLink);
 		assertValid(postExternalLink);
 	}
 
-	protected ExternalLink testPostTeamExternalLink_addExternalLink(
+	protected ExternalLink testPostTeamTeamKeyExternalLink_addExternalLink(
 			ExternalLink externalLink)
 		throws Exception {
 
-		return externalLinkResource.postTeamExternalLink(
-			testGetTeamExternalLinksPage_getTeamId(), externalLink);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -1256,10 +1279,6 @@ public abstract class BaseExternalLinkResourceTestCase {
 			valid = false;
 		}
 
-		if (externalLink.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1281,6 +1300,14 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 			if (Objects.equals("entityName", additionalAssertFieldName)) {
 				if (externalLink.getEntityName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (externalLink.getKey() == null) {
 					valid = false;
 				}
 
@@ -1373,9 +1400,9 @@ public abstract class BaseExternalLinkResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						externalLink1.getId(), externalLink2.getId())) {
+						externalLink1.getKey(), externalLink2.getKey())) {
 
 					return false;
 				}
@@ -1498,9 +1525,12 @@ public abstract class BaseExternalLinkResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(externalLink.getKey()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -1514,7 +1544,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 				domain = RandomTestUtil.randomString();
 				entityId = RandomTestUtil.randomString();
 				entityName = RandomTestUtil.randomString();
-				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 			}
 		};
 	}

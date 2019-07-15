@@ -60,13 +60,15 @@ public abstract class BasePostalAddressResourceImpl
 	@Override
 	@GET
 	@Operation(description = "Retrieves the accounts's postal addresses.")
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/postal-addresses")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}/postal-addresses")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PostalAddress")})
-	public Page<PostalAddress> getAccountPostalAddressesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId)
+	public Page<PostalAddress> getAccountAccountKeyPostalAddressesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -75,13 +77,15 @@ public abstract class BasePostalAddressResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/postal-addresses")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}/postal-addresses")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PostalAddress")})
-	public PostalAddress postAccountPostalAddress(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public PostalAddress postAccountAccountKeyPostalAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			PostalAddress postalAddress)
 		throws Exception {
 

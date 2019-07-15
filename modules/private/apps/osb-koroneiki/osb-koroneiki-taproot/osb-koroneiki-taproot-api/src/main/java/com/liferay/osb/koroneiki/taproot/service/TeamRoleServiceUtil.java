@@ -53,6 +53,13 @@ public class TeamRoleServiceUtil {
 		return getService().deleteTeamRole(teamRoleId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRole
+			deleteTeamRole(String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteTeamRole(teamRoleKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -69,11 +76,25 @@ public class TeamRoleServiceUtil {
 		return getService().getTeamRole(teamRoleId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRole getTeamRole(
+			String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getTeamRole(teamRoleKey);
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.TeamRole
 			updateTeamRole(long teamRoleId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateTeamRole(teamRoleId, name, description);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRole
+			updateTeamRole(String teamRoleKey, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateTeamRole(teamRoleKey, name, description);
 	}
 
 	public static TeamRoleService getService() {

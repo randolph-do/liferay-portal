@@ -54,11 +54,27 @@ public class AccountServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Account deleteAccount(
+			String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountService.deleteAccount(accountKey);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Account getAccount(
 			long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountService.getAccount(accountId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Account getAccount(
+			String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountService.getAccount(accountKey);
 	}
 
 	/**
@@ -80,6 +96,18 @@ public class AccountServiceWrapper
 
 		return _accountService.updateAccount(
 			accountId, name, description, logoId, contactEmailAddress,
+			profileEmailAddress, phoneNumber, faxNumber, website, status);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Account updateAccount(
+			String accountKey, String name, String description, long logoId,
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountService.updateAccount(
+			accountKey, name, description, logoId, contactEmailAddress,
 			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 

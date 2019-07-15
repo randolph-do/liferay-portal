@@ -106,9 +106,10 @@ public interface TeamRoleLocalService
 	 *
 	 * @param teamRole the team role
 	 * @return the team role that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public TeamRole deleteTeamRole(TeamRole teamRole);
+	public TeamRole deleteTeamRole(TeamRole teamRole) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

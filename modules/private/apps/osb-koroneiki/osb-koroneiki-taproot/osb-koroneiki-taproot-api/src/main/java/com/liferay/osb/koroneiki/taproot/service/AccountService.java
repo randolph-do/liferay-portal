@@ -57,8 +57,13 @@ public interface AccountService extends BaseService {
 
 	public Account deleteAccount(long accountId) throws PortalException;
 
+	public Account deleteAccount(String accountKey) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Account getAccount(long accountId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Account getAccount(String accountKey) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -69,6 +74,12 @@ public interface AccountService extends BaseService {
 
 	public Account updateAccount(
 			long accountId, String name, String description, long logoId,
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
+		throws PortalException;
+
+	public Account updateAccount(
+			String accountKey, String name, String description, long logoId,
 			String contactEmailAddress, String profileEmailAddress,
 			String phoneNumber, String faxNumber, String website, int status)
 		throws PortalException;

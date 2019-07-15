@@ -108,9 +108,10 @@ public interface ProjectLocalService
 	 *
 	 * @param project the project
 	 * @return the project that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public Project deleteProject(Project project);
+	public Project deleteProject(Project project) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

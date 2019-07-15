@@ -49,20 +49,21 @@ public interface ProductResource {
 	public HttpInvoker.HttpResponse postProductHttpResponse(Product product)
 		throws Exception;
 
-	public void deleteProduct(Long productId) throws Exception;
+	public void deleteProduct(String productKey) throws Exception;
 
-	public HttpInvoker.HttpResponse deleteProductHttpResponse(Long productId)
+	public HttpInvoker.HttpResponse deleteProductHttpResponse(String productKey)
 		throws Exception;
 
-	public Product getProduct(Long productId) throws Exception;
+	public Product getProduct(String productKey) throws Exception;
 
-	public HttpInvoker.HttpResponse getProductHttpResponse(Long productId)
+	public HttpInvoker.HttpResponse getProductHttpResponse(String productKey)
 		throws Exception;
 
-	public Product putProduct(Long productId, Product product) throws Exception;
+	public Product putProduct(String productKey, Product product)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse putProductHttpResponse(
-			Long productId, Product product)
+			String productKey, Product product)
 		throws Exception;
 
 	public static class Builder {
@@ -201,9 +202,9 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteProduct(Long productId) throws Exception {
+		public void deleteProduct(String productKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteProductHttpResponse(
-				productId);
+				productKey);
 
 			String content = httpResponse.getContent();
 
@@ -215,7 +216,7 @@ public interface ProductResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteProductHttpResponse(
-				Long productId)
+				String productKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -230,8 +231,8 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/products/{productId}",
-				productId);
+						"/o/koroneiki-rest/v1.0/products/{productKey}",
+				productKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -239,9 +240,9 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public Product getProduct(Long productId) throws Exception {
+		public Product getProduct(String productKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getProductHttpResponse(
-				productId);
+				productKey);
 
 			String content = httpResponse.getContent();
 
@@ -263,7 +264,8 @@ public interface ProductResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getProductHttpResponse(Long productId)
+		public HttpInvoker.HttpResponse getProductHttpResponse(
+				String productKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -278,8 +280,8 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/products/{productId}",
-				productId);
+						"/o/koroneiki-rest/v1.0/products/{productKey}",
+				productKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -287,11 +289,11 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public Product putProduct(Long productId, Product product)
+		public Product putProduct(String productKey, Product product)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putProductHttpResponse(
-				productId, product);
+				productKey, product);
 
 			String content = httpResponse.getContent();
 
@@ -314,7 +316,7 @@ public interface ProductResource {
 		}
 
 		public HttpInvoker.HttpResponse putProductHttpResponse(
-				Long productId, Product product)
+				String productKey, Product product)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -331,8 +333,8 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/products/{productId}",
-				productId);
+						"/o/koroneiki-rest/v1.0/products/{productKey}",
+				productKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

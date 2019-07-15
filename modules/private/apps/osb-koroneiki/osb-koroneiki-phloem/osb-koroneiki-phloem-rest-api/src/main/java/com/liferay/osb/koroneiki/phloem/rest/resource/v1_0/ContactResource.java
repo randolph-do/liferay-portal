@@ -37,18 +37,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ContactResource {
 
-	public Page<Contact> getAccountContactsPage(
-			Long accountId, Pagination pagination)
+	public Page<Contact> getAccountAccountKeyContactsPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
 	public Contact postContact(Contact contact) throws Exception;
 
-	public void deleteContact(Long contactId) throws Exception;
+	public void deleteContact(String contactKey) throws Exception;
 
-	public Contact getContact(Long contactId) throws Exception;
+	public Contact getContact(String contactKey) throws Exception;
 
-	public Page<Contact> getProjectContactsPage(
-			Long projectId, Pagination pagination)
+	public Page<Contact> getProjectProjectKeyContactsPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

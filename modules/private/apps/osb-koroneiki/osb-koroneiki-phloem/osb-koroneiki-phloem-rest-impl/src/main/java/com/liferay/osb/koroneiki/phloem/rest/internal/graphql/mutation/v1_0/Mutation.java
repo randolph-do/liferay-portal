@@ -153,87 +153,88 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteAccount(@GraphQLName("accountId") Long accountId)
+	public boolean deleteAccount(@GraphQLName("accountKey") String accountKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource -> accountResource.deleteAccount(accountId));
+			accountResource -> accountResource.deleteAccount(accountKey));
 
 		return true;
 	}
 
 	@GraphQLField
 	public Account putAccount(
-			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("account") Account account)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource -> accountResource.putAccount(accountId, account));
+			accountResource -> accountResource.putAccount(accountKey, account));
 	}
 
 	@GraphQLField
 	public boolean deleteAccountContact(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("contactIds") Long[] contactIds)
+			@GraphQLName("accountKey") String accountKey,
+			@GraphQLName("contactKeys") String[] contactKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountResource -> accountResource.deleteAccountContact(
-				accountId, contactIds));
+				accountKey, contactKeys));
 
 		return true;
 	}
 
 	@GraphQLField
 	public boolean putAccountContact(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("contactIds") Long[] contactIds)
+			@GraphQLName("accountKey") String accountKey,
+			@GraphQLName("contactKeys") String[] contactKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountResource -> accountResource.putAccountContact(
-				accountId, contactIds));
+				accountKey, contactKeys));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean deleteAccountContactRole(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("contactId") Long contactId,
-			@GraphQLName("contactRoleIds") Long[] contactRoleIds)
+	public boolean deleteAccountContactContactKeyRole(
+			@GraphQLName("accountKey") String accountKey,
+			@GraphQLName("contactKey") String contactKey,
+			@GraphQLName("contactRoleKeys") String[] contactRoleKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource -> accountResource.deleteAccountContactRole(
-				accountId, contactId, contactRoleIds));
+			accountResource ->
+				accountResource.deleteAccountContactContactKeyRole(
+					accountKey, contactKey, contactRoleKeys));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean putAccountContactRole(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("contactId") Long contactId,
-			@GraphQLName("contactRoleIds") Long[] contactRoleIds)
+	public boolean putAccountContactContactKeyRole(
+			@GraphQLName("accountKey") String accountKey,
+			@GraphQLName("contactKey") String contactKey,
+			@GraphQLName("contactRoleKeys") String[] contactRoleKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource -> accountResource.putAccountContactRole(
-				accountId, contactId, contactRoleIds));
+			accountResource -> accountResource.putAccountContactContactKeyRole(
+				accountKey, contactKey, contactRoleKeys));
 
 		return true;
 	}
@@ -249,13 +250,13 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteContact(@GraphQLName("contactId") Long contactId)
+	public boolean deleteContact(@GraphQLName("contactKey") String contactKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_contactResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			contactResource -> contactResource.deleteContact(contactId));
+			contactResource -> contactResource.deleteContact(contactKey));
 
 		return true;
 	}
@@ -274,21 +275,21 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean deleteContactRole(
-			@GraphQLName("contactRoleId") Long contactRoleId)
+			@GraphQLName("contactRoleKey") String contactRoleKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_contactRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contactRoleResource -> contactRoleResource.deleteContactRole(
-				contactRoleId));
+				contactRoleKey));
 
 		return true;
 	}
 
 	@GraphQLField
 	public ContactRole putContactRole(
-			@GraphQLName("contactRoleId") Long contactRoleId,
+			@GraphQLName("contactRoleKey") String contactRoleKey,
 			@GraphQLName("contactRole") ContactRole contactRole)
 		throws Exception {
 
@@ -296,12 +297,12 @@ public class Mutation {
 			_contactRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contactRoleResource -> contactRoleResource.putContactRole(
-				contactRoleId, contactRole));
+				contactRoleKey, contactRole));
 	}
 
 	@GraphQLField
-	public ExternalLink postAccountExternalLink(
-			@GraphQLName("accountId") Long accountId,
+	public ExternalLink postAccountAccountKeyExternalLink(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("externalLink") ExternalLink externalLink)
 		throws Exception {
 
@@ -309,13 +310,13 @@ public class Mutation {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource ->
-				externalLinkResource.postAccountExternalLink(
-					accountId, externalLink));
+				externalLinkResource.postAccountAccountKeyExternalLink(
+					accountKey, externalLink));
 	}
 
 	@GraphQLField
-	public ExternalLink postContactExternalLink(
-			@GraphQLName("contactId") Long contactId,
+	public ExternalLink postContactContactKeyExternalLink(
+			@GraphQLName("contactKey") String contactKey,
 			@GraphQLName("externalLink") ExternalLink externalLink)
 		throws Exception {
 
@@ -323,27 +324,27 @@ public class Mutation {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource ->
-				externalLinkResource.postContactExternalLink(
-					contactId, externalLink));
+				externalLinkResource.postContactContactKeyExternalLink(
+					contactKey, externalLink));
 	}
 
 	@GraphQLField
 	public boolean deleteExternalLink(
-			@GraphQLName("externalLinkId") Long externalLinkId)
+			@GraphQLName("externalLinkKey") String externalLinkKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource -> externalLinkResource.deleteExternalLink(
-				externalLinkId));
+				externalLinkKey));
 
 		return true;
 	}
 
 	@GraphQLField
-	public ExternalLink postProductConsumptionExternalLink(
-			@GraphQLName("productConsumptionId") Long productConsumptionId,
+	public ExternalLink postProductConsumptionProductConsumptionKeyExternalLink(
+			@GraphQLName("productConsumptionKey") String productConsumptionKey,
 			@GraphQLName("externalLink") ExternalLink externalLink)
 		throws Exception {
 
@@ -351,13 +352,14 @@ public class Mutation {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource ->
-				externalLinkResource.postProductConsumptionExternalLink(
-					productConsumptionId, externalLink));
+				externalLinkResource.
+					postProductConsumptionProductConsumptionKeyExternalLink(
+						productConsumptionKey, externalLink));
 	}
 
 	@GraphQLField
-	public ExternalLink postProductPurchaseExternalLink(
-			@GraphQLName("productPurchaseId") Long productPurchaseId,
+	public ExternalLink postProductPurchaseProductPurchaseKeyExternalLink(
+			@GraphQLName("productPurchaseKey") String productPurchaseKey,
 			@GraphQLName("externalLink") ExternalLink externalLink)
 		throws Exception {
 
@@ -365,13 +367,14 @@ public class Mutation {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource ->
-				externalLinkResource.postProductPurchaseExternalLink(
-					productPurchaseId, externalLink));
+				externalLinkResource.
+					postProductPurchaseProductPurchaseKeyExternalLink(
+						productPurchaseKey, externalLink));
 	}
 
 	@GraphQLField
-	public ExternalLink postProductExternalLink(
-			@GraphQLName("productId") Long productId,
+	public ExternalLink postProductProductKeyExternalLink(
+			@GraphQLName("productKey") String productKey,
 			@GraphQLName("externalLink") ExternalLink externalLink)
 		throws Exception {
 
@@ -379,13 +382,13 @@ public class Mutation {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource ->
-				externalLinkResource.postProductExternalLink(
-					productId, externalLink));
+				externalLinkResource.postProductProductKeyExternalLink(
+					productKey, externalLink));
 	}
 
 	@GraphQLField
-	public ExternalLink postProjectExternalLink(
-			@GraphQLName("projectId") Long projectId,
+	public ExternalLink postProjectProjectKeyExternalLink(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("externalLink") ExternalLink externalLink)
 		throws Exception {
 
@@ -393,26 +396,27 @@ public class Mutation {
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			externalLinkResource ->
-				externalLinkResource.postProjectExternalLink(
-					projectId, externalLink));
+				externalLinkResource.postProjectProjectKeyExternalLink(
+					projectKey, externalLink));
 	}
 
 	@GraphQLField
-	public ExternalLink postTeamExternalLink(
-			@GraphQLName("teamId") Long teamId,
+	public ExternalLink postTeamTeamKeyExternalLink(
+			@GraphQLName("teamKey") String teamKey,
 			@GraphQLName("externalLink") ExternalLink externalLink)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_externalLinkResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			externalLinkResource -> externalLinkResource.postTeamExternalLink(
-				teamId, externalLink));
+			externalLinkResource ->
+				externalLinkResource.postTeamTeamKeyExternalLink(
+					teamKey, externalLink));
 	}
 
 	@GraphQLField
-	public PostalAddress postAccountPostalAddress(
-			@GraphQLName("accountId") Long accountId,
+	public PostalAddress postAccountAccountKeyPostalAddress(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("postalAddress") PostalAddress postalAddress)
 		throws Exception {
 
@@ -420,8 +424,8 @@ public class Mutation {
 			_postalAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			postalAddressResource ->
-				postalAddressResource.postAccountPostalAddress(
-					accountId, postalAddress));
+				postalAddressResource.postAccountAccountKeyPostalAddress(
+					accountKey, postalAddress));
 	}
 
 	@GraphQLField
@@ -462,32 +466,32 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteProduct(@GraphQLName("productId") Long productId)
+	public boolean deleteProduct(@GraphQLName("productKey") String productKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productResource -> productResource.deleteProduct(productId));
+			productResource -> productResource.deleteProduct(productKey));
 
 		return true;
 	}
 
 	@GraphQLField
 	public Product putProduct(
-			@GraphQLName("productId") Long productId,
+			@GraphQLName("productKey") String productKey,
 			@GraphQLName("product") Product product)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			productResource -> productResource.putProduct(productId, product));
+			productResource -> productResource.putProduct(productKey, product));
 	}
 
 	@GraphQLField
-	public ProductConsumption postAccountProductConsumption(
-			@GraphQLName("accountId") Long accountId,
+	public ProductConsumption postAccountAccountKeyProductConsumption(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("productConsumption") ProductConsumption
 				productConsumption)
 		throws Exception {
@@ -496,13 +500,14 @@ public class Mutation {
 			_productConsumptionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productConsumptionResource ->
-				productConsumptionResource.postAccountProductConsumption(
-					accountId, productConsumption));
+				productConsumptionResource.
+					postAccountAccountKeyProductConsumption(
+						accountKey, productConsumption));
 	}
 
 	@GraphQLField
 	public boolean deleteProductConsumption(
-			@GraphQLName("productConsumptionId") Long productConsumptionId)
+			@GraphQLName("productConsumptionKey") String productConsumptionKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -510,14 +515,14 @@ public class Mutation {
 			this::_populateResourceContext,
 			productConsumptionResource ->
 				productConsumptionResource.deleteProductConsumption(
-					productConsumptionId));
+					productConsumptionKey));
 
 		return true;
 	}
 
 	@GraphQLField
-	public ProductConsumption postProjectProductConsumption(
-			@GraphQLName("projectId") Long projectId,
+	public ProductConsumption postProjectProjectKeyProductConsumption(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("productConsumption") ProductConsumption
 				productConsumption)
 		throws Exception {
@@ -526,13 +531,14 @@ public class Mutation {
 			_productConsumptionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productConsumptionResource ->
-				productConsumptionResource.postProjectProductConsumption(
-					projectId, productConsumption));
+				productConsumptionResource.
+					postProjectProjectKeyProductConsumption(
+						projectKey, productConsumption));
 	}
 
 	@GraphQLField
-	public ProductPurchase postAccountProductPurchase(
-			@GraphQLName("accountId") Long accountId,
+	public ProductPurchase postAccountAccountKeyProductPurchase(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
 		throws Exception {
 
@@ -540,13 +546,13 @@ public class Mutation {
 			_productPurchaseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productPurchaseResource ->
-				productPurchaseResource.postAccountProductPurchase(
-					accountId, productPurchase));
+				productPurchaseResource.postAccountAccountKeyProductPurchase(
+					accountKey, productPurchase));
 	}
 
 	@GraphQLField
 	public boolean deleteProductPurchase(
-			@GraphQLName("productPurchaseId") Long productPurchaseId)
+			@GraphQLName("productPurchaseKey") String productPurchaseKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -554,14 +560,14 @@ public class Mutation {
 			this::_populateResourceContext,
 			productPurchaseResource ->
 				productPurchaseResource.deleteProductPurchase(
-					productPurchaseId));
+					productPurchaseKey));
 
 		return true;
 	}
 
 	@GraphQLField
 	public ProductPurchase putProductPurchase(
-			@GraphQLName("productPurchaseId") Long productPurchaseId,
+			@GraphQLName("productPurchaseKey") String productPurchaseKey,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
 		throws Exception {
 
@@ -570,12 +576,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			productPurchaseResource ->
 				productPurchaseResource.putProductPurchase(
-					productPurchaseId, productPurchase));
+					productPurchaseKey, productPurchase));
 	}
 
 	@GraphQLField
-	public ProductPurchase postProjectProductPurchase(
-			@GraphQLName("projectId") Long projectId,
+	public ProductPurchase postProjectProjectKeyProductPurchase(
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("productPurchase") ProductPurchase productPurchase)
 		throws Exception {
 
@@ -583,174 +589,177 @@ public class Mutation {
 			_productPurchaseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productPurchaseResource ->
-				productPurchaseResource.postProjectProductPurchase(
-					projectId, productPurchase));
+				productPurchaseResource.postProjectProjectKeyProductPurchase(
+					projectKey, productPurchase));
 	}
 
 	@GraphQLField
-	public Project postAccountProject(
-			@GraphQLName("accountId") Long accountId,
+	public Project postAccountAccountKeyProject(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("project") Project project)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.postAccountProject(
-				accountId, project));
+			projectResource -> projectResource.postAccountAccountKeyProject(
+				accountKey, project));
 	}
 
 	@GraphQLField
-	public boolean deleteProject(@GraphQLName("projectId") Long projectId)
+	public boolean deleteProject(@GraphQLName("projectKey") String projectKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.deleteProject(projectId));
+			projectResource -> projectResource.deleteProject(projectKey));
 
 		return true;
 	}
 
 	@GraphQLField
 	public Project putProject(
-			@GraphQLName("projectId") Long projectId,
+			@GraphQLName("projectKey") String projectKey,
 			@GraphQLName("project") Project project)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.putProject(projectId, project));
+			projectResource -> projectResource.putProject(projectKey, project));
 	}
 
 	@GraphQLField
 	public boolean deleteProjectContact(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("contactIds") Long[] contactIds)
+			@GraphQLName("projectKey") String projectKey,
+			@GraphQLName("contactKeys") String[] contactKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			projectResource -> projectResource.deleteProjectContact(
-				projectId, contactIds));
+				projectKey, contactKeys));
 
 		return true;
 	}
 
 	@GraphQLField
 	public boolean putProjectContact(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("contactIds") Long[] contactIds)
+			@GraphQLName("projectKey") String projectKey,
+			@GraphQLName("contactKeys") String[] contactKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			projectResource -> projectResource.putProjectContact(
-				projectId, contactIds));
+				projectKey, contactKeys));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean deleteProjectContactRole(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("contactId") Long contactId,
-			@GraphQLName("contactRoleIds") Long[] contactRoleIds)
+	public boolean deleteProjectContactContactKeyRole(
+			@GraphQLName("projectKey") String projectKey,
+			@GraphQLName("contactKey") String contactKey,
+			@GraphQLName("contactRoleKeys") String[] contactRoleKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.deleteProjectContactRole(
-				projectId, contactId, contactRoleIds));
+			projectResource ->
+				projectResource.deleteProjectContactContactKeyRole(
+					projectKey, contactKey, contactRoleKeys));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean putProjectContactRole(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("contactId") Long contactId,
-			@GraphQLName("contactRoleIds") Long[] contactRoleIds)
+	public boolean putProjectContactContactKeyRole(
+			@GraphQLName("projectKey") String projectKey,
+			@GraphQLName("contactKey") String contactKey,
+			@GraphQLName("contactRoleKeys") String[] contactRoleKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.putProjectContactRole(
-				projectId, contactId, contactRoleIds));
+			projectResource -> projectResource.putProjectContactContactKeyRole(
+				projectKey, contactKey, contactRoleKeys));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean deleteProjectTeamRole(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("teamId") Long teamId,
-			@GraphQLName("teamRoleIds") Long[] teamRoleIds)
+	public boolean deleteProjectTeamTeamKeyRole(
+			@GraphQLName("projectKey") String projectKey,
+			@GraphQLName("teamKey") String teamKey,
+			@GraphQLName("teamRoleKeys") String[] teamRoleKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.deleteProjectTeamRole(
-				projectId, teamId, teamRoleIds));
+			projectResource -> projectResource.deleteProjectTeamTeamKeyRole(
+				projectKey, teamKey, teamRoleKeys));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean putProjectTeamRole(
-			@GraphQLName("projectId") Long projectId,
-			@GraphQLName("teamId") Long teamId,
-			@GraphQLName("teamRoleIds") Long[] teamRoleIds)
+	public boolean putProjectTeamTeamKeyRole(
+			@GraphQLName("projectKey") String projectKey,
+			@GraphQLName("teamKey") String teamKey,
+			@GraphQLName("teamRoleKeys") String[] teamRoleKeys)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.putProjectTeamRole(
-				projectId, teamId, teamRoleIds));
+			projectResource -> projectResource.putProjectTeamTeamKeyRole(
+				projectKey, teamKey, teamRoleKeys));
 
 		return true;
 	}
 
 	@GraphQLField
-	public Team postAccountTeam(
-			@GraphQLName("accountId") Long accountId,
+	public Team postAccountAccountKeyTeam(
+			@GraphQLName("accountKey") String accountKey,
 			@GraphQLName("team") Team team)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_teamResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			teamResource -> teamResource.postAccountTeam(accountId, team));
+			teamResource -> teamResource.postAccountAccountKeyTeam(
+				accountKey, team));
 	}
 
 	@GraphQLField
-	public boolean deleteTeam(@GraphQLName("teamId") Long teamId)
+	public boolean deleteTeam(@GraphQLName("teamKey") String teamKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_teamResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			teamResource -> teamResource.deleteTeam(teamId));
+			teamResource -> teamResource.deleteTeam(teamKey));
 
 		return true;
 	}
 
 	@GraphQLField
 	public Team putTeam(
-			@GraphQLName("teamId") Long teamId, @GraphQLName("team") Team team)
+			@GraphQLName("teamKey") String teamKey,
+			@GraphQLName("team") Team team)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_teamResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			teamResource -> teamResource.putTeam(teamId, team));
+			teamResource -> teamResource.putTeam(teamKey, team));
 	}
 
 	@GraphQLField
@@ -764,20 +773,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteTeamRole(@GraphQLName("teamRoleId") Long teamRoleId)
+	public boolean deleteTeamRole(
+			@GraphQLName("teamRoleKey") String teamRoleKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_teamRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			teamRoleResource -> teamRoleResource.deleteTeamRole(teamRoleId));
+			teamRoleResource -> teamRoleResource.deleteTeamRole(teamRoleKey));
 
 		return true;
 	}
 
 	@GraphQLField
 	public TeamRole putTeamRole(
-			@GraphQLName("teamRoleId") Long teamRoleId,
+			@GraphQLName("teamRoleKey") String teamRoleKey,
 			@GraphQLName("teamRole") TeamRole teamRole)
 		throws Exception {
 
@@ -785,7 +795,7 @@ public class Mutation {
 			_teamRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			teamRoleResource -> teamRoleResource.putTeamRole(
-				teamRoleId, teamRole));
+				teamRoleKey, teamRole));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

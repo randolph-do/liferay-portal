@@ -61,17 +61,17 @@ public abstract class BaseContactResourceImpl implements ContactResource {
 	@Operation(description = "Retrieves the account's contacts.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/accounts/{accountId}/contacts")
+	@Path("/accounts/{accountKey}/contacts")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Contact")})
-	public Page<Contact> getAccountContactsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Page<Contact> getAccountAccountKeyContactsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -90,26 +90,30 @@ public abstract class BaseContactResourceImpl implements ContactResource {
 
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "contactId")})
-	@Path("/contacts/{contactId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "contactKey")}
+	)
+	@Path("/contacts/{contactKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Contact")})
 	public void deleteContact(
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId)
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey)
 		throws Exception {
 	}
 
 	@Override
 	@GET
 	@Operation(description = "Retrieves the contact.")
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "contactId")})
-	@Path("/contacts/{contactId}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "contactKey")}
+	)
+	@Path("/contacts/{contactKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Contact")})
 	public Contact getContact(
-			@NotNull @Parameter(hidden = true) @PathParam("contactId") Long
-				contactId)
+			@NotNull @Parameter(hidden = true) @PathParam("contactKey") String
+				contactKey)
 		throws Exception {
 
 		return new Contact();
@@ -120,17 +124,17 @@ public abstract class BaseContactResourceImpl implements ContactResource {
 	@Operation(description = "Retrieves the project's contacts.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/projects/{projectId}/contacts")
+	@Path("/projects/{projectKey}/contacts")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Contact")})
-	public Page<Contact> getProjectContactsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public Page<Contact> getProjectProjectKeyContactsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			@Context Pagination pagination)
 		throws Exception {
 

@@ -70,14 +70,14 @@ public abstract class BaseContactRoleResourceImpl
 	@Override
 	@DELETE
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "contactRoleId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "contactRoleKey")}
 	)
-	@Path("/contact-roles/{contactRoleId}")
+	@Path("/contact-roles/{contactRoleKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContactRole")})
 	public void deleteContactRole(
-			@NotNull @Parameter(hidden = true) @PathParam("contactRoleId") Long
-				contactRoleId)
+			@NotNull @Parameter(hidden = true) @PathParam("contactRoleKey")
+				String contactRoleKey)
 		throws Exception {
 	}
 
@@ -85,14 +85,14 @@ public abstract class BaseContactRoleResourceImpl
 	@GET
 	@Operation(description = "Retrieves the contact role.")
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "contactRoleId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "contactRoleKey")}
 	)
-	@Path("/contact-roles/{contactRoleId}")
+	@Path("/contact-roles/{contactRoleKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContactRole")})
 	public ContactRole getContactRole(
-			@NotNull @Parameter(hidden = true) @PathParam("contactRoleId") Long
-				contactRoleId)
+			@NotNull @Parameter(hidden = true) @PathParam("contactRoleKey")
+				String contactRoleKey)
 		throws Exception {
 
 		return new ContactRole();
@@ -102,14 +102,14 @@ public abstract class BaseContactRoleResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "contactRoleId")}
+		value = {@Parameter(in = ParameterIn.PATH, name = "contactRoleKey")}
 	)
-	@Path("/contact-roles/{contactRoleId}")
+	@Path("/contact-roles/{contactRoleKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContactRole")})
 	public ContactRole putContactRole(
-			@NotNull @Parameter(hidden = true) @PathParam("contactRoleId") Long
-				contactRoleId,
+			@NotNull @Parameter(hidden = true) @PathParam("contactRoleKey")
+				String contactRoleKey,
 			ContactRole contactRole)
 		throws Exception {
 

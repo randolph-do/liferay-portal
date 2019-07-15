@@ -144,26 +144,26 @@ public class Project {
 
 	}
 
-	public Long getAccountId() {
-		return accountId;
+	public String getAccountKey() {
+		return accountKey;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
 	}
 
-	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
 		try {
-			accountId = accountIdUnsafeSupplier.get();
+			accountKey = accountKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long accountId;
+	protected String accountKey;
 
 	public String getCode() {
 		return code;
@@ -247,25 +247,6 @@ public class Project {
 
 	protected ExternalLink[] externalLinks;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
 	public Industry getIndustry() {
 		return industry;
 	}
@@ -294,6 +275,25 @@ public class Project {
 	}
 
 	protected Industry industry;
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+		try {
+			key = keyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String key;
 
 	public String getName() {
 		return name;

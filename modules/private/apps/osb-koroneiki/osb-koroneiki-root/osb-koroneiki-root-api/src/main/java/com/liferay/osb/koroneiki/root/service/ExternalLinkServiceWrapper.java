@@ -52,11 +52,27 @@ public class ExternalLinkServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.root.model.ExternalLink deleteExternalLink(
+			String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _externalLinkService.deleteExternalLink(externalLinkKey);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.root.model.ExternalLink getExternalLink(
 			long externalLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _externalLinkService.getExternalLink(externalLinkId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.root.model.ExternalLink getExternalLink(
+			String externalLinkKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _externalLinkService.getExternalLink(externalLinkKey);
 	}
 
 	@Override

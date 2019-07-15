@@ -57,11 +57,25 @@ public class AccountServiceUtil {
 		return getService().deleteAccount(accountId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Account deleteAccount(
+			String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteAccount(accountKey);
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Account getAccount(
 			long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAccount(accountId);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Account getAccount(
+			String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccount(accountKey);
 	}
 
 	/**
@@ -81,6 +95,17 @@ public class AccountServiceUtil {
 
 		return getService().updateAccount(
 			accountId, name, description, logoId, contactEmailAddress,
+			profileEmailAddress, phoneNumber, faxNumber, website, status);
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.Account updateAccount(
+			String accountKey, String name, String description, long logoId,
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateAccount(
+			accountKey, name, description, logoId, contactEmailAddress,
 			profileEmailAddress, phoneNumber, faxNumber, website, status);
 	}
 

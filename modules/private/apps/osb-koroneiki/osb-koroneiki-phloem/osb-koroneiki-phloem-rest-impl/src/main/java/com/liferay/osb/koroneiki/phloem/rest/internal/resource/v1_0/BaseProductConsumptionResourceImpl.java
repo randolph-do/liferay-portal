@@ -62,17 +62,17 @@ public abstract class BaseProductConsumptionResourceImpl
 	@Operation(description = "Retrieves the account's product consumptions.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/accounts/{accountId}/product-consumptions")
+	@Path("/accounts/{accountKey}/product-consumptions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConsumption")})
-	public Page<ProductConsumption> getAccountProductConsumptionsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public Page<ProductConsumption> getAccountAccountKeyProductConsumptionsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -82,13 +82,15 @@ public abstract class BaseProductConsumptionResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/product-consumptions")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+	)
+	@Path("/accounts/{accountKey}/product-consumptions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConsumption")})
-	public ProductConsumption postAccountProductConsumption(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+	public ProductConsumption postAccountAccountKeyProductConsumption(
+			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
+				accountKey,
 			ProductConsumption productConsumption)
 		throws Exception {
 
@@ -99,15 +101,15 @@ public abstract class BaseProductConsumptionResourceImpl
 	@DELETE
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "productConsumptionId")
+			@Parameter(in = ParameterIn.PATH, name = "productConsumptionKey")
 		}
 	)
-	@Path("/product-consumptions/{productConsumptionId}")
+	@Path("/product-consumptions/{productConsumptionKey}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ProductConsumption")})
 	public void deleteProductConsumption(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("productConsumptionId") Long productConsumptionId)
+			@PathParam("productConsumptionKey") String productConsumptionKey)
 		throws Exception {
 	}
 
@@ -116,15 +118,15 @@ public abstract class BaseProductConsumptionResourceImpl
 	@Operation(description = "Retrieves the product consumption.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "productConsumptionId")
+			@Parameter(in = ParameterIn.PATH, name = "productConsumptionKey")
 		}
 	)
-	@Path("/product-consumptions/{productConsumptionId}")
+	@Path("/product-consumptions/{productConsumptionKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConsumption")})
 	public ProductConsumption getProductConsumption(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("productConsumptionId") Long productConsumptionId)
+			@PathParam("productConsumptionKey") String productConsumptionKey)
 		throws Exception {
 
 		return new ProductConsumption();
@@ -135,17 +137,17 @@ public abstract class BaseProductConsumptionResourceImpl
 	@Operation(description = "Retrieves the project's product consumptions.")
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "projectId"),
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/projects/{projectId}/product-consumptions")
+	@Path("/projects/{projectKey}/product-consumptions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConsumption")})
-	public Page<ProductConsumption> getProjectProductConsumptionsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public Page<ProductConsumption> getProjectProjectKeyProductConsumptionsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -155,13 +157,15 @@ public abstract class BaseProductConsumptionResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "projectId")})
-	@Path("/projects/{projectId}/product-consumptions")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
+	)
+	@Path("/projects/{projectKey}/product-consumptions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConsumption")})
-	public ProductConsumption postProjectProductConsumption(
-			@NotNull @Parameter(hidden = true) @PathParam("projectId") Long
-				projectId,
+	public ProductConsumption postProjectProjectKeyProductConsumption(
+			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
+				projectKey,
 			ProductConsumption productConsumption)
 		throws Exception {
 

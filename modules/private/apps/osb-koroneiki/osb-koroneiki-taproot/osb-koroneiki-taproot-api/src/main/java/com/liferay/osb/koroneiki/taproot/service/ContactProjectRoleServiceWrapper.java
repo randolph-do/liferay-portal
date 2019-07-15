@@ -48,6 +48,16 @@ public class ContactProjectRoleServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+			addContactProjectRole(
+				String contactKey, String projectKey, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactProjectRoleService.addContactProjectRole(
+			contactKey, projectKey, contactRoleKey);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
 			deleteContactProjectRole(
 				long contactId, long projectId, long contactRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -57,11 +67,29 @@ public class ContactProjectRoleServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+			deleteContactProjectRole(
+				String contactKey, String projectKey, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactProjectRoleService.deleteContactProjectRole(
+			contactKey, projectKey, contactRoleKey);
+	}
+
+	@Override
 	public void deleteContactProjectRoles(long contactId, long projectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_contactProjectRoleService.deleteContactProjectRoles(
 			contactId, projectId);
+	}
+
+	@Override
+	public void deleteContactProjectRoles(String contactKey, String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_contactProjectRoleService.deleteContactProjectRoles(
+			contactKey, projectKey);
 	}
 
 	/**

@@ -56,7 +56,14 @@ public interface ProjectService extends BaseService {
 			String tier, String notes, String soldBy, int status)
 		throws PortalException;
 
+	public Project addProject(
+			String accountKey, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
+		throws PortalException;
+
 	public Project deleteProject(long projectId) throws PortalException;
+
+	public Project deleteProject(String projectKey) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -69,14 +76,29 @@ public interface ProjectService extends BaseService {
 	public Project getProject(long projectId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Project getProject(String projectKey) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Project> getProjects(long accountId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Project> getProjects(String accountKey, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getProjectsCount(long accountId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProjectsCount(String accountKey) throws PortalException;
+
 	public Project updateProject(
 			long projectId, String name, String code, String industry,
+			String tier, String notes, String soldBy, int status)
+		throws PortalException;
+
+	public Project updateProject(
+			String projectKey, String name, String code, String industry,
 			String tier, String notes, String soldBy, int status)
 		throws PortalException;
 

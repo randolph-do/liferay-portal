@@ -118,14 +118,18 @@ public class ExternalLinkSerDes {
 			sb.append("\"");
 		}
 
-		if (externalLink.getId() != null) {
+		if (externalLink.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(externalLink.getId());
+			sb.append("\"");
+
+			sb.append(_escape(externalLink.getKey()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -175,11 +179,11 @@ public class ExternalLinkSerDes {
 			map.put("entityName", String.valueOf(externalLink.getEntityName()));
 		}
 
-		if (externalLink.getId() == null) {
-			map.put("id", null);
+		if (externalLink.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(externalLink.getId()));
+			map.put("key", String.valueOf(externalLink.getKey()));
 		}
 
 		return map;
@@ -261,10 +265,9 @@ public class ExternalLinkSerDes {
 					externalLink.setEntityName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					externalLink.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					externalLink.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else {

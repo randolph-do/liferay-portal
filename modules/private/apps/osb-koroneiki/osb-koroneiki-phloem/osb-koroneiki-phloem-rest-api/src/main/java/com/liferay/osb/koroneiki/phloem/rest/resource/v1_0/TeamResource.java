@@ -37,16 +37,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TeamResource {
 
-	public Page<Team> getAccountTeamsPage(Long accountId, Pagination pagination)
+	public Page<Team> getAccountAccountKeyTeamsPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public Team postAccountTeam(Long accountId, Team team) throws Exception;
+	public Team postAccountAccountKeyTeam(String accountKey, Team team)
+		throws Exception;
 
-	public void deleteTeam(Long teamId) throws Exception;
+	public void deleteTeam(String teamKey) throws Exception;
 
-	public Team getTeam(Long teamId) throws Exception;
+	public Team getTeam(String teamKey) throws Exception;
 
-	public Team putTeam(Long teamId, Team team) throws Exception;
+	public Team putTeam(String teamKey, Team team) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

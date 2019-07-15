@@ -46,11 +46,31 @@ public class TeamProjectRoleServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+			addTeamProjectRole(
+				String teamKey, String projectKey, String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamProjectRoleService.addTeamProjectRole(
+			teamKey, projectKey, teamRoleKey);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
 			deleteTeamProjectRole(long teamId, long projectId, long teamRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamProjectRoleService.deleteTeamProjectRole(
 			teamId, projectId, teamRoleId);
+	}
+
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.TeamProjectRole
+			deleteTeamProjectRole(
+				String teamKey, String projectKey, String teamRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teamProjectRoleService.deleteTeamProjectRole(
+			teamKey, projectKey, teamRoleKey);
 	}
 
 	@Override

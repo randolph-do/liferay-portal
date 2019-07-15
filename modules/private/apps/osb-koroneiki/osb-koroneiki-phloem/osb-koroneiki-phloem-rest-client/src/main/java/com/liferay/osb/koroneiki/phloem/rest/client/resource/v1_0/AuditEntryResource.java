@@ -37,57 +37,63 @@ public interface AuditEntryResource {
 		return new Builder();
 	}
 
-	public Page<AuditEntry> getAccountAuditEntriesPage(
-			Long accountId, Pagination pagination)
+	public Page<AuditEntry> getAccountAccountKeyAuditEntriesPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountAuditEntriesPageHttpResponse(
-			Long accountId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getAccountAccountKeyAuditEntriesPageHttpResponse(
+				String accountKey, Pagination pagination)
 		throws Exception;
 
-	public AuditEntry getAuditEntry(Long auditEntryId) throws Exception;
+	public AuditEntry getAuditEntry(String auditEntryKey) throws Exception;
 
-	public HttpInvoker.HttpResponse getAuditEntryHttpResponse(Long auditEntryId)
+	public HttpInvoker.HttpResponse getAuditEntryHttpResponse(
+			String auditEntryKey)
 		throws Exception;
 
-	public Page<AuditEntry> getContactRoleAuditEntriesPage(
-			Long contactRoleId, Pagination pagination)
+	public Page<AuditEntry> getContactRoleContactRoleKeyAuditEntriesPage(
+			String contactRoleKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getContactRoleAuditEntriesPageHttpResponse(
-			Long contactRoleId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getContactRoleContactRoleKeyAuditEntriesPageHttpResponse(
+				String contactRoleKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getContactAuditEntriesPage(
-			Long contactId, Pagination pagination)
+	public Page<AuditEntry> getContactContactKeyAuditEntriesPage(
+			String contactKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getContactAuditEntriesPageHttpResponse(
-			Long contactId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getContactContactKeyAuditEntriesPageHttpResponse(
+				String contactKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getProjectAuditEntriesPage(
-			Long projectId, Pagination pagination)
+	public Page<AuditEntry> getProjectProjectKeyAuditEntriesPage(
+			String projectKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProjectAuditEntriesPageHttpResponse(
-			Long projectId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getProjectProjectKeyAuditEntriesPageHttpResponse(
+				String projectKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getTeamRoleAuditEntriesPage(
-			Long teamRoleId, Pagination pagination)
+	public Page<AuditEntry> getTeamRoleTeamRoleKeyAuditEntriesPage(
+			String teamRoleKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getTeamRoleAuditEntriesPageHttpResponse(
-			Long teamRoleId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getTeamRoleTeamRoleKeyAuditEntriesPageHttpResponse(
+				String teamRoleKey, Pagination pagination)
 		throws Exception;
 
-	public Page<AuditEntry> getTeamAuditEntriesPage(
-			Long teamId, Pagination pagination)
+	public Page<AuditEntry> getTeamTeamKeyAuditEntriesPage(
+			String teamKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getTeamAuditEntriesPageHttpResponse(
-			Long teamId, Pagination pagination)
+	public HttpInvoker.HttpResponse getTeamTeamKeyAuditEntriesPageHttpResponse(
+			String teamKey, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -131,12 +137,13 @@ public interface AuditEntryResource {
 
 	public static class AuditEntryResourceImpl implements AuditEntryResource {
 
-		public Page<AuditEntry> getAccountAuditEntriesPage(
-				Long accountId, Pagination pagination)
+		public Page<AuditEntry> getAccountAccountKeyAuditEntriesPage(
+				String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountAuditEntriesPageHttpResponse(accountId, pagination);
+				getAccountAccountKeyAuditEntriesPageHttpResponse(
+					accountKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -149,8 +156,9 @@ public interface AuditEntryResource {
 			return Page.of(content, AuditEntrySerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getAccountAuditEntriesPageHttpResponse(
-				Long accountId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getAccountAccountKeyAuditEntriesPageHttpResponse(
+					String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -172,8 +180,8 @@ public interface AuditEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/audit-entries",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/audit-entries",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -181,9 +189,9 @@ public interface AuditEntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public AuditEntry getAuditEntry(Long auditEntryId) throws Exception {
+		public AuditEntry getAuditEntry(String auditEntryKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getAuditEntryHttpResponse(
-				auditEntryId);
+				auditEntryKey);
 
 			String content = httpResponse.getContent();
 
@@ -206,7 +214,7 @@ public interface AuditEntryResource {
 		}
 
 		public HttpInvoker.HttpResponse getAuditEntryHttpResponse(
-				Long auditEntryId)
+				String auditEntryKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -221,8 +229,8 @@ public interface AuditEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/audit-entries/{auditEntryId}",
-				auditEntryId);
+						"/o/koroneiki-rest/v1.0/audit-entries/{auditEntryKey}",
+				auditEntryKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -230,13 +238,13 @@ public interface AuditEntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AuditEntry> getContactRoleAuditEntriesPage(
-				Long contactRoleId, Pagination pagination)
+		public Page<AuditEntry> getContactRoleContactRoleKeyAuditEntriesPage(
+				String contactRoleKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getContactRoleAuditEntriesPageHttpResponse(
-					contactRoleId, pagination);
+				getContactRoleContactRoleKeyAuditEntriesPageHttpResponse(
+					contactRoleKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -250,8 +258,8 @@ public interface AuditEntryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getContactRoleAuditEntriesPageHttpResponse(
-					Long contactRoleId, Pagination pagination)
+				getContactRoleContactRoleKeyAuditEntriesPageHttpResponse(
+					String contactRoleKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -273,8 +281,8 @@ public interface AuditEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleId}/audit-entries",
-				contactRoleId);
+						"/o/koroneiki-rest/v1.0/contact-roles/{contactRoleKey}/audit-entries",
+				contactRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -282,12 +290,13 @@ public interface AuditEntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AuditEntry> getContactAuditEntriesPage(
-				Long contactId, Pagination pagination)
+		public Page<AuditEntry> getContactContactKeyAuditEntriesPage(
+				String contactKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getContactAuditEntriesPageHttpResponse(contactId, pagination);
+				getContactContactKeyAuditEntriesPageHttpResponse(
+					contactKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -300,8 +309,9 @@ public interface AuditEntryResource {
 			return Page.of(content, AuditEntrySerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getContactAuditEntriesPageHttpResponse(
-				Long contactId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getContactContactKeyAuditEntriesPageHttpResponse(
+					String contactKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -323,8 +333,8 @@ public interface AuditEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/contacts/{contactId}/audit-entries",
-				contactId);
+						"/o/koroneiki-rest/v1.0/contacts/{contactKey}/audit-entries",
+				contactKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -332,12 +342,13 @@ public interface AuditEntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AuditEntry> getProjectAuditEntriesPage(
-				Long projectId, Pagination pagination)
+		public Page<AuditEntry> getProjectProjectKeyAuditEntriesPage(
+				String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProjectAuditEntriesPageHttpResponse(projectId, pagination);
+				getProjectProjectKeyAuditEntriesPageHttpResponse(
+					projectKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -350,8 +361,9 @@ public interface AuditEntryResource {
 			return Page.of(content, AuditEntrySerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getProjectAuditEntriesPageHttpResponse(
-				Long projectId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getProjectProjectKeyAuditEntriesPageHttpResponse(
+					String projectKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -373,8 +385,8 @@ public interface AuditEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/projects/{projectId}/audit-entries",
-				projectId);
+						"/o/koroneiki-rest/v1.0/projects/{projectKey}/audit-entries",
+				projectKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -382,12 +394,13 @@ public interface AuditEntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AuditEntry> getTeamRoleAuditEntriesPage(
-				Long teamRoleId, Pagination pagination)
+		public Page<AuditEntry> getTeamRoleTeamRoleKeyAuditEntriesPage(
+				String teamRoleKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTeamRoleAuditEntriesPageHttpResponse(teamRoleId, pagination);
+				getTeamRoleTeamRoleKeyAuditEntriesPageHttpResponse(
+					teamRoleKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -400,8 +413,9 @@ public interface AuditEntryResource {
 			return Page.of(content, AuditEntrySerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getTeamRoleAuditEntriesPageHttpResponse(
-				Long teamRoleId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getTeamRoleTeamRoleKeyAuditEntriesPageHttpResponse(
+					String teamRoleKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -423,8 +437,8 @@ public interface AuditEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleId}/audit-entries",
-				teamRoleId);
+						"/o/koroneiki-rest/v1.0/team-roles/{teamRoleKey}/audit-entries",
+				teamRoleKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -432,12 +446,12 @@ public interface AuditEntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AuditEntry> getTeamAuditEntriesPage(
-				Long teamId, Pagination pagination)
+		public Page<AuditEntry> getTeamTeamKeyAuditEntriesPage(
+				String teamKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTeamAuditEntriesPageHttpResponse(teamId, pagination);
+				getTeamTeamKeyAuditEntriesPageHttpResponse(teamKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -450,8 +464,9 @@ public interface AuditEntryResource {
 			return Page.of(content, AuditEntrySerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getTeamAuditEntriesPageHttpResponse(
-				Long teamId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getTeamTeamKeyAuditEntriesPageHttpResponse(
+					String teamKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -473,8 +488,8 @@ public interface AuditEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/teams/{teamId}/audit-entries",
-				teamId);
+						"/o/koroneiki-rest/v1.0/teams/{teamKey}/audit-entries",
+				teamKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

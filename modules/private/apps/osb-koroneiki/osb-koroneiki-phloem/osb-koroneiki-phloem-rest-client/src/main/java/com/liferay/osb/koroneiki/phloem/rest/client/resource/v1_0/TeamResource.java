@@ -37,32 +37,35 @@ public interface TeamResource {
 		return new Builder();
 	}
 
-	public Page<Team> getAccountTeamsPage(Long accountId, Pagination pagination)
+	public Page<Team> getAccountAccountKeyTeamsPage(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountTeamsPageHttpResponse(
-			Long accountId, Pagination pagination)
+	public HttpInvoker.HttpResponse getAccountAccountKeyTeamsPageHttpResponse(
+			String accountKey, Pagination pagination)
 		throws Exception;
 
-	public Team postAccountTeam(Long accountId, Team team) throws Exception;
-
-	public HttpInvoker.HttpResponse postAccountTeamHttpResponse(
-			Long accountId, Team team)
+	public Team postAccountAccountKeyTeam(String accountKey, Team team)
 		throws Exception;
 
-	public void deleteTeam(Long teamId) throws Exception;
-
-	public HttpInvoker.HttpResponse deleteTeamHttpResponse(Long teamId)
+	public HttpInvoker.HttpResponse postAccountAccountKeyTeamHttpResponse(
+			String accountKey, Team team)
 		throws Exception;
 
-	public Team getTeam(Long teamId) throws Exception;
+	public void deleteTeam(String teamKey) throws Exception;
 
-	public HttpInvoker.HttpResponse getTeamHttpResponse(Long teamId)
+	public HttpInvoker.HttpResponse deleteTeamHttpResponse(String teamKey)
 		throws Exception;
 
-	public Team putTeam(Long teamId, Team team) throws Exception;
+	public Team getTeam(String teamKey) throws Exception;
 
-	public HttpInvoker.HttpResponse putTeamHttpResponse(Long teamId, Team team)
+	public HttpInvoker.HttpResponse getTeamHttpResponse(String teamKey)
+		throws Exception;
+
+	public Team putTeam(String teamKey, Team team) throws Exception;
+
+	public HttpInvoker.HttpResponse putTeamHttpResponse(
+			String teamKey, Team team)
 		throws Exception;
 
 	public static class Builder {
@@ -106,12 +109,13 @@ public interface TeamResource {
 
 	public static class TeamResourceImpl implements TeamResource {
 
-		public Page<Team> getAccountTeamsPage(
-				Long accountId, Pagination pagination)
+		public Page<Team> getAccountAccountKeyTeamsPage(
+				String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountTeamsPageHttpResponse(accountId, pagination);
+				getAccountAccountKeyTeamsPageHttpResponse(
+					accountKey, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -124,8 +128,9 @@ public interface TeamResource {
 			return Page.of(content, TeamSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getAccountTeamsPageHttpResponse(
-				Long accountId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getAccountAccountKeyTeamsPageHttpResponse(
+					String accountKey, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -147,8 +152,8 @@ public interface TeamResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/teams",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -156,11 +161,11 @@ public interface TeamResource {
 			return httpInvoker.invoke();
 		}
 
-		public Team postAccountTeam(Long accountId, Team team)
+		public Team postAccountAccountKeyTeam(String accountKey, Team team)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postAccountTeamHttpResponse(
-				accountId, team);
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountAccountKeyTeamHttpResponse(accountKey, team);
 
 			String content = httpResponse.getContent();
 
@@ -182,8 +187,8 @@ public interface TeamResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAccountTeamHttpResponse(
-				Long accountId, Team team)
+		public HttpInvoker.HttpResponse postAccountAccountKeyTeamHttpResponse(
+				String accountKey, Team team)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -200,8 +205,8 @@ public interface TeamResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/koroneiki-rest/v1.0/accounts/{accountId}/teams",
-				accountId);
+						"/o/koroneiki-rest/v1.0/accounts/{accountKey}/teams",
+				accountKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -209,9 +214,9 @@ public interface TeamResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteTeam(Long teamId) throws Exception {
+		public void deleteTeam(String teamKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteTeamHttpResponse(
-				teamId);
+				teamKey);
 
 			String content = httpResponse.getContent();
 
@@ -222,7 +227,7 @@ public interface TeamResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		public HttpInvoker.HttpResponse deleteTeamHttpResponse(Long teamId)
+		public HttpInvoker.HttpResponse deleteTeamHttpResponse(String teamKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -236,8 +241,8 @@ public interface TeamResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamId}",
-				teamId);
+					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamKey}",
+				teamKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -245,8 +250,9 @@ public interface TeamResource {
 			return httpInvoker.invoke();
 		}
 
-		public Team getTeam(Long teamId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getTeamHttpResponse(teamId);
+		public Team getTeam(String teamKey) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getTeamHttpResponse(
+				teamKey);
 
 			String content = httpResponse.getContent();
 
@@ -268,7 +274,7 @@ public interface TeamResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTeamHttpResponse(Long teamId)
+		public HttpInvoker.HttpResponse getTeamHttpResponse(String teamKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -282,8 +288,8 @@ public interface TeamResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamId}",
-				teamId);
+					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamKey}",
+				teamKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -291,9 +297,9 @@ public interface TeamResource {
 			return httpInvoker.invoke();
 		}
 
-		public Team putTeam(Long teamId, Team team) throws Exception {
+		public Team putTeam(String teamKey, Team team) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = putTeamHttpResponse(
-				teamId, team);
+				teamKey, team);
 
 			String content = httpResponse.getContent();
 
@@ -316,7 +322,7 @@ public interface TeamResource {
 		}
 
 		public HttpInvoker.HttpResponse putTeamHttpResponse(
-				Long teamId, Team team)
+				String teamKey, Team team)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -332,8 +338,8 @@ public interface TeamResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamId}",
-				teamId);
+					_builder._port + "/o/koroneiki-rest/v1.0/teams/{teamKey}",
+				teamKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

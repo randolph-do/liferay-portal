@@ -96,6 +96,47 @@ public class ContactProjectRoleServiceHttp {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+			addContactProjectRole(
+				HttpPrincipal httpPrincipal, String contactKey,
+				String projectKey, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactProjectRoleServiceUtil.class, "addContactProjectRole",
+				_addContactProjectRoleParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactKey, projectKey, contactRoleKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.ContactProjectRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
 			deleteContactProjectRole(
 				HttpPrincipal httpPrincipal, long contactId, long projectId,
 				long contactRoleId)
@@ -104,10 +145,51 @@ public class ContactProjectRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactProjectRoleServiceUtil.class, "deleteContactProjectRole",
-				_deleteContactProjectRoleParameterTypes1);
+				_deleteContactProjectRoleParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactId, projectId, contactRoleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.osb.koroneiki.taproot.model.ContactProjectRole)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
+			deleteContactProjectRole(
+				HttpPrincipal httpPrincipal, String contactKey,
+				String projectKey, String contactRoleKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactProjectRoleServiceUtil.class, "deleteContactProjectRole",
+				_deleteContactProjectRoleParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactKey, projectKey, contactRoleKey);
 
 			Object returnObj = null;
 
@@ -144,10 +226,45 @@ public class ContactProjectRoleServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ContactProjectRoleServiceUtil.class,
 				"deleteContactProjectRoles",
-				_deleteContactProjectRolesParameterTypes2);
+				_deleteContactProjectRolesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactId, projectId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteContactProjectRoles(
+			HttpPrincipal httpPrincipal, String contactKey, String projectKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactProjectRoleServiceUtil.class,
+				"deleteContactProjectRoles",
+				_deleteContactProjectRolesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactKey, projectKey);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -176,9 +293,15 @@ public class ContactProjectRoleServiceHttp {
 
 	private static final Class<?>[] _addContactProjectRoleParameterTypes0 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _deleteContactProjectRoleParameterTypes1 =
+	private static final Class<?>[] _addContactProjectRoleParameterTypes1 =
+		new Class[] {String.class, String.class, String.class};
+	private static final Class<?>[] _deleteContactProjectRoleParameterTypes2 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _deleteContactProjectRolesParameterTypes2 =
+	private static final Class<?>[] _deleteContactProjectRoleParameterTypes3 =
+		new Class[] {String.class, String.class, String.class};
+	private static final Class<?>[] _deleteContactProjectRolesParameterTypes4 =
 		new Class[] {long.class, long.class};
+	private static final Class<?>[] _deleteContactProjectRolesParameterTypes5 =
+		new Class[] {String.class, String.class};
 
 }

@@ -101,12 +101,48 @@ public class TeamRoleServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap
+			deleteTeamRole(String teamRoleKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.TeamRole returnValue =
+				TeamRoleServiceUtil.deleteTeamRole(teamRoleKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap
 			getTeamRole(long teamRoleId)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.taproot.model.TeamRole returnValue =
 				TeamRoleServiceUtil.getTeamRole(teamRoleId);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap
+			getTeamRole(String teamRoleKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.TeamRole returnValue =
+				TeamRoleServiceUtil.getTeamRole(teamRoleKey);
 
 			return com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap.
 				toSoapModel(returnValue);
@@ -126,6 +162,25 @@ public class TeamRoleServiceSoap {
 			com.liferay.osb.koroneiki.taproot.model.TeamRole returnValue =
 				TeamRoleServiceUtil.updateTeamRole(
 					teamRoleId, name, description);
+
+			return com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap
+			updateTeamRole(String teamRoleKey, String name, String description)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.TeamRole returnValue =
+				TeamRoleServiceUtil.updateTeamRole(
+					teamRoleKey, name, description);
 
 			return com.liferay.osb.koroneiki.taproot.model.TeamRoleSoap.
 				toSoapModel(returnValue);

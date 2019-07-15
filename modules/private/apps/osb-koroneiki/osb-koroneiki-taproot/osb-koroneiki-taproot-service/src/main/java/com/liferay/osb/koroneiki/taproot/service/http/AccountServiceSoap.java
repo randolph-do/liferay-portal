@@ -108,12 +108,48 @@ public class AccountServiceSoap {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.AccountSoap
+			deleteAccount(String accountKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Account returnValue =
+				AccountServiceUtil.deleteAccount(accountKey);
+
+			return com.liferay.osb.koroneiki.taproot.model.AccountSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.AccountSoap
 			getAccount(long accountId)
 		throws RemoteException {
 
 		try {
 			com.liferay.osb.koroneiki.taproot.model.Account returnValue =
 				AccountServiceUtil.getAccount(accountId);
+
+			return com.liferay.osb.koroneiki.taproot.model.AccountSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.AccountSoap
+			getAccount(String accountKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Account returnValue =
+				AccountServiceUtil.getAccount(accountKey);
 
 			return com.liferay.osb.koroneiki.taproot.model.AccountSoap.
 				toSoapModel(returnValue);
@@ -137,6 +173,31 @@ public class AccountServiceSoap {
 			com.liferay.osb.koroneiki.taproot.model.Account returnValue =
 				AccountServiceUtil.updateAccount(
 					accountId, name, description, logoId, contactEmailAddress,
+					profileEmailAddress, phoneNumber, faxNumber, website,
+					status);
+
+			return com.liferay.osb.koroneiki.taproot.model.AccountSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.koroneiki.taproot.model.AccountSoap
+			updateAccount(
+				String accountKey, String name, String description, long logoId,
+				String contactEmailAddress, String profileEmailAddress,
+				String phoneNumber, String faxNumber, String website,
+				int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.taproot.model.Account returnValue =
+				AccountServiceUtil.updateAccount(
+					accountKey, name, description, logoId, contactEmailAddress,
 					profileEmailAddress, phoneNumber, faxNumber, website,
 					status);
 

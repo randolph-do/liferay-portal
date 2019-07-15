@@ -51,21 +51,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Team")
 public class Team {
 
-	@Schema(description = "The team's account's ID.")
-	public Long getAccountId() {
-		return accountId;
+	@Schema(description = "The team's account's key.")
+	public String getAccountKey() {
+		return accountKey;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
 	}
 
 	@JsonIgnore
-	public void setAccountId(
-		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
 		try {
-			accountId = accountIdUnsafeSupplier.get();
+			accountKey = accountKeyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,7 +77,7 @@ public class Team {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long accountId;
+	protected String accountKey;
 
 	@Schema(description = "The team's creation date.")
 	public Date getDateCreated() {
@@ -165,19 +165,19 @@ public class Team {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ExternalLink[] externalLinks;
 
-	@Schema(description = "The team's ID.")
-	public Long getId() {
-		return id;
+	@Schema(description = "The team's key.")
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -189,7 +189,7 @@ public class Team {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected String key;
 
 	@Schema(description = "The name of the team.")
 	public String getName() {
@@ -248,14 +248,18 @@ public class Team {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (accountId != null) {
+		if (accountKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"accountId\": ");
+			sb.append("\"accountKey\": ");
 
-			sb.append(accountId);
+			sb.append("\"");
+
+			sb.append(_escape(accountKey));
+
+			sb.append("\"");
 		}
 
 		if (dateCreated != null) {
@@ -306,14 +310,18 @@ public class Team {
 			sb.append("]");
 		}
 
-		if (id != null) {
+		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
 		if (name != null) {

@@ -174,14 +174,18 @@ public class AuditEntrySerDes {
 			sb.append(auditEntry.getFieldClassPK());
 		}
 
-		if (auditEntry.getId() != null) {
+		if (auditEntry.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
-			sb.append(auditEntry.getId());
+			sb.append("\"");
+
+			sb.append(_escape(auditEntry.getKey()));
+
+			sb.append("\"");
 		}
 
 		if (auditEntry.getNewValue() != null) {
@@ -320,11 +324,11 @@ public class AuditEntrySerDes {
 				"fieldClassPK", String.valueOf(auditEntry.getFieldClassPK()));
 		}
 
-		if (auditEntry.getId() == null) {
-			map.put("id", null);
+		if (auditEntry.getKey() == null) {
+			map.put("key", null);
 		}
 		else {
-			map.put("id", String.valueOf(auditEntry.getId()));
+			map.put("key", String.valueOf(auditEntry.getKey()));
 		}
 
 		if (auditEntry.getNewValue() == null) {
@@ -463,10 +467,9 @@ public class AuditEntrySerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					auditEntry.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					auditEntry.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "newValue")) {

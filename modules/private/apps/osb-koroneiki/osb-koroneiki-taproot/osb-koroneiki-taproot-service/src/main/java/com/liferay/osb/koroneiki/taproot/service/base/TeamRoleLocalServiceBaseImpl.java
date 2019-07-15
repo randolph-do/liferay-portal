@@ -134,10 +134,11 @@ public abstract class TeamRoleLocalServiceBaseImpl
 	 *
 	 * @param teamRole the team role
 	 * @return the team role that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public TeamRole deleteTeamRole(TeamRole teamRole) {
+	public TeamRole deleteTeamRole(TeamRole teamRole) throws PortalException {
 		return teamRolePersistence.remove(teamRole);
 	}
 

@@ -20,6 +20,8 @@ import com.liferay.osb.koroneiki.taproot.service.persistence.ContactAccountRoleP
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -74,6 +76,10 @@ public class ContactAccountRoleLocalServiceImpl
 
 	public void deleteContactAccountRoles(long contactId, long accountId) {
 		contactAccountRolePersistence.removeByC_A(contactId, accountId);
+	}
+
+	public List<ContactAccountRole> getContactAccountRoles(long contactId) {
+		return contactAccountRolePersistence.findByContactId(contactId);
 	}
 
 	protected void validate(long contactId, long accountId)

@@ -69,7 +69,8 @@ public class AssignTeamContactMVCActionCommand extends BaseMVCActionCommand {
 			String emailAddress = ParamUtil.getString(
 				actionRequest, "emailAddress");
 
-			Contact contact = _contactLocalService.getContact(emailAddress);
+			Contact contact = _contactLocalService.getContactByEmailAddress(
+				emailAddress);
 
 			ContactRole contactRole =
 				_contactRoleLocalService.getMemberContactRole(

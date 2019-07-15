@@ -91,31 +91,10 @@ public class ProductConsumptionLocalServiceImpl
 			long productConsumptionId)
 		throws PortalException {
 
-		ProductConsumption productConsumption =
-			productConsumptionLocalService.getProductConsumption(
-				productConsumptionId);
+		ProductConsumption productConsumption = getProductConsumption(
+			productConsumptionId);
 
-		// External links
-
-		long classNameId = classNameLocalService.getClassNameId(
-			ProductConsumption.class);
-
-		_externalLinkLocalService.deleteExternalLinks(
-			classNameId, productConsumptionId);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			productConsumption.getCompanyId(),
-			ProductConsumption.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			productConsumption.getProductConsumptionId());
-
-		// Product fields
-
-		productFieldPersistence.removeByC_C(classNameId, productConsumptionId);
-
-		return productConsumptionPersistence.remove(productConsumptionId);
+		return deleteProductConsumption(productConsumption);
 	}
 
 	@Override
@@ -135,6 +114,35 @@ public class ProductConsumptionLocalServiceImpl
 
 		return deleteProductConsumption(
 			productConsumption.getProductConsumptionId());
+	}
+
+	@Override
+	public ProductConsumption deleteProductConsumption(
+			ProductConsumption productConsumption)
+		throws PortalException {
+
+		// External links
+
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductConsumption.class);
+
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, productConsumption.getProductConsumptionId());
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			productConsumption.getCompanyId(),
+			ProductConsumption.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			productConsumption.getProductConsumptionId());
+
+		// Product fields
+
+		productFieldPersistence.removeByC_C(
+			classNameId, productConsumption.getProductConsumptionId());
+
+		return productConsumptionPersistence.remove(productConsumption);
 	}
 
 	@Override

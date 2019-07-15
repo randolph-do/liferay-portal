@@ -34,11 +34,10 @@ components:
                 faxNumber:
                     description: The account's fax number.
                     type: string
-                id:
-                    description: The account's ID.
-                    format: int64
+                key:
+                    description: The account's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 name:
                     description: The name of the account.
                     type: string
@@ -102,11 +101,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
-                id:
-                    description: The audit entry's ID.
-                    format: int64
+                key:
+                    description: The audit entry's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 newValue:
                     description: The new value of the field on the audited object.
                     readOnly: true
@@ -150,11 +148,10 @@ components:
                 firstName:
                     description: The first name of the contact.
                     type: string
-                id:
-                    description: The contact's ID.
-                    format: int64
+                key:
+                    description: The contact's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 languageId:
                     description: The language ID of the contact.
                     type: string
@@ -185,11 +182,10 @@ components:
                 description:
                     description: The description of the contact role.
                     type: string
-                id:
-                    description: The contact role's ID.
-                    format: int64
+                key:
+                    description: The contact role's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 name:
                     description: The name of the contact role.
                     type: string
@@ -222,11 +218,10 @@ components:
                 entityName:
                     description: The unique classification for the entity.
                     type: string
-                id:
-                    description: The external link's ID.
-                    format: int64
+                key:
+                    description: The external link's key.
                     readOnly: true
-                    type: integer
+                    type: string
             required:
                 - domain
                 - entityId
@@ -292,11 +287,10 @@ components:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
                     type: array
-                id:
-                    description: The product's ID.
-                    format: int64
+                key:
+                    description: The product's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 name:
                     description: The name of the product.
                     type: string
@@ -306,11 +300,10 @@ components:
         ProductConsumption:
             description: Represents a product consumption.
             properties:
-                accountId:
-                    description: The ID of the account consuming the product.
-                    format: int64
+                accountKey:
+                    description: The key of the account consuming the product.
                     readOnly: true
-                    type: integer
+                    type: string
                 dateCreated:
                     description: The product consumption's creation date.
                     format: date-time
@@ -322,35 +315,31 @@ components:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
                     type: array
-                id:
-                    description: The product consumption's ID.
-                    format: int64
+                key:
+                    description: The product consumption's key.
                     readOnly: true
-                    type: integer
-                productId:
-                    description: The ID of the product being consumed.
-                    format: int64
-                    type: integer
-                projectId:
-                    description: The ID of the project consuming the product.
-                    format: int64
+                    type: string
+                productKey:
+                    description: The key of the product being consumed.
+                    type: string
+                projectKey:
+                    description: The key of the project consuming the product.
                     readOnly: true
-                    type: integer
+                    type: string
                 properties:
                     additionalProperties:
                         type: string
                     type: object
             required:
-                - productId
+                - productKey
             type: object
         ProductPurchase:
             description: Represents a product purchase.
             properties:
-                accountId:
-                    description: The ID of the account purchasing the product.
-                    format: int64
+                accountKey:
+                    description: The key of the account purchasing the product.
                     readOnly: true
-                    type: integer
+                    type: string
                 dateCreated:
                     description: The product purchase's creation date.
                     format: date-time
@@ -366,20 +355,17 @@ components:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
                     type: array
-                id:
-                    description: The product purchase's ID.
-                    format: int64
+                key:
+                    description: The product purchase's key.
                     readOnly: true
-                    type: integer
-                productId:
-                    description: The ID of the product being purchased.
-                    format: int64
-                    type: integer
-                projectId:
-                    description: The ID of the project purchasing the product.
-                    format: int64
+                    type: string
+                productKey:
+                    description: The key of the product being purchased.
+                    type: string
+                projectKey:
+                    description: The key of the project purchasing the product.
                     readOnly: true
-                    type: integer
+                    type: string
                 properties:
                     additionalProperties:
                         type: string
@@ -393,16 +379,15 @@ components:
                     format: date-time
                     type: string
             required:
-                - productId
+                - productKey
             type: object
         Project:
             description: Represents a project.
             properties:
-                accountId:
-                    description: The project's account's ID.
-                    format: int64
+                accountKey:
+                    description: The project's account's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 code:
                     description: The code of the project.
                     type: string
@@ -422,14 +407,13 @@ components:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
                     type: array
-                id:
-                    description: The project's ID.
-                    format: int64
-                    readOnly: true
-                    type: integer
                 industry:
                     description: The industry of the project.
                     enum: ["aerospace-and-defense", "agriculture", "automotive", "consulting-market-research", "education", "energy", "engineering", "financial-services", "food-services", "government-federal", "government-state-local", "healthcare", "hospitality-leisure", "insurance", "manufacturing", "media-entertainment", "not-for-profit-ngo", "other", "pharmaceuticals", "professional-services-agency-business", "professional-services-technical-web-it", "retail-consumer-products", "technology", "telecommunication", "transportation", "utilities"]
+                    type: string
+                key:
+                    description: The project's key.
+                    readOnly: true
                     type: string
                 name:
                     description: The name of the project.
@@ -455,11 +439,10 @@ components:
         Team:
             description: Represents a team.
             properties:
-                accountId:
-                    description: The team's account's ID.
-                    format: int64
+                accountKey:
+                    description: The team's account's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 dateCreated:
                     description: The team's creation date.
                     format: date-time
@@ -476,11 +459,10 @@ components:
                         $ref: "#/components/schemas/ExternalLink"
                     readOnly: true
                     type: array
-                id:
-                    description: The team's ID.
-                    format: int64
+                key:
+                    description: The team's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 name:
                     description: The name of the team.
                     type: string
@@ -503,11 +485,10 @@ components:
                 description:
                     description: The description of the team role.
                     type: string
-                id:
-                    description: The team role's ID.
-                    format: int64
+                key:
+                    description: The team role's key.
                     readOnly: true
-                    type: integer
+                    type: string
                 name:
                     description: The name of the team role.
                     type: string
@@ -548,16 +529,15 @@ paths:
                                 $ref: "#/components/schemas/Account"
                     description: ""
             tags: ["Account"]
-    "/accounts/{accountId}":
+    "/accounts/{accountKey}":
         delete:
             operationId: deleteAccount
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -569,11 +549,10 @@ paths:
             operationId: getAccount
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -589,11 +568,10 @@ paths:
             operationId: putAccount
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -614,17 +592,16 @@ paths:
                                 $ref: "#/components/schemas/Account"
                     description: ""
             tags: ["Account"]
-    "/accounts/{accountId}/audit-entries":
+    "/accounts/{accountKey}/audit-entries":
         get:
             description: Retrieves the account's audit history.
-            operationId: getAccountAuditEntriesPage
+            operationId: getAccountAccountKeyAuditEntriesPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -648,24 +625,22 @@ paths:
                                 type: array
                     description: ""
             tags: ["AuditEntry"]
-    "/accounts/{accountId}/contacts":
+    "/accounts/{accountKey}/contacts":
         delete:
             description: Unassigns contacts from the account.
             operationId: deleteAccountContact
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactIds
+                  name: contactKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -675,14 +650,13 @@ paths:
             tags: ["Account"]
         get:
             description: Retrieves the account's contacts.
-            operationId: getAccountContactsPage
+            operationId: getAccountAccountKeyContactsPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -711,18 +685,16 @@ paths:
             operationId: putAccountContact
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactIds
+                  name: contactKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -730,30 +702,27 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["Account"]
-    "/accounts/{accountId}/contacts/{contactId}/roles":
+    "/accounts/{accountKey}/contacts/{contactKey}/roles":
         delete:
             description: Unassigns roles from the contact for the account.
-            operationId: deleteAccountContactRole
+            operationId: deleteAccountContactContactKeyRole
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactRoleIds
+                  name: contactRoleKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -763,27 +732,24 @@ paths:
             tags: ["Account"]
         put:
             description: Assigns roles to the contact for the account.
-            operationId: putAccountContactRole
+            operationId: putAccountContactContactKeyRole
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactRoleIds
+                  name: contactRoleKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -791,17 +757,16 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["Account"]
-    "/accounts/{accountId}/external-links":
+    "/accounts/{accountKey}/external-links":
         get:
             description: Retrieves the account's external links.
-            operationId: getAccountExternalLinksPage
+            operationId: getAccountAccountKeyExternalLinksPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -827,14 +792,13 @@ paths:
             tags: ["ExternalLink"]
         post:
             description: Adds an external link to the account.
-            operationId: postAccountExternalLink
+            operationId: postAccountAccountKeyExternalLink
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -855,17 +819,16 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
-    "/accounts/{accountId}/postal-addresses":
+    "/accounts/{accountKey}/postal-addresses":
         get:
             description: Retrieves the accounts's postal addresses.
-            operationId: getAccountPostalAddressesPage
+            operationId: getAccountAccountKeyPostalAddressesPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -882,14 +845,13 @@ paths:
                     description: ""
             tags: ["PostalAddress"]
         post:
-            operationId: postAccountPostalAddress
+            operationId: postAccountAccountKeyPostalAddress
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -910,17 +872,16 @@ paths:
                                 $ref: "#/components/schemas/PostalAddress"
                     description: ""
             tags: ["PostalAddress"]
-    "/accounts/{accountId}/product-consumptions":
+    "/accounts/{accountKey}/product-consumptions":
         get:
             description: Retrieves the account's product consumptions.
-            operationId: getAccountProductConsumptionsPage
+            operationId: getAccountAccountKeyProductConsumptionsPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -945,14 +906,13 @@ paths:
                     description: ""
             tags: ["ProductConsumption"]
         post:
-            operationId: postAccountProductConsumption
+            operationId: postAccountAccountKeyProductConsumption
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -973,17 +933,16 @@ paths:
                                 $ref: "#/components/schemas/ProductConsumption"
                     description: ""
             tags: ["ProductConsumption"]
-    "/accounts/{accountId}/product-purchases":
+    "/accounts/{accountKey}/product-purchases":
         get:
             description: Retrieves the account's product purchases.
-            operationId: getAccountProductPurchasesPage
+            operationId: getAccountAccountKeyProductPurchasesPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1008,14 +967,13 @@ paths:
                     description: ""
             tags: ["ProductPurchase"]
         post:
-            operationId: postAccountProductPurchase
+            operationId: postAccountAccountKeyProductPurchase
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1036,17 +994,16 @@ paths:
                                 $ref: "#/components/schemas/ProductPurchase"
                     description: ""
             tags: ["ProductPurchase"]
-    "/accounts/{accountId}/projects":
+    "/accounts/{accountKey}/projects":
         get:
             description: Retrieves the account's projects.
-            operationId: getAccountProjectsPage
+            operationId: getAccountAccountKeyProjectsPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1071,14 +1028,13 @@ paths:
                     description: ""
             tags: ["Project"]
         post:
-            operationId: postAccountProject
+            operationId: postAccountAccountKeyProject
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1099,17 +1055,16 @@ paths:
                                 $ref: "#/components/schemas/Project"
                     description: ""
             tags: ["Project"]
-    "/accounts/{accountId}/teams":
+    "/accounts/{accountKey}/teams":
         get:
             description: Retrieves the account's teams.
-            operationId: getAccountTeamsPage
+            operationId: getAccountAccountKeyTeamsPage
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1134,14 +1089,13 @@ paths:
                     description: ""
             tags: ["Team"]
         post:
-            operationId: postAccountTeam
+            operationId: postAccountAccountKeyTeam
             parameters:
                 - in: path
-                  name: accountId
+                  name: accountKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1162,17 +1116,16 @@ paths:
                                 $ref: "#/components/schemas/Team"
                     description: ""
             tags: ["Team"]
-    "/audit-entries/{auditEntryId}":
+    "/audit-entries/{auditEntryKey}":
         get:
             description: Retrieves the audit entry.
             operationId: getAuditEntry
             parameters:
                 - in: path
-                  name: auditEntryId
+                  name: auditEntryKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1207,16 +1160,15 @@ paths:
                                 $ref: "#/components/schemas/ContactRole"
                     description: ""
             tags: ["ContactRole"]
-    "/contact-roles/{contactRoleId}":
+    "/contact-roles/{contactRoleKey}":
         delete:
             operationId: deleteContactRole
             parameters:
                 - in: path
-                  name: contactRoleId
+                  name: contactRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1228,11 +1180,10 @@ paths:
             operationId: getContactRole
             parameters:
                 - in: path
-                  name: contactRoleId
+                  name: contactRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1248,11 +1199,10 @@ paths:
             operationId: putContactRole
             parameters:
                 - in: path
-                  name: contactRoleId
+                  name: contactRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1273,17 +1223,16 @@ paths:
                                 $ref: "#/components/schemas/ContactRole"
                     description: ""
             tags: ["ContactRole"]
-    "/contact-roles/{contactRoleId}/audit-entries":
+    "/contact-roles/{contactRoleKey}/audit-entries":
         get:
             description: Retrieves the contact role's audit history.
-            operationId: getContactRoleAuditEntriesPage
+            operationId: getContactRoleContactRoleKeyAuditEntriesPage
             parameters:
                 - in: path
-                  name: contactRoleId
+                  name: contactRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1330,16 +1279,15 @@ paths:
                                 $ref: "#/components/schemas/Contact"
                     description: ""
             tags: ["Contact"]
-    "/contacts/{contactId}":
+    "/contacts/{contactKey}":
         delete:
             operationId: deleteContact
             parameters:
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1351,11 +1299,10 @@ paths:
             operationId: getContact
             parameters:
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1367,17 +1314,16 @@ paths:
                                 $ref: "#/components/schemas/Contact"
                     description: ""
             tags: ["Contact"]
-    "/contacts/{contactId}/audit-entries":
+    "/contacts/{contactKey}/audit-entries":
         get:
             description: Retrieves the contact's audit history.
-            operationId: getContactAuditEntriesPage
+            operationId: getContactContactKeyAuditEntriesPage
             parameters:
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1401,17 +1347,16 @@ paths:
                                 type: array
                     description: ""
             tags: ["AuditEntry"]
-    "/contacts/{contactId}/external-links":
+    "/contacts/{contactKey}/external-links":
         get:
             description: Retrieves the contact's external links.
-            operationId: getContactExternalLinksPage
+            operationId: getContactContactKeyExternalLinksPage
             parameters:
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1437,14 +1382,13 @@ paths:
             tags: ["ExternalLink"]
         post:
             description: Adds an external link to the contact.
-            operationId: postContactExternalLink
+            operationId: postContactContactKeyExternalLink
             parameters:
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1465,16 +1409,15 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
-    "/external-links/{externalLinkId}":
+    "/external-links/{externalLinkKey}":
         delete:
             operationId: deleteExternalLink
             parameters:
                 - in: path
-                  name: externalLinkId
+                  name: externalLinkKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1486,11 +1429,10 @@ paths:
             operationId: getExternalLink
             parameters:
                 - in: path
-                  name: externalLinkId
+                  name: externalLinkKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1568,16 +1510,15 @@ paths:
                                 $ref: "#/components/schemas/PostalAddress"
                     description: ""
             tags: ["PostalAddress"]
-    "/product-consumptions/{productConsumptionId}":
+    "/product-consumptions/{productConsumptionKey}":
         delete:
             operationId: deleteProductConsumption
             parameters:
                 - in: path
-                  name: productConsumptionId
+                  name: productConsumptionKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1589,11 +1530,10 @@ paths:
             operationId: getProductConsumption
             parameters:
                 - in: path
-                  name: productConsumptionId
+                  name: productConsumptionKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1605,17 +1545,16 @@ paths:
                                 $ref: "#/components/schemas/ProductConsumption"
                     description: ""
             tags: ["ProductConsumption"]
-    "/product-consumptions/{productConsumptionId}/external-links":
+    "/product-consumptions/{productConsumptionKey}/external-links":
         get:
             description: Retrieves the product consumption's external links.
-            operationId: getProductConsumptionExternalLinksPage
+            operationId: getProductConsumptionProductConsumptionKeyExternalLinksPage
             parameters:
                 - in: path
-                  name: productConsumptionId
+                  name: productConsumptionKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1641,14 +1580,13 @@ paths:
             tags: ["ExternalLink"]
         post:
             description: Adds an external link to the product consumption.
-            operationId: postProductConsumptionExternalLink
+            operationId: postProductConsumptionProductConsumptionKeyExternalLink
             parameters:
                 - in: path
-                  name: productConsumptionId
+                  name: productConsumptionKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1669,16 +1607,15 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
-    "/product-purchases/{productPurchaseId}":
+    "/product-purchases/{productPurchaseKey}":
         delete:
             operationId: deleteProductPurchase
             parameters:
                 - in: path
-                  name: productPurchaseId
+                  name: productPurchaseKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1690,11 +1627,10 @@ paths:
             operationId: getProductPurchase
             parameters:
                 - in: path
-                  name: productPurchaseId
+                  name: productPurchaseKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1710,11 +1646,10 @@ paths:
             operationId: putProductPurchase
             parameters:
                 - in: path
-                  name: productPurchaseId
+                  name: productPurchaseKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1735,17 +1670,16 @@ paths:
                                 $ref: "#/components/schemas/ProductPurchase"
                     description: ""
             tags: ["ProductPurchase"]
-    "/product-purchases/{productPurchaseId}/external-links":
+    "/product-purchases/{productPurchaseKey}/external-links":
         get:
             description: Retrieves the product purchase's external links.
-            operationId: getProductPurchaseExternalLinksPage
+            operationId: getProductPurchaseProductPurchaseKeyExternalLinksPage
             parameters:
                 - in: path
-                  name: productPurchaseId
+                  name: productPurchaseKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1771,14 +1705,13 @@ paths:
             tags: ["ExternalLink"]
         post:
             description: Adds an external link to the product purchase.
-            operationId: postProductPurchaseExternalLink
+            operationId: postProductPurchaseProductPurchaseKeyExternalLink
             parameters:
                 - in: path
-                  name: productPurchaseId
+                  name: productPurchaseKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1848,16 +1781,15 @@ paths:
                                 $ref: "#/components/schemas/Product"
                     description: ""
             tags: ["Product"]
-    "/products/{productId}":
+    "/products/{productKey}":
         delete:
             operationId: deleteProduct
             parameters:
                 - in: path
-                  name: productId
+                  name: productKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1869,11 +1801,10 @@ paths:
             operationId: getProduct
             parameters:
                 - in: path
-                  name: productId
+                  name: productKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1889,11 +1820,10 @@ paths:
             operationId: putProduct
             parameters:
                 - in: path
-                  name: productId
+                  name: productKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1914,17 +1844,16 @@ paths:
                                 $ref: "#/components/schemas/Product"
                     description: ""
             tags: ["Product"]
-    "/products/{productId}/external-links":
+    "/products/{productKey}/external-links":
         get:
             description: Retrieves the product's external links.
-            operationId: getProductExternalLinksPage
+            operationId: getProductProductKeyExternalLinksPage
             parameters:
                 - in: path
-                  name: productId
+                  name: productKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1950,14 +1879,13 @@ paths:
             tags: ["ExternalLink"]
         post:
             description: Adds an external link to the product.
-            operationId: postProductExternalLink
+            operationId: postProductProductKeyExternalLink
             parameters:
                 - in: path
-                  name: productId
+                  name: productKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1978,16 +1906,15 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
-    "/projects/{projectId}":
+    "/projects/{projectKey}":
         delete:
             operationId: deleteProject
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1999,11 +1926,10 @@ paths:
             operationId: getProject
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -2019,11 +1945,10 @@ paths:
             operationId: putProject
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2044,17 +1969,16 @@ paths:
                                 $ref: "#/components/schemas/Project"
                     description: ""
             tags: ["Project"]
-    "/projects/{projectId}/audit-entries":
+    "/projects/{projectKey}/audit-entries":
         get:
             description: Retrieves the project's audit history.
-            operationId: getProjectAuditEntriesPage
+            operationId: getProjectProjectKeyAuditEntriesPage
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2078,24 +2002,22 @@ paths:
                                 type: array
                     description: ""
             tags: ["AuditEntry"]
-    "/projects/{projectId}/contacts":
+    "/projects/{projectKey}/contacts":
         delete:
             description: Unassigns contacts from the project.
             operationId: deleteProjectContact
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactIds
+                  name: contactKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -2105,14 +2027,13 @@ paths:
             tags: ["Project"]
         get:
             description: Retrieves the project's contacts.
-            operationId: getProjectContactsPage
+            operationId: getProjectProjectKeyContactsPage
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2141,18 +2062,16 @@ paths:
             operationId: putProjectContact
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactIds
+                  name: contactKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -2160,30 +2079,27 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["Project"]
-    "/projects/{projectId}/contacts/{contactId}/roles":
+    "/projects/{projectKey}/contacts/{contactKey}/roles":
         delete:
             description: Unassigns roles from the contact for the project.
-            operationId: deleteProjectContactRole
+            operationId: deleteProjectContactContactKeyRole
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactRoleIds
+                  name: contactRoleKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -2193,27 +2109,24 @@ paths:
             tags: ["Project"]
         put:
             description: Assigns roles to the contact for the project.
-            operationId: putProjectContactRole
+            operationId: putProjectContactContactKeyRole
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
-                  name: contactId
+                  name: contactKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: contactRoleIds
+                  name: contactRoleKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -2221,17 +2134,16 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["Project"]
-    "/projects/{projectId}/external-links":
+    "/projects/{projectKey}/external-links":
         get:
             description: Retrieves the project's external links.
-            operationId: getProjectExternalLinksPage
+            operationId: getProjectProjectKeyExternalLinksPage
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2257,14 +2169,13 @@ paths:
             tags: ["ExternalLink"]
         post:
             description: Adds an external link to the project.
-            operationId: postProjectExternalLink
+            operationId: postProjectProjectKeyExternalLink
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2285,17 +2196,16 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
-    "/projects/{projectId}/product-consumptions":
+    "/projects/{projectKey}/product-consumptions":
         get:
             description: Retrieves the project's product consumptions.
-            operationId: getProjectProductConsumptionsPage
+            operationId: getProjectProjectKeyProductConsumptionsPage
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2320,14 +2230,13 @@ paths:
                     description: ""
             tags: ["ProductConsumption"]
         post:
-            operationId: postProjectProductConsumption
+            operationId: postProjectProjectKeyProductConsumption
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2348,17 +2257,16 @@ paths:
                                 $ref: "#/components/schemas/ProductConsumption"
                     description: ""
             tags: ["ProductConsumption"]
-    "/projects/{projectId}/product-purchases":
+    "/projects/{projectKey}/product-purchases":
         get:
             description: Retrieves the project's product purchases.
-            operationId: getProjectProductPurchasesPage
+            operationId: getProjectProjectKeyProductPurchasesPage
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2383,14 +2291,13 @@ paths:
                     description: ""
             tags: ["ProductPurchase"]
         post:
-            operationId: postProjectProductPurchase
+            operationId: postProjectProjectKeyProductPurchase
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2411,30 +2318,27 @@ paths:
                                 $ref: "#/components/schemas/ProductPurchase"
                     description: ""
             tags: ["ProductPurchase"]
-    "/projects/{projectId}/teams/{teamId}/roles":
+    "/projects/{projectKey}/teams/{teamKey}/roles":
         delete:
             description: Unassigns roles from the team for the project.
-            operationId: deleteProjectTeamRole
+            operationId: deleteProjectTeamTeamKeyRole
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: teamRoleIds
+                  name: teamRoleKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -2444,27 +2348,24 @@ paths:
             tags: ["Project"]
         put:
             description: Assigns roles to the team for the project.
-            operationId: putProjectTeamRole
+            operationId: putProjectTeamTeamKeyRole
             parameters:
                 - in: path
-                  name: projectId
+                  name: projectKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
-                  name: teamRoleIds
+                  name: teamRoleKeys
                   required: true
                   schema:
                       items:
-                          format: int64
-                          type: integer
+                          type: string
                       type: array
             responses:
                 204:
@@ -2495,16 +2396,15 @@ paths:
                                 $ref: "#/components/schemas/TeamRole"
                     description: ""
             tags: ["TeamRole"]
-    "/team-roles/{teamRoleId}":
+    "/team-roles/{teamRoleKey}":
         delete:
             operationId: deleteTeamRole
             parameters:
                 - in: path
-                  name: teamRoleId
+                  name: teamRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -2516,11 +2416,10 @@ paths:
             operationId: getTeamRole
             parameters:
                 - in: path
-                  name: teamRoleId
+                  name: teamRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -2536,11 +2435,10 @@ paths:
             operationId: putTeamRole
             parameters:
                 - in: path
-                  name: teamRoleId
+                  name: teamRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2561,17 +2459,16 @@ paths:
                                 $ref: "#/components/schemas/TeamRole"
                     description: ""
             tags: ["TeamRole"]
-    "/team-roles/{teamRoleId}/audit-entries":
+    "/team-roles/{teamRoleKey}/audit-entries":
         get:
             description: Retrieves the team role's audit history.
-            operationId: getTeamRoleAuditEntriesPage
+            operationId: getTeamRoleTeamRoleKeyAuditEntriesPage
             parameters:
                 - in: path
-                  name: teamRoleId
+                  name: teamRoleKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2595,16 +2492,15 @@ paths:
                                 type: array
                     description: ""
             tags: ["AuditEntry"]
-    "/teams/{teamId}":
+    "/teams/{teamKey}":
         delete:
             operationId: deleteTeam
             parameters:
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -2616,11 +2512,10 @@ paths:
             operationId: getTeam
             parameters:
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -2636,11 +2531,10 @@ paths:
             operationId: putTeam
             parameters:
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2661,17 +2555,16 @@ paths:
                                 $ref: "#/components/schemas/Team"
                     description: ""
             tags: ["Team"]
-    "/teams/{teamId}/audit-entries":
+    "/teams/{teamKey}/audit-entries":
         get:
             description: Retrieves the team's audit history.
-            operationId: getTeamAuditEntriesPage
+            operationId: getTeamTeamKeyAuditEntriesPage
             parameters:
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2695,17 +2588,16 @@ paths:
                                 type: array
                     description: ""
             tags: ["AuditEntry"]
-    "/teams/{teamId}/external-links":
+    "/teams/{teamKey}/external-links":
         get:
             description: Retrieves the team's external links.
-            operationId: getTeamExternalLinksPage
+            operationId: getTeamTeamKeyExternalLinksPage
             parameters:
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -2731,14 +2623,13 @@ paths:
             tags: ["ExternalLink"]
         post:
             description: Adds an external link to the team.
-            operationId: postTeamExternalLink
+            operationId: postTeamTeamKeyExternalLink
             parameters:
                 - in: path
-                  name: teamId
+                  name: teamKey
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             requestBody:
                 content:
                     application/json:

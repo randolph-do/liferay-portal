@@ -72,11 +72,18 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	public Team deleteTeam(long teamId) throws PortalException {
 		Team team = teamLocalService.getTeam(teamId);
 
+		return deleteTeam(team);
+	}
+
+	@Override
+	public Team deleteTeam(Team team) throws PortalException {
+
 		// External links
 
 		long classNameId = classNameLocalService.getClassNameId(Team.class);
 
-		_externalLinkLocalService.deleteExternalLinks(classNameId, teamId);
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, team.getTeamId());
 
 		// Resources
 
@@ -86,9 +93,9 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		// Team project roles
 
-		teamProjectRolePersistence.removeByTeamId(teamId);
+		teamProjectRolePersistence.removeByTeamId(team.getTeamId());
 
-		return teamPersistence.remove(teamId);
+		return teamPersistence.remove(team);
 	}
 
 	public List<Team> getAccountTeams(long accountId, int start, int end) {

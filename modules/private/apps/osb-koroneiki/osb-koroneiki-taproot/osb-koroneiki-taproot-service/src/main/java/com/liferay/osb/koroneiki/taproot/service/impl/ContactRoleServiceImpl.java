@@ -57,6 +57,18 @@ public class ContactRoleServiceImpl extends ContactRoleServiceBaseImpl {
 		return contactRoleLocalService.deleteContactRole(contactRoleId);
 	}
 
+	public ContactRole deleteContactRole(String contactRoleKey)
+		throws PortalException {
+
+		ContactRole contactRole = contactRoleLocalService.getContactRole(
+			contactRoleKey);
+
+		_contactRolePermission.check(
+			getPermissionChecker(), contactRole, ActionKeys.DELETE);
+
+		return contactRoleLocalService.deleteContactRole(contactRole);
+	}
+
 	public ContactRole getContactRole(long contactRoleId)
 		throws PortalException {
 
@@ -64,6 +76,18 @@ public class ContactRoleServiceImpl extends ContactRoleServiceBaseImpl {
 			getPermissionChecker(), contactRoleId, ActionKeys.VIEW);
 
 		return contactRoleLocalService.getContactRole(contactRoleId);
+	}
+
+	public ContactRole getContactRole(String contactRoleKey)
+		throws PortalException {
+
+		ContactRole contactRole = contactRoleLocalService.getContactRole(
+			contactRoleKey);
+
+		_contactRolePermission.check(
+			getPermissionChecker(), contactRole, ActionKeys.VIEW);
+
+		return contactRole;
 	}
 
 	public ContactRole updateContactRole(
@@ -75,6 +99,20 @@ public class ContactRoleServiceImpl extends ContactRoleServiceBaseImpl {
 
 		return contactRoleLocalService.updateContactRole(
 			contactRoleId, name, description);
+	}
+
+	public ContactRole updateContactRole(
+			String contactRoleKey, String name, String description)
+		throws PortalException {
+
+		ContactRole contactRole = contactRoleLocalService.getContactRole(
+			contactRoleKey);
+
+		_contactRolePermission.check(
+			getPermissionChecker(), contactRole, ActionKeys.UPDATE);
+
+		return contactRoleLocalService.updateContactRole(
+			contactRole.getContactRoleId(), name, description);
 	}
 
 	@Reference

@@ -35,36 +35,41 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class TeamResourceImpl extends BaseTeamResourceImpl {
 
 	@Override
-	public void deleteTeam(Long teamId) throws Exception {
-		_teamService.deleteTeam(teamId);
+	public void deleteTeam(String teamKey) throws Exception {
+		_teamService.deleteTeam(teamKey);
 	}
 
 	@Override
-	public Page<Team> getAccountTeamsPage(Long accountId, Pagination pagination)
+	public Page<Team> getAccountAccountKeyTeamsPage(
+			String accountKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_teamService.getAccountTeams(
-					accountId, pagination.getStartPosition(),
+					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				TeamUtil::toTeam),
-			pagination, _teamService.getAccountTeamsCount(accountId));
+			pagination, _teamService.getAccountTeamsCount(accountKey));
 	}
 
 	@Override
-	public Team getTeam(Long teamId) throws Exception {
-		return TeamUtil.toTeam(_teamService.getTeam(teamId));
+	public Team getTeam(String teamKey) throws Exception {
+		return TeamUtil.toTeam(_teamService.getTeam(teamKey));
 	}
 
 	@Override
-	public Team postAccountTeam(Long accountId, Team team) throws Exception {
-		return TeamUtil.toTeam(_teamService.addTeam(accountId, team.getName()));
+	public Team postAccountAccountKeyTeam(String accountKey, Team team)
+		throws Exception {
+
+		return TeamUtil.toTeam(
+			_teamService.addTeam(accountKey, team.getName()));
 	}
 
 	@Override
-	public Team putTeam(Long teamId, Team team) throws Exception {
-		return TeamUtil.toTeam(_teamService.updateTeam(teamId, team.getName()));
+	public Team putTeam(String teamKey, Team team) throws Exception {
+		return TeamUtil.toTeam(
+			_teamService.updateTeam(teamKey, team.getName()));
 	}
 
 	@Reference

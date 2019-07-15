@@ -75,13 +75,20 @@ public class ProductEntryLocalServiceImpl
 		ProductEntry productEntry = productEntryLocalService.getProductEntry(
 			productEntryId);
 
+		return deleteProductEntry(productEntry);
+	}
+
+	@Override
+	public ProductEntry deleteProductEntry(ProductEntry productEntry)
+		throws PortalException {
+
 		// External links
 
 		long classNameId = classNameLocalService.getClassNameId(
 			ProductEntry.class);
 
 		_externalLinkLocalService.deleteExternalLinks(
-			classNameId, productEntryId);
+			classNameId, productEntry.getProductEntryId());
 
 		// Resources
 
@@ -90,7 +97,7 @@ public class ProductEntryLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			productEntry.getProductEntryId());
 
-		return productEntryPersistence.remove(productEntryId);
+		return productEntryPersistence.remove(productEntry);
 	}
 
 	public ProductEntry getProductEntry(String productEntryKey)

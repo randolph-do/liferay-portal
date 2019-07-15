@@ -84,22 +84,21 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Account deleteAccount(long accountId) throws PortalException {
-		Account account = accountLocalService.getAccount(accountId);
-
-		if (projectPersistence.countByAccountId(accountId) > 0) {
+	public Account deleteAccount(Account account) throws PortalException {
+		if (projectPersistence.countByAccountId(account.getAccountId()) > 0) {
 			throw new RequiredAccountException();
 		}
 
 		// Contact account roles
 
-		contactAccountRolePersistence.removeByAccountId(accountId);
+		contactAccountRolePersistence.removeByAccountId(account.getAccountId());
 
 		// External links
 
 		long classNameId = classNameLocalService.getClassNameId(Account.class);
 
-		_externalLinkLocalService.deleteExternalLinks(classNameId, accountId);
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, account.getAccountId());
 
 		// Resources
 
@@ -109,9 +108,16 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 		// Teams
 
-		teamPersistence.removeByAccountId(accountId);
+		teamPersistence.removeByAccountId(account.getAccountId());
 
-		return accountPersistence.remove(accountId);
+		return accountPersistence.remove(account);
+	}
+
+	@Override
+	public Account deleteAccount(long accountId) throws PortalException {
+		Account account = accountLocalService.getAccount(accountId);
+
+		return deleteAccount(account);
 	}
 
 	public Account getAccount(String accountKey) throws PortalException {

@@ -15,10 +15,14 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
+import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
 import com.liferay.osb.koroneiki.taproot.permission.ContactPermission;
 import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,6 +65,16 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 		return contactLocalService.deleteContact(contactId);
 	}
 
+	public Contact deleteContact(String contactKey) throws PortalException {
+		Contact contact = contactLocalService.getContactByContactKey(
+			contactKey);
+
+		_contactPermission.check(
+			getPermissionChecker(), contact, ActionKeys.DELETE);
+
+		return contactLocalService.deleteContact(contact);
+	}
+
 	public List<Contact> getAccountContacts(long accountId, int start, int end)
 		throws PortalException {
 
@@ -70,6 +84,19 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 		return contactLocalService.getAccountContacts(accountId, start, end);
 	}
 
+	public List<Contact> getAccountContacts(
+			String accountKey, int start, int end)
+		throws PortalException {
+
+		Account account = _accountLocalService.getAccount(accountKey);
+
+		_accountPermission.check(
+			getPermissionChecker(), account, ActionKeys.VIEW);
+
+		return contactLocalService.getAccountContacts(
+			account.getAccountId(), start, end);
+	}
+
 	public int getAccountContactsCount(long accountId) throws PortalException {
 		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
@@ -77,11 +104,35 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 		return contactLocalService.getAccountContactsCount(accountId);
 	}
 
+	public int getAccountContactsCount(String accountKey)
+		throws PortalException {
+
+		Account account = _accountLocalService.getAccount(accountKey);
+
+		_accountPermission.check(
+			getPermissionChecker(), account, ActionKeys.VIEW);
+
+		return contactLocalService.getAccountContactsCount(
+			account.getAccountId());
+	}
+
 	public Contact getContact(long contactId) throws PortalException {
 		_contactPermission.check(
 			getPermissionChecker(), contactId, ActionKeys.VIEW);
 
 		return contactLocalService.getContact(contactId);
+	}
+
+	public Contact getContactByContactKey(String contactKey)
+		throws PortalException {
+
+		Contact contact = contactLocalService.getContactByContactKey(
+			contactKey);
+
+		_contactPermission.check(
+			getPermissionChecker(), contact, ActionKeys.VIEW);
+
+		return contact;
 	}
 
 	public List<Contact> getProjectContacts(long projectId, int start, int end)
@@ -93,11 +144,36 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 		return contactLocalService.getProjectContacts(projectId, start, end);
 	}
 
+	public List<Contact> getProjectContacts(
+			String projectKey, int start, int end)
+		throws PortalException {
+
+		Project project = _projectLocalService.getProject(projectKey);
+
+		_projectPermission.check(
+			getPermissionChecker(), project, ActionKeys.VIEW);
+
+		return contactLocalService.getProjectContacts(
+			project.getProjectId(), start, end);
+	}
+
 	public int getProjectContactsCount(long projectId) throws PortalException {
 		_projectPermission.check(
 			getPermissionChecker(), projectId, ActionKeys.VIEW);
 
 		return contactLocalService.getProjectContactsCount(projectId);
+	}
+
+	public int getProjectContactsCount(String projectKey)
+		throws PortalException {
+
+		Project project = _projectLocalService.getProject(projectKey);
+
+		_projectPermission.check(
+			getPermissionChecker(), project, ActionKeys.VIEW);
+
+		return contactLocalService.getProjectContactsCount(
+			project.getProjectId());
 	}
 
 	public Contact updateContact(
@@ -114,10 +190,16 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	}
 
 	@Reference
+	private AccountLocalService _accountLocalService;
+
+	@Reference
 	private AccountPermission _accountPermission;
 
 	@Reference
 	private ContactPermission _contactPermission;
+
+	@Reference
+	private ProjectLocalService _projectLocalService;
 
 	@Reference
 	private ProjectPermission _projectPermission;

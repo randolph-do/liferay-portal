@@ -53,10 +53,11 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	@Override
-	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
+	public Page<PostalAddress> getAccountAccountKeyPostalAddressesPage(
+			String accountKey)
 		throws Exception {
 
-		Account account = _accountService.getAccount(accountId);
+		Account account = _accountService.getAccount(accountKey);
 
 		return Page.of(
 			transform(
@@ -75,9 +76,11 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	@Override
-	public PostalAddress postAccountPostalAddress(
-			Long accountId, PostalAddress postalAddress)
+	public PostalAddress postAccountAccountKeyPostalAddress(
+			String accountKey, PostalAddress postalAddress)
 		throws Exception {
+
+		Account account = _accountService.getAccount(accountKey);
 
 		long countryId = 0;
 		long regionId = 0;
@@ -114,7 +117,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		return PostalAddressUtil.toPostalAddress(
 			_addressService.addAddress(
-				Account.class.getName(), accountId,
+				Account.class.getName(), account.getAccountId(),
 				postalAddress.getStreetAddressLine1(),
 				postalAddress.getStreetAddressLine2(),
 				postalAddress.getStreetAddressLine2(),

@@ -108,11 +108,8 @@ public class ContactRoleLocalServiceImpl
 	}
 
 	@Override
-	public ContactRole deleteContactRole(long contactRoleId)
+	public ContactRole deleteContactRole(ContactRole contactRole)
 		throws PortalException {
-
-		ContactRole contactRole = contactRoleLocalService.getContactRole(
-			contactRoleId);
 
 		if (contactRole.isSystem()) {
 			throw new ContactRoleSystemException();
@@ -120,15 +117,18 @@ public class ContactRoleLocalServiceImpl
 
 		// Contact account roles
 
-		contactAccountRolePersistence.removeByContactRoleId(contactRoleId);
+		contactAccountRolePersistence.removeByContactRoleId(
+			contactRole.getContactRoleId());
 
 		// Contact project roles
 
-		contactProjectRolePersistence.removeByContactRoleId(contactRoleId);
+		contactProjectRolePersistence.removeByContactRoleId(
+			contactRole.getContactRoleId());
 
 		// Contact team roles
 
-		contactTeamRolePersistence.removeByContactRoleId(contactRoleId);
+		contactTeamRolePersistence.removeByContactRoleId(
+			contactRole.getContactRoleId());
 
 		// Resources
 
@@ -136,7 +136,17 @@ public class ContactRoleLocalServiceImpl
 			contactRole.getCompanyId(), ContactRole.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, contactRole.getContactRoleId());
 
-		return contactRolePersistence.remove(contactRoleId);
+		return contactRolePersistence.remove(contactRole);
+	}
+
+	@Override
+	public ContactRole deleteContactRole(long contactRoleId)
+		throws PortalException {
+
+		ContactRole contactRole = contactRoleLocalService.getContactRole(
+			contactRoleId);
+
+		return deleteContactRole(contactRole);
 	}
 
 	public List<ContactRole> getContactAccountContactRoles(

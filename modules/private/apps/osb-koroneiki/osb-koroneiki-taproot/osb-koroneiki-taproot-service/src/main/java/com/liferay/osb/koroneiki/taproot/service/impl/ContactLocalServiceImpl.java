@@ -74,26 +74,26 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Contact deleteContact(long contactId) throws PortalException {
-		Contact contact = contactLocalService.getContact(contactId);
+	public Contact deleteContact(Contact contact) throws PortalException {
 
 		// Contact account roles
 
-		contactAccountRolePersistence.removeByContactId(contactId);
+		contactAccountRolePersistence.removeByContactId(contact.getContactId());
 
 		// Contact project roles
 
-		contactProjectRolePersistence.removeByContactId(contactId);
+		contactProjectRolePersistence.removeByContactId(contact.getContactId());
 
 		// Contact team roles
 
-		contactTeamRolePersistence.removeByContactId(contactId);
+		contactTeamRolePersistence.removeByContactId(contact.getContactId());
 
 		// External links
 
 		long classNameId = classNameLocalService.getClassNameId(Contact.class);
 
-		_externalLinkLocalService.deleteExternalLinks(classNameId, contactId);
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, contact.getContactId());
 
 		// Resources
 
@@ -101,7 +101,14 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			contact.getCompanyId(), Contact.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, contact.getContactId());
 
-		return contactPersistence.remove(contactId);
+		return contactPersistence.remove(contact);
+	}
+
+	@Override
+	public Contact deleteContact(long contactId) throws PortalException {
+		Contact contact = contactLocalService.getContact(contactId);
+
+		return deleteContact(contact);
 	}
 
 	public List<Contact> getAccountContacts(

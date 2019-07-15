@@ -54,11 +54,29 @@ public class TeamRoleServiceImpl extends TeamRoleServiceBaseImpl {
 		return teamRoleLocalService.deleteTeamRole(teamRoleId);
 	}
 
+	public TeamRole deleteTeamRole(String teamRoleKey) throws PortalException {
+		TeamRole teamRole = teamRoleLocalService.getTeamRole(teamRoleKey);
+
+		_teamRolePermission.check(
+			getPermissionChecker(), teamRole, ActionKeys.DELETE);
+
+		return teamRoleLocalService.deleteTeamRole(teamRole);
+	}
+
 	public TeamRole getTeamRole(long teamRoleId) throws PortalException {
 		_teamRolePermission.check(
 			getPermissionChecker(), teamRoleId, ActionKeys.VIEW);
 
 		return teamRoleLocalService.getTeamRole(teamRoleId);
+	}
+
+	public TeamRole getTeamRole(String teamRoleKey) throws PortalException {
+		TeamRole teamRole = teamRoleLocalService.getTeamRole(teamRoleKey);
+
+		_teamRolePermission.check(
+			getPermissionChecker(), teamRole, ActionKeys.VIEW);
+
+		return teamRole;
 	}
 
 	public TeamRole updateTeamRole(
@@ -70,6 +88,19 @@ public class TeamRoleServiceImpl extends TeamRoleServiceBaseImpl {
 
 		return teamRoleLocalService.updateTeamRole(
 			getUserId(), teamRoleId, name, description);
+	}
+
+	public TeamRole updateTeamRole(
+			String teamRoleKey, String name, String description)
+		throws PortalException {
+
+		TeamRole teamRole = teamRoleLocalService.getTeamRole(teamRoleKey);
+
+		_teamRolePermission.check(
+			getPermissionChecker(), teamRole, ActionKeys.UPDATE);
+
+		return teamRoleLocalService.updateTeamRole(
+			getUserId(), teamRole.getTeamRoleId(), name, description);
 	}
 
 	@Reference

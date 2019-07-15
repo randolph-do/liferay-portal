@@ -42,63 +42,64 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProjectResourceImpl extends BaseProjectResourceImpl {
 
 	@Override
-	public void deleteProject(Long projectId) throws Exception {
-		_projectService.deleteProject(projectId);
+	public void deleteProject(String projectKey) throws Exception {
+		_projectService.deleteProject(projectKey);
 	}
 
 	@Override
-	public void deleteProjectContact(Long projectId, Long[] contactIds)
+	public void deleteProjectContact(String projectKey, String[] contactKeys)
 		throws Exception {
 
-		for (Long contactId : contactIds) {
+		for (String contactKey : contactKeys) {
 			_contactProjectRoleService.deleteContactProjectRoles(
-				contactId, projectId);
+				contactKey, projectKey);
 		}
 	}
 
 	@Override
-	public void deleteProjectContactRole(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public void deleteProjectContactContactKeyRole(
+			String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception {
 
-		for (Long contactRoleId : contactRoleIds) {
+		for (String contactRoleKey : contactRoleKeys) {
 			_contactProjectRoleService.deleteContactProjectRole(
-				contactId, projectId, contactRoleId);
+				contactKey, projectKey, contactRoleKey);
 		}
 	}
 
 	@Override
-	public void deleteProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public void deleteProjectTeamTeamKeyRole(
+			String projectKey, String teamKey, String[] teamRoleKeys)
 		throws Exception {
 
-		for (long teamRoleId : teamRoleIds) {
+		for (String teamRoleKey : teamRoleKeys) {
 			_teamProjectRoleService.deleteTeamProjectRole(
-				teamId, projectId, teamRoleId);
+				teamKey, projectKey, teamRoleKey);
 		}
 	}
 
 	@Override
-	public Page<Project> getAccountProjectsPage(
-			Long accountId, Pagination pagination)
+	public Page<Project> getAccountAccountKeyProjectsPage(
+			String accountKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_projectService.getProjects(
-					accountId, pagination.getStartPosition(),
+					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				ProjectUtil::toProject),
-			pagination, _projectService.getProjectsCount(accountId));
+			pagination, _projectService.getProjectsCount(accountKey));
 	}
 
 	@Override
-	public Project getProject(Long projectId) throws Exception {
-		return ProjectUtil.toProject(_projectService.getProject(projectId));
+	public Project getProject(String projectKey) throws Exception {
+		return ProjectUtil.toProject(_projectService.getProject(projectKey));
 	}
 
 	@Override
-	public Project postAccountProject(Long accountId, Project project)
+	public Project postAccountAccountKeyProject(
+			String accountKey, Project project)
 		throws Exception {
 
 		Project.Industry projectIndustry = project.getIndustry();
@@ -111,13 +112,13 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 
 		return ProjectUtil.toProject(
 			_projectService.addProject(
-				accountId, project.getName(), project.getCode(),
+				accountKey, project.getName(), project.getCode(),
 				projectTier.toString(), projectIndustry.toString(),
 				project.getNotes(), project.getSoldBy(), status));
 	}
 
 	@Override
-	public Project putProject(Long projectId, Project project)
+	public Project putProject(String projectKey, Project project)
 		throws Exception {
 
 		Project.Industry projectIndustry = project.getIndustry();
@@ -130,43 +131,43 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 
 		return ProjectUtil.toProject(
 			_projectService.updateProject(
-				projectId, project.getName(), project.getCode(),
+				projectKey, project.getName(), project.getCode(),
 				projectTier.toString(), projectIndustry.toString(),
 				project.getNotes(), project.getSoldBy(), status));
 	}
 
 	@Override
-	public void putProjectContact(Long projectId, Long[] contactIds)
+	public void putProjectContact(String projectKey, String[] contactKeys)
 		throws Exception {
 
 		ContactRole contactRole = _contactRoleLocalService.getMemberContactRole(
 			ContactRoleType.PROJECT);
 
-		for (Long contactId : contactIds) {
+		for (String contactKey : contactKeys) {
 			_contactProjectRoleService.addContactProjectRole(
-				contactId, projectId, contactRole.getContactRoleId());
+				contactKey, projectKey, contactRole.getContactRoleKey());
 		}
 	}
 
 	@Override
-	public void putProjectContactRole(
-			Long projectId, Long contactId, Long[] contactRoleIds)
+	public void putProjectContactContactKeyRole(
+			String projectKey, String contactKey, String[] contactRoleKeys)
 		throws Exception {
 
-		for (Long contactRoleId : contactRoleIds) {
+		for (String contactRoleKey : contactRoleKeys) {
 			_contactProjectRoleService.addContactProjectRole(
-				contactId, projectId, contactRoleId);
+				contactKey, projectKey, contactRoleKey);
 		}
 	}
 
 	@Override
-	public void putProjectTeamRole(
-			Long projectId, Long teamId, Long[] teamRoleIds)
+	public void putProjectTeamTeamKeyRole(
+			String projectKey, String teamKey, String[] teamRoleKeys)
 		throws Exception {
 
-		for (long teamRoleId : teamRoleIds) {
+		for (String teamRoleKey : teamRoleKeys) {
 			_teamProjectRoleService.addTeamProjectRole(
-				teamId, projectId, teamRoleId);
+				teamKey, projectKey, teamRoleKey);
 		}
 	}
 

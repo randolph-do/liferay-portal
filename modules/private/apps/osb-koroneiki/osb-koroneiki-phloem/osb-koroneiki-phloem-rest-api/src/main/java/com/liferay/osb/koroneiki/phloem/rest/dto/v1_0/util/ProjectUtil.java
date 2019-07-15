@@ -29,14 +29,14 @@ public class ProjectUtil {
 
 		return new Project() {
 			{
-				accountId = project.getAccountId();
+				accountKey = project.getAccountKey();
 				code = project.getCode();
 				dateCreated = project.getCreateDate();
 				dateModified = project.getModifiedDate();
 				externalLinks = TransformUtil.transformToArray(
 					project.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = project.getProjectId();
+				key = project.getProjectKey();
 				industry = Industry.create(project.getIndustry());
 				name = project.getName();
 				notes = project.getNotes();

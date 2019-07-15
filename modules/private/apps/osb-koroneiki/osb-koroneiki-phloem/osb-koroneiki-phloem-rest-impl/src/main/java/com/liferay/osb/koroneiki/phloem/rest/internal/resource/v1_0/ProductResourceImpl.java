@@ -35,14 +35,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Override
-	public void deleteProduct(Long productId) throws Exception {
-		_productEntryService.deleteProductEntry(productId);
+	public void deleteProduct(String productKey) throws Exception {
+		_productEntryService.deleteProductEntry(productKey);
 	}
 
 	@Override
-	public Product getProduct(Long productId) throws Exception {
+	public Product getProduct(String productKey) throws Exception {
 		return ProductUtil.toProduct(
-			_productEntryService.getProductEntry(productId));
+			_productEntryService.getProductEntry(productKey));
 	}
 
 	@Override
@@ -64,12 +64,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	}
 
 	@Override
-	public Product putProduct(Long productId, Product product)
+	public Product putProduct(String productKey, Product product)
 		throws Exception {
 
 		return ProductUtil.toProduct(
 			_productEntryService.updateProductEntry(
-				productId, product.getName()));
+				productKey, product.getName()));
 	}
 
 	@Reference

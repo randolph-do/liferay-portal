@@ -86,17 +86,24 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 	@Override
 	public Project deleteProject(long projectId) throws PortalException {
-		Project project = projectLocalService.getProject(projectId);
+		Project project = getProject(projectId);
+
+		return deleteProject(project);
+	}
+
+	@Override
+	public Project deleteProject(Project project) throws PortalException {
 
 		// Contact project roles
 
-		contactProjectRolePersistence.removeByProjectId(projectId);
+		contactProjectRolePersistence.removeByProjectId(project.getProjectId());
 
 		// External links
 
 		long classNameId = classNameLocalService.getClassNameId(Project.class);
 
-		_externalLinkLocalService.deleteExternalLinks(classNameId, projectId);
+		_externalLinkLocalService.deleteExternalLinks(
+			classNameId, project.getProjectId());
 
 		// Resources
 
@@ -106,9 +113,9 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 		// Team project roles
 
-		teamProjectRolePersistence.removeByProjectId(projectId);
+		teamProjectRolePersistence.removeByProjectId(project.getProjectId());
 
-		return projectPersistence.remove(projectId);
+		return projectPersistence.remove(project);
 	}
 
 	public Project getProject(String projectKey) throws PortalException {

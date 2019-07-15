@@ -40,6 +40,12 @@ public class ProjectImpl extends ProjectBaseImpl {
 		return AccountLocalServiceUtil.getAccount(getAccountId());
 	}
 
+	public String getAccountKey() throws PortalException {
+		Account account = getAccount();
+
+		return account.getAccountKey();
+	}
+
 	public List<ExternalLink> getExternalLinks() {
 		return ExternalLinkLocalServiceUtil.getExternalLinks(
 			Project.class.getName(), getProjectId(), QueryUtil.ALL_POS,

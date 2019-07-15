@@ -71,6 +71,19 @@ public class AuditEntryServiceImpl extends AuditEntryServiceBaseImpl {
 		return auditEntry;
 	}
 
+	public AuditEntry getAuditEntry(String auditEntryKey)
+		throws PortalException {
+
+		AuditEntry auditEntry = auditEntryLocalService.getAuditEntry(
+			auditEntryKey);
+
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), auditEntry.getClassNameId(),
+			auditEntry.getClassPK(), ActionKeys.VIEW);
+
+		return auditEntry;
+	}
+
 	@Reference
 	private ModelPermissionRegistry _modelPermissionRegistry;
 

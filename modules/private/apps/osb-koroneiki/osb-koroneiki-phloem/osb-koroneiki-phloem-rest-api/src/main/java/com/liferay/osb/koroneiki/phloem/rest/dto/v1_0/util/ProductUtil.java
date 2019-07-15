@@ -34,7 +34,7 @@ public class ProductUtil {
 				externalLinks = TransformUtil.transformToArray(
 					productEntry.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = productEntry.getProductEntryId();
+				key = productEntry.getProductEntryKey();
 				name = productEntry.getName();
 			}
 		};

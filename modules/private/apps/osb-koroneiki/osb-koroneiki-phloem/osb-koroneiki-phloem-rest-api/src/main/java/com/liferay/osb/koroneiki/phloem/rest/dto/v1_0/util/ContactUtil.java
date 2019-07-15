@@ -36,7 +36,7 @@ public class ContactUtil {
 					contact.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				firstName = contact.getFirstName();
-				id = contact.getContactId();
+				key = contact.getContactKey();
 				languageId = contact.getLanguageId();
 				lastName = contact.getLastName();
 			}

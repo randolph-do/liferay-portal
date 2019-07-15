@@ -34,14 +34,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class TeamRoleResourceImpl extends BaseTeamRoleResourceImpl {
 
 	@Override
-	public void deleteTeamRole(Long teamRoleId) throws Exception {
-		_teamRoleService.deleteTeamRole(teamRoleId);
+	public void deleteTeamRole(String teamRoleKey) throws Exception {
+		_teamRoleService.deleteTeamRole(teamRoleKey);
 	}
 
 	@Override
-	public TeamRole getTeamRole(Long teamRoleId) throws Exception {
+	public TeamRole getTeamRole(String teamRoleKey) throws Exception {
 		return TeamRoleUtil.toTeamRole(
-			_teamRoleService.getTeamRole(teamRoleId));
+			_teamRoleService.getTeamRole(teamRoleKey));
 	}
 
 	@Override
@@ -56,12 +56,12 @@ public class TeamRoleResourceImpl extends BaseTeamRoleResourceImpl {
 	}
 
 	@Override
-	public TeamRole putTeamRole(Long teamRoleId, TeamRole teamRole)
+	public TeamRole putTeamRole(String teamRoleKey, TeamRole teamRole)
 		throws Exception {
 
 		return TeamRoleUtil.toTeamRole(
 			_teamRoleService.updateTeamRole(
-				teamRoleId, teamRole.getName(), teamRole.getDescription()));
+				teamRoleKey, teamRole.getName(), teamRole.getDescription()));
 	}
 
 	@Reference

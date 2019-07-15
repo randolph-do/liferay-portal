@@ -40,35 +40,35 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Override
-	public void deleteAccount(Long accountId) throws Exception {
-		_accountService.deleteAccount(accountId);
+	public void deleteAccount(String accountKey) throws Exception {
+		_accountService.deleteAccount(accountKey);
 	}
 
 	@Override
-	public void deleteAccountContact(Long accountId, Long[] contactIds)
+	public void deleteAccountContact(String accountKey, String[] contactKeys)
 		throws Exception {
 
-		for (Long contactId : contactIds) {
+		for (String contactKey : contactKeys) {
 			_contactAccountRoleService.deleteContactAccountRoles(
-				contactId, accountId);
+				contactKey, accountKey);
 		}
 	}
 
 	@Override
-	public void deleteAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
+	public void deleteAccountContactContactKeyRole(
+			String accountKey, String contactKey, String[] contactRoleKeys)
 		throws Exception {
 
-		for (Long contactRoleId : contactRoleIds) {
+		for (String contactRoleKey : contactRoleKeys) {
 			_contactAccountRoleService.deleteContactAccountRole(
-				contactId, accountId, contactRoleId);
+				contactKey, accountKey, contactRoleKey);
 		}
 	}
 
 	@Override
-	public Account getAccount(Long accountId) throws Exception {
+	public Account getAccount(String accountKey) throws Exception {
 		return AccountUtil.toAccount(
-			_accountService.getAccount(accountId),
+			_accountService.getAccount(accountKey),
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
@@ -88,7 +88,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	@Override
-	public Account putAccount(Long accountId, Account account)
+	public Account putAccount(String accountKey, Account account)
 		throws Exception {
 
 		Account.Status accountStatus = account.getStatus();
@@ -97,7 +97,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		return AccountUtil.toAccount(
 			_accountService.updateAccount(
-				accountId, account.getName(), account.getDescription(), 0,
+				accountKey, account.getName(), account.getDescription(), 0,
 				account.getContactEmailAddress(),
 				account.getProfileEmailAddress(), account.getPhoneNumber(),
 				account.getFaxNumber(), account.getWebsite(), status),
@@ -105,26 +105,26 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	@Override
-	public void putAccountContact(Long accountId, Long[] contactIds)
+	public void putAccountContact(String accountKey, String[] contactKeys)
 		throws Exception {
 
 		ContactRole contactRole = _contactRoleLocalService.getMemberContactRole(
 			ContactRoleType.ACCOUNT);
 
-		for (Long contactId : contactIds) {
+		for (String contactKey : contactKeys) {
 			_contactAccountRoleService.addContactAccountRole(
-				contactId, accountId, contactRole.getContactRoleId());
+				contactKey, accountKey, contactRole.getContactRoleKey());
 		}
 	}
 
 	@Override
-	public void putAccountContactRole(
-			Long accountId, Long contactId, Long[] contactRoleIds)
+	public void putAccountContactContactKeyRole(
+			String accountKey, String contactKey, String[] contactRoleKeys)
 		throws Exception {
 
-		for (Long contactRoleId : contactRoleIds) {
+		for (String contactRoleKey : contactRoleKeys) {
 			_contactAccountRoleService.addContactAccountRole(
-				contactId, accountId, contactRoleId);
+				contactKey, accountKey, contactRoleKey);
 		}
 	}
 

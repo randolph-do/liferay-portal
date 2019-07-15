@@ -44,57 +44,58 @@ public class ProductConsumptionResourceImpl
 	extends BaseProductConsumptionResourceImpl {
 
 	@Override
-	public void deleteProductConsumption(Long productConsumptionId)
+	public void deleteProductConsumption(String productConsumptionKey)
 		throws Exception {
 
 		_productConsumptionService.deleteProductConsumption(
-			productConsumptionId);
+			productConsumptionKey);
 	}
 
 	@Override
-	public Page<ProductConsumption> getAccountProductConsumptionsPage(
-			Long accountId, Pagination pagination)
+	public Page<ProductConsumption> getAccountAccountKeyProductConsumptionsPage(
+			String accountKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_productConsumptionService.getAccountProductConsumptions(
-					accountId, pagination.getStartPosition(),
+					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				ProductConsumptionUtil::toProductConsumption),
 			pagination,
 			_productConsumptionService.getAccountProductConsumptionsCount(
-				accountId));
+				accountKey));
 	}
 
 	@Override
-	public ProductConsumption getProductConsumption(Long productConsumptionId)
+	public ProductConsumption getProductConsumption(
+			String productConsumptionKey)
 		throws Exception {
 
 		return ProductConsumptionUtil.toProductConsumption(
 			_productConsumptionService.getProductConsumption(
-				productConsumptionId));
+				productConsumptionKey));
 	}
 
 	@Override
-	public Page<ProductConsumption> getProjectProductConsumptionsPage(
-			Long projectId, Pagination pagination)
+	public Page<ProductConsumption> getProjectProjectKeyProductConsumptionsPage(
+			String projectKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_productConsumptionService.getAccountProductConsumptions(
-					projectId, pagination.getStartPosition(),
+					projectKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				ProductConsumptionUtil::toProductConsumption),
 			pagination,
 			_productConsumptionService.getAccountProductConsumptionsCount(
-				projectId));
+				projectKey));
 	}
 
 	@Override
-	public ProductConsumption postAccountProductConsumption(
-			Long accountId, ProductConsumption productConsumption)
+	public ProductConsumption postAccountAccountKeyProductConsumption(
+			String accountKey, ProductConsumption productConsumption)
 		throws Exception {
 
 		List<ProductField> productFields = getProductFields(
@@ -102,24 +103,24 @@ public class ProductConsumptionResourceImpl
 
 		return ProductConsumptionUtil.toProductConsumption(
 			_productConsumptionService.addProductConsumption(
-				accountId, 0, productConsumption.getProductId(),
+				accountKey, null, productConsumption.getProductKey(),
 				productFields));
 	}
 
 	@Override
-	public ProductConsumption postProjectProductConsumption(
-			Long projectId, ProductConsumption productConsumption)
+	public ProductConsumption postProjectProjectKeyProductConsumption(
+			String projectKey, ProductConsumption productConsumption)
 		throws Exception {
 
-		Project project = _projectLocalService.getProject(projectId);
+		Project project = _projectLocalService.getProject(projectKey);
 
 		List<ProductField> productFields = getProductFields(
 			productConsumption.getProperties());
 
 		return ProductConsumptionUtil.toProductConsumption(
 			_productConsumptionService.addProductConsumption(
-				project.getAccountId(), projectId,
-				productConsumption.getProductId(), productFields));
+				project.getAccountKey(), projectKey,
+				productConsumption.getProductKey(), productFields));
 	}
 
 	protected List<ProductField> getProductFields(

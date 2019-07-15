@@ -58,6 +58,19 @@ public class ProductEntryServiceImpl extends ProductEntryServiceBaseImpl {
 		return productEntryLocalService.deleteProductEntry(productEntryId);
 	}
 
+	@Override
+	public ProductEntry deleteProductEntry(String productEntryKey)
+		throws PortalException {
+
+		ProductEntry productEntry = productEntryLocalService.getProductEntry(
+			productEntryKey);
+
+		_productEntryPermission.check(
+			getPermissionChecker(), productEntry, ActionKeys.DELETE);
+
+		return productEntryLocalService.deleteProductEntry(productEntry);
+	}
+
 	public List<ProductEntry> getProductEntries(int start, int end)
 		throws PortalException {
 
@@ -93,6 +106,18 @@ public class ProductEntryServiceImpl extends ProductEntryServiceBaseImpl {
 		return productEntryLocalService.getProductEntry(productEntryId);
 	}
 
+	public ProductEntry getProductEntry(String productEntryKey)
+		throws PortalException {
+
+		ProductEntry productEntry = productEntryLocalService.getProductEntry(
+			productEntryKey);
+
+		_productEntryPermission.check(
+			getPermissionChecker(), productEntry, ActionKeys.VIEW);
+
+		return productEntry;
+	}
+
 	public ProductEntry updateProductEntry(long productEntryId, String name)
 		throws PortalException {
 
@@ -101,6 +126,19 @@ public class ProductEntryServiceImpl extends ProductEntryServiceBaseImpl {
 
 		return productEntryLocalService.updateProductEntry(
 			productEntryId, name);
+	}
+
+	public ProductEntry updateProductEntry(String productEntryKey, String name)
+		throws PortalException {
+
+		ProductEntry productEntry = productEntryLocalService.getProductEntry(
+			productEntryKey);
+
+		_productEntryPermission.check(
+			getPermissionChecker(), productEntry, ActionKeys.UPDATE);
+
+		return productEntryLocalService.updateProductEntry(
+			productEntry.getProductEntryId(), name);
 	}
 
 	@Reference

@@ -24,6 +24,12 @@ import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.model.TeamRole;
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
+import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
+import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -42,58 +48,76 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AuditEntryResourceImpl extends BaseAuditEntryResourceImpl {
 
 	@Override
-	public Page<AuditEntry> getAccountAuditEntriesPage(
-			Long accountId, Pagination pagination)
+	public Page<AuditEntry> getAccountAccountKeyAuditEntriesPage(
+			String accountKey, Pagination pagination)
 		throws Exception {
 
-		return getAuditEntriesPage(Account.class, accountId, pagination);
-	}
-
-	@Override
-	public AuditEntry getAuditEntry(Long auditEntryId) throws Exception {
-		return AuditEntryUtil.toAuditEntry(
-			_auditEntryService.getAuditEntry(auditEntryId));
-	}
-
-	@Override
-	public Page<AuditEntry> getContactAuditEntriesPage(
-			Long contactId, Pagination pagination)
-		throws Exception {
-
-		return getAuditEntriesPage(Contact.class, contactId, pagination);
-	}
-
-	@Override
-	public Page<AuditEntry> getContactRoleAuditEntriesPage(
-			Long contactRoleId, Pagination pagination)
-		throws Exception {
+		Account account = _accountLocalService.getAccount(accountKey);
 
 		return getAuditEntriesPage(
-			ContactRole.class, contactRoleId, pagination);
+			Account.class, account.getAccountId(), pagination);
 	}
 
 	@Override
-	public Page<AuditEntry> getProjectAuditEntriesPage(
-			Long projectId, Pagination pagination)
-		throws Exception {
-
-		return getAuditEntriesPage(Project.class, projectId, pagination);
+	public AuditEntry getAuditEntry(String auditEntryKey) throws Exception {
+		return AuditEntryUtil.toAuditEntry(
+			_auditEntryService.getAuditEntry(auditEntryKey));
 	}
 
 	@Override
-	public Page<AuditEntry> getTeamAuditEntriesPage(
-			Long teamId, Pagination pagination)
+	public Page<AuditEntry> getContactContactKeyAuditEntriesPage(
+			String contactKey, Pagination pagination)
 		throws Exception {
 
-		return getAuditEntriesPage(Team.class, teamId, pagination);
+		Contact contact = _contactLocalService.getContactByContactKey(
+			contactKey);
+
+		return getAuditEntriesPage(
+			Contact.class, contact.getContactId(), pagination);
 	}
 
 	@Override
-	public Page<AuditEntry> getTeamRoleAuditEntriesPage(
-			Long teamRoleId, Pagination pagination)
+	public Page<AuditEntry> getContactRoleContactRoleKeyAuditEntriesPage(
+			String contactRoleKey, Pagination pagination)
 		throws Exception {
 
-		return getAuditEntriesPage(TeamRole.class, teamRoleId, pagination);
+		ContactRole contactRole = _contactRoleLocalService.getContactRole(
+			contactRoleKey);
+
+		return getAuditEntriesPage(
+			ContactRole.class, contactRole.getContactRoleId(), pagination);
+	}
+
+	@Override
+	public Page<AuditEntry> getProjectProjectKeyAuditEntriesPage(
+			String projectKey, Pagination pagination)
+		throws Exception {
+
+		Project project = _projectLocalService.getProject(projectKey);
+
+		return getAuditEntriesPage(
+			Project.class, project.getProjectId(), pagination);
+	}
+
+	@Override
+	public Page<AuditEntry> getTeamRoleTeamRoleKeyAuditEntriesPage(
+			String teamRoleKey, Pagination pagination)
+		throws Exception {
+
+		TeamRole teamRole = _teamRoleLocalService.getTeamRole(teamRoleKey);
+
+		return getAuditEntriesPage(
+			TeamRole.class, teamRole.getTeamRoleId(), pagination);
+	}
+
+	@Override
+	public Page<AuditEntry> getTeamTeamKeyAuditEntriesPage(
+			String teamKey, Pagination pagination)
+		throws Exception {
+
+		Team team = _teamLocalService.getTeam(teamKey);
+
+		return getAuditEntriesPage(Team.class, team.getTeamId(), pagination);
 	}
 
 	protected Page<AuditEntry> getAuditEntriesPage(
@@ -113,9 +137,27 @@ public class AuditEntryResourceImpl extends BaseAuditEntryResourceImpl {
 	}
 
 	@Reference
+	private AccountLocalService _accountLocalService;
+
+	@Reference
 	private AuditEntryService _auditEntryService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ContactLocalService _contactLocalService;
+
+	@Reference
+	private ContactRoleLocalService _contactRoleLocalService;
+
+	@Reference
+	private ProjectLocalService _projectLocalService;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
+
+	@Reference
+	private TeamRoleLocalService _teamRoleLocalService;
 
 }

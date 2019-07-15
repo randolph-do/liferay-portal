@@ -15,9 +15,11 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
+import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.permission.AccountPermission;
 import com.liferay.osb.koroneiki.taproot.permission.TeamPermission;
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,11 +49,25 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return teamLocalService.addTeam(getUserId(), accountId, name);
 	}
 
+	public Team addTeam(String accountKey, String name) throws PortalException {
+		Account account = _accountLocalService.getAccount(accountKey);
+
+		return addTeam(account.getAccountId(), name);
+	}
+
 	public Team deleteTeam(long teamId) throws PortalException {
 		_teamPermission.check(
 			getPermissionChecker(), teamId, ActionKeys.DELETE);
 
 		return teamLocalService.deleteTeam(teamId);
+	}
+
+	public Team deleteTeam(String teamKey) throws PortalException {
+		Team team = teamLocalService.getTeam(teamKey);
+
+		_teamPermission.check(getPermissionChecker(), team, ActionKeys.DELETE);
+
+		return team;
 	}
 
 	public List<Team> getAccountTeams(long accountId, int start, int end)
@@ -63,11 +79,32 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return teamLocalService.getAccountTeams(accountId, start, end);
 	}
 
+	public List<Team> getAccountTeams(String accountKey, int start, int end)
+		throws PortalException {
+
+		Account account = _accountLocalService.getAccount(accountKey);
+
+		_accountPermission.check(
+			getPermissionChecker(), account, ActionKeys.VIEW);
+
+		return teamLocalService.getAccountTeams(
+			account.getAccountId(), start, end);
+	}
+
 	public int getAccountTeamsCount(long accountId) throws PortalException {
 		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return teamLocalService.getAccountTeamsCount(accountId);
+	}
+
+	public int getAccountTeamsCount(String accountKey) throws PortalException {
+		Account account = _accountLocalService.getAccount(accountKey);
+
+		_accountPermission.check(
+			getPermissionChecker(), account, ActionKeys.VIEW);
+
+		return teamLocalService.getAccountTeamsCount(account.getAccountId());
 	}
 
 	public Team getTeam(long teamId) throws PortalException {
@@ -76,12 +113,31 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return teamLocalService.getTeam(teamId);
 	}
 
+	public Team getTeam(String teamKey) throws PortalException {
+		Team team = teamLocalService.getTeam(teamKey);
+
+		_teamPermission.check(getPermissionChecker(), team, ActionKeys.VIEW);
+
+		return team;
+	}
+
 	public Team updateTeam(long teamId, String name) throws PortalException {
 		_teamPermission.check(
 			getPermissionChecker(), teamId, ActionKeys.UPDATE);
 
 		return teamLocalService.updateTeam(teamId, name);
 	}
+
+	public Team updateTeam(String teamKey, String name) throws PortalException {
+		Team team = teamLocalService.getTeam(teamKey);
+
+		_teamPermission.check(getPermissionChecker(), team, ActionKeys.UPDATE);
+
+		return teamLocalService.updateTeam(team.getTeamId(), name);
+	}
+
+	@Reference
+	private AccountLocalService _accountLocalService;
 
 	@Reference
 	private AccountPermission _accountPermission;

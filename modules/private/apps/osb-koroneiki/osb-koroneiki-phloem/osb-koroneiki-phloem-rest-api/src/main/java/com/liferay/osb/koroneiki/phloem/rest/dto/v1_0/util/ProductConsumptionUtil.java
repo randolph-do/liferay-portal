@@ -30,14 +30,14 @@ public class ProductConsumptionUtil {
 
 		return new ProductConsumption() {
 			{
-				accountId = productConsumption.getAccountId();
+				accountKey = productConsumption.getAccountKey();
 				dateCreated = productConsumption.getCreateDate();
 				externalLinks = TransformUtil.transformToArray(
 					productConsumption.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = productConsumption.getProductConsumptionId();
-				productId = productConsumption.getProductEntryId();
-				projectId = productConsumption.getProjectId();
+				key = productConsumption.getProductConsumptionKey();
+				productKey = productConsumption.getProductEntryKey();
+				projectKey = productConsumption.getProjectKey();
 				properties = productConsumption.getProductFieldsMap();
 			}
 		};

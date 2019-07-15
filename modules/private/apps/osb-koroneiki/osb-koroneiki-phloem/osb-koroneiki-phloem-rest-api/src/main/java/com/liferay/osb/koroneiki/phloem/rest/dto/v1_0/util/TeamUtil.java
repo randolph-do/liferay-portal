@@ -33,7 +33,7 @@ public class TeamUtil {
 				externalLinks = TransformUtil.transformToArray(
 					team.getExternalLinks(), ExternalLinkUtil::toExternalLink,
 					ExternalLink.class);
-				id = team.getTeamId();
+				key = team.getTeamKey();
 				name = team.getName();
 			}
 		};

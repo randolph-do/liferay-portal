@@ -76,6 +76,12 @@ public class TeamRoleLocalServiceImpl extends TeamRoleLocalServiceBaseImpl {
 	public TeamRole deleteTeamRole(long teamRoleId) throws PortalException {
 		TeamRole teamRole = teamRoleLocalService.getTeamRole(teamRoleId);
 
+		return deleteTeamRole(teamRole);
+	}
+
+	@Override
+	public TeamRole deleteTeamRole(TeamRole teamRole) throws PortalException {
+
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -84,9 +90,9 @@ public class TeamRoleLocalServiceImpl extends TeamRoleLocalServiceBaseImpl {
 
 		// Team project roles
 
-		teamProjectRolePersistence.removeByTeamRoleId(teamRoleId);
+		teamProjectRolePersistence.removeByTeamRoleId(teamRole.getTeamRoleId());
 
-		return teamRolePersistence.remove(teamRoleId);
+		return teamRolePersistence.remove(teamRole);
 	}
 
 	public List<TeamRole> getTeamProjectTeamRoles(long projectId, long teamId) {

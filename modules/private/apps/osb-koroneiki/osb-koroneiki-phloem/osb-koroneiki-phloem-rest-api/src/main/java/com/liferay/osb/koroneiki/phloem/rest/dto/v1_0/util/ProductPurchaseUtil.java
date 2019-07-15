@@ -30,14 +30,14 @@ public class ProductPurchaseUtil {
 
 		return new ProductPurchase() {
 			{
-				accountId = productPurchase.getAccountId();
+				accountKey = productPurchase.getAccountKey();
 				dateCreated = productPurchase.getCreateDate();
 				externalLinks = TransformUtil.transformToArray(
 					productPurchase.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
-				id = productPurchase.getProductPurchaseId();
-				productId = productPurchase.getProductEntryId();
-				projectId = productPurchase.getProjectId();
+				key = productPurchase.getProductPurchaseKey();
+				productKey = productPurchase.getProductEntryKey();
+				projectKey = productPurchase.getProjectKey();
 				properties = productPurchase.getProductFieldsMap();
 			}
 		};

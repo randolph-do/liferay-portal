@@ -15,8 +15,14 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
+import com.liferay.osb.koroneiki.taproot.model.Project;
+import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.model.TeamProjectRole;
+import com.liferay.osb.koroneiki.taproot.model.TeamRole;
 import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
+import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
+import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalService;
 import com.liferay.osb.koroneiki.taproot.service.base.TeamProjectRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,6 +53,21 @@ public class TeamProjectRoleServiceImpl extends TeamProjectRoleServiceBaseImpl {
 			teamId, projectId, teamRoleId);
 	}
 
+	public TeamProjectRole addTeamProjectRole(
+			String teamKey, String projectKey, String teamRoleKey)
+		throws PortalException {
+
+		Team team = _teamLocalService.getTeam(teamKey);
+		Project project = _projectLocalService.getProject(projectKey);
+		TeamRole teamRole = _teamRoleLocalService.getTeamRole(teamRoleKey);
+
+		_projectPermission.check(
+			getPermissionChecker(), project, TaprootActionKeys.ASSIGN_TEAM);
+
+		return teamProjectRoleLocalService.addTeamProjectRole(
+			team.getTeamId(), project.getProjectId(), teamRole.getTeamRoleId());
+	}
+
 	public TeamProjectRole deleteTeamProjectRole(
 			long teamId, long projectId, long teamRoleId)
 		throws PortalException {
@@ -56,6 +77,21 @@ public class TeamProjectRoleServiceImpl extends TeamProjectRoleServiceBaseImpl {
 
 		return teamProjectRoleLocalService.deleteTeamProjectRole(
 			teamId, projectId, teamRoleId);
+	}
+
+	public TeamProjectRole deleteTeamProjectRole(
+			String teamKey, String projectKey, String teamRoleKey)
+		throws PortalException {
+
+		Team team = _teamLocalService.getTeam(teamKey);
+		Project project = _projectLocalService.getProject(projectKey);
+		TeamRole teamRole = _teamRoleLocalService.getTeamRole(teamRoleKey);
+
+		_projectPermission.check(
+			getPermissionChecker(), project, TaprootActionKeys.ASSIGN_TEAM);
+
+		return teamProjectRoleLocalService.deleteTeamProjectRole(
+			team.getTeamId(), project.getProjectId(), teamRole.getTeamRoleId());
 	}
 
 	public void deleteTeamProjectRoles(long teamId, long projectId)
@@ -68,6 +104,15 @@ public class TeamProjectRoleServiceImpl extends TeamProjectRoleServiceBaseImpl {
 	}
 
 	@Reference
+	private ProjectLocalService _projectLocalService;
+
+	@Reference
 	private ProjectPermission _projectPermission;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
+
+	@Reference
+	private TeamRoleLocalService _teamRoleLocalService;
 
 }

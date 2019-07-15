@@ -15,10 +15,16 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootActionKeys;
+import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.model.ContactProjectRole;
+import com.liferay.osb.koroneiki.taproot.model.ContactRole;
+import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.permission.ContactPermission;
 import com.liferay.osb.koroneiki.taproot.permission.ContactRolePermission;
 import com.liferay.osb.koroneiki.taproot.permission.ProjectPermission;
+import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactProjectRoleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,6 +67,31 @@ public class ContactProjectRoleServiceImpl
 			contactId, projectId, contactRoleId);
 	}
 
+	public ContactProjectRole addContactProjectRole(
+			String contactKey, String projectKey, String contactRoleKey)
+		throws PortalException {
+
+		Contact contact = _contactLocalService.getContactByContactKey(
+			contactKey);
+		Project project = _projectLocalService.getProject(projectKey);
+		ContactRole contactRole = _contactRoleLocalService.getContactRole(
+			contactRoleKey);
+
+		_contactPermission.check(
+			getPermissionChecker(), contact, ActionKeys.VIEW);
+
+		_projectPermission.check(
+			getPermissionChecker(), project, TaprootActionKeys.ASSIGN_CONTACT);
+
+		_contactRolePermission.check(
+			getPermissionChecker(), contactRole,
+			TaprootActionKeys.ASSIGN_CONTACT);
+
+		return contactProjectRoleLocalService.addContactProjectRole(
+			contact.getContactId(), project.getProjectId(),
+			contactRole.getContactRoleId());
+	}
+
 	public ContactProjectRole deleteContactProjectRole(
 			long contactId, long projectId, long contactRoleId)
 		throws PortalException {
@@ -78,6 +109,31 @@ public class ContactProjectRoleServiceImpl
 
 		return contactProjectRoleLocalService.deleteContactProjectRole(
 			contactId, projectId, contactRoleId);
+	}
+
+	public ContactProjectRole deleteContactProjectRole(
+			String contactKey, String projectKey, String contactRoleKey)
+		throws PortalException {
+
+		Contact contact = _contactLocalService.getContactByContactKey(
+			contactKey);
+		Project project = _projectLocalService.getProject(projectKey);
+		ContactRole contactRole = _contactRoleLocalService.getContactRole(
+			contactRoleKey);
+
+		_contactPermission.check(
+			getPermissionChecker(), contact, ActionKeys.VIEW);
+
+		_projectPermission.check(
+			getPermissionChecker(), project, TaprootActionKeys.ASSIGN_CONTACT);
+
+		_contactRolePermission.check(
+			getPermissionChecker(), contactRole,
+			TaprootActionKeys.ASSIGN_CONTACT);
+
+		return contactProjectRoleLocalService.deleteContactProjectRole(
+			contact.getContactId(), project.getProjectId(),
+			contactRole.getContactRoleId());
 	}
 
 	public void deleteContactProjectRoles(long contactId, long projectId)
@@ -103,11 +159,47 @@ public class ContactProjectRoleServiceImpl
 			contactId, projectId);
 	}
 
+	public void deleteContactProjectRoles(String contactKey, String projectKey)
+		throws PortalException {
+
+		Contact contact = _contactLocalService.getContactByContactKey(
+			contactKey);
+		Project project = _projectLocalService.getProject(projectKey);
+
+		_contactPermission.check(
+			getPermissionChecker(), contact, ActionKeys.VIEW);
+
+		_projectPermission.check(
+			getPermissionChecker(), project, TaprootActionKeys.ASSIGN_CONTACT);
+
+		List<ContactProjectRole> contactProjectRoles =
+			contactProjectRolePersistence.findByC_P(
+				contact.getContactId(), project.getProjectId());
+
+		for (ContactProjectRole contactProjectRole : contactProjectRoles) {
+			_contactRolePermission.check(
+				getPermissionChecker(), contactProjectRole.getContactRoleId(),
+				TaprootActionKeys.ASSIGN_CONTACT);
+		}
+
+		contactProjectRoleLocalService.deleteContactProjectRoles(
+			contact.getContactId(), project.getProjectId());
+	}
+
+	@Reference
+	private ContactLocalService _contactLocalService;
+
 	@Reference
 	private ContactPermission _contactPermission;
 
 	@Reference
+	private ContactRoleLocalService _contactRoleLocalService;
+
+	@Reference
 	private ContactRolePermission _contactRolePermission;
+
+	@Reference
+	private ProjectLocalService _projectLocalService;
 
 	@Reference
 	private ProjectPermission _projectPermission;

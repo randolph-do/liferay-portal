@@ -30,7 +30,7 @@ public class ContactRoleUtil {
 				dateCreated = contactRole.getCreateDate();
 				dateModified = contactRole.getModifiedDate();
 				description = contactRole.getDescription();
-				id = contactRole.getContactRoleId();
+				key = contactRole.getContactRoleKey();
 				name = contactRole.getName();
 				system = contactRole.getSystem();
 				type = Type.create(contactRole.getTypeLabel());

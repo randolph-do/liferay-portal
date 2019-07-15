@@ -34,14 +34,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ContactRoleResourceImpl extends BaseContactRoleResourceImpl {
 
 	@Override
-	public void deleteContactRole(Long contactRoleId) throws Exception {
-		_contactRoleService.deleteContactRole(contactRoleId);
+	public void deleteContactRole(String contactRoleKey) throws Exception {
+		_contactRoleService.deleteContactRole(contactRoleKey);
 	}
 
 	@Override
-	public ContactRole getContactRole(Long contactRoleId) throws Exception {
+	public ContactRole getContactRole(String contactRoleKey) throws Exception {
 		return ContactRoleUtil.toContactRole(
-			_contactRoleService.getContactRole(contactRoleId));
+			_contactRoleService.getContactRole(contactRoleKey));
 	}
 
 	@Override
@@ -59,12 +59,12 @@ public class ContactRoleResourceImpl extends BaseContactRoleResourceImpl {
 
 	@Override
 	public ContactRole putContactRole(
-			Long contactRoleId, ContactRole contactRole)
+			String contactRoleKey, ContactRole contactRole)
 		throws Exception {
 
 		return ContactRoleUtil.toContactRole(
 			_contactRoleService.updateContactRole(
-				contactRoleId, contactRole.getName(),
+				contactRoleKey, contactRole.getName(),
 				contactRole.getDescription()));
 	}
 

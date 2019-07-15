@@ -44,51 +44,55 @@ public class ProductPurchaseResourceImpl
 	extends BaseProductPurchaseResourceImpl {
 
 	@Override
-	public void deleteProductPurchase(Long productPurchaseId) throws Exception {
-		_productPurchaseService.deleteProductPurchase(productPurchaseId);
+	public void deleteProductPurchase(String productPurchaseKey)
+		throws Exception {
+
+		_productPurchaseService.deleteProductPurchase(productPurchaseKey);
 	}
 
 	@Override
-	public Page<ProductPurchase> getAccountProductPurchasesPage(
-			Long accountId, Pagination pagination)
+	public Page<ProductPurchase> getAccountAccountKeyProductPurchasesPage(
+			String accountKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_productPurchaseService.getAccountProductPurchases(
-					accountId, pagination.getStartPosition(),
+					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				ProductPurchaseUtil::toProductPurchase),
 			pagination,
-			_productPurchaseService.getAccountProductPurchasesCount(accountId));
+			_productPurchaseService.getAccountProductPurchasesCount(
+				accountKey));
 	}
 
 	@Override
-	public ProductPurchase getProductPurchase(Long productPurchaseId)
+	public ProductPurchase getProductPurchase(String productPurchaseKey)
 		throws Exception {
 
 		return ProductPurchaseUtil.toProductPurchase(
-			_productPurchaseService.getProductPurchase(productPurchaseId));
+			_productPurchaseService.getProductPurchase(productPurchaseKey));
 	}
 
 	@Override
-	public Page<ProductPurchase> getProjectProductPurchasesPage(
-			Long projectId, Pagination pagination)
+	public Page<ProductPurchase> getProjectProjectKeyProductPurchasesPage(
+			String projectKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_productPurchaseService.getProjectProductPurchases(
-					projectId, pagination.getStartPosition(),
+					projectKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				ProductPurchaseUtil::toProductPurchase),
 			pagination,
-			_productPurchaseService.getProjectProductPurchasesCount(projectId));
+			_productPurchaseService.getProjectProductPurchasesCount(
+				projectKey));
 	}
 
 	@Override
-	public ProductPurchase postAccountProductPurchase(
-			Long accountId, ProductPurchase productPurchase)
+	public ProductPurchase postAccountAccountKeyProductPurchase(
+			String accountKey, ProductPurchase productPurchase)
 		throws Exception {
 
 		int quantity = getQuantity(productPurchase.getQuantity());
@@ -98,17 +102,17 @@ public class ProductPurchaseResourceImpl
 
 		return ProductPurchaseUtil.toProductPurchase(
 			_productPurchaseService.addProductPurchase(
-				accountId, 0, productPurchase.getProductId(),
+				accountKey, null, productPurchase.getProductKey(),
 				productPurchase.getStartDate(), productPurchase.getEndDate(),
 				quantity, productFields));
 	}
 
 	@Override
-	public ProductPurchase postProjectProductPurchase(
-			Long projectId, ProductPurchase productPurchase)
+	public ProductPurchase postProjectProjectKeyProductPurchase(
+			String projectKey, ProductPurchase productPurchase)
 		throws Exception {
 
-		Project project = _projectLocalService.getProject(projectId);
+		Project project = _projectLocalService.getProject(projectKey);
 
 		int quantity = getQuantity(productPurchase.getQuantity());
 
@@ -117,14 +121,14 @@ public class ProductPurchaseResourceImpl
 
 		return ProductPurchaseUtil.toProductPurchase(
 			_productPurchaseService.addProductPurchase(
-				project.getAccountId(), projectId,
-				productPurchase.getProductId(), productPurchase.getStartDate(),
+				project.getAccountKey(), projectKey,
+				productPurchase.getProductKey(), productPurchase.getStartDate(),
 				productPurchase.getEndDate(), quantity, productFields));
 	}
 
 	@Override
 	public ProductPurchase putProductPurchase(
-			Long productPurchaseId, ProductPurchase productPurchase)
+			String productPurchaseKey, ProductPurchase productPurchase)
 		throws Exception {
 
 		int quantity = getQuantity(productPurchase.getQuantity());
@@ -134,7 +138,7 @@ public class ProductPurchaseResourceImpl
 
 		return ProductPurchaseUtil.toProductPurchase(
 			_productPurchaseService.updateProductPurchase(
-				productPurchaseId, productPurchase.getStartDate(),
+				productPurchaseKey, productPurchase.getStartDate(),
 				productPurchase.getEndDate(), quantity, productFields));
 	}
 

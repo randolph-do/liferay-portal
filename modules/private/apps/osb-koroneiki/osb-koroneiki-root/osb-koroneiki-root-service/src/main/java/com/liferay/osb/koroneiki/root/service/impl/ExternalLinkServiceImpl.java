@@ -61,7 +61,20 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 			getPermissionChecker(), externalLink.getClassNameId(),
 			externalLink.getClassPK(), ActionKeys.UPDATE);
 
-		return externalLinkLocalService.deleteExternalLink(externalLinkId);
+		return externalLinkLocalService.deleteExternalLink(externalLink);
+	}
+
+	public ExternalLink deleteExternalLink(String externalLinkKey)
+		throws PortalException {
+
+		ExternalLink externalLink = externalLinkLocalService.getExternalLink(
+			externalLinkKey);
+
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), externalLink.getClassNameId(),
+			externalLink.getClassPK(), ActionKeys.UPDATE);
+
+		return externalLinkLocalService.deleteExternalLink(externalLink);
 	}
 
 	public ExternalLink getExternalLink(long externalLinkId)
@@ -69,6 +82,19 @@ public class ExternalLinkServiceImpl extends ExternalLinkServiceBaseImpl {
 
 		ExternalLink externalLink = externalLinkLocalService.getExternalLink(
 			externalLinkId);
+
+		_modelPermissionRegistry.check(
+			getPermissionChecker(), externalLink.getClassNameId(),
+			externalLink.getClassPK(), ActionKeys.VIEW);
+
+		return externalLink;
+	}
+
+	public ExternalLink getExternalLink(String externalLinkKey)
+		throws PortalException {
+
+		ExternalLink externalLink = externalLinkLocalService.getExternalLink(
+			externalLinkKey);
 
 		_modelPermissionRegistry.check(
 			getPermissionChecker(), externalLink.getClassNameId(),

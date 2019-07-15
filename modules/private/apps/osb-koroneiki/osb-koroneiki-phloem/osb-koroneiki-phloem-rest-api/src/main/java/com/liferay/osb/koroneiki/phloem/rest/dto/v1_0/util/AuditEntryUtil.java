@@ -38,7 +38,7 @@ public class AuditEntryUtil {
 				fieldClassName = PortalUtil.getClassName(
 					auditEntry.getFieldClassNameId());
 				fieldClassPK = auditEntry.getClassPK();
-				id = auditEntry.getAuditEntryId();
+				key = auditEntry.getAuditEntryKey();
 				newValue = auditEntry.getNewValue();
 				oldValue = auditEntry.getOldValue();
 				userId = auditEntry.getUserId();

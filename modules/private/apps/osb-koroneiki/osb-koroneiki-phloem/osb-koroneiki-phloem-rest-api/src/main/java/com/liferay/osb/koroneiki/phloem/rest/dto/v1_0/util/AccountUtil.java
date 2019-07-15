@@ -46,7 +46,7 @@ public class AccountUtil {
 					account.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				faxNumber = account.getFaxNumber();
-				id = account.getAccountId();
+				key = account.getAccountKey();
 				name = account.getName();
 				phoneNumber = account.getPhoneNumber();
 				profileEmailAddress = account.getProfileEmailAddress();

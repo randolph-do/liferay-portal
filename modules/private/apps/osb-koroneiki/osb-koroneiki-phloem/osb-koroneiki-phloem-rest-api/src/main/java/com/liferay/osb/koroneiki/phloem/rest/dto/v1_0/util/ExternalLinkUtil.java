@@ -31,7 +31,7 @@ public class ExternalLinkUtil {
 				domain = externalLink.getDomain();
 				entityId = externalLink.getEntityId();
 				entityName = externalLink.getEntityName();
-				id = externalLink.getExternalLinkId();
+				key = externalLink.getExternalLinkKey();
 			}
 		};
 	}

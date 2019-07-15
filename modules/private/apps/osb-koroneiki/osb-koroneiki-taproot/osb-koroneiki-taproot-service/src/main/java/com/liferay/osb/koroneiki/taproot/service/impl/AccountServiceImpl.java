@@ -58,11 +58,29 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 		return accountLocalService.deleteAccount(accountId);
 	}
 
+	public Account deleteAccount(String accountKey) throws PortalException {
+		Account account = accountLocalService.getAccount(accountKey);
+
+		_accountPermission.check(
+			getPermissionChecker(), account, ActionKeys.DELETE);
+
+		return accountLocalService.deleteAccount(account);
+	}
+
 	public Account getAccount(long accountId) throws PortalException {
 		_accountPermission.check(
 			getPermissionChecker(), accountId, ActionKeys.VIEW);
 
 		return accountLocalService.getAccount(accountId);
+	}
+
+	public Account getAccount(String accountKey) throws PortalException {
+		Account account = accountLocalService.getAccount(accountKey);
+
+		_accountPermission.check(
+			getPermissionChecker(), account, ActionKeys.VIEW);
+
+		return account;
 	}
 
 	public Account updateAccount(
@@ -76,6 +94,23 @@ public class AccountServiceImpl extends AccountServiceBaseImpl {
 
 		return accountLocalService.updateAccount(
 			getUserId(), accountId, name, description, logoId,
+			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
+			website, status);
+	}
+
+	public Account updateAccount(
+			String accountKey, String name, String description, long logoId,
+			String contactEmailAddress, String profileEmailAddress,
+			String phoneNumber, String faxNumber, String website, int status)
+		throws PortalException {
+
+		Account account = accountLocalService.getAccount(accountKey);
+
+		_accountPermission.check(
+			getPermissionChecker(), account, ActionKeys.UPDATE);
+
+		return accountLocalService.updateAccount(
+			getUserId(), account.getAccountId(), name, description, logoId,
 			contactEmailAddress, profileEmailAddress, phoneNumber, faxNumber,
 			website, status);
 	}

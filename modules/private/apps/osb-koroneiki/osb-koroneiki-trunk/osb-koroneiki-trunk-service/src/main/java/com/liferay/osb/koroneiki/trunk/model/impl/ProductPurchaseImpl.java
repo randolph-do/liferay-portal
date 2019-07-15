@@ -47,6 +47,12 @@ public class ProductPurchaseImpl extends ProductPurchaseBaseImpl {
 		return AccountLocalServiceUtil.getAccount(getAccountId());
 	}
 
+	public String getAccountKey() throws PortalException {
+		Account account = getAccount();
+
+		return account.getAccountKey();
+	}
+
 	public List<ExternalLink> getExternalLinks() {
 		return ExternalLinkLocalServiceUtil.getExternalLinks(
 			ProductPurchase.class.getName(), getProductPurchaseId(),
@@ -56,6 +62,12 @@ public class ProductPurchaseImpl extends ProductPurchaseBaseImpl {
 	public ProductEntry getProductEntry() throws PortalException {
 		return ProductEntryLocalServiceUtil.getProductEntry(
 			getProductEntryId());
+	}
+
+	public String getProductEntryKey() throws PortalException {
+		ProductEntry productEntry = getProductEntry();
+
+		return productEntry.getProductEntryKey();
 	}
 
 	public List<ProductField> getProductFields() {
@@ -79,6 +91,16 @@ public class ProductPurchaseImpl extends ProductPurchaseBaseImpl {
 	public Project getProject() {
 		if (getProjectId() > 0) {
 			return ProjectLocalServiceUtil.fetchProject(getProjectId());
+		}
+
+		return null;
+	}
+
+	public String getProjectKey() throws PortalException {
+		Project project = getProject();
+
+		if (project != null) {
+			return project.getProjectKey();
 		}
 
 		return null;

@@ -35,41 +35,42 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ContactResourceImpl extends BaseContactResourceImpl {
 
 	@Override
-	public void deleteContact(Long contactId) throws Exception {
-		_contactService.deleteContact(contactId);
+	public void deleteContact(String contactKey) throws Exception {
+		_contactService.deleteContact(contactKey);
 	}
 
 	@Override
-	public Page<Contact> getAccountContactsPage(
-			Long accountId, Pagination pagination)
+	public Page<Contact> getAccountAccountKeyContactsPage(
+			String accountKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_contactService.getAccountContacts(
-					accountId, pagination.getStartPosition(),
+					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				ContactUtil::toContact),
-			pagination, _contactService.getAccountContactsCount(accountId));
+			pagination, _contactService.getAccountContactsCount(accountKey));
 	}
 
 	@Override
-	public Contact getContact(Long contactId) throws Exception {
-		return ContactUtil.toContact(_contactService.getContact(contactId));
+	public Contact getContact(String contactKey) throws Exception {
+		return ContactUtil.toContact(
+			_contactService.getContactByContactKey(contactKey));
 	}
 
 	@Override
-	public Page<Contact> getProjectContactsPage(
-			Long projectId, Pagination pagination)
+	public Page<Contact> getProjectProjectKeyContactsPage(
+			String projectKey, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_contactService.getProjectContacts(
-					projectId, pagination.getStartPosition(),
+					projectKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				ContactUtil::toContact),
-			pagination, _contactService.getProjectContactsCount(projectId));
+			pagination, _contactService.getProjectContactsCount(projectKey));
 	}
 
 	@Override

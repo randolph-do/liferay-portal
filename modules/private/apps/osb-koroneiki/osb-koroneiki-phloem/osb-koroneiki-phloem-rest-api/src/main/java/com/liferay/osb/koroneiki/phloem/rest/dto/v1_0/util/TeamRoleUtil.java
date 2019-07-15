@@ -30,7 +30,7 @@ public class TeamRoleUtil {
 				dateCreated = teamRole.getCreateDate();
 				dateModified = teamRole.getModifiedDate();
 				description = teamRole.getDescription();
-				id = teamRole.getTeamRoleId();
+				key = teamRole.getTeamRoleKey();
 				name = teamRole.getName();
 				type = Type.create(teamRole.getTypeLabel());
 			}

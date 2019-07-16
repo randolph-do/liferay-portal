@@ -218,6 +218,9 @@ public interface ContactTeamRoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ContactTeamRole> getContactTeamRoles(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ContactTeamRole> getContactTeamRoles(long contactId);
+
 	/**
 	 * Returns the number of contact team roles.
 	 *

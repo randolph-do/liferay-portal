@@ -265,6 +265,13 @@ public class ContactAccountRoleLocalServiceUtil {
 		return getService().getContactAccountRoles(start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.ContactAccountRole>
+			getContactAccountRoles(long contactId, long accountId) {
+
+		return getService().getContactAccountRoles(contactId, accountId);
+	}
+
 	/**
 	 * Returns the number of contact account roles.
 	 *

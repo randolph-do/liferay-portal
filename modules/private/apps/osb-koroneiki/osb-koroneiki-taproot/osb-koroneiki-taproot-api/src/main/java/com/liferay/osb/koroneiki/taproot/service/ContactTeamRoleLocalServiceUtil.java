@@ -261,6 +261,13 @@ public class ContactTeamRoleLocalServiceUtil {
 		return getService().getContactTeamRoles(start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.ContactTeamRole>
+			getContactTeamRoles(long contactId) {
+
+		return getService().getContactTeamRoles(contactId);
+	}
+
 	/**
 	 * Returns the number of contact team roles.
 	 *

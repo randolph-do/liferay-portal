@@ -285,6 +285,15 @@ public class ContactProjectRoleLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.ContactProjectRole>
+			getContactProjectRoles(long contactId) {
+
+		return _contactProjectRoleLocalService.getContactProjectRoles(
+			contactId);
+	}
+
 	/**
 	 * Returns the number of contact project roles.
 	 *

@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
@@ -60,6 +61,26 @@ public class ContactSerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (contact.getContactRoles() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contactRoles\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < contact.getContactRoles().length; i++) {
+				sb.append(String.valueOf(contact.getContactRoles()[i]));
+
+				if ((i + 1) < contact.getContactRoles().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (contact.getDateCreated() != null) {
 			if (sb.length() > 1) {
@@ -215,6 +236,13 @@ public class ContactSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (contact.getContactRoles() == null) {
+			map.put("contactRoles", null);
+		}
+		else {
+			map.put("contactRoles", String.valueOf(contact.getContactRoles()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(contact.getDateCreated()));
@@ -330,7 +358,19 @@ public class ContactSerDes {
 			Contact contact, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "contactRoles")) {
+				if (jsonParserFieldValue != null) {
+					contact.setContactRoles(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ContactRoleSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ContactRole[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					contact.setDateCreated(
 						toDate((String)jsonParserFieldValue));

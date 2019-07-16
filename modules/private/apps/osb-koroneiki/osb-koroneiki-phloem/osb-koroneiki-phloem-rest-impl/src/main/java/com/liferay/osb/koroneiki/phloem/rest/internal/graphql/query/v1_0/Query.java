@@ -270,6 +270,7 @@ public class Query {
 	@GraphQLField
 	public ContactPage getAccountAccountKeyContactsPage(
 			@GraphQLName("accountKey") String accountKey,
+			@GraphQLName("includes") String[] includes,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -279,7 +280,7 @@ public class Query {
 			this::_populateResourceContext,
 			contactResource -> new ContactPage(
 				contactResource.getAccountAccountKeyContactsPage(
-					accountKey, Pagination.of(page, pageSize))));
+					accountKey, includes, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField

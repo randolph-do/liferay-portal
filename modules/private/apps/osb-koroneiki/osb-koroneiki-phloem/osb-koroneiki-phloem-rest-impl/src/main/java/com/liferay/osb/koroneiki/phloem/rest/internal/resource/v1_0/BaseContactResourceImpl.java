@@ -45,6 +45,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -62,6 +63,7 @@ public abstract class BaseContactResourceImpl implements ContactResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "includes"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -72,6 +74,7 @@ public abstract class BaseContactResourceImpl implements ContactResource {
 	public Page<Contact> getAccountAccountKeyContactsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
 				accountKey,
+			@Parameter(hidden = true) @QueryParam("includes") String[] includes,
 			@Context Pagination pagination)
 		throws Exception {
 

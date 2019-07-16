@@ -38,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ContactResource {
 
 	public Page<Contact> getAccountAccountKeyContactsPage(
-			String accountKey, Pagination pagination)
+			String accountKey, String[] includes, Pagination pagination)
 		throws Exception;
 
 	public Contact postContact(Contact contact) throws Exception;

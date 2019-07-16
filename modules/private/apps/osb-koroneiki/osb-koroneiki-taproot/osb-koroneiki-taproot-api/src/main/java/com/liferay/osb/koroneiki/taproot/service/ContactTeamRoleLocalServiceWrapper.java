@@ -280,6 +280,14 @@ public class ContactTeamRoleLocalServiceWrapper
 		return _contactTeamRoleLocalService.getContactTeamRoles(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.ContactTeamRole>
+			getContactTeamRoles(long contactId) {
+
+		return _contactTeamRoleLocalService.getContactTeamRoles(contactId);
+	}
+
 	/**
 	 * Returns the number of contact team roles.
 	 *

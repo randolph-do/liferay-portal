@@ -38,12 +38,12 @@ public interface ContactResource {
 	}
 
 	public Page<Contact> getAccountAccountKeyContactsPage(
-			String accountKey, Pagination pagination)
+			String accountKey, String[] includes, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAccountAccountKeyContactsPageHttpResponse(
-				String accountKey, Pagination pagination)
+				String accountKey, String[] includes, Pagination pagination)
 		throws Exception;
 
 	public Contact postContact(Contact contact) throws Exception;
@@ -112,12 +112,12 @@ public interface ContactResource {
 	public static class ContactResourceImpl implements ContactResource {
 
 		public Page<Contact> getAccountAccountKeyContactsPage(
-				String accountKey, Pagination pagination)
+				String accountKey, String[] includes, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAccountAccountKeyContactsPageHttpResponse(
-					accountKey, pagination);
+					accountKey, includes, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -132,7 +132,7 @@ public interface ContactResource {
 
 		public HttpInvoker.HttpResponse
 				getAccountAccountKeyContactsPageHttpResponse(
-					String accountKey, Pagination pagination)
+					String accountKey, String[] includes, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -143,6 +143,13 @@ public interface ContactResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (includes != null) {
+				for (int i = 0; i < includes.length; i++) {
+					httpInvoker.parameter(
+						"includes", String.valueOf(includes[i]));
+				}
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

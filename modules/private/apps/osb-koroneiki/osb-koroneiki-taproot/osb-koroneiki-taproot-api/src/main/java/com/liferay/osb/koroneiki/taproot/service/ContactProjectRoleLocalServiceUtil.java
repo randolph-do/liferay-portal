@@ -265,6 +265,13 @@ public class ContactProjectRoleLocalServiceUtil {
 		return getService().getContactProjectRoles(start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.osb.koroneiki.taproot.model.ContactProjectRole>
+			getContactProjectRoles(long contactId) {
+
+		return getService().getContactProjectRoles(contactId);
+	}
+
 	/**
 	 * Returns the number of contact project roles.
 	 *

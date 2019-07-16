@@ -29,6 +29,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class Contact {
 
+	public ContactRole[] getContactRoles() {
+		return contactRoles;
+	}
+
+	public void setContactRoles(ContactRole[] contactRoles) {
+		this.contactRoles = contactRoles;
+	}
+
+	public void setContactRoles(
+		UnsafeSupplier<ContactRole[], Exception> contactRolesUnsafeSupplier) {
+
+		try {
+			contactRoles = contactRolesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ContactRole[] contactRoles;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

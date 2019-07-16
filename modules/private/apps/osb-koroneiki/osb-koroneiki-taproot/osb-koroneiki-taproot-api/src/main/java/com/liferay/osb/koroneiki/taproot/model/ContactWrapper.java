@@ -167,6 +167,13 @@ public class ContactWrapper
 		return model.getContactKey();
 	}
 
+	@Override
+	public java.util.List<ContactRole> getContactRoles(String accountKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getContactRoles(accountKey);
+	}
+
 	/**
 	 * Returns the create date of this contact.
 	 *

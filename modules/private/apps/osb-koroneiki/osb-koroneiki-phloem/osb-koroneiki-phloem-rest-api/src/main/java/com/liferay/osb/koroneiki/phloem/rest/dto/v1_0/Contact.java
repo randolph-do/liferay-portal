@@ -51,6 +51,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Contact")
 public class Contact {
 
+	@Schema(description = "The contact's roles.")
+	public ContactRole[] getContactRoles() {
+		return contactRoles;
+	}
+
+	public void setContactRoles(ContactRole[] contactRoles) {
+		this.contactRoles = contactRoles;
+	}
+
+	@JsonIgnore
+	public void setContactRoles(
+		UnsafeSupplier<ContactRole[], Exception> contactRolesUnsafeSupplier) {
+
+		try {
+			contactRoles = contactRolesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected ContactRole[] contactRoles;
+
 	@Schema(description = "The contact's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
@@ -337,6 +365,26 @@ public class Contact {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (contactRoles != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contactRoles\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < contactRoles.length; i++) {
+				sb.append(String.valueOf(contactRoles[i]));
+
+				if ((i + 1) < contactRoles.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {

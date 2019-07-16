@@ -18,6 +18,7 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -49,7 +50,8 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 				_contactService.getAccountContacts(
 					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				contact -> ContactUtil.toContact(contact, includes)),
+				contact -> ContactUtil.toContact(
+					contact, ArrayUtil.append(includes, accountKey))),
 			pagination, _contactService.getAccountContactsCount(accountKey));
 	}
 

@@ -78,8 +78,10 @@ public class ContactAccountRoleLocalServiceImpl
 		contactAccountRolePersistence.removeByC_A(contactId, accountId);
 	}
 
-	public List<ContactAccountRole> getContactAccountRoles(long contactId) {
-		return contactAccountRolePersistence.findByContactId(contactId);
+	public List<ContactAccountRole> getContactAccountRoles(
+		long contactId, long accountId) {
+
+		return contactAccountRolePersistence.findByC_A(contactId, accountId);
 	}
 
 	protected void validate(long contactId, long accountId)

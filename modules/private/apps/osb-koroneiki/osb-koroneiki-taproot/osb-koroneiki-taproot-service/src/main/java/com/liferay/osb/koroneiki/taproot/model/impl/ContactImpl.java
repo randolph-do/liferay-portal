@@ -42,12 +42,14 @@ public class ContactImpl extends ContactBaseImpl {
 	public ContactImpl() {
 	}
 
-	public List<ContactRole> getContactRoles() throws PortalException {
+	public List<ContactRole> getContactRoles(long accountId)
+		throws PortalException {
+
 		List<ContactRole> contactRoles = new ArrayList<>();
 
 		List<ContactAccountRole> contactAccountRoles =
 			ContactAccountRoleLocalServiceUtil.getContactAccountRoles(
-				getContactId());
+				getContactId(), accountId);
 
 		for (ContactAccountRole contactAccountRole : contactAccountRoles) {
 			contactRoles.add(

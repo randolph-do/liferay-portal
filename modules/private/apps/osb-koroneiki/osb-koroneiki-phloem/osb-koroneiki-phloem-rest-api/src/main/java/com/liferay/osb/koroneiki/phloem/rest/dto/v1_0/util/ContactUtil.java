@@ -49,8 +49,11 @@ public class ContactUtil {
 							return null;
 						}
 
+						String accountKey = includes[includes.length - 1];
+
 						return contactRoles = TransformUtil.transformToArray(
-							contact.getContactRoles(),
+							contact.getContactRoles(
+								Long.valueOf(accountKey.substring(4))),
 							ContactRoleUtil::toContactRole, ContactRole.class);
 					});
 			}

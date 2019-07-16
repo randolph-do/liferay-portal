@@ -60,7 +60,7 @@ public class MessageFactory {
 
 	public Message create(Contact contact) throws Exception {
 		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact dtoContact =
-			ContactUtil.toContact(contact);
+			ContactUtil.toContact(contact, null);
 
 		return new Message(dtoContact.toString());
 	}
@@ -166,7 +166,7 @@ public class MessageFactory {
 
 	protected JSONObject toJSONObject(Contact contact) throws Exception {
 		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact dtoContact =
-			ContactUtil.toContact(contact);
+			ContactUtil.toContact(contact, null);
 
 		return _jsonFactory.createJSONObject(dtoContact.toString());
 	}

@@ -126,6 +126,12 @@ components:
         Contact:
             description: Represents a contact.
             properties:
+                contactRoles:
+                    description: The contact's roles.
+                    items:
+                        $ref: "#/components/schemas/ContactRole"
+                    readOnly: true
+                    type: array
                 dateCreated:
                     description: The contact's creation date.
                     format: date-time
@@ -657,6 +663,12 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: includes
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: page
                   schema:

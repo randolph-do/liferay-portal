@@ -15,7 +15,9 @@
 package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
@@ -24,7 +26,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 public class ContactUtil {
 
 	public static Contact toContact(
-			com.liferay.osb.koroneiki.taproot.model.Contact contact)
+			com.liferay.osb.koroneiki.taproot.model.Contact contact,
+			String[] includes)
 		throws Exception {
 
 		return new Contact() {
@@ -39,6 +42,17 @@ public class ContactUtil {
 				key = contact.getContactKey();
 				languageId = contact.getLanguageId();
 				lastName = contact.getLastName();
+
+				setContactRoles(
+					() -> {
+						if (!ArrayUtil.contains(includes, "contact-roles")) {
+							return null;
+						}
+
+						return contactRoles = TransformUtil.transformToArray(
+							contact.getContactRoles(),
+							ContactRoleUtil::toContactRole, ContactRole.class);
+					});
 			}
 		};
 	}

@@ -41,7 +41,7 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 
 	@Override
 	public Page<Contact> getAccountAccountKeyContactsPage(
-			String accountKey, Pagination pagination)
+			String accountKey, String[] includes, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
@@ -49,14 +49,14 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 				_contactService.getAccountContacts(
 					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				ContactUtil::toContact),
+				contact -> ContactUtil.toContact(contact, includes)),
 			pagination, _contactService.getAccountContactsCount(accountKey));
 	}
 
 	@Override
 	public Contact getContact(String contactKey) throws Exception {
 		return ContactUtil.toContact(
-			_contactService.getContactByContactKey(contactKey));
+			_contactService.getContactByContactKey(contactKey), null);
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 				_contactService.getProjectContacts(
 					projectKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				ContactUtil::toContact),
-			pagination, _contactService.getProjectContactsCount(projectKey));
+				contact -> ContactUtil.toContact(contact, null)),
+			pagination, _contactService.getAccountContactsCount(projectKey));
 	}
 
 	@Override
@@ -79,7 +79,8 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 			_contactService.addContact(
 				contact.getFirstName(), contact.getMiddleName(),
 				contact.getLastName(), contact.getEmailAddress(),
-				contact.getLanguageId()));
+				contact.getLanguageId()),
+			null);
 	}
 
 	@Reference

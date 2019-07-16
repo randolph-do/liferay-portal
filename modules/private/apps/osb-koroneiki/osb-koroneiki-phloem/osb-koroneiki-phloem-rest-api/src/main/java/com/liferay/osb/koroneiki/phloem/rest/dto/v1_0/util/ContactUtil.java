@@ -20,6 +20,8 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Map;
+
 /**
  * @author Amos Fong
  */
@@ -27,7 +29,7 @@ public class ContactUtil {
 
 	public static Contact toContact(
 			com.liferay.osb.koroneiki.taproot.model.Contact contact,
-			String[] includes)
+			Map<String, Object> includesContext)
 		throws Exception {
 
 		return new Contact() {
@@ -45,15 +47,22 @@ public class ContactUtil {
 
 				setContactRoles(
 					() -> {
+						if (includesContext == null) {
+							return null;
+						}
+
+						String[] includes = (String[])includesContext.get(
+							"includes");
+
 						if (!ArrayUtil.contains(includes, "contact-roles")) {
 							return null;
 						}
 
-						String accountKey = includes[includes.length - 1];
+						String accountKey = (String)includesContext.get(
+							"accountKey");
 
-						return contactRoles = TransformUtil.transformToArray(
-							contact.getContactRoles(
-								Long.valueOf(accountKey.substring(4))),
+						return TransformUtil.transformToArray(
+							contact.getContactRoles(accountKey),
 							ContactRoleUtil::toContactRole, ContactRole.class);
 					});
 			}

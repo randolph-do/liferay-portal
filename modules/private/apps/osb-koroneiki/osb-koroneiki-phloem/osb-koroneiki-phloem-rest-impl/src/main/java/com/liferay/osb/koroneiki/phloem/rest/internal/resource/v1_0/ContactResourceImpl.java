@@ -18,9 +18,11 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,13 +47,19 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 			String accountKey, String[] includes, Pagination pagination)
 		throws Exception {
 
+		Map<String, Object> includesContext = new HashMap<String, Object>() {
+			{
+				put("accountKey", accountKey);
+				put("includes", includes);
+			}
+		};
+
 		return Page.of(
 			transform(
 				_contactService.getAccountContacts(
 					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				contact -> ContactUtil.toContact(
-					contact, ArrayUtil.append(includes, accountKey))),
+				contact -> ContactUtil.toContact(contact, includesContext)),
 			pagination, _contactService.getAccountContactsCount(accountKey));
 	}
 

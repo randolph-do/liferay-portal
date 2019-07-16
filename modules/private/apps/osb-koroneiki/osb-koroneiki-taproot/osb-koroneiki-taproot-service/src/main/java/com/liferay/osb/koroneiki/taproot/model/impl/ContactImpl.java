@@ -18,9 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalServiceUtil;
+import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.model.ContactAccountRole;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalServiceUtil;
 import com.liferay.osb.koroneiki.taproot.service.ContactAccountRoleLocalServiceUtil;
 import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,14 +44,16 @@ public class ContactImpl extends ContactBaseImpl {
 	public ContactImpl() {
 	}
 
-	public List<ContactRole> getContactRoles(long accountId)
+	public List<ContactRole> getContactRoles(String accountKey)
 		throws PortalException {
+
+		Account account = AccountLocalServiceUtil.getAccount(accountKey);
 
 		List<ContactRole> contactRoles = new ArrayList<>();
 
 		List<ContactAccountRole> contactAccountRoles =
 			ContactAccountRoleLocalServiceUtil.getContactAccountRoles(
-				getContactId(), accountId);
+				getContactId(), account.getAccountId());
 
 		for (ContactAccountRole contactAccountRole : contactAccountRoles) {
 			contactRoles.add(

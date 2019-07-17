@@ -80,7 +80,7 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 					projectKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				contact -> ContactUtil.toContact(contact, null)),
-			pagination, _contactService.getAccountContactsCount(projectKey));
+			pagination, _contactService.getProjectContactsCount(projectKey));
 	}
 
 	@Override

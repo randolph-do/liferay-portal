@@ -46,14 +46,13 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 
 			for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 				String field = entry.getKey();
-				Object value = entry.getValue();
 
 				auditEntryLocalService.addAuditEntry(
 					userId, getClassNameId(model), getClassPK(model),
 					_auditSetId.get(), getFieldClassNameId(model),
 					getFieldClassPK(model), AuditEntryConstants.ACTION_ADD,
 					field, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-					String.valueOf(value), StringPool.BLANK);
+					String.valueOf(entry.getValue()), StringPool.BLANK);
 			}
 		}
 		catch (PortalException pe) {
@@ -70,13 +69,12 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 
 			for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 				String field = entry.getKey();
-				Object value = entry.getValue();
 
 				auditEntryLocalService.addAuditEntry(
 					userId, getClassNameId(model), getClassPK(model),
 					_auditSetId.get(), getFieldClassNameId(model),
 					getFieldClassPK(model), AuditEntryConstants.ACTION_DELETE,
-					field, StringPool.BLANK, String.valueOf(value),
+					field, StringPool.BLANK, String.valueOf(entry.getValue()),
 					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 			}
 		}

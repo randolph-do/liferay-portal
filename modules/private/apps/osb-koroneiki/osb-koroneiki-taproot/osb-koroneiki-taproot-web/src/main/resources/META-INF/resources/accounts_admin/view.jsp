@@ -17,51 +17,37 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<NavigationItem> navigationItems = new ArrayList<>();
+ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplayContext = new ViewAccountsManagementToolbarDisplayContext(request, renderRequest, renderResponse);
 
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(StringPool.BLANK);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "accounts"));
-
-navigationItems.add(entriesNavigationItem);
+SearchContainer searchContainer = viewAccountsManagementToolbarDisplayContext.getSearchContainer();
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= navigationItems %>"
+	navigationItems="<%= viewAccountsManagementToolbarDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	creationMenu='<%=
-		new JSPCreationMenu(pageContext) {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/accounts_admin/edit_account", "redirect", PortalUtil.getCurrentURL(request));
-						dropdownItem.setLabel(LanguageUtil.get(request, "new-account"));
-					});
-			}
-		}
-	%>'
+	clearResultsURL="<%= viewAccountsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= viewAccountsManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= viewAccountsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= viewAccountsManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="accountSearch"
+	searchFormName="searchFm"
 	selectable="<%= false %>"
-	showSearch="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewAccountsManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
 <liferay-ui:error exception="<%= RequiredAccountException.class %>" message="you-cannot-delete-accounts-that-have-projects" />
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-accounts-were-found"
-		headerNames="name,description,status,"
-		iteratorURL="<%= renderResponse.createRenderURL() %>"
-		total="<%= AccountLocalServiceUtil.getAccountsCount() %>"
+		searchContainer="<%= searchContainer %>"
+		var="accountSearch"
 	>
-		<liferay-ui:search-container-results
-			results="<%= AccountLocalServiceUtil.getAccounts(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.osb.koroneiki.taproot.model.Account"
 			escapedModel="<%= true %>"

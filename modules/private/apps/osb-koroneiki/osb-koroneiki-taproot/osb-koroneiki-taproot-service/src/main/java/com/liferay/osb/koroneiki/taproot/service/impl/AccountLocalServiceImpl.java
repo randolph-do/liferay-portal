@@ -25,9 +25,19 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,6 +132,46 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 	public Account getAccount(String accountKey) throws PortalException {
 		return accountPersistence.findByAccountKey(accountKey);
+	}
+
+	public Hits search(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		try {
+			Indexer<Account> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Account.class);
+
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAndSearch(false);
+
+			Map<String, Serializable> attributes = new HashMap<>();
+
+			attributes.put("description", keywords);
+			attributes.put("name", keywords);
+
+			searchContext.setAttributes(attributes);
+
+			searchContext.setCompanyId(companyId);
+			searchContext.setEnd(end);
+
+			if (sort != null) {
+				searchContext.setSorts(sort);
+			}
+
+			searchContext.setStart(start);
+
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			queryConfig.setHighlightEnabled(false);
+			queryConfig.setScoreEnabled(false);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	public Account updateAccount(

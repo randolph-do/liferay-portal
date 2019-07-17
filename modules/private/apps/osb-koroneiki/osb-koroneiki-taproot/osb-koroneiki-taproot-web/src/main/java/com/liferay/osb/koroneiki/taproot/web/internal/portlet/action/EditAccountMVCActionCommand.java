@@ -16,18 +16,23 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.exception.AccountNameException;
+import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,7 +69,7 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 				deleteAccount(actionRequest);
 			}
 			else {
-				updateAccount(actionRequest);
+				updateAccount(actionRequest, actionResponse);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -84,7 +89,8 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateAccount(ActionRequest actionRequest)
+	protected void updateAccount(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
 		long accountId = ParamUtil.getLong(actionRequest, "accountId");
@@ -100,16 +106,33 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		String website = ParamUtil.getString(actionRequest, "website");
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
+		Account account = null;
+
 		if (accountId <= 0) {
-			_accountService.addAccount(
+			account = _accountService.addAccount(
 				name, description, 0, contactEmailAddress, profileEmailAddress,
 				phoneNumber, faxNumber, website, status);
 		}
 		else {
-			_accountService.updateAccount(
+			account = _accountService.updateAccount(
 				accountId, name, description, 0, contactEmailAddress,
 				profileEmailAddress, phoneNumber, faxNumber, website, status);
 		}
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(actionResponse);
+
+		PortletURL renderURL = liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter(
+			"mvcRenderCommandName", "/accounts_admin/edit_account");
+		renderURL.setParameter("redirect", redirect);
+		renderURL.setParameter(
+			"accountId", String.valueOf(account.getAccountId()));
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -117,5 +140,8 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AccountService _accountService;
+
+	@Reference
+	private Portal _portal;
 
 }

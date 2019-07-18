@@ -132,7 +132,8 @@ public class ProjectResourceImpl
 				contextCompany.getCompanyId()),
 			document -> ProjectUtil.toProject(
 				_projectService.getProject(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				null),
 			sorts);
 	}
 

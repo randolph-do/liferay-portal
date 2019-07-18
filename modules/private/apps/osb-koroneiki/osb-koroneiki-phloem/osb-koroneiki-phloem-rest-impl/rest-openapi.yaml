@@ -1020,12 +1020,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: includes
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -1086,6 +1080,12 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: includes
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: page
                   schema:

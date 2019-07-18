@@ -104,7 +104,7 @@ public class AccountResourceImpl
 			document -> AccountUtil.toAccount(
 				_accountService.getAccount(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				contextAcceptLanguage.getPreferredLocale()),
+				contextAcceptLanguage.getPreferredLocale(), null),
 			sorts);
 	}
 

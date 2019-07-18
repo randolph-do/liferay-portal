@@ -17,6 +17,8 @@ package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -38,16 +40,21 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ProjectResource {
 
 	public Page<Project> getAccountAccountKeyProjectsPage(
-			String accountKey, Pagination pagination)
+			String accountKey, String[] includes, Pagination pagination)
 		throws Exception;
 
 	public Project postAccountAccountKeyProject(
 			String accountKey, Project project)
 		throws Exception;
 
+	public Page<Project> getProjectsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public void deleteProject(String projectKey) throws Exception;
 
-	public Project getProject(String projectKey) throws Exception;
+	public Project getProject(String projectKey, String[] includes)
+		throws Exception;
 
 	public Project putProject(String projectKey, Project project)
 		throws Exception;

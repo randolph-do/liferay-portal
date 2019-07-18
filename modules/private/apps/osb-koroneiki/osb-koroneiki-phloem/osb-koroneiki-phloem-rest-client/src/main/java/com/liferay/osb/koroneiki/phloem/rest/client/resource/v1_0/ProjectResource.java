@@ -38,12 +38,12 @@ public interface ProjectResource {
 	}
 
 	public Page<Project> getAccountAccountKeyProjectsPage(
-			String accountKey, Pagination pagination)
+			String accountKey, String[] includes, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAccountAccountKeyProjectsPageHttpResponse(
-				String accountKey, Pagination pagination)
+				String accountKey, String[] includes, Pagination pagination)
 		throws Exception;
 
 	public Project postAccountAccountKeyProject(
@@ -54,14 +54,26 @@ public interface ProjectResource {
 			String accountKey, Project project)
 		throws Exception;
 
+	public Page<Project> getProjectsPage(
+			String search, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getProjectsPageHttpResponse(
+			String search, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception;
+
 	public void deleteProject(String projectKey) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteProjectHttpResponse(String projectKey)
 		throws Exception;
 
-	public Project getProject(String projectKey) throws Exception;
+	public Project getProject(String projectKey, String[] includes)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getProjectHttpResponse(String projectKey)
+	public HttpInvoker.HttpResponse getProjectHttpResponse(
+			String projectKey, String[] includes)
 		throws Exception;
 
 	public Project putProject(String projectKey, Project project)
@@ -160,12 +172,12 @@ public interface ProjectResource {
 	public static class ProjectResourceImpl implements ProjectResource {
 
 		public Page<Project> getAccountAccountKeyProjectsPage(
-				String accountKey, Pagination pagination)
+				String accountKey, String[] includes, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAccountAccountKeyProjectsPageHttpResponse(
-					accountKey, pagination);
+					accountKey, includes, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -180,7 +192,7 @@ public interface ProjectResource {
 
 		public HttpInvoker.HttpResponse
 				getAccountAccountKeyProjectsPageHttpResponse(
-					String accountKey, Pagination pagination)
+					String accountKey, String[] includes, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -191,6 +203,13 @@ public interface ProjectResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (includes != null) {
+				for (int i = 0; i < includes.length; i++) {
+					httpInvoker.parameter(
+						"includes", String.valueOf(includes[i]));
+				}
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(
@@ -266,6 +285,68 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
+		public Page<Project> getProjectsPage(
+				String search, String filterString, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = getProjectsPageHttpResponse(
+				search, filterString, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, ProjectSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getProjectsPageHttpResponse(
+				String search, String filterString, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/koroneiki-rest/v1.0/projects");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
 		public void deleteProject(String projectKey) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteProjectHttpResponse(
 				projectKey);
@@ -304,9 +385,11 @@ public interface ProjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public Project getProject(String projectKey) throws Exception {
+		public Project getProject(String projectKey, String[] includes)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getProjectHttpResponse(
-				projectKey);
+				projectKey, includes);
 
 			String content = httpResponse.getContent();
 
@@ -329,7 +412,7 @@ public interface ProjectResource {
 		}
 
 		public HttpInvoker.HttpResponse getProjectHttpResponse(
-				String projectKey)
+				String projectKey, String[] includes)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -340,6 +423,13 @@ public interface ProjectResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (includes != null) {
+				for (int i = 0; i < includes.length; i++) {
+					httpInvoker.parameter(
+						"includes", String.valueOf(includes[i]));
+				}
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

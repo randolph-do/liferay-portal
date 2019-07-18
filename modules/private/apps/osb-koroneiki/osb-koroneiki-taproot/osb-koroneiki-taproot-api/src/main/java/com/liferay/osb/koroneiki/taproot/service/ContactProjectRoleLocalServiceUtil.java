@@ -108,15 +108,16 @@ public class ContactProjectRoleLocalServiceUtil {
 	}
 
 	public static com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
-		deleteContactProjectRole(
-			long contactId, long projectId, long contactRoleId) {
+			deleteContactProjectRole(
+				long contactId, long projectId, long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteContactProjectRole(
 			contactId, projectId, contactRoleId);
 	}
 
-	public static void deleteContactProjectRoles(
-		long contactId, long projectId) {
+	public static void deleteContactProjectRoles(long contactId, long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteContactProjectRoles(contactId, projectId);
 	}

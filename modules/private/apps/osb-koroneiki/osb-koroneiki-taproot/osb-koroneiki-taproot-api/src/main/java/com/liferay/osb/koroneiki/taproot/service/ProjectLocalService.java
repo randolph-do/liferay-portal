@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -62,6 +64,7 @@ public interface ProjectLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ProjectLocalServiceUtil} to access the project local service. Add custom service methods to <code>com.liferay.osb.koroneiki.taproot.service.impl.ProjectLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Project addProject(
 			long userId, long accountId, String name, String code,
 			String industry, String tier, String notes, String soldBy,
@@ -267,6 +270,16 @@ public interface ProjectLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getProjectsCount(long accountId);
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Project reindex(long projectId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public Project updateProject(
 			long userId, long projectId, String name, String code,
 			String industry, String tier, String notes, String soldBy,

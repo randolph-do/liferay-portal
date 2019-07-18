@@ -114,14 +114,18 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	@GET
 	@Operation(description = "Retrieves the account.")
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "accountKey")}
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "includes")
+		}
 	)
 	@Path("/accounts/{accountKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Account getAccount(
 			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
-				accountKey)
+				accountKey,
+			@Parameter(hidden = true) @QueryParam("includes") String[] includes)
 		throws Exception {
 
 		return new Account();

@@ -47,7 +47,8 @@ public interface AccountResource {
 
 	public void deleteAccount(String accountKey) throws Exception;
 
-	public Account getAccount(String accountKey) throws Exception;
+	public Account getAccount(String accountKey, String[] includes)
+		throws Exception;
 
 	public Account putAccount(String accountKey, Account account)
 		throws Exception;

@@ -17,6 +17,7 @@ package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -215,6 +216,26 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
+		if (account.getProductPurchases() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productPurchases\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getProductPurchases().length; i++) {
+				sb.append(String.valueOf(account.getProductPurchases()[i]));
+
+				if ((i + 1) < account.getProductPurchases().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (account.getProfileEmailAddress() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -343,6 +364,15 @@ public class AccountSerDes {
 		}
 		else {
 			map.put("phoneNumber", String.valueOf(account.getPhoneNumber()));
+		}
+
+		if (account.getProductPurchases() == null) {
+			map.put("productPurchases", null);
+		}
+		else {
+			map.put(
+				"productPurchases",
+				String.valueOf(account.getProductPurchases()));
 		}
 
 		if (account.getProfileEmailAddress() == null) {
@@ -492,6 +522,19 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "phoneNumber")) {
 				if (jsonParserFieldValue != null) {
 					account.setPhoneNumber((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "productPurchases")) {
+				if (jsonParserFieldValue != null) {
+					account.setProductPurchases(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ProductPurchaseSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new ProductPurchase[size]
+						));
 				}
 			}
 			else if (Objects.equals(

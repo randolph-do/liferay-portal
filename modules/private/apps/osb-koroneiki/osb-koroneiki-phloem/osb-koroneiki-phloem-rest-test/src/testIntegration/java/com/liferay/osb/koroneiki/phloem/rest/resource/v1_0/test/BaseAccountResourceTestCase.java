@@ -562,6 +562,14 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("productPurchases", additionalAssertFieldName)) {
+				if (account.getProductPurchases() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"profileEmailAddress", additionalAssertFieldName)) {
 
@@ -725,6 +733,17 @@ public abstract class BaseAccountResourceTestCase {
 			if (Objects.equals("phoneNumber", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						account1.getPhoneNumber(), account2.getPhoneNumber())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productPurchases", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getProductPurchases(),
+						account2.getProductPurchases())) {
 
 					return false;
 				}
@@ -941,6 +960,11 @@ public abstract class BaseAccountResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("productPurchases")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("profileEmailAddress")) {

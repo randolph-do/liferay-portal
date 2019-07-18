@@ -268,6 +268,28 @@ public class Account {
 
 	protected String phoneNumber;
 
+	public ProductPurchase[] getProductPurchases() {
+		return productPurchases;
+	}
+
+	public void setProductPurchases(ProductPurchase[] productPurchases) {
+		this.productPurchases = productPurchases;
+	}
+
+	public void setProductPurchases(
+		UnsafeSupplier<ProductPurchase[], Exception>
+			productPurchasesUnsafeSupplier) {
+
+		try {
+			productPurchases = productPurchasesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ProductPurchase[] productPurchases;
+
 	public String getProfileEmailAddress() {
 		return profileEmailAddress;
 	}

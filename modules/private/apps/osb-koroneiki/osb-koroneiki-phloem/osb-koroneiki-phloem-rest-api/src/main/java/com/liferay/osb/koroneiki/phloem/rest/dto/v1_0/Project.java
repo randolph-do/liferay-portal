@@ -435,6 +435,35 @@ public class Project {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String notes;
 
+	@Schema(description = "The products that the project has purchased.")
+	public ProductPurchase[] getProductPurchases() {
+		return productPurchases;
+	}
+
+	public void setProductPurchases(ProductPurchase[] productPurchases) {
+		this.productPurchases = productPurchases;
+	}
+
+	@JsonIgnore
+	public void setProductPurchases(
+		UnsafeSupplier<ProductPurchase[], Exception>
+			productPurchasesUnsafeSupplier) {
+
+		try {
+			productPurchases = productPurchasesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected ProductPurchase[] productPurchases;
+
 	@Schema(description = "The region which sold the salesforce opportunity.")
 	public String getSoldBy() {
 		return soldBy;
@@ -696,6 +725,26 @@ public class Project {
 			sb.append(_escape(notes));
 
 			sb.append("\"");
+		}
+
+		if (productPurchases != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productPurchases\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < productPurchases.length; i++) {
+				sb.append(String.valueOf(productPurchases[i]));
+
+				if ((i + 1) < productPurchases.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (soldBy != null) {

@@ -145,6 +145,16 @@ public class ProductPurchaseSerDes {
 			sb.append("\"");
 		}
 
+		if (productPurchase.getProduct() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"product\": ");
+
+			sb.append(String.valueOf(productPurchase.getProduct()));
+		}
+
 		if (productPurchase.getProductKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -260,6 +270,13 @@ public class ProductPurchaseSerDes {
 		}
 		else {
 			map.put("key", String.valueOf(productPurchase.getKey()));
+		}
+
+		if (productPurchase.getProduct() == null) {
+			map.put("product", null);
+		}
+		else {
+			map.put("product", String.valueOf(productPurchase.getProduct()));
 		}
 
 		if (productPurchase.getProductKey() == null) {
@@ -387,6 +404,12 @@ public class ProductPurchaseSerDes {
 			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
 					productPurchase.setKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "product")) {
+				if (jsonParserFieldValue != null) {
+					productPurchase.setProduct(
+						ProductSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productKey")) {

@@ -191,6 +191,34 @@ public class ProductPurchase {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	@Schema(description = "The product that is being purchased.")
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	@JsonIgnore
+	public void setProduct(
+		UnsafeSupplier<Product, Exception> productUnsafeSupplier) {
+
+		try {
+			product = productUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Product product;
+
 	@Schema(description = "The key of the product being purchased.")
 	public String getProductKey() {
 		return productKey;
@@ -437,6 +465,16 @@ public class ProductPurchase {
 			sb.append(_escape(key));
 
 			sb.append("\"");
+		}
+
+		if (product != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"product\": ");
+
+			sb.append(String.valueOf(product));
 		}
 
 		if (productKey != null) {

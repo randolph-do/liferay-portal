@@ -19,6 +19,8 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -64,6 +66,7 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "includes"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -74,6 +77,7 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	public Page<Project> getAccountAccountKeyProjectsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("accountKey") String
 				accountKey,
+			@Parameter(hidden = true) @QueryParam("includes") String[] includes,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -99,6 +103,32 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	}
 
 	@Override
+	@GET
+	@Operation(
+		description = "Retrieves the projects. Results can be paginated, filtered, searched, and sorted."
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/projects")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Project")})
+	public Page<Project> getProjectsPage(
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
 	@DELETE
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
@@ -116,14 +146,18 @@ public abstract class BaseProjectResourceImpl implements ProjectResource {
 	@GET
 	@Operation(description = "Retrieves the project.")
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "projectKey")}
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "projectKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "includes")
+		}
 	)
 	@Path("/projects/{projectKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Project")})
 	public Project getProject(
 			@NotNull @Parameter(hidden = true) @PathParam("projectKey") String
-				projectKey)
+				projectKey,
+			@Parameter(hidden = true) @QueryParam("includes") String[] includes)
 		throws Exception {
 
 		return new Project();

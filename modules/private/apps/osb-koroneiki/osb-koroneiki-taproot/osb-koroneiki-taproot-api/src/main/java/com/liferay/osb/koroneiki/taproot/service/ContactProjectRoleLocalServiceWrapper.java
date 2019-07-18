@@ -114,15 +114,18 @@ public class ContactProjectRoleLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.koroneiki.taproot.model.ContactProjectRole
-		deleteContactProjectRole(
-			long contactId, long projectId, long contactRoleId) {
+			deleteContactProjectRole(
+				long contactId, long projectId, long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _contactProjectRoleLocalService.deleteContactProjectRole(
 			contactId, projectId, contactRoleId);
 	}
 
 	@Override
-	public void deleteContactProjectRoles(long contactId, long projectId) {
+	public void deleteContactProjectRoles(long contactId, long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_contactProjectRoleLocalService.deleteContactProjectRoles(
 			contactId, projectId);
 	}

@@ -133,6 +133,27 @@ public class ProductPurchase {
 
 	protected String key;
 
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public void setProduct(
+		UnsafeSupplier<Product, Exception> productUnsafeSupplier) {
+
+		try {
+			product = productUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Product product;
+
 	public String getProductKey() {
 		return productKey;
 	}

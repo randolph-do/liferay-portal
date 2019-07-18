@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
@@ -194,6 +195,26 @@ public class ProjectSerDes {
 			sb.append("\"");
 		}
 
+		if (project.getProductPurchases() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productPurchases\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < project.getProductPurchases().length; i++) {
+				sb.append(String.valueOf(project.getProductPurchases()[i]));
+
+				if ((i + 1) < project.getProductPurchases().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (project.getSoldBy() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -313,6 +334,15 @@ public class ProjectSerDes {
 		}
 		else {
 			map.put("notes", String.valueOf(project.getNotes()));
+		}
+
+		if (project.getProductPurchases() == null) {
+			map.put("productPurchases", null);
+		}
+		else {
+			map.put(
+				"productPurchases",
+				String.valueOf(project.getProductPurchases()));
 		}
 
 		if (project.getSoldBy() == null) {
@@ -446,6 +476,19 @@ public class ProjectSerDes {
 			else if (Objects.equals(jsonParserFieldName, "notes")) {
 				if (jsonParserFieldValue != null) {
 					project.setNotes((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "productPurchases")) {
+				if (jsonParserFieldValue != null) {
+					project.setProductPurchases(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ProductPurchaseSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new ProductPurchase[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "soldBy")) {

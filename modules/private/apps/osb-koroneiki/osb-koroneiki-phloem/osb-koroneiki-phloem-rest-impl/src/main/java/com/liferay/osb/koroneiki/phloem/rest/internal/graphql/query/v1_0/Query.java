@@ -174,13 +174,16 @@ public class Query {
 	}
 
 	@GraphQLField
-	public Account getAccount(@GraphQLName("accountKey") String accountKey)
+	public Account getAccount(
+			@GraphQLName("accountKey") String accountKey,
+			@GraphQLName("includes") String[] includes)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource -> accountResource.getAccount(accountKey));
+			accountResource -> accountResource.getAccount(
+				accountKey, includes));
 	}
 
 	@GraphQLField
@@ -601,6 +604,7 @@ public class Query {
 	@GraphQLField
 	public ProjectPage getAccountAccountKeyProjectsPage(
 			@GraphQLName("accountKey") String accountKey,
+			@GraphQLName("includes") String[] includes,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -610,17 +614,36 @@ public class Query {
 			this::_populateResourceContext,
 			projectResource -> new ProjectPage(
 				projectResource.getAccountAccountKeyProjectsPage(
-					accountKey, Pagination.of(page, pageSize))));
+					accountKey, includes, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public Project getProject(@GraphQLName("projectKey") String projectKey)
+	public ProjectPage getProjectsPage(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_projectResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			projectResource -> projectResource.getProject(projectKey));
+			projectResource -> new ProjectPage(
+				projectResource.getProjectsPage(
+					search, filter, Pagination.of(page, pageSize), sorts)));
+	}
+
+	@GraphQLField
+	public Project getProject(
+			@GraphQLName("projectKey") String projectKey,
+			@GraphQLName("includes") String[] includes)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_projectResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			projectResource -> projectResource.getProject(
+				projectKey, includes));
 	}
 
 	@GraphQLField

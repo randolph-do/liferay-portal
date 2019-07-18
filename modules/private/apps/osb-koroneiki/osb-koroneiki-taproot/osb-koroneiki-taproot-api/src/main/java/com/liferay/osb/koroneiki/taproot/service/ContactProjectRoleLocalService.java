@@ -109,9 +109,11 @@ public interface ContactProjectRoleLocalService
 		throws PortalException;
 
 	public ContactProjectRole deleteContactProjectRole(
-		long contactId, long projectId, long contactRoleId);
+			long contactId, long projectId, long contactRoleId)
+		throws PortalException;
 
-	public void deleteContactProjectRoles(long contactId, long projectId);
+	public void deleteContactProjectRoles(long contactId, long projectId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

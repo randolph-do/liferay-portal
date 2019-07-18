@@ -13,11 +13,11 @@ create table Koroneiki_AuditEntry (
 	fieldClassPK LONG,
 	action VARCHAR(75) null,
 	field VARCHAR(75) null,
-	oldLabel VARCHAR(75) null,
-	oldValue VARCHAR(75) null,
-	newLabel VARCHAR(75) null,
-	newValue VARCHAR(75) null,
-	description VARCHAR(75) null
+	oldLabel VARCHAR(255) null,
+	oldValue STRING null,
+	newLabel VARCHAR(255) null,
+	newValue STRING null,
+	description STRING null
 );
 
 create table Koroneiki_ExternalLink (
@@ -29,6 +29,6 @@ create table Koroneiki_ExternalLink (
 	classNameId LONG,
 	classPK LONG,
 	domain VARCHAR(75) null,
-	entityName VARCHAR(75) null,
-	entityId VARCHAR(75) null
+	entityName VARCHAR(255) null,
+	entityId VARCHAR(150) null
 );

@@ -328,6 +328,21 @@ public class ProjectLocalServiceUtil {
 		return getService().getProjectsCount(accountId);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Project reindex(
+			long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().reindex(projectId);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().search(companyId, keywords, start, end, sort);
+	}
+
 	public static com.liferay.osb.koroneiki.taproot.model.Project updateProject(
 			long userId, long projectId, String name, String code,
 			String industry, String tier, String notes, String soldBy,

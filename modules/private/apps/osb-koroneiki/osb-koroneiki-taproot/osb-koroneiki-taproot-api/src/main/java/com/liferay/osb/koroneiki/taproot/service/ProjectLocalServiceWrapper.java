@@ -346,6 +346,24 @@ public class ProjectLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Project reindex(
+			long projectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectLocalService.reindex(projectId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _projectLocalService.search(
+			companyId, keywords, start, end, sort);
+	}
+
+	@Override
 	public com.liferay.osb.koroneiki.taproot.model.Project updateProject(
 			long userId, long projectId, String name, String code,
 			String industry, String tier, String notes, String soldBy,

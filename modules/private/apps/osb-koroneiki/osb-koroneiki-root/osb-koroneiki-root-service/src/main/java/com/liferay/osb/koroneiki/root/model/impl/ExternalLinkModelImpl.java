@@ -98,7 +98,7 @@ public class ExternalLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_ExternalLink (externalLinkId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,externalLinkKey VARCHAR(75) null,classNameId LONG,classPK LONG,domain VARCHAR(75) null,entityName VARCHAR(75) null,entityId VARCHAR(75) null)";
+		"create table Koroneiki_ExternalLink (externalLinkId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,externalLinkKey VARCHAR(75) null,classNameId LONG,classPK LONG,domain VARCHAR(75) null,entityName VARCHAR(255) null,entityId VARCHAR(150) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Koroneiki_ExternalLink";

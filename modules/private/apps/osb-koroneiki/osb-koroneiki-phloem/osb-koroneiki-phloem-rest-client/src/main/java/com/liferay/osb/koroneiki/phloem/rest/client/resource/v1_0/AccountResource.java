@@ -57,9 +57,11 @@ public interface AccountResource {
 	public HttpInvoker.HttpResponse deleteAccountHttpResponse(String accountKey)
 		throws Exception;
 
-	public Account getAccount(String accountKey) throws Exception;
+	public Account getAccount(String accountKey, String[] includes)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountHttpResponse(String accountKey)
+	public HttpInvoker.HttpResponse getAccountHttpResponse(
+			String accountKey, String[] includes)
 		throws Exception;
 
 	public Account putAccount(String accountKey, Account account)
@@ -289,9 +291,11 @@ public interface AccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public Account getAccount(String accountKey) throws Exception {
+		public Account getAccount(String accountKey, String[] includes)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getAccountHttpResponse(
-				accountKey);
+				accountKey, includes);
 
 			String content = httpResponse.getContent();
 
@@ -314,7 +318,7 @@ public interface AccountResource {
 		}
 
 		public HttpInvoker.HttpResponse getAccountHttpResponse(
-				String accountKey)
+				String accountKey, String[] includes)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -325,6 +329,13 @@ public interface AccountResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (includes != null) {
+				for (int i = 0; i < includes.length; i++) {
+					httpInvoker.parameter(
+						"includes", String.valueOf(includes[i]));
+				}
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

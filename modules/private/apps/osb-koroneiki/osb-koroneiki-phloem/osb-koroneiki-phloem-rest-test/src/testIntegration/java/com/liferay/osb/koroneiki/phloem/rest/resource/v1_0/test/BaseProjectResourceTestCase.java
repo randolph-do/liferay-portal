@@ -28,6 +28,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProjectResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ProjectSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,6 +51,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,6 +63,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -195,7 +199,7 @@ public abstract class BaseProjectResourceTestCase {
 	@Test
 	public void testGetAccountAccountKeyProjectsPage() throws Exception {
 		Page<Project> page = projectResource.getAccountAccountKeyProjectsPage(
-			testGetAccountAccountKeyProjectsPage_getAccountKey(),
+			testGetAccountAccountKeyProjectsPage_getAccountKey(), null,
 			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -211,7 +215,7 @@ public abstract class BaseProjectResourceTestCase {
 					irrelevantAccountKey, randomIrrelevantProject());
 
 			page = projectResource.getAccountAccountKeyProjectsPage(
-				irrelevantAccountKey, Pagination.of(1, 2));
+				irrelevantAccountKey, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -228,7 +232,7 @@ public abstract class BaseProjectResourceTestCase {
 			accountKey, randomProject());
 
 		page = projectResource.getAccountAccountKeyProjectsPage(
-			accountKey, Pagination.of(1, 2));
+			accountKey, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -254,14 +258,14 @@ public abstract class BaseProjectResourceTestCase {
 			accountKey, randomProject());
 
 		Page<Project> page1 = projectResource.getAccountAccountKeyProjectsPage(
-			accountKey, Pagination.of(1, 2));
+			accountKey, null, Pagination.of(1, 2));
 
 		List<Project> projects1 = (List<Project>)page1.getItems();
 
 		Assert.assertEquals(projects1.toString(), 2, projects1.size());
 
 		Page<Project> page2 = projectResource.getAccountAccountKeyProjectsPage(
-			accountKey, Pagination.of(2, 2));
+			accountKey, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -270,7 +274,7 @@ public abstract class BaseProjectResourceTestCase {
 		Assert.assertEquals(projects2.toString(), 1, projects2.size());
 
 		Page<Project> page3 = projectResource.getAccountAccountKeyProjectsPage(
-			accountKey, Pagination.of(1, 3));
+			accountKey, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(project1, project2, project3),
@@ -312,6 +316,188 @@ public abstract class BaseProjectResourceTestCase {
 
 	protected Project testPostAccountAccountKeyProject_addProject(
 			Project project)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProjectsPage() throws Exception {
+		Page<Project> page = projectResource.getProjectsPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Project project1 = testGetProjectsPage_addProject(randomProject());
+
+		Project project2 = testGetProjectsPage_addProject(randomProject());
+
+		page = projectResource.getProjectsPage(
+			null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(project1, project2), (List<Project>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetProjectsPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Project project1 = randomProject();
+
+		project1 = testGetProjectsPage_addProject(project1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Project> page = projectResource.getProjectsPage(
+				null, getFilterString(entityField, "between", project1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(project1),
+				(List<Project>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetProjectsPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Project project1 = testGetProjectsPage_addProject(randomProject());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Project project2 = testGetProjectsPage_addProject(randomProject());
+
+		for (EntityField entityField : entityFields) {
+			Page<Project> page = projectResource.getProjectsPage(
+				null, getFilterString(entityField, "eq", project1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(project1),
+				(List<Project>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetProjectsPageWithPagination() throws Exception {
+		Project project1 = testGetProjectsPage_addProject(randomProject());
+
+		Project project2 = testGetProjectsPage_addProject(randomProject());
+
+		Project project3 = testGetProjectsPage_addProject(randomProject());
+
+		Page<Project> page1 = projectResource.getProjectsPage(
+			null, null, Pagination.of(1, 2), null);
+
+		List<Project> projects1 = (List<Project>)page1.getItems();
+
+		Assert.assertEquals(projects1.toString(), 2, projects1.size());
+
+		Page<Project> page2 = projectResource.getProjectsPage(
+			null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Project> projects2 = (List<Project>)page2.getItems();
+
+		Assert.assertEquals(projects2.toString(), 1, projects2.size());
+
+		Page<Project> page3 = projectResource.getProjectsPage(
+			null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(project1, project2, project3),
+			(List<Project>)page3.getItems());
+	}
+
+	@Test
+	public void testGetProjectsPageWithSortDateTime() throws Exception {
+		testGetProjectsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, project1, project2) -> {
+				BeanUtils.setProperty(
+					project1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProjectsPageWithSortInteger() throws Exception {
+		testGetProjectsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, project1, project2) -> {
+				BeanUtils.setProperty(project1, entityField.getName(), 0);
+				BeanUtils.setProperty(project2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetProjectsPageWithSortString() throws Exception {
+		testGetProjectsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, project1, project2) -> {
+				BeanUtils.setProperty(project1, entityField.getName(), "Aaa");
+				BeanUtils.setProperty(project2, entityField.getName(), "Bbb");
+			});
+	}
+
+	protected void testGetProjectsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Project, Project, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Project project1 = randomProject();
+		Project project2 = randomProject();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, project1, project2);
+		}
+
+		project1 = testGetProjectsPage_addProject(project1);
+
+		project2 = testGetProjectsPage_addProject(project2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Project> ascPage = projectResource.getProjectsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(project1, project2),
+				(List<Project>)ascPage.getItems());
+
+			Page<Project> descPage = projectResource.getProjectsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(project2, project1),
+				(List<Project>)descPage.getItems());
+		}
+	}
+
+	protected Project testGetProjectsPage_addProject(Project project)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -481,6 +667,14 @@ public abstract class BaseProjectResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("productPurchases", additionalAssertFieldName)) {
+				if (project.getProductPurchases() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("soldBy", additionalAssertFieldName)) {
 				if (project.getSoldBy() == null) {
 					valid = false;
@@ -629,6 +823,17 @@ public abstract class BaseProjectResourceTestCase {
 			if (Objects.equals("notes", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						project1.getNotes(), project2.getNotes())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productPurchases", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						project1.getProductPurchases(),
+						project2.getProductPurchases())) {
 
 					return false;
 				}
@@ -834,6 +1039,11 @@ public abstract class BaseProjectResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("productPurchases")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("soldBy")) {

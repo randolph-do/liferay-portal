@@ -126,7 +126,7 @@ public class MessageFactory {
 
 	public Message create(Project project) throws Exception {
 		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project dtoProject =
-			ProjectUtil.toProject(project);
+			ProjectUtil.toProject(project, null);
 
 		return new Message(dtoProject.toString());
 	}
@@ -182,7 +182,7 @@ public class MessageFactory {
 
 	protected JSONObject toJSONObject(Project project) throws Exception {
 		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project dtoProject =
-			ProjectUtil.toProject(project);
+			ProjectUtil.toProject(project, null);
 
 		return _jsonFactory.createJSONObject(dtoProject.toString());
 	}

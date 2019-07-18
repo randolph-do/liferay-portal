@@ -15,7 +15,11 @@
 package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
+import com.liferay.osb.koroneiki.trunk.service.ProductPurchaseLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
@@ -24,7 +28,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 public class ProjectUtil {
 
 	public static Project toProject(
-			com.liferay.osb.koroneiki.taproot.model.Project project)
+			com.liferay.osb.koroneiki.taproot.model.Project project,
+			String[] includes)
 		throws Exception {
 
 		return new Project() {
@@ -43,6 +48,22 @@ public class ProjectUtil {
 				soldBy = project.getSoldBy();
 				status = Status.create(project.getStatusLabel());
 				tier = Tier.create(project.getTier());
+
+				setProductPurchases(
+					() -> {
+						if (!ArrayUtil.contains(includes, "products")) {
+							return null;
+						}
+
+						return productPurchases =
+							TransformUtil.transformToArray(
+								ProductPurchaseLocalServiceUtil.
+									getProjectProductPurchases(
+										project.getProjectId(),
+										QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+								ProductPurchaseUtil::toProductPurchase,
+								ProductPurchase.class);
+					});
 			}
 		};
 	}

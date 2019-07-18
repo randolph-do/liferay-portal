@@ -80,7 +80,7 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 
 	@Override
 	public Page<Project> getAccountAccountKeyProjectsPage(
-			String accountKey, Pagination pagination)
+			String accountKey, String[] includes, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
@@ -88,13 +88,16 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 				_projectService.getProjects(
 					accountKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				ProjectUtil::toProject),
+				project -> ProjectUtil.toProject(project, includes)),
 			pagination, _projectService.getProjectsCount(accountKey));
 	}
 
 	@Override
-	public Project getProject(String projectKey) throws Exception {
-		return ProjectUtil.toProject(_projectService.getProject(projectKey));
+	public Project getProject(String projectKey, String[] includes)
+		throws Exception {
+
+		return ProjectUtil.toProject(
+			_projectService.getProject(projectKey), includes);
 	}
 
 	@Override
@@ -114,7 +117,8 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 			_projectService.addProject(
 				accountKey, project.getName(), project.getCode(),
 				projectTier.toString(), projectIndustry.toString(),
-				project.getNotes(), project.getSoldBy(), status));
+				project.getNotes(), project.getSoldBy(), status),
+			null);
 	}
 
 	@Override
@@ -133,7 +137,8 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 			_projectService.updateProject(
 				projectKey, project.getName(), project.getCode(),
 				projectTier.toString(), projectIndustry.toString(),
-				project.getNotes(), project.getSoldBy(), status));
+				project.getNotes(), project.getSoldBy(), status),
+			null);
 	}
 
 	@Override

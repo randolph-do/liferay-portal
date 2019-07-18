@@ -365,6 +365,13 @@ components:
                     description: The product purchase's key.
                     readOnly: true
                     type: string
+                product:
+                    description: The product that is being purchased.
+                    items:
+                        $ref: "#/components/schemas/Product"
+                    products:
+                    readOnly: true
+                    type: object
                 productKey:
                     description: The key of the product being purchased.
                     type: string
@@ -427,6 +434,12 @@ components:
                 notes:
                     description: The notes of the project.
                     type: string
+                productPurchases:
+                    description: The products that the project has purchased.
+                    items:
+                        $ref: "#/components/schemas/ProductPurchase"
+                    readOnly: true
+                    type: array
                 soldBy:
                     description: The region which sold the salesforce opportunity.
                     type: string
@@ -994,6 +1007,12 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: includes
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: page
                   schema:
@@ -1981,6 +2000,12 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: includes
+                  schema:
+                      items:
+                          type: string
+                      type: array
             responses:
                 200:
                     content:

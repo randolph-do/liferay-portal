@@ -318,6 +318,13 @@ public class AccountLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.Account reindex(
+			long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().reindex(accountId);
+	}
+
 	public static com.liferay.portal.kernel.search.Hits search(
 			long companyId, String keywords, int start, int end,
 			com.liferay.portal.kernel.search.Sort sort)

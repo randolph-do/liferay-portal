@@ -334,6 +334,14 @@ public class AccountLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.taproot.model.Account reindex(
+			long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountLocalService.reindex(accountId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 			long companyId, String keywords, int start, int end,
 			com.liferay.portal.kernel.search.Sort sort)

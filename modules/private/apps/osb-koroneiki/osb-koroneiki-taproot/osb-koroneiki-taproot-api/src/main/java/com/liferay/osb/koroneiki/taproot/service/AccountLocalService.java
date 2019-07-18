@@ -74,6 +74,7 @@ public interface AccountLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Account addAccount(Account account);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Account addAccount(
 			long userId, String name, String description, long logoId,
 			String contactEmailAddress, String profileEmailAddress,
@@ -264,6 +265,10 @@ public interface AccountLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Account reindex(long accountId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(
 			long companyId, String keywords, int start, int end, Sort sort)
@@ -278,6 +283,7 @@ public interface AccountLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Account updateAccount(Account account);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Account updateAccount(
 			long userId, long accountId, String name, String description,
 			long logoId, String contactEmailAddress, String profileEmailAddress,

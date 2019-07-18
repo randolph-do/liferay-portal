@@ -16,6 +16,9 @@ package com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
+import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
+import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
+import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AccountSerDes;
 
 import java.util.Locale;
 import java.util.logging.Level;
@@ -33,6 +36,16 @@ public interface AccountResource {
 	public static Builder builder() {
 		return new Builder();
 	}
+
+	public Page<Account> getAccountsPage(
+			String search, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getAccountsPageHttpResponse(
+			String search, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception;
 
 	public Account postAccount(Account account) throws Exception;
 
@@ -128,6 +141,68 @@ public interface AccountResource {
 
 	public static class AccountResourceImpl implements AccountResource {
 
+		public Page<Account> getAccountsPage(
+				String search, String filterString, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = getAccountsPageHttpResponse(
+				search, filterString, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, AccountSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getAccountsPageHttpResponse(
+				String search, String filterString, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/koroneiki-rest/v1.0/accounts");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
 		public Account postAccount(Account account) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = postAccountHttpResponse(
 				account);
@@ -141,8 +216,7 @@ public interface AccountResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-					AccountSerDes.toDTO(content);
+				return AccountSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -228,8 +302,7 @@ public interface AccountResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-					AccountSerDes.toDTO(content);
+				return AccountSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -280,8 +353,7 @@ public interface AccountResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.
-					AccountSerDes.toDTO(content);
+				return AccountSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(

@@ -44,6 +44,12 @@ components:
                 phoneNumber:
                     description: The account's phone number.
                     type: string
+                productPurchases:
+                    description: The products that the account has purchased.
+                    items:
+                        $ref: "#/components/schemas/ProductPurchase"
+                    readOnly: true
+                    type: array
                 profileEmailAddress:
                     description: The account's profile email address.
                     type: string
@@ -611,6 +617,12 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: includes
+                  schema:
+                      items:
+                          type: string
+                      type: array
             responses:
                 200:
                     content:

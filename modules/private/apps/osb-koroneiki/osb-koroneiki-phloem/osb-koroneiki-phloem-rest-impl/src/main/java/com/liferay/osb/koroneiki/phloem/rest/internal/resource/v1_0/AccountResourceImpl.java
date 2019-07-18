@@ -79,10 +79,12 @@ public class AccountResourceImpl
 	}
 
 	@Override
-	public Account getAccount(String accountKey) throws Exception {
+	public Account getAccount(String accountKey, String[] includes)
+		throws Exception {
+
 		return AccountUtil.toAccount(
 			_accountService.getAccount(accountKey),
-			contextAcceptLanguage.getPreferredLocale());
+			contextAcceptLanguage.getPreferredLocale(), includes);
 	}
 
 	@Override
@@ -123,7 +125,7 @@ public class AccountResourceImpl
 				account.getContactEmailAddress(),
 				account.getProfileEmailAddress(), account.getPhoneNumber(),
 				account.getFaxNumber(), account.getWebsite(), status),
-			contextAcceptLanguage.getPreferredLocale());
+			contextAcceptLanguage.getPreferredLocale(), null);
 	}
 
 	@Override
@@ -140,7 +142,7 @@ public class AccountResourceImpl
 				account.getContactEmailAddress(),
 				account.getProfileEmailAddress(), account.getPhoneNumber(),
 				account.getFaxNumber(), account.getWebsite(), status),
-			contextAcceptLanguage.getPreferredLocale());
+			contextAcceptLanguage.getPreferredLocale(), null);
 	}
 
 	@Override

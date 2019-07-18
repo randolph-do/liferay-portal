@@ -53,7 +53,7 @@ public class MessageFactory {
 
 	public Message create(Account account) throws Exception {
 		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account dtoAccount =
-			AccountUtil.toAccount(account, LocaleUtil.US);
+			AccountUtil.toAccount(account, LocaleUtil.US, null);
 
 		return new Message(dtoAccount.toString());
 	}
@@ -159,7 +159,7 @@ public class MessageFactory {
 
 	protected JSONObject toJSONObject(Account account) throws Exception {
 		com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Account dtoAccount =
-			AccountUtil.toAccount(account, LocaleUtil.US);
+			AccountUtil.toAccount(account, LocaleUtil.US, null);
 
 		return _jsonFactory.createJSONObject(dtoAccount.toString());
 	}

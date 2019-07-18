@@ -95,6 +95,10 @@ public class ProductPurchaseLocalServiceImpl
 
 		_accountLocalService.reindex(accountId);
 
+		if (projectId > 0) {
+			_projectLocalService.reindex(projectId);
+		}
+
 		return productPurchase;
 	}
 
@@ -125,6 +129,10 @@ public class ProductPurchaseLocalServiceImpl
 			productPurchase.getProductPurchaseId());
 
 		_accountLocalService.reindex(productPurchase.getAccountId());
+
+		if (productPurchase.getProjectId() > 0) {
+			_projectLocalService.reindex(productPurchase.getProjectId());
+		}
 
 		return productPurchasePersistence.remove(productPurchaseId);
 	}

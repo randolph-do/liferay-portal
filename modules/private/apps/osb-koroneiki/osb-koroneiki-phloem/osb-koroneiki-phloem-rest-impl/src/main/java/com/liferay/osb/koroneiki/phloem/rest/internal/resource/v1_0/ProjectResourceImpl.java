@@ -16,6 +16,7 @@ package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0;
 
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Project;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProjectUtil;
+import com.liferay.osb.koroneiki.phloem.rest.internal.odata.entity.v1_0.ProjectEntityModel;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProjectResource;
 import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.constants.WorkflowConstants;
@@ -25,8 +26,17 @@ import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectService;
 import com.liferay.osb.koroneiki.taproot.service.TeamProjectRoleService;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +49,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/project.properties",
 	scope = ServiceScope.PROTOTYPE, service = ProjectResource.class
 )
-public class ProjectResourceImpl extends BaseProjectResourceImpl {
+public class ProjectResourceImpl
+	extends BaseProjectResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteProject(String projectKey) throws Exception {
@@ -93,11 +104,36 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 	}
 
 	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	@Override
 	public Project getProject(String projectKey, String[] includes)
 		throws Exception {
 
 		return ProjectUtil.toProject(
 			_projectService.getProject(projectKey), includes);
+	}
+
+	@Override
+	public Page<Project> getProjectsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQuery -> {
+			},
+			filter, com.liferay.osb.koroneiki.taproot.model.Project.class,
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			document -> ProjectUtil.toProject(
+				_projectService.getProject(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
 	}
 
 	@Override
@@ -175,6 +211,8 @@ public class ProjectResourceImpl extends BaseProjectResourceImpl {
 				teamKey, projectKey, teamRoleKey);
 		}
 	}
+
+	private static final EntityModel _entityModel = new ProjectEntityModel();
 
 	@Reference
 	private ContactProjectRoleService _contactProjectRoleService;

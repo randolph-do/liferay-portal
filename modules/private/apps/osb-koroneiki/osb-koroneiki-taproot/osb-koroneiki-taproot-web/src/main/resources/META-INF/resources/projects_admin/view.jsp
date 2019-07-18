@@ -17,53 +17,35 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<NavigationItem> navigationItems = new ArrayList<>();
+ViewProjectsManagementToolbarDisplayContext viewProjectsManagementToolbarDisplayContext = new ViewProjectsManagementToolbarDisplayContext(request, renderRequest, renderResponse);
 
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(StringPool.BLANK);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "projects"));
-
-navigationItems.add(entriesNavigationItem);
+SearchContainer searchContainer = viewProjectsManagementToolbarDisplayContext.getSearchContainer();
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= navigationItems %>"
+	navigationItems="<%= viewProjectsManagementToolbarDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	creationMenu='<%=
-		new JSPCreationMenu(pageContext) {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/projects_admin/edit_project", "redirect", PortalUtil.getCurrentURL(request));
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-					});
-			}
-		}
-	%>'
+	clearResultsURL="<%= viewProjectsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= viewProjectsManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= viewProjectsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= viewProjectsManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="accountSearch"
+	searchFormName="searchFm"
 	selectable="<%= false %>"
-	showSearch="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewProjectsManagementToolbarDisplayContext.getSortingURL() %>"
 />
-
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
-%>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-projects-were-found"
-		headerNames="name,account,code,status,"
-		iteratorURL="<%= portletURL %>"
-		total="<%= ProjectLocalServiceUtil.getProjectsCount() %>"
+		searchContainer="<%= searchContainer %>"
+		var="projectSearch"
 	>
-		<liferay-ui:search-container-results
-			results="<%= ProjectLocalServiceUtil.getProjects(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.osb.koroneiki.taproot.model.Project"
 			escapedModel="<%= true %>"

@@ -24,10 +24,22 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Project addProject(
 			long userId, long accountId, String name, String code,
 			String industry, String tier, String notes, String soldBy,
@@ -130,6 +143,55 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return projectPersistence.countByAccountId(accountId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	public Project reindex(long projectId) throws PortalException {
+		return projectPersistence.findByPrimaryKey(projectId);
+	}
+
+	public Hits search(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		try {
+			Indexer<Project> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Project.class);
+
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAndSearch(false);
+
+			Map<String, Serializable> attributes = new HashMap<>();
+
+			attributes.put("code", keywords);
+			attributes.put("contactKeys", keywords);
+			attributes.put("name", keywords);
+			attributes.put("notes", keywords);
+			attributes.put("productEntryKeys", keywords);
+
+			searchContext.setAttributes(attributes);
+
+			searchContext.setCompanyId(companyId);
+			searchContext.setEnd(end);
+
+			if (sort != null) {
+				searchContext.setSorts(sort);
+			}
+
+			searchContext.setStart(start);
+
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			queryConfig.setHighlightEnabled(false);
+			queryConfig.setScoreEnabled(false);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
 	public Project updateProject(
 			long userId, long projectId, String name, String code,
 			String industry, String tier, String notes, String soldBy,

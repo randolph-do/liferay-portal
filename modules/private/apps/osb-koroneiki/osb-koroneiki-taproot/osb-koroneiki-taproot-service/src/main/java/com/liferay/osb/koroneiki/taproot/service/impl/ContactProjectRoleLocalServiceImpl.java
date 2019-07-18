@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.model.ContactProjectRole;
+import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactProjectRoleLocalServiceBaseImpl;
 import com.liferay.osb.koroneiki.taproot.service.persistence.ContactProjectRolePK;
 import com.liferay.portal.aop.AopService;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -52,13 +54,16 @@ public class ContactProjectRoleLocalServiceImpl
 				contactProjectRolePK);
 
 			contactProjectRolePersistence.update(contactProjectRole);
+
+			_projectLocalService.reindex(projectId);
 		}
 
 		return contactProjectRole;
 	}
 
 	public ContactProjectRole deleteContactProjectRole(
-		long contactId, long projectId, long contactRoleId) {
+			long contactId, long projectId, long contactRoleId)
+		throws PortalException {
 
 		ContactProjectRolePK contactProjectRolePK = new ContactProjectRolePK(
 			contactId, projectId, contactRoleId);
@@ -69,13 +74,19 @@ public class ContactProjectRoleLocalServiceImpl
 
 		if (contactProjectRole != null) {
 			deleteContactProjectRole(contactProjectRole);
+
+			_projectLocalService.reindex(projectId);
 		}
 
 		return contactProjectRole;
 	}
 
-	public void deleteContactProjectRoles(long contactId, long projectId) {
+	public void deleteContactProjectRoles(long contactId, long projectId)
+		throws PortalException {
+
 		contactProjectRolePersistence.removeByC_P(contactId, projectId);
+
+		_projectLocalService.reindex(projectId);
 	}
 
 	public List<ContactProjectRole> getContactProjectRoles(long contactId) {
@@ -89,5 +100,8 @@ public class ContactProjectRoleLocalServiceImpl
 
 		projectPersistence.findByPrimaryKey(projectId);
 	}
+
+	@Reference
+	private ProjectLocalService _projectLocalService;
 
 }

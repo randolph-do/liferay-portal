@@ -1988,6 +1988,46 @@ paths:
                                 $ref: "#/components/schemas/ExternalLink"
                     description: ""
             tags: ["ExternalLink"]
+    "/projects":
+        get:
+            description: Retrieves the projects. Results can be paginated, filtered, searched, and sorted.
+            operationId: getProjectsPage
+            parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Project"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Project"
+                                type: array
+                    description: ""
+            tags: ["Project"]
     "/projects/{projectKey}":
         delete:
             operationId: deleteProject

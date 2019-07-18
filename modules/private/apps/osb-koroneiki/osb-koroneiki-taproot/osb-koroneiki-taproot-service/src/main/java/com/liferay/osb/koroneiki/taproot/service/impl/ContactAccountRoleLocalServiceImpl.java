@@ -15,6 +15,7 @@
 package com.liferay.osb.koroneiki.taproot.service.impl;
 
 import com.liferay.osb.koroneiki.taproot.model.ContactAccountRole;
+import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactAccountRoleLocalServiceBaseImpl;
 import com.liferay.osb.koroneiki.taproot.service.persistence.ContactAccountRolePK;
 import com.liferay.portal.aop.AopService;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kyle Bischof
@@ -52,13 +54,16 @@ public class ContactAccountRoleLocalServiceImpl
 				contactAccountRolePK);
 
 			contactAccountRolePersistence.update(contactAccountRole);
+
+			_accountLocalService.reindex(accountId);
 		}
 
 		return contactAccountRole;
 	}
 
 	public ContactAccountRole deleteContactAccountRole(
-		long contactId, long accountId, long contactRoleId) {
+			long contactId, long accountId, long contactRoleId)
+		throws PortalException {
 
 		ContactAccountRolePK contactAccountRolePK = new ContactAccountRolePK(
 			contactId, accountId, contactRoleId);
@@ -69,13 +74,19 @@ public class ContactAccountRoleLocalServiceImpl
 
 		if (contactAccountRole != null) {
 			deleteContactAccountRole(contactAccountRole);
+
+			_accountLocalService.reindex(accountId);
 		}
 
 		return contactAccountRole;
 	}
 
-	public void deleteContactAccountRoles(long contactId, long accountId) {
+	public void deleteContactAccountRoles(long contactId, long accountId)
+		throws PortalException {
+
 		contactAccountRolePersistence.removeByC_A(contactId, accountId);
+
+		_accountLocalService.reindex(accountId);
 	}
 
 	public List<ContactAccountRole> getContactAccountRoles(
@@ -91,5 +102,8 @@ public class ContactAccountRoleLocalServiceImpl
 
 		accountPersistence.findByPrimaryKey(accountId);
 	}
+
+	@Reference
+	private AccountLocalService _accountLocalService;
 
 }

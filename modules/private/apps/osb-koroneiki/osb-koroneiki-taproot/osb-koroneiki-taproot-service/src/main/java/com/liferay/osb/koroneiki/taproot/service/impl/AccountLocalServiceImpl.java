@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -51,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Account addAccount(
 			long userId, String name, String description, long logoId,
 			String contactEmailAddress, String profileEmailAddress,
@@ -134,6 +137,11 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		return accountPersistence.findByAccountKey(accountKey);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	public Account reindex(long accountId) throws PortalException {
+		return accountPersistence.findByPrimaryKey(accountId);
+	}
+
 	public Hits search(
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
@@ -148,8 +156,10 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 			Map<String, Serializable> attributes = new HashMap<>();
 
+			attributes.put("contactKeys", keywords);
 			attributes.put("description", keywords);
 			attributes.put("name", keywords);
+			attributes.put("productEntryKeys", keywords);
 
 			searchContext.setAttributes(attributes);
 
@@ -174,6 +184,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Account updateAccount(
 			long userId, long accountId, String name, String description,
 			long logoId, String contactEmailAddress, String profileEmailAddress,

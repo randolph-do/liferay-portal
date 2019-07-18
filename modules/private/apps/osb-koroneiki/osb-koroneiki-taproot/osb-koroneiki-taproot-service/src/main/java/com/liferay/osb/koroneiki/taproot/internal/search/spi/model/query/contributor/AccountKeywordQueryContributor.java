@@ -44,12 +44,16 @@ public class AccountKeywordQueryContributor implements KeywordQueryContributor {
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "contactEmailAddress", false);
 		queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "contactKeys", false);
+		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "description", false);
+		queryHelper.addSearchTerm(booleanQuery, searchContext, "name", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "phoneNumber", false);
 		queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "productEntryKeys", false);
+		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "profileEmailAddress", false);
-		queryHelper.addSearchTerm(booleanQuery, searchContext, "name", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "website", false);
 	}

@@ -17,7 +17,11 @@ package com.liferay.osb.koroneiki.taproot.internal.search.spi.model.index.contri
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
+import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
+import com.liferay.osb.koroneiki.trunk.service.ProductPurchaseLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -61,6 +65,7 @@ public class AccountModelDocumentContributor
 		document.addTextSortable("name", account.getName());
 
 		contributeContacts(document, account.getAccountId());
+		contributeProductEntries(document, account.getAccountId());
 	}
 
 	protected void contributeContacts(Document document, long accountId) {
@@ -73,11 +78,38 @@ public class AccountModelDocumentContributor
 			contactKeys.add(contact.getContactKey());
 		}
 
-		document.addText(
+		document.addKeyword(
 			"contactKeys", ArrayUtil.toStringArray(contactKeys.toArray()));
+	}
+
+	protected void contributeProductEntries(Document document, long accountId) {
+		List<String> productEntryKeys = new ArrayList<>();
+
+		List<ProductPurchase> productPurchases =
+			productPurchaseLocalService.getAccountProductPurchases(
+				accountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (ProductPurchase productPurchase : productPurchases) {
+			try {
+				productEntryKeys.add(productPurchase.getProductEntryKey());
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		document.addKeyword(
+			"productEntryKeys",
+			ArrayUtil.toStringArray(productEntryKeys.toArray()));
 	}
 
 	@Reference
 	protected ContactLocalService contactLocalService;
+
+	@Reference
+	protected ProductPurchaseLocalService productPurchaseLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountModelDocumentContributor.class);
 
 }

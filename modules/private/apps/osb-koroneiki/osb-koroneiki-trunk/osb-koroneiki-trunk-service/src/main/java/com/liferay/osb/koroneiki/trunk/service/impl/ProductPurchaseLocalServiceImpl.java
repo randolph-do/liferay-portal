@@ -93,6 +93,8 @@ public class ProductPurchaseLocalServiceImpl
 				productField.getName(), productField.getValue());
 		}
 
+		_accountLocalService.reindex(accountId);
+
 		return productPurchase;
 	}
 
@@ -121,6 +123,8 @@ public class ProductPurchaseLocalServiceImpl
 			productPurchase.getCompanyId(), ProductPurchase.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			productPurchase.getProductPurchaseId());
+
+		_accountLocalService.reindex(productPurchase.getAccountId());
 
 		return productPurchasePersistence.remove(productPurchaseId);
 	}

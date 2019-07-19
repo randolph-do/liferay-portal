@@ -21,9 +21,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 ProductConsumption productConsumption = (ProductConsumption)request.getAttribute(TrunkWebKeys.PRODUCT_CONSUMPTION);
 
-long accountId = ParamUtil.getLong(request, "accountId");
-long projectId = ParamUtil.getLong(request, "projectId");
-
 renderResponse.setTitle((productConsumption == null) ? LanguageUtil.get(request, "new-consumption") : LanguageUtil.get(request, "consumption"));
 %>
 
@@ -99,14 +96,17 @@ renderResponse.setTitle((productConsumption == null) ? LanguageUtil.get(request,
 					</p>
 				</c:when>
 				<c:otherwise>
-					<aui:select label="account" name="accountId" onChange='<%= renderResponse.getNamespace() + "selectAccount(this.value, 0);" %>'>
+					<aui:select label="account" name="accountId" onChange='<%= renderResponse.getNamespace() + "selectAccount(this);" %>'>
 						<aui:option value="" />
 
 						<%
 						for (Account koroneikiAccount : AccountLocalServiceUtil.getAccounts(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+							Map<String, Object> data = new HashMap<String, Object>();
+
+							data.put("accountkey", koroneikiAccount.getAccountKey());
 						%>
 
-							<aui:option label="<%= koroneikiAccount.getName() %>" select="<%= koroneikiAccount.getAccountId() == accountId %>" value="<%= koroneikiAccount.getAccountId() %>" />
+							<aui:option data="<%= data %>" label="<%= koroneikiAccount.getName() %>" value="<%= koroneikiAccount.getAccountId() %>" />
 
 						<%
 						}
@@ -191,22 +191,16 @@ renderResponse.setTitle((productConsumption == null) ? LanguageUtil.get(request,
 </aui:form>
 
 <aui:script>
-	<c:if test="<%= accountId > 0 %>">
-		AUI().ready(
-			function() {
-				<portlet:namespace />selectAccount('<%= accountId %>', '<%= projectId %>');
-			}
-		);
-	</c:if>
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectAccount',
-		function(accountId, projectId) {
+		function(account) {
 			var A = AUI();
 
+			var accountKey = account.options[account.selectedIndex].dataset.accountkey;
+
 			A.io.request(
-				'/o/koroneiki-rest/v1.0/accounts/' + accountId + '/projects',
+				'/o/koroneiki-rest/v1.0/accounts/' + accountKey + '/projects',
 				{
 					data: {
 						p_auth: Liferay.authToken
@@ -235,10 +229,6 @@ renderResponse.setTitle((productConsumption == null) ? LanguageUtil.get(request,
 									var projectOption = A.Node.create('<option value="' + item.id + '">' + item.name + '</option>');
 
 									projectSelect.append(projectOption);
-								}
-
-								if (projectId > 0) {
-									projectSelect.val(projectId);
 								}
 							}
 						}

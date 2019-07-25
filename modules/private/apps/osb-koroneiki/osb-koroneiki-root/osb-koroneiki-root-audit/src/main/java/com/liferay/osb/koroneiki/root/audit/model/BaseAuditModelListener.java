@@ -19,12 +19,14 @@ import com.liferay.osb.koroneiki.root.audit.constants.AuditEntryConstants;
 import com.liferay.osb.koroneiki.root.model.AuditEntry;
 import com.liferay.osb.koroneiki.root.service.AuditEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Map;
 import java.util.Objects;
@@ -39,8 +41,6 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
-		long userId = PrincipalThreadLocal.getUserId();
-
 		try {
 			Map<String, Object> attributes = model.getModelAttributes();
 
@@ -48,7 +48,7 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 				String field = entry.getKey();
 
 				auditEntryLocalService.addAuditEntry(
-					userId, getClassNameId(model), getClassPK(model),
+					getUserId(), getClassNameId(model), getClassPK(model),
 					_auditSetId.get(), getFieldClassNameId(model),
 					getFieldClassPK(model), AuditEntryConstants.ACTION_ADD,
 					field, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
@@ -63,15 +63,13 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 	@Override
 	public void onBeforeRemove(T model) throws ModelListenerException {
 		try {
-			long userId = PrincipalThreadLocal.getUserId();
-
 			Map<String, Object> attributes = model.getModelAttributes();
 
 			for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 				String field = entry.getKey();
 
 				auditEntryLocalService.addAuditEntry(
-					userId, getClassNameId(model), getClassPK(model),
+					getUserId(), getClassNameId(model), getClassPK(model),
 					_auditSetId.get(), getFieldClassNameId(model),
 					getFieldClassPK(model), AuditEntryConstants.ACTION_DELETE,
 					field, StringPool.BLANK, String.valueOf(entry.getValue()),
@@ -86,8 +84,6 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 	@Override
 	public void onBeforeUpdate(T model) throws ModelListenerException {
 		try {
-			long userId = PrincipalThreadLocal.getUserId();
-
 			long classPK = (Long)model.getPrimaryKeyObj();
 
 			T oldModel = getModel(classPK);
@@ -105,7 +101,7 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 
 				if (!Objects.equals(oldValue, value)) {
 					auditEntryLocalService.addAuditEntry(
-						userId, getClassNameId(model), getClassPK(model),
+						getUserId(), getClassNameId(model), getClassPK(model),
 						_auditSetId.get(), getFieldClassNameId(model),
 						getFieldClassPK(model),
 						AuditEntryConstants.ACTION_UPDATE, field,
@@ -140,11 +136,29 @@ public abstract class BaseAuditModelListener<T extends BaseModel<T>>
 		return null;
 	}
 
+	protected long getUserId() throws PortalException {
+		long userId = PrincipalThreadLocal.getUserId();
+
+		if (userId <= 0) {
+			long companyId = portalInstancesLocalService.getDefaultCompanyId();
+
+			userId = userLocalService.getDefaultUserId(companyId);
+		}
+
+		return userId;
+	}
+
 	@Reference
 	protected AuditEntryLocalService auditEntryLocalService;
 
 	@Reference
 	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
+	protected PortalInstancesLocalService portalInstancesLocalService;
+
+	@Reference
+	protected UserLocalService userLocalService;
 
 	private static final ThreadLocal<Long> _auditSetId =
 		new ThreadLocal<Long>() {

@@ -100,10 +100,11 @@ public class ContactRolePermissionImpl
 			String actionId)
 		throws PortalException {
 
-		ContactRole contactRole = _contactRoleLocalService.getContactRole(
-			contactRoleId);
+		if (contains(
+				permissionChecker,
+				_contactRoleLocalService.getContactRole(contactRoleId),
+				actionId)) {
 
-		if (contains(permissionChecker, contactRole, actionId)) {
 			return true;
 		}
 

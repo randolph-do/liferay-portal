@@ -15,7 +15,6 @@
 package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.root.constants.RootWebKeys;
-import com.liferay.osb.koroneiki.root.model.ExternalLink;
 import com.liferay.osb.koroneiki.root.service.ExternalLinkLocalService;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -53,11 +52,9 @@ public class EditExternalLinkMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "externalLinkId");
 
 			if (externalLinkId > 0) {
-				ExternalLink externalLink =
-					_externalLinkLocalService.getExternalLink(externalLinkId);
-
 				renderRequest.setAttribute(
-					RootWebKeys.EXTERNAL_LINK, externalLink);
+					RootWebKeys.EXTERNAL_LINK,
+					_externalLinkLocalService.getExternalLink(externalLinkId));
 			}
 
 			return "/edit_external_link.jsp";

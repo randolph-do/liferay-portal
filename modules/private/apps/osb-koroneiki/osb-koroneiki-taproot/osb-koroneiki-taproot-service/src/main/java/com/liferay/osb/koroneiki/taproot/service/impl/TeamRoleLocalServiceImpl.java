@@ -74,9 +74,7 @@ public class TeamRoleLocalServiceImpl extends TeamRoleLocalServiceBaseImpl {
 
 	@Override
 	public TeamRole deleteTeamRole(long teamRoleId) throws PortalException {
-		TeamRole teamRole = teamRoleLocalService.getTeamRole(teamRoleId);
-
-		return deleteTeamRole(teamRole);
+		return deleteTeamRole(teamRoleLocalService.getTeamRole(teamRoleId));
 	}
 
 	@Override

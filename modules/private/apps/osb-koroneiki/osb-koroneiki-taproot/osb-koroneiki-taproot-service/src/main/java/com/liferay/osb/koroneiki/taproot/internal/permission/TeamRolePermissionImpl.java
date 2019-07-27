@@ -81,9 +81,10 @@ public class TeamRolePermissionImpl
 			String actionId)
 		throws PortalException {
 
-		TeamRole teamRole = _teamRoleLocalService.getTeamRole(teamRoleId);
+		if (contains(
+				permissionChecker,
+				_teamRoleLocalService.getTeamRole(teamRoleId), actionId)) {
 
-		if (contains(permissionChecker, teamRole, actionId)) {
 			return true;
 		}
 

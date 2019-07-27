@@ -252,12 +252,11 @@ public class ExternalLinkResourceImpl extends BaseExternalLinkResourceImpl {
 			Class<?> clazz, long classPK, ExternalLink externalLink)
 		throws Exception {
 
-		long classNameId = _classNameLocalService.getClassNameId(clazz);
-
 		return ExternalLinkUtil.toExternalLink(
 			_externalLinkService.addExternalLink(
-				classNameId, classPK, externalLink.getDomain(),
-				externalLink.getEntityName(), externalLink.getEntityId()));
+				_classNameLocalService.getClassNameId(clazz), classPK,
+				externalLink.getDomain(), externalLink.getEntityName(),
+				externalLink.getEntityId()));
 	}
 
 	@Reference

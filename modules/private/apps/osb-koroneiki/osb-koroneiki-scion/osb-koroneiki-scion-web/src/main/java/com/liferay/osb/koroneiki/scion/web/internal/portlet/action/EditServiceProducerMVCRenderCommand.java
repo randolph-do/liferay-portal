@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.scion.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.scion.constants.ScionPortletKeys;
 import com.liferay.osb.koroneiki.scion.constants.ScionWebKeys;
-import com.liferay.osb.koroneiki.scion.model.ServiceProducer;
 import com.liferay.osb.koroneiki.scion.service.ServiceProducerLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -51,12 +50,10 @@ public class EditServiceProducerMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "serviceProducerId");
 
 			if (serviceProducerId > 0) {
-				ServiceProducer serviceProducer =
-					_serviceProducerLocalService.getServiceProducer(
-						serviceProducerId);
-
 				renderRequest.setAttribute(
-					ScionWebKeys.SERVICE_PRODUCER, serviceProducer);
+					ScionWebKeys.SERVICE_PRODUCER,
+					_serviceProducerLocalService.getServiceProducer(
+						serviceProducerId));
 			}
 
 			return "/service_producers_admin/edit_service_producer.jsp";

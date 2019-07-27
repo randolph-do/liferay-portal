@@ -91,10 +91,8 @@ public class ProductConsumptionLocalServiceImpl
 			long productConsumptionId)
 		throws PortalException {
 
-		ProductConsumption productConsumption = getProductConsumption(
-			productConsumptionId);
-
-		return deleteProductConsumption(productConsumption);
+		return deleteProductConsumption(
+			getProductConsumption(productConsumptionId));
 	}
 
 	@Override

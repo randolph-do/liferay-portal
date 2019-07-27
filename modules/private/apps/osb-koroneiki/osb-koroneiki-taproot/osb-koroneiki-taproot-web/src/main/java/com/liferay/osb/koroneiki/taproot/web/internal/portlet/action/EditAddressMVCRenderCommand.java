@@ -16,9 +16,7 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -54,15 +52,15 @@ public class EditAddressMVCRenderCommand implements MVCRenderCommand {
 			long addressId = ParamUtil.getLong(renderRequest, "addressId");
 
 			if (accountId > 0) {
-				Account account = _accountLocalService.getAccount(accountId);
-
-				renderRequest.setAttribute(TaprootWebKeys.ACCOUNT, account);
+				renderRequest.setAttribute(
+					TaprootWebKeys.ACCOUNT,
+					_accountLocalService.getAccount(accountId));
 			}
 
 			if (addressId > 0) {
-				Address address = _addressLocalService.getAddress(addressId);
-
-				renderRequest.setAttribute(WebKeys.ADDRESS, address);
+				renderRequest.setAttribute(
+					WebKeys.ADDRESS,
+					_addressLocalService.getAddress(addressId));
 			}
 
 			return "/accounts_admin/edit_address.jsp";

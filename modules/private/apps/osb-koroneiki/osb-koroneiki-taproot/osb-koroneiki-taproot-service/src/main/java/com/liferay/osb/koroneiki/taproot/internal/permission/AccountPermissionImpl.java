@@ -97,9 +97,10 @@ public class AccountPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		Account account = _accountLocalService.getAccount(accountId);
+		if (contains(
+				permissionChecker, _accountLocalService.getAccount(accountId),
+				actionId)) {
 
-		if (contains(permissionChecker, account, actionId)) {
 			return true;
 		}
 

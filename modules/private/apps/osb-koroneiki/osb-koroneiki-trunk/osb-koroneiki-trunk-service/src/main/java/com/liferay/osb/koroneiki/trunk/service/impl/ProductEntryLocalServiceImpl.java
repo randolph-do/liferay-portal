@@ -72,10 +72,8 @@ public class ProductEntryLocalServiceImpl
 	public ProductEntry deleteProductEntry(long productEntryId)
 		throws PortalException {
 
-		ProductEntry productEntry = productEntryLocalService.getProductEntry(
-			productEntryId);
-
-		return deleteProductEntry(productEntry);
+		return deleteProductEntry(
+			productEntryLocalService.getProductEntry(productEntryId));
 	}
 
 	@Override

@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -49,9 +48,9 @@ public class AssignProjectTeamMVCRenderCommand implements MVCRenderCommand {
 		try {
 			long projectId = ParamUtil.getLong(renderRequest, "projectId");
 
-			Project project = _projectLocalService.getProject(projectId);
-
-			renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
+			renderRequest.setAttribute(
+				TaprootWebKeys.PROJECT,
+				_projectLocalService.getProject(projectId));
 
 			return "/projects_admin/assign_project_team.jsp";
 		}

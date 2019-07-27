@@ -16,8 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Contact;
-import com.liferay.osb.koroneiki.taproot.model.Team;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
 import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -53,13 +51,12 @@ public class AssignTeamContactRolesMVCRenderCommand
 			long teamId = ParamUtil.getLong(renderRequest, "teamId");
 			long contactId = ParamUtil.getLong(renderRequest, "contactId");
 
-			Team team = _teamLocalService.getTeam(teamId);
+			renderRequest.setAttribute(
+				TaprootWebKeys.TEAM, _teamLocalService.getTeam(teamId));
 
-			renderRequest.setAttribute(TaprootWebKeys.TEAM, team);
-
-			Contact contact = _contactLocalService.getContact(contactId);
-
-			renderRequest.setAttribute(TaprootWebKeys.CONTACT, contact);
+			renderRequest.setAttribute(
+				TaprootWebKeys.CONTACT,
+				_contactLocalService.getContact(contactId));
 
 			return "/teams_admin/assign_team_contact_roles.jsp";
 		}

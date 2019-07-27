@@ -106,9 +106,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 	@Override
 	public Contact deleteContact(long contactId) throws PortalException {
-		Contact contact = contactLocalService.getContact(contactId);
-
-		return deleteContact(contact);
+		return deleteContact(contactLocalService.getContact(contactId));
 	}
 
 	public List<Contact> getAccountContacts(

@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -50,9 +49,9 @@ public class EditAccountMVCRenderCommand implements MVCRenderCommand {
 			long accountId = ParamUtil.getLong(renderRequest, "accountId");
 
 			if (accountId > 0) {
-				Account account = _accountLocalService.getAccount(accountId);
-
-				renderRequest.setAttribute(TaprootWebKeys.ACCOUNT, account);
+				renderRequest.setAttribute(
+					TaprootWebKeys.ACCOUNT,
+					_accountLocalService.getAccount(accountId));
 			}
 
 			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");

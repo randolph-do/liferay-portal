@@ -61,9 +61,9 @@ public class ProductFieldLocalServiceImpl
 			String value)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return addProductField(userId, classNameId, classPK, name, value);
+		return addProductField(
+			userId, classNameLocalService.getClassNameId(className), classPK,
+			name, value);
 	}
 
 	public List<ProductField> getProductFields(long classNameId, long classPK) {
@@ -71,9 +71,8 @@ public class ProductFieldLocalServiceImpl
 	}
 
 	public List<ProductField> getProductFields(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getProductFields(classNameId, classPK);
+		return getProductFields(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	public ProductField updateProductField(long productFieldId, String value)

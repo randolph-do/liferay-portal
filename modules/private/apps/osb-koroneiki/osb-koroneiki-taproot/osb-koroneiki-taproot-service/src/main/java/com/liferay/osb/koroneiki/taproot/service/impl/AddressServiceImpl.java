@@ -46,10 +46,10 @@ public class AddressServiceImpl implements AddressService {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
 		_modelPermissionRegistry.check(
-			getPermissionChecker(), classNameId, classPK, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			_classNameLocalService.getClassNameId(className), classPK,
+			ActionKeys.UPDATE);
 
 		return _addressLocalService.addAddress(
 			getUserId(), className, classPK, street1, street2, street3, city,

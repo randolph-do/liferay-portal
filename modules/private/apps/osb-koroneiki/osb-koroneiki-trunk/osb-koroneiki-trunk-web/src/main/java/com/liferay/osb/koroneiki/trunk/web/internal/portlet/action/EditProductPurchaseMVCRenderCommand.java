@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.trunk.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkPortletKeys;
 import com.liferay.osb.koroneiki.trunk.constants.TrunkWebKeys;
-import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.osb.koroneiki.trunk.service.ProductPurchaseLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -51,12 +50,10 @@ public class EditProductPurchaseMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "productPurchaseId");
 
 			if (productPurchaseId > 0) {
-				ProductPurchase productPurchase =
-					_productPurchaseLocalService.getProductPurchase(
-						productPurchaseId);
-
 				renderRequest.setAttribute(
-					TrunkWebKeys.PRODUCT_PURCHASE, productPurchase);
+					TrunkWebKeys.PRODUCT_PURCHASE,
+					_productPurchaseLocalService.getProductPurchase(
+						productPurchaseId));
 			}
 
 			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");

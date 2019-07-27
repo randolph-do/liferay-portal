@@ -128,9 +128,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 	@Override
 	public Account deleteAccount(long accountId) throws PortalException {
-		Account account = accountLocalService.getAccount(accountId);
-
-		return deleteAccount(account);
+		return deleteAccount(accountLocalService.getAccount(accountId));
 	}
 
 	public Account getAccount(String accountKey) throws PortalException {

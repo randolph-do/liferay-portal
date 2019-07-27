@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -51,11 +50,9 @@ public class EditContactRoleMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "contactRoleId");
 
 			if (contactRoleId > 0) {
-				ContactRole contactRole =
-					_contactRoleLocalService.getContactRole(contactRoleId);
-
 				renderRequest.setAttribute(
-					TaprootWebKeys.CONTACT_ROLE, contactRole);
+					TaprootWebKeys.CONTACT_ROLE,
+					_contactRoleLocalService.getContactRole(contactRoleId));
 			}
 
 			return "/contact_roles_admin/edit_contact_role.jsp";

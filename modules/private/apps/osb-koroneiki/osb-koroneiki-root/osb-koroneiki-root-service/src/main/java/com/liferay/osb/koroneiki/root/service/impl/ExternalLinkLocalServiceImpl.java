@@ -70,10 +70,9 @@ public class ExternalLinkLocalServiceImpl
 			String entityName, String entityId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		return addExternalLink(
-			userId, classNameId, classPK, domain, entityName, entityId);
+			userId, classNameLocalService.getClassNameId(className), classPK,
+			domain, entityName, entityId);
 	}
 
 	public void deleteExternalLinks(long classNameId, long classPK) {
@@ -96,9 +95,9 @@ public class ExternalLinkLocalServiceImpl
 	public List<ExternalLink> getExternalLinks(
 		String className, long classPK, int start, int end) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getExternalLinks(classNameId, classPK, start, end);
+		return getExternalLinks(
+			classNameLocalService.getClassNameId(className), classPK, start,
+			end);
 	}
 
 	public int getExternalLinksCount(long classNameId, long classPK) {
@@ -106,9 +105,8 @@ public class ExternalLinkLocalServiceImpl
 	}
 
 	public int getExternalLinksCount(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getExternalLinksCount(classNameId, classPK);
+		return getExternalLinksCount(
+			classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	public ExternalLink updateExternalLink(long externalLinkId, String entityId)

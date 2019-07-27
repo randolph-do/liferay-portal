@@ -68,11 +68,12 @@ public class ProductConsumptionPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		ProductConsumption productConsumption =
-			_productConsumptionLocalService.getProductConsumption(
-				productConsumptionId);
+		if (contains(
+				permissionChecker,
+				_productConsumptionLocalService.getProductConsumption(
+					productConsumptionId),
+				actionId)) {
 
-		if (contains(permissionChecker, productConsumption, actionId)) {
 			return true;
 		}
 

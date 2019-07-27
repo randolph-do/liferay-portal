@@ -143,10 +143,8 @@ public class ContactRoleLocalServiceImpl
 	public ContactRole deleteContactRole(long contactRoleId)
 		throws PortalException {
 
-		ContactRole contactRole = contactRoleLocalService.getContactRole(
-			contactRoleId);
-
-		return deleteContactRole(contactRole);
+		return deleteContactRole(
+			contactRoleLocalService.getContactRole(contactRoleId));
 	}
 
 	public List<ContactRole> getContactAccountContactRoles(

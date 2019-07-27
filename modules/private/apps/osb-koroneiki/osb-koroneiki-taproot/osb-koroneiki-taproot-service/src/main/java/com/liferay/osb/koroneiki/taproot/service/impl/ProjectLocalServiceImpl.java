@@ -99,9 +99,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 	@Override
 	public Project deleteProject(long projectId) throws PortalException {
-		Project project = getProject(projectId);
-
-		return deleteProject(project);
+		return deleteProject(getProject(projectId));
 	}
 
 	@Override

@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.scion.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.scion.constants.ScionPortletKeys;
 import com.liferay.osb.koroneiki.scion.constants.ScionWebKeys;
-import com.liferay.osb.koroneiki.scion.model.AuthenticationToken;
 import com.liferay.osb.koroneiki.scion.service.AuthenticationTokenLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -63,12 +62,10 @@ public class EditAuthenticationTokenMVCRenderCommand
 			renderRequest, "authenticationTokenId");
 
 		if (authenticationTokenId > 0) {
-			AuthenticationToken authenticationToken =
-				_authenticationTokenLocalService.getAuthenticationToken(
-					authenticationTokenId);
-
 			renderRequest.setAttribute(
-				ScionWebKeys.AUTHENTICATION_TOKEN, authenticationToken);
+				ScionWebKeys.AUTHENTICATION_TOKEN,
+				_authenticationTokenLocalService.getAuthenticationToken(
+					authenticationTokenId));
 		}
 		else {
 			String token = PwdGenerator.getPassword(

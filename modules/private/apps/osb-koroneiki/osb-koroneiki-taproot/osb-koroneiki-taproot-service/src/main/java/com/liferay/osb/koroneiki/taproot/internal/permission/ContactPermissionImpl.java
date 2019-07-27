@@ -97,9 +97,10 @@ public class ContactPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		Contact contact = _contactLocalService.getContact(contactId);
+		if (contains(
+				permissionChecker, _contactLocalService.getContact(contactId),
+				actionId)) {
 
-		if (contains(permissionChecker, contact, actionId)) {
 			return true;
 		}
 

@@ -80,9 +80,10 @@ public class ProjectPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		Project project = _projectLocalService.getProject(projectId);
+		if (contains(
+				permissionChecker, _projectLocalService.getProject(projectId),
+				actionId)) {
 
-		if (contains(permissionChecker, project, actionId)) {
 			return true;
 		}
 

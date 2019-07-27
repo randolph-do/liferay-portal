@@ -16,8 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Contact;
-import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -53,13 +51,13 @@ public class AssignProjectContactRolesMVCRenderCommand
 			long projectId = ParamUtil.getLong(renderRequest, "projectId");
 			long contactId = ParamUtil.getLong(renderRequest, "contactId");
 
-			Project project = _projectLocalService.getProject(projectId);
+			renderRequest.setAttribute(
+				TaprootWebKeys.PROJECT,
+				_projectLocalService.getProject(projectId));
 
-			renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
-
-			Contact contact = _contactLocalService.getContact(contactId);
-
-			renderRequest.setAttribute(TaprootWebKeys.CONTACT, contact);
+			renderRequest.setAttribute(
+				TaprootWebKeys.CONTACT,
+				_contactLocalService.getContact(contactId));
 
 			return "/projects_admin/assign_project_contact_roles.jsp";
 		}

@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.trunk.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.trunk.constants.TrunkPortletKeys;
 import com.liferay.osb.koroneiki.trunk.constants.TrunkWebKeys;
-import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.service.ProductConsumptionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -52,12 +51,10 @@ public class EditProductConsumptionMVCRenderCommand
 				renderRequest, "productConsumptionId");
 
 			if (productConsumptionId > 0) {
-				ProductConsumption productConsumption =
-					_productConsumptionLocalService.getProductConsumption(
-						productConsumptionId);
-
 				renderRequest.setAttribute(
-					TrunkWebKeys.PRODUCT_CONSUMPTION, productConsumption);
+					TrunkWebKeys.PRODUCT_CONSUMPTION,
+					_productConsumptionLocalService.getProductConsumption(
+						productConsumptionId));
 			}
 
 			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");

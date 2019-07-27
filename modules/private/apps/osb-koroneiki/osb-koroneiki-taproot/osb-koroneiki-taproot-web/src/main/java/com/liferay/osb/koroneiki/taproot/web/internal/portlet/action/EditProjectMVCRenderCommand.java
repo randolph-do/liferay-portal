@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ProjectLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -50,9 +49,9 @@ public class EditProjectMVCRenderCommand implements MVCRenderCommand {
 			long projectId = ParamUtil.getLong(renderRequest, "projectId");
 
 			if (projectId > 0) {
-				Project project = _projectLocalService.getProject(projectId);
-
-				renderRequest.setAttribute(TaprootWebKeys.PROJECT, project);
+				renderRequest.setAttribute(
+					TaprootWebKeys.PROJECT,
+					_projectLocalService.getProject(projectId));
 			}
 
 			String tabs1 = ParamUtil.getString(renderRequest, "tabs1");

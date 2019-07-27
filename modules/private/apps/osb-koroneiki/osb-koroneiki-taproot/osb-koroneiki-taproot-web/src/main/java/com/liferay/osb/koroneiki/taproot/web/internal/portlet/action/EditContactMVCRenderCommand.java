@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -50,9 +49,9 @@ public class EditContactMVCRenderCommand implements MVCRenderCommand {
 			long contactId = ParamUtil.getLong(renderRequest, "contactId");
 
 			if (contactId > 0) {
-				Contact contact = _contactLocalService.getContact(contactId);
-
-				renderRequest.setAttribute(TaprootWebKeys.CONTACT, contact);
+				renderRequest.setAttribute(
+					TaprootWebKeys.CONTACT,
+					_contactLocalService.getContact(contactId));
 			}
 
 			return "/contacts_admin/edit_contact.jsp";

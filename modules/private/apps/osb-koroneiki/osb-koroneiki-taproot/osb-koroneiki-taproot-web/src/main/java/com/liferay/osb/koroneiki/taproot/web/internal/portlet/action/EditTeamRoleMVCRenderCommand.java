@@ -16,7 +16,6 @@ package com.liferay.osb.koroneiki.taproot.web.internal.portlet.action;
 
 import com.liferay.osb.koroneiki.taproot.constants.TaprootPortletKeys;
 import com.liferay.osb.koroneiki.taproot.constants.TaprootWebKeys;
-import com.liferay.osb.koroneiki.taproot.model.TeamRole;
 import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -50,10 +49,9 @@ public class EditTeamRoleMVCRenderCommand implements MVCRenderCommand {
 			long teamRoleId = ParamUtil.getLong(renderRequest, "teamRoleId");
 
 			if (teamRoleId > 0) {
-				TeamRole teamRole = _teamRoleLocalService.getTeamRole(
-					teamRoleId);
-
-				renderRequest.setAttribute(TaprootWebKeys.TEAM_ROLE, teamRole);
+				renderRequest.setAttribute(
+					TaprootWebKeys.TEAM_ROLE,
+					_teamRoleLocalService.getTeamRole(teamRoleId));
 			}
 
 			return "/team_roles_admin/edit_team_role.jsp";

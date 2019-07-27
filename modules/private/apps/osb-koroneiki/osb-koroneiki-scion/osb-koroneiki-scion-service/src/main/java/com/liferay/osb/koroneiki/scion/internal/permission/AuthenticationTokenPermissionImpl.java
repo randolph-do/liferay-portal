@@ -98,11 +98,12 @@ public class AuthenticationTokenPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		AuthenticationToken authenticationToken =
-			_authenticationTokenLocalService.getAuthenticationToken(
-				authenticationTokenId);
+		if (contains(
+				permissionChecker,
+				_authenticationTokenLocalService.getAuthenticationToken(
+					authenticationTokenId),
+				actionId)) {
 
-		if (contains(permissionChecker, authenticationToken, actionId)) {
 			return true;
 		}
 

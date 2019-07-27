@@ -81,10 +81,12 @@ public class ProductPurchasePermissionImpl
 			String actionId)
 		throws PortalException {
 
-		ProductPurchase productPurchase =
-			_productPurchaseLocalService.getProductPurchase(productPurchaseId);
+		if (contains(
+				permissionChecker,
+				_productPurchaseLocalService.getProductPurchase(
+					productPurchaseId),
+				actionId)) {
 
-		if (contains(permissionChecker, productPurchase, actionId)) {
 			return true;
 		}
 

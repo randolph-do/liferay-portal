@@ -70,9 +70,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 	@Override
 	public Team deleteTeam(long teamId) throws PortalException {
-		Team team = teamLocalService.getTeam(teamId);
-
-		return deleteTeam(team);
+		return deleteTeam(teamLocalService.getTeam(teamId));
 	}
 
 	@Override

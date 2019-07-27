@@ -81,10 +81,11 @@ public class ProductEntryPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		ProductEntry productEntry = _productEntryLocalService.getProductEntry(
-			productEntryId);
+		if (contains(
+				permissionChecker,
+				_productEntryLocalService.getProductEntry(productEntryId),
+				actionId)) {
 
-		if (contains(permissionChecker, productEntry, actionId)) {
 			return true;
 		}
 

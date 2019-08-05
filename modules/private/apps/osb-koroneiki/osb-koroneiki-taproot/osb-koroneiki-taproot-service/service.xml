@@ -153,10 +153,9 @@
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
 		</finder>
-		<finder name="N_T_S" return-type="ContactRole">
+		<finder name="N_T" return-type="ContactRole">
 			<finder-column name="name" />
 			<finder-column name="type" />
-			<finder-column name="system" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ContactTeamRole" remote-service="true">
@@ -320,6 +319,7 @@
 		<exception>ContactRoleName</exception>
 		<exception>ContactRoleSystem</exception>
 		<exception>ContactRoleType</exception>
+		<exception>DuplicateContactRole</exception>
 		<exception>ProjectName</exception>
 		<exception>RequiredAccount</exception>
 		<exception>TeamName</exception>

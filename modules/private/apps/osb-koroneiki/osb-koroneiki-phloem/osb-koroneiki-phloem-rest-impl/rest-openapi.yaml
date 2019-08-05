@@ -1220,6 +1220,45 @@ paths:
                     description: ""
             tags: ["AuditEntry"]
     "/contact-roles":
+        get:
+            description: Retrieves the contact roles. Results can be paginated, filtered, searched, and sorted.
+            operationId: getContactRolesPage
+            parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContactRole"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContactRole"
+                                type: array
+                    description: ""
+            tags: ["ContactRole"]
         post:
             operationId: postContactRole
             requestBody:

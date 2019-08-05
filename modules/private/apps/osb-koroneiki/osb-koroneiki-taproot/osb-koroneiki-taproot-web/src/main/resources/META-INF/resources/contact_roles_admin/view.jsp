@@ -17,96 +17,35 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "account-contact-roles");
+ViewContactRolesManagementToolbarDisplayContext viewContactRolesManagementToolbarDisplayContext = new ViewContactRolesManagementToolbarDisplayContext(request, renderRequest, renderResponse);
+
+SearchContainer searchContainer = viewContactRolesManagementToolbarDisplayContext.getSearchContainer();
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs1.equals("account-contact-roles"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "account-contact-roles");
-						navigationItem.setLabel(LanguageUtil.get(request, "account-contact-roles"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs1.equals("project-contact-roles"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "project-contact-roles");
-						navigationItem.setLabel(LanguageUtil.get(request, "project-contact-roles"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs1.equals("team-contact-roles"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "team-contact-roles");
-						navigationItem.setLabel(LanguageUtil.get(request, "team-contact-roles"));
-					});
-			}
-		}
-	%>"
+	navigationItems="<%= viewContactRolesManagementToolbarDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	creationMenu='<%=
-		new JSPCreationMenu(pageContext) {
-			{
-				if (tabs1.equals("project-contact-roles")) {
-					addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/contact_roles_admin/edit_contact_role", "redirect", PortalUtil.getCurrentURL(request), "type", ContactRoleType.PROJECT);
-							dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-						});
-				}
-				else if (tabs1.equals("team-contact-roles")) {
-					addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/contact_roles_admin/edit_contact_role", "redirect", PortalUtil.getCurrentURL(request), "type", ContactRoleType.TEAM);
-							dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-						});
-				}
-				else {
-					addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/contact_roles_admin/edit_contact_role", "redirect", PortalUtil.getCurrentURL(request), "type", ContactRoleType.ACCOUNT);
-							dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-						});
-				}
-			}
-		}
-	%>'
+	clearResultsURL="<%= viewContactRolesManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= viewContactRolesManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= viewContactRolesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= viewContactRolesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="contactRoleSearch"
+	searchFormName="searchFm"
 	selectable="<%= false %>"
-	showSearch="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewContactRolesManagementToolbarDisplayContext.getSortingURL() %>"
 />
-
-<%
-int type = 0;
-
-if (tabs1.equals("project-contact-roles")) {
-	type = ContactRoleType.PROJECT;
-}
-else if (tabs1.equals("team-contact-roles")) {
-	type = ContactRoleType.TEAM;
-}
-else {
-	type = ContactRoleType.ACCOUNT;
-}
-%>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-contact-roles-were-found"
-		headerNames="name,description,"
-		iteratorURL="<%= renderResponse.createRenderURL() %>"
-		total="<%= ContactRoleLocalServiceUtil.getContactRolesCount(type) %>"
+		searchContainer="<%= searchContainer %>"
+		var="contactRoleSearch"
 	>
-		<liferay-ui:search-container-results
-			results="<%= ContactRoleLocalServiceUtil.getContactRoles(type, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.osb.koroneiki.taproot.model.ContactRole"
 			escapedModel="<%= true %>"

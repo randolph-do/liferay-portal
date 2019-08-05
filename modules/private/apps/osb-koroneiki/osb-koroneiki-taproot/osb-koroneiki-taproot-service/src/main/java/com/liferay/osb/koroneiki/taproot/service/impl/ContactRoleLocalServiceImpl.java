@@ -20,6 +20,7 @@ import com.liferay.osb.koroneiki.taproot.constants.ContactRoleType;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleNameException;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleSystemException;
 import com.liferay.osb.koroneiki.taproot.exception.ContactRoleTypeException;
+import com.liferay.osb.koroneiki.taproot.exception.DuplicateContactRoleException;
 import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.service.base.ContactRoleLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -28,8 +29,23 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -49,13 +65,14 @@ import org.osgi.service.component.annotations.Reference;
 public class ContactRoleLocalServiceImpl
 	extends ContactRoleLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ContactRole addContactRole(
 			long userId, String name, String description, int type)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
-		validate(name, type);
+		validate(0, name, type);
 
 		long contactRoleId = counterLocalService.increment();
 
@@ -86,8 +103,8 @@ public class ContactRoleLocalServiceImpl
 		User user = userLocalService.getDefaultUser(companyId);
 
 		for (int type : ContactRoleType.VALUES) {
-			ContactRole contactRole = contactRolePersistence.fetchByN_T_S(
-				ContactRoleSystem.NAME_MEMBER, type, true);
+			ContactRole contactRole = contactRolePersistence.fetchByN_T(
+				ContactRoleSystem.NAME_MEMBER, type);
 
 			if (contactRole == null) {
 				String description =
@@ -101,6 +118,8 @@ public class ContactRoleLocalServiceImpl
 				contactRole.setSystem(true);
 
 				contactRole = contactRolePersistence.update(contactRole);
+
+				contactRoleLocalService.reindex(contactRole.getContactRoleId());
 			}
 
 			_memberContactRoles.put(type, contactRole);
@@ -198,6 +217,63 @@ public class ContactRoleLocalServiceImpl
 		return _memberContactRoles.get(type);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ContactRole reindex(long contactRoleId) throws PortalException {
+		return contactRolePersistence.findByPrimaryKey(contactRoleId);
+	}
+
+	public Hits search(
+			long companyId, int type, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		try {
+			Indexer<ContactRole> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(ContactRole.class);
+
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAndSearch(false);
+
+			Map<String, Serializable> attributes = new HashMap<>();
+
+			attributes.put("description", keywords);
+			attributes.put("name", keywords);
+
+			searchContext.setAttributes(attributes);
+
+			BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+			booleanQuery.addExactTerm("type", ContactRoleType.getLabel(type));
+
+			BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
+				booleanQuery, BooleanClauseOccur.MUST.getName());
+
+			searchContext.setBooleanClauses(
+				new BooleanClause[] {booleanClause});
+
+			searchContext.setCompanyId(companyId);
+			searchContext.setEnd(end);
+
+			if (sort != null) {
+				searchContext.setSorts(sort);
+			}
+
+			searchContext.setStart(start);
+
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			queryConfig.setHighlightEnabled(false);
+			queryConfig.setScoreEnabled(false);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
 	public ContactRole updateContactRole(
 			long contactRoleId, String name, String description)
 		throws PortalException {
@@ -205,7 +281,7 @@ public class ContactRoleLocalServiceImpl
 		ContactRole contactRole = contactRolePersistence.findByPrimaryKey(
 			contactRoleId);
 
-		validate(name, contactRole.getType());
+		validate(contactRoleId, name, contactRole.getType());
 
 		contactRole.setName(name);
 		contactRole.setDescription(description);
@@ -213,9 +289,19 @@ public class ContactRoleLocalServiceImpl
 		return contactRolePersistence.update(contactRole);
 	}
 
-	protected void validate(String name, int type) throws PortalException {
+	protected void validate(long contactRoleId, String name, int type)
+		throws PortalException {
+
 		if (Validator.isNull(name)) {
 			throw new ContactRoleNameException();
+		}
+
+		ContactRole contactRole = contactRolePersistence.fetchByN_T(name, type);
+
+		if ((contactRole != null) &&
+			(contactRole.getContactRoleId() != contactRoleId)) {
+
+			throw new DuplicateContactRoleException();
 		}
 
 		if (!ArrayUtil.contains(ContactRoleType.VALUES, type)) {

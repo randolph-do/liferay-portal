@@ -385,6 +385,24 @@ public class ContactRoleLocalServiceWrapper
 		return _contactRoleLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.taproot.model.ContactRole reindex(
+			long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactRoleLocalService.reindex(contactRoleId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+			long companyId, int type, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactRoleLocalService.search(
+			companyId, type, keywords, start, end, sort);
+	}
+
 	/**
 	 * Updates the contact role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

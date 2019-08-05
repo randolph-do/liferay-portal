@@ -330,6 +330,22 @@ public class Query {
 	}
 
 	@GraphQLField
+	public ContactRolePage getContactRolesPage(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contactRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contactRoleResource -> new ContactRolePage(
+				contactRoleResource.getContactRolesPage(
+					search, filter, Pagination.of(page, pageSize), sorts)));
+	}
+
+	@GraphQLField
 	public ContactRole getContactRole(
 			@GraphQLName("contactRoleKey") String contactRoleKey)
 		throws Exception {

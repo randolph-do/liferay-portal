@@ -125,11 +125,9 @@ public class ContactRoleModelImpl
 
 	public static final long NAME_COLUMN_BITMASK = 4L;
 
-	public static final long SYSTEM_COLUMN_BITMASK = 8L;
+	public static final long TYPE_COLUMN_BITMASK = 8L;
 
-	public static final long TYPE_COLUMN_BITMASK = 16L;
-
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -583,19 +581,7 @@ public class ContactRoleModelImpl
 
 	@Override
 	public void setSystem(boolean system) {
-		_columnBitmask |= SYSTEM_COLUMN_BITMASK;
-
-		if (!_setOriginalSystem) {
-			_setOriginalSystem = true;
-
-			_originalSystem = _system;
-		}
-
 		_system = system;
-	}
-
-	public boolean getOriginalSystem() {
-		return _originalSystem;
 	}
 
 	@Override
@@ -728,10 +714,6 @@ public class ContactRoleModelImpl
 		contactRoleModelImpl._originalType = contactRoleModelImpl._type;
 
 		contactRoleModelImpl._setOriginalType = false;
-
-		contactRoleModelImpl._originalSystem = contactRoleModelImpl._system;
-
-		contactRoleModelImpl._setOriginalSystem = false;
 
 		contactRoleModelImpl._columnBitmask = 0;
 	}
@@ -896,8 +878,6 @@ public class ContactRoleModelImpl
 	private int _originalType;
 	private boolean _setOriginalType;
 	private boolean _system;
-	private boolean _originalSystem;
-	private boolean _setOriginalSystem;
 	private long _columnBitmask;
 	private ContactRole _escapedModel;
 

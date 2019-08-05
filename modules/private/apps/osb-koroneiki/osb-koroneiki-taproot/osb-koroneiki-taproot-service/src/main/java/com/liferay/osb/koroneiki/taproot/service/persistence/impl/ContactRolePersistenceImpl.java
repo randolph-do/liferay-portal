@@ -3192,26 +3192,25 @@ public class ContactRolePersistenceImpl
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2_SQL =
 		"contactRole.type_ = ?";
 
-	private FinderPath _finderPathFetchByN_T_S;
-	private FinderPath _finderPathCountByN_T_S;
+	private FinderPath _finderPathFetchByN_T;
+	private FinderPath _finderPathCountByN_T;
 
 	/**
-	 * Returns the contact role where name = &#63; and type = &#63; and system = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
+	 * Returns the contact role where name = &#63; and type = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the matching contact role
 	 * @throws NoSuchContactRoleException if a matching contact role could not be found
 	 */
 	@Override
-	public ContactRole findByN_T_S(String name, int type, boolean system)
+	public ContactRole findByN_T(String name, int type)
 		throws NoSuchContactRoleException {
 
-		ContactRole contactRole = fetchByN_T_S(name, type, system);
+		ContactRole contactRole = fetchByN_T(name, type);
 
 		if (contactRole == null) {
-			StringBundler msg = new StringBundler(8);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -3220,9 +3219,6 @@ public class ContactRolePersistenceImpl
 
 			msg.append(", type=");
 			msg.append(type);
-
-			msg.append(", system=");
-			msg.append(system);
 
 			msg.append("}");
 
@@ -3237,72 +3233,67 @@ public class ContactRolePersistenceImpl
 	}
 
 	/**
-	 * Returns the contact role where name = &#63; and type = &#63; and system = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the contact role where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
 	 */
 	@Override
-	public ContactRole fetchByN_T_S(String name, int type, boolean system) {
-		return fetchByN_T_S(name, type, system, true);
+	public ContactRole fetchByN_T(String name, int type) {
+		return fetchByN_T(name, type, true);
 	}
 
 	/**
-	 * Returns the contact role where name = &#63; and type = &#63; and system = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the contact role where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
 	 */
 	@Override
-	public ContactRole fetchByN_T_S(
-		String name, int type, boolean system, boolean retrieveFromCache) {
+	public ContactRole fetchByN_T(
+		String name, int type, boolean retrieveFromCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {name, type, system};
+		Object[] finderArgs = new Object[] {name, type};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByN_T_S, finderArgs, this);
+				_finderPathFetchByN_T, finderArgs, this);
 		}
 
 		if (result instanceof ContactRole) {
 			ContactRole contactRole = (ContactRole)result;
 
 			if (!Objects.equals(name, contactRole.getName()) ||
-				(type != contactRole.getType()) ||
-				(system != contactRole.isSystem())) {
+				(type != contactRole.getType())) {
 
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_SELECT_CONTACTROLE_WHERE);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				query.append(_FINDER_COLUMN_N_T_S_NAME_3);
+				query.append(_FINDER_COLUMN_N_T_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				query.append(_FINDER_COLUMN_N_T_S_NAME_2);
+				query.append(_FINDER_COLUMN_N_T_NAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_N_T_S_TYPE_2);
-
-			query.append(_FINDER_COLUMN_N_T_S_SYSTEM_2);
+			query.append(_FINDER_COLUMN_N_T_TYPE_2);
 
 			String sql = query.toString();
 
@@ -3321,13 +3312,11 @@ public class ContactRolePersistenceImpl
 
 				qPos.add(type);
 
-				qPos.add(system);
-
 				List<ContactRole> list = q.list();
 
 				if (list.isEmpty()) {
 					finderCache.putResult(
-						_finderPathFetchByN_T_S, finderArgs, list);
+						_finderPathFetchByN_T, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -3335,7 +3324,7 @@ public class ContactRolePersistenceImpl
 
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"ContactRolePersistenceImpl.fetchByN_T_S(String, int, boolean, boolean) with parameters (" +
+								"ContactRolePersistenceImpl.fetchByN_T(String, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -3349,7 +3338,7 @@ public class ContactRolePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByN_T_S, finderArgs);
+				finderCache.removeResult(_finderPathFetchByN_T, finderArgs);
 
 				throw processException(e);
 			}
@@ -3367,59 +3356,55 @@ public class ContactRolePersistenceImpl
 	}
 
 	/**
-	 * Removes the contact role where name = &#63; and type = &#63; and system = &#63; from the database.
+	 * Removes the contact role where name = &#63; and type = &#63; from the database.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the contact role that was removed
 	 */
 	@Override
-	public ContactRole removeByN_T_S(String name, int type, boolean system)
+	public ContactRole removeByN_T(String name, int type)
 		throws NoSuchContactRoleException {
 
-		ContactRole contactRole = findByN_T_S(name, type, system);
+		ContactRole contactRole = findByN_T(name, type);
 
 		return remove(contactRole);
 	}
 
 	/**
-	 * Returns the number of contact roles where name = &#63; and type = &#63; and system = &#63;.
+	 * Returns the number of contact roles where name = &#63; and type = &#63;.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the number of matching contact roles
 	 */
 	@Override
-	public int countByN_T_S(String name, int type, boolean system) {
+	public int countByN_T(String name, int type) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByN_T_S;
+		FinderPath finderPath = _finderPathCountByN_T;
 
-		Object[] finderArgs = new Object[] {name, type, system};
+		Object[] finderArgs = new Object[] {name, type};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_CONTACTROLE_WHERE);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				query.append(_FINDER_COLUMN_N_T_S_NAME_3);
+				query.append(_FINDER_COLUMN_N_T_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				query.append(_FINDER_COLUMN_N_T_S_NAME_2);
+				query.append(_FINDER_COLUMN_N_T_NAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_N_T_S_TYPE_2);
-
-			query.append(_FINDER_COLUMN_N_T_S_SYSTEM_2);
+			query.append(_FINDER_COLUMN_N_T_TYPE_2);
 
 			String sql = query.toString();
 
@@ -3437,8 +3422,6 @@ public class ContactRolePersistenceImpl
 				}
 
 				qPos.add(type);
-
-				qPos.add(system);
 
 				count = (Long)q.uniqueResult();
 
@@ -3457,17 +3440,14 @@ public class ContactRolePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_N_T_S_NAME_2 =
+	private static final String _FINDER_COLUMN_N_T_NAME_2 =
 		"contactRole.name = ? AND ";
 
-	private static final String _FINDER_COLUMN_N_T_S_NAME_3 =
+	private static final String _FINDER_COLUMN_N_T_NAME_3 =
 		"(contactRole.name IS NULL OR contactRole.name = '') AND ";
 
-	private static final String _FINDER_COLUMN_N_T_S_TYPE_2 =
-		"contactRole.type = ? AND ";
-
-	private static final String _FINDER_COLUMN_N_T_S_SYSTEM_2 =
-		"contactRole.system = ?";
+	private static final String _FINDER_COLUMN_N_T_TYPE_2 =
+		"contactRole.type = ?";
 
 	public ContactRolePersistenceImpl() {
 		setModelClass(ContactRole.class);
@@ -3500,11 +3480,8 @@ public class ContactRolePersistenceImpl
 			new Object[] {contactRole.getContactRoleKey()}, contactRole);
 
 		finderCache.putResult(
-			_finderPathFetchByN_T_S,
-			new Object[] {
-				contactRole.getName(), contactRole.getType(),
-				contactRole.isSystem()
-			},
+			_finderPathFetchByN_T,
+			new Object[] {contactRole.getName(), contactRole.getType()},
 			contactRole);
 
 		contactRole.resetOriginalValues();
@@ -3591,14 +3568,13 @@ public class ContactRolePersistenceImpl
 			false);
 
 		args = new Object[] {
-			contactRoleModelImpl.getName(), contactRoleModelImpl.getType(),
-			contactRoleModelImpl.isSystem()
+			contactRoleModelImpl.getName(), contactRoleModelImpl.getType()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByN_T_S, args, Long.valueOf(1), false);
+			_finderPathCountByN_T, args, Long.valueOf(1), false);
 		finderCache.putResult(
-			_finderPathFetchByN_T_S, args, contactRoleModelImpl, false);
+			_finderPathFetchByN_T, args, contactRoleModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -3626,25 +3602,23 @@ public class ContactRolePersistenceImpl
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-				contactRoleModelImpl.getName(), contactRoleModelImpl.getType(),
-				contactRoleModelImpl.isSystem()
+				contactRoleModelImpl.getName(), contactRoleModelImpl.getType()
 			};
 
-			finderCache.removeResult(_finderPathCountByN_T_S, args);
-			finderCache.removeResult(_finderPathFetchByN_T_S, args);
+			finderCache.removeResult(_finderPathCountByN_T, args);
+			finderCache.removeResult(_finderPathFetchByN_T, args);
 		}
 
 		if ((contactRoleModelImpl.getColumnBitmask() &
-			 _finderPathFetchByN_T_S.getColumnBitmask()) != 0) {
+			 _finderPathFetchByN_T.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				contactRoleModelImpl.getOriginalName(),
-				contactRoleModelImpl.getOriginalType(),
-				contactRoleModelImpl.getOriginalSystem()
+				contactRoleModelImpl.getOriginalType()
 			};
 
-			finderCache.removeResult(_finderPathCountByN_T_S, args);
-			finderCache.removeResult(_finderPathFetchByN_T_S, args);
+			finderCache.removeResult(_finderPathCountByN_T, args);
+			finderCache.removeResult(_finderPathFetchByN_T, args);
 		}
 	}
 
@@ -4299,24 +4273,17 @@ public class ContactRolePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
 			new String[] {Integer.class.getName()});
 
-		_finderPathFetchByN_T_S = new FinderPath(
+		_finderPathFetchByN_T = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ContactRoleImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByN_T_S",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Boolean.class.getName()
-			},
+			FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
+			new String[] {String.class.getName(), Integer.class.getName()},
 			ContactRoleModelImpl.NAME_COLUMN_BITMASK |
-			ContactRoleModelImpl.TYPE_COLUMN_BITMASK |
-			ContactRoleModelImpl.SYSTEM_COLUMN_BITMASK);
+			ContactRoleModelImpl.TYPE_COLUMN_BITMASK);
 
-		_finderPathCountByN_T_S = new FinderPath(
+		_finderPathCountByN_T = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T_S",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Boolean.class.getName()
-			});
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
+			new String[] {String.class.getName(), Integer.class.getName()});
 	}
 
 	@Deactivate

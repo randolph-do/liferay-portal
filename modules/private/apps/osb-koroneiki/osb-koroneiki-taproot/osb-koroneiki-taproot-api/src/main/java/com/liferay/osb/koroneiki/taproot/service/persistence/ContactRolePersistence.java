@@ -724,59 +724,54 @@ public interface ContactRolePersistence extends BasePersistence<ContactRole> {
 	public int filterCountByType(int type);
 
 	/**
-	 * Returns the contact role where name = &#63; and type = &#63; and system = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
+	 * Returns the contact role where name = &#63; and type = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the matching contact role
 	 * @throws NoSuchContactRoleException if a matching contact role could not be found
 	 */
-	public ContactRole findByN_T_S(String name, int type, boolean system)
+	public ContactRole findByN_T(String name, int type)
 		throws NoSuchContactRoleException;
 
 	/**
-	 * Returns the contact role where name = &#63; and type = &#63; and system = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the contact role where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
 	 */
-	public ContactRole fetchByN_T_S(String name, int type, boolean system);
+	public ContactRole fetchByN_T(String name, int type);
 
 	/**
-	 * Returns the contact role where name = &#63; and type = &#63; and system = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the contact role where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
 	 */
-	public ContactRole fetchByN_T_S(
-		String name, int type, boolean system, boolean retrieveFromCache);
+	public ContactRole fetchByN_T(
+		String name, int type, boolean retrieveFromCache);
 
 	/**
-	 * Removes the contact role where name = &#63; and type = &#63; and system = &#63; from the database.
+	 * Removes the contact role where name = &#63; and type = &#63; from the database.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the contact role that was removed
 	 */
-	public ContactRole removeByN_T_S(String name, int type, boolean system)
+	public ContactRole removeByN_T(String name, int type)
 		throws NoSuchContactRoleException;
 
 	/**
-	 * Returns the number of contact roles where name = &#63; and type = &#63; and system = &#63;.
+	 * Returns the number of contact roles where name = &#63; and type = &#63;.
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param system the system
 	 * @return the number of matching contact roles
 	 */
-	public int countByN_T_S(String name, int type, boolean system);
+	public int countByN_T(String name, int type);
 
 	/**
 	 * Caches the contact role in the entity cache if it is enabled.

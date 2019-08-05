@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.client.http.HttpInvoker;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
+import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ContactRoleSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,6 +50,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -58,6 +63,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -182,6 +188,204 @@ public abstract class BaseContactRoleResourceTestCase {
 		Assert.assertEquals(regex, contactRole.getDescription());
 		Assert.assertEquals(regex, contactRole.getKey());
 		Assert.assertEquals(regex, contactRole.getName());
+	}
+
+	@Test
+	public void testGetContactRolesPage() throws Exception {
+		Page<ContactRole> page = contactRoleResource.getContactRolesPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		ContactRole contactRole1 = testGetContactRolesPage_addContactRole(
+			randomContactRole());
+
+		ContactRole contactRole2 = testGetContactRolesPage_addContactRole(
+			randomContactRole());
+
+		page = contactRoleResource.getContactRolesPage(
+			null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contactRole1, contactRole2),
+			(List<ContactRole>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetContactRolesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ContactRole contactRole1 = randomContactRole();
+
+		contactRole1 = testGetContactRolesPage_addContactRole(contactRole1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ContactRole> page = contactRoleResource.getContactRolesPage(
+				null, getFilterString(entityField, "between", contactRole1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(contactRole1),
+				(List<ContactRole>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetContactRolesPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ContactRole contactRole1 = testGetContactRolesPage_addContactRole(
+			randomContactRole());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContactRole contactRole2 = testGetContactRolesPage_addContactRole(
+			randomContactRole());
+
+		for (EntityField entityField : entityFields) {
+			Page<ContactRole> page = contactRoleResource.getContactRolesPage(
+				null, getFilterString(entityField, "eq", contactRole1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(contactRole1),
+				(List<ContactRole>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetContactRolesPageWithPagination() throws Exception {
+		ContactRole contactRole1 = testGetContactRolesPage_addContactRole(
+			randomContactRole());
+
+		ContactRole contactRole2 = testGetContactRolesPage_addContactRole(
+			randomContactRole());
+
+		ContactRole contactRole3 = testGetContactRolesPage_addContactRole(
+			randomContactRole());
+
+		Page<ContactRole> page1 = contactRoleResource.getContactRolesPage(
+			null, null, Pagination.of(1, 2), null);
+
+		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
+
+		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+
+		Page<ContactRole> page2 = contactRoleResource.getContactRolesPage(
+			null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
+
+		Assert.assertEquals(contactRoles2.toString(), 1, contactRoles2.size());
+
+		Page<ContactRole> page3 = contactRoleResource.getContactRolesPage(
+			null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contactRole1, contactRole2, contactRole3),
+			(List<ContactRole>)page3.getItems());
+	}
+
+	@Test
+	public void testGetContactRolesPageWithSortDateTime() throws Exception {
+		testGetContactRolesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, contactRole1, contactRole2) -> {
+				BeanUtils.setProperty(
+					contactRole1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetContactRolesPageWithSortInteger() throws Exception {
+		testGetContactRolesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, contactRole1, contactRole2) -> {
+				BeanUtils.setProperty(contactRole1, entityField.getName(), 0);
+				BeanUtils.setProperty(contactRole2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetContactRolesPageWithSortString() throws Exception {
+		testGetContactRolesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, contactRole1, contactRole2) -> {
+				BeanUtils.setProperty(
+					contactRole1, entityField.getName(), "Aaa");
+				BeanUtils.setProperty(
+					contactRole2, entityField.getName(), "Bbb");
+			});
+	}
+
+	protected void testGetContactRolesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, ContactRole, ContactRole, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ContactRole contactRole1 = randomContactRole();
+		ContactRole contactRole2 = randomContactRole();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, contactRole1, contactRole2);
+		}
+
+		contactRole1 = testGetContactRolesPage_addContactRole(contactRole1);
+
+		contactRole2 = testGetContactRolesPage_addContactRole(contactRole2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ContactRole> ascPage = contactRoleResource.getContactRolesPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(contactRole1, contactRole2),
+				(List<ContactRole>)ascPage.getItems());
+
+			Page<ContactRole> descPage =
+				contactRoleResource.getContactRolesPage(
+					null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(contactRole2, contactRole1),
+				(List<ContactRole>)descPage.getItems());
+		}
+	}
+
+	protected ContactRole testGetContactRolesPage_addContactRole(
+			ContactRole contactRole)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

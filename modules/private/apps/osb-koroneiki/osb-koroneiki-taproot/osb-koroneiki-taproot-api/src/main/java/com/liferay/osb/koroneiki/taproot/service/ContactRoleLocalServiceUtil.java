@@ -361,6 +361,21 @@ public class ContactRoleLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.osb.koroneiki.taproot.model.ContactRole reindex(
+			long contactRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().reindex(contactRoleId);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+			long companyId, int type, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().search(companyId, type, keywords, start, end, sort);
+	}
+
 	/**
 	 * Updates the contact role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

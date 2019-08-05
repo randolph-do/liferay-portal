@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -72,6 +74,7 @@ public interface ContactRoleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ContactRole addContactRole(ContactRole contactRole);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ContactRole addContactRole(
 			long userId, String name, String description, int type)
 		throws PortalException;
@@ -289,6 +292,16 @@ public interface ContactRoleLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ContactRole reindex(long contactRoleId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(
+			long companyId, int type, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException;
+
 	/**
 	 * Updates the contact role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -298,6 +311,7 @@ public interface ContactRoleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ContactRole updateContactRole(ContactRole contactRole);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ContactRole updateContactRole(
 			long contactRoleId, String name, String description)
 		throws PortalException;

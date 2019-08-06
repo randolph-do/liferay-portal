@@ -143,20 +143,24 @@ public class ExternalLinkPersistenceImpl
 	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalLinkKey the external link key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
 	 */
 	@Override
 	public ExternalLink fetchByExternalLinkKey(
-		String externalLinkKey, boolean retrieveFromCache) {
+		String externalLinkKey, boolean useFinderCache) {
 
 		externalLinkKey = Objects.toString(externalLinkKey, "");
 
-		Object[] finderArgs = new Object[] {externalLinkKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalLinkKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByExternalLinkKey, finderArgs, this);
 		}
@@ -205,8 +209,11 @@ public class ExternalLinkPersistenceImpl
 				List<ExternalLink> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByExternalLinkKey, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByExternalLinkKey, finderArgs,
+							list);
+					}
 				}
 				else {
 					ExternalLink externalLink = list.get(0);
@@ -217,8 +224,10 @@ public class ExternalLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByExternalLinkKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByExternalLinkKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -394,14 +403,14 @@ public class ExternalLinkPersistenceImpl
 	 * @param start the lower bound of the range of external links
 	 * @param end the upper bound of the range of external links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching external links
 	 */
 	@Override
 	public List<ExternalLink> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<ExternalLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -411,10 +420,13 @@ public class ExternalLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
@@ -423,7 +435,7 @@ public class ExternalLinkPersistenceImpl
 
 		List<ExternalLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExternalLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -495,10 +507,14 @@ public class ExternalLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -940,23 +956,27 @@ public class ExternalLinkPersistenceImpl
 	 * @param domain the domain
 	 * @param entityName the entity name
 	 * @param entityId the entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
 	 */
 	@Override
 	public ExternalLink fetchByD_EN_EI(
 		String domain, String entityName, String entityId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		domain = Objects.toString(domain, "");
 		entityName = Objects.toString(entityName, "");
 		entityId = Objects.toString(entityId, "");
 
-		Object[] finderArgs = new Object[] {domain, entityName, entityId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {domain, entityName, entityId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByD_EN_EI, finderArgs, this);
 		}
@@ -1036,14 +1056,22 @@ public class ExternalLinkPersistenceImpl
 				List<ExternalLink> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByD_EN_EI, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByD_EN_EI, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									domain, entityName, entityId
+								};
+							}
+
 							_log.warn(
 								"ExternalLinkPersistenceImpl.fetchByD_EN_EI(String, String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1059,7 +1087,10 @@ public class ExternalLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByD_EN_EI, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByD_EN_EI, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1720,13 +1751,13 @@ public class ExternalLinkPersistenceImpl
 	 * @param start the lower bound of the range of external links
 	 * @param end the upper bound of the range of external links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of external links
 	 */
 	@Override
 	public List<ExternalLink> findAll(
 		int start, int end, OrderByComparator<ExternalLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1736,17 +1767,20 @@ public class ExternalLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ExternalLink> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ExternalLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1796,10 +1830,14 @@ public class ExternalLinkPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

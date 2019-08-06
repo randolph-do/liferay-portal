@@ -153,14 +153,14 @@ public class ExternalLinkUtil {
 	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalLinkKey the external link key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
 	 */
 	public static ExternalLink fetchByExternalLinkKey(
-		String externalLinkKey, boolean retrieveFromCache) {
+		String externalLinkKey, boolean useFinderCache) {
 
 		return getPersistence().fetchByExternalLinkKey(
-			externalLinkKey, retrieveFromCache);
+			externalLinkKey, useFinderCache);
 	}
 
 	/**
@@ -250,17 +250,17 @@ public class ExternalLinkUtil {
 	 * @param start the lower bound of the range of external links
 	 * @param end the upper bound of the range of external links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching external links
 	 */
 	public static List<ExternalLink> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<ExternalLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -411,15 +411,15 @@ public class ExternalLinkUtil {
 	 * @param domain the domain
 	 * @param entityName the entity name
 	 * @param entityId the entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
 	 */
 	public static ExternalLink fetchByD_EN_EI(
 		String domain, String entityName, String entityId,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByD_EN_EI(
-			domain, entityName, entityId, retrieveFromCache);
+			domain, entityName, entityId, useFinderCache);
 	}
 
 	/**
@@ -574,15 +574,15 @@ public class ExternalLinkUtil {
 	 * @param start the lower bound of the range of external links
 	 * @param end the upper bound of the range of external links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of external links
 	 */
 	public static List<ExternalLink> findAll(
 		int start, int end, OrderByComparator<ExternalLink> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

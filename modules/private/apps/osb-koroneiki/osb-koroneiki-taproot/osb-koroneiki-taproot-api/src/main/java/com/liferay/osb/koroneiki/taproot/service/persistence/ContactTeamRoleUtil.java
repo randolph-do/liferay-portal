@@ -185,16 +185,16 @@ public class ContactTeamRoleUtil {
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public static List<ContactTeamRole> findByContactId(
 		long contactId, int start, int end,
 		OrderByComparator<ContactTeamRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByContactId(
-			contactId, start, end, orderByComparator, retrieveFromCache);
+			contactId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -359,16 +359,16 @@ public class ContactTeamRoleUtil {
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public static List<ContactTeamRole> findByTeamId(
 		long teamId, int start, int end,
 		OrderByComparator<ContactTeamRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByTeamId(
-			teamId, start, end, orderByComparator, retrieveFromCache);
+			teamId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -529,16 +529,16 @@ public class ContactTeamRoleUtil {
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public static List<ContactTeamRole> findByContactRoleId(
 		long contactRoleId, int start, int end,
 		OrderByComparator<ContactTeamRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByContactRoleId(
-			contactRoleId, start, end, orderByComparator, retrieveFromCache);
+			contactRoleId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -709,17 +709,16 @@ public class ContactTeamRoleUtil {
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public static List<ContactTeamRole> findByC_T(
 		long contactId, long teamId, int start, int end,
 		OrderByComparator<ContactTeamRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_T(
-			contactId, teamId, start, end, orderByComparator,
-			retrieveFromCache);
+			contactId, teamId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -959,16 +958,16 @@ public class ContactTeamRoleUtil {
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contact team roles
 	 */
 	public static List<ContactTeamRole> findAll(
 		int start, int end,
 		OrderByComparator<ContactTeamRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

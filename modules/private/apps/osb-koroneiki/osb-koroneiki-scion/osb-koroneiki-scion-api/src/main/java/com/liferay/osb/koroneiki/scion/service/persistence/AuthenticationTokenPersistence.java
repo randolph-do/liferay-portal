@@ -94,14 +94,14 @@ public interface AuthenticationTokenPersistence
 	 * @param start the lower bound of the range of authentication tokens
 	 * @param end the upper bound of the range of authentication tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching authentication tokens
 	 */
 	public java.util.List<AuthenticationToken> findByServiceProducerId(
 		long serviceProducerId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AuthenticationToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first authentication token in the ordered set where serviceProducerId = &#63;.
@@ -275,11 +275,11 @@ public interface AuthenticationTokenPersistence
 	 *
 	 * @param digest the digest
 	 * @param status the status
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching authentication token, or <code>null</code> if a matching authentication token could not be found
 	 */
 	public AuthenticationToken fetchByD_S(
-		String digest, int status, boolean retrieveFromCache);
+		String digest, int status, boolean useFinderCache);
 
 	/**
 	 * Removes the authentication token where digest = &#63; and status = &#63; from the database.
@@ -401,14 +401,14 @@ public interface AuthenticationTokenPersistence
 	 * @param start the lower bound of the range of authentication tokens
 	 * @param end the upper bound of the range of authentication tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of authentication tokens
 	 */
 	public java.util.List<AuthenticationToken> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AuthenticationToken>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the authentication tokens from the database.

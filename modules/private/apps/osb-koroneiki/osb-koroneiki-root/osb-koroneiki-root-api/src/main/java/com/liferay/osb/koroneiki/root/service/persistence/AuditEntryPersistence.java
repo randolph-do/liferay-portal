@@ -62,11 +62,11 @@ public interface AuditEntryPersistence extends BasePersistence<AuditEntry> {
 	 * Returns the audit entry where auditEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param auditEntryKey the audit entry key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching audit entry, or <code>null</code> if a matching audit entry could not be found
 	 */
 	public AuditEntry fetchByAuditEntryKey(
-		String auditEntryKey, boolean retrieveFromCache);
+		String auditEntryKey, boolean useFinderCache);
 
 	/**
 	 * Removes the audit entry where auditEntryKey = &#63; from the database.
@@ -141,14 +141,14 @@ public interface AuditEntryPersistence extends BasePersistence<AuditEntry> {
 	 * @param start the lower bound of the range of audit entries
 	 * @param end the upper bound of the range of audit entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching audit entries
 	 */
 	public java.util.List<AuditEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AuditEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first audit entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -338,14 +338,14 @@ public interface AuditEntryPersistence extends BasePersistence<AuditEntry> {
 	 * @param start the lower bound of the range of audit entries
 	 * @param end the upper bound of the range of audit entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of audit entries
 	 */
 	public java.util.List<AuditEntry> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AuditEntry>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the audit entries from the database.

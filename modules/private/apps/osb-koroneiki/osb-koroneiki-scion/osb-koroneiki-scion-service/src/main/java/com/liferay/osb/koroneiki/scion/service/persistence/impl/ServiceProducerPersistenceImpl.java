@@ -158,14 +158,14 @@ public class ServiceProducerPersistenceImpl
 	 * @param start the lower bound of the range of service producers
 	 * @param end the upper bound of the range of service producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching service producers
 	 */
 	@Override
 	public List<ServiceProducer> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<ServiceProducer> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -177,17 +177,20 @@ public class ServiceProducerPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<ServiceProducer> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ServiceProducer>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -264,10 +267,14 @@ public class ServiceProducerPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -711,14 +718,14 @@ public class ServiceProducerPersistenceImpl
 	 * @param start the lower bound of the range of service producers
 	 * @param end the upper bound of the range of service producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching service producers
 	 */
 	@Override
 	public List<ServiceProducer> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<ServiceProducer> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -730,10 +737,13 @@ public class ServiceProducerPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -742,7 +752,7 @@ public class ServiceProducerPersistenceImpl
 
 		List<ServiceProducer> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ServiceProducer>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -825,10 +835,14 @@ public class ServiceProducerPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1287,18 +1301,22 @@ public class ServiceProducerPersistenceImpl
 	 * Returns the service producer where authorizationUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param authorizationUserId the authorization user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching service producer, or <code>null</code> if a matching service producer could not be found
 	 */
 	@Override
 	public ServiceProducer fetchByAuthorizationUserId(
-		long authorizationUserId, boolean retrieveFromCache) {
+		long authorizationUserId, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {authorizationUserId};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {authorizationUserId};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByAuthorizationUserId, finderArgs, this);
 		}
@@ -1337,15 +1355,21 @@ public class ServiceProducerPersistenceImpl
 				List<ServiceProducer> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByAuthorizationUserId, finderArgs,
-						list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByAuthorizationUserId, finderArgs,
+							list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {authorizationUserId};
+							}
+
 							_log.warn(
 								"ServiceProducerPersistenceImpl.fetchByAuthorizationUserId(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1361,8 +1385,10 @@ public class ServiceProducerPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByAuthorizationUserId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByAuthorizationUserId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1945,14 +1971,14 @@ public class ServiceProducerPersistenceImpl
 	 * @param start the lower bound of the range of service producers
 	 * @param end the upper bound of the range of service producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of service producers
 	 */
 	@Override
 	public List<ServiceProducer> findAll(
 		int start, int end,
 		OrderByComparator<ServiceProducer> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1962,17 +1988,20 @@ public class ServiceProducerPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ServiceProducer> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ServiceProducer>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -2022,10 +2051,14 @@ public class ServiceProducerPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

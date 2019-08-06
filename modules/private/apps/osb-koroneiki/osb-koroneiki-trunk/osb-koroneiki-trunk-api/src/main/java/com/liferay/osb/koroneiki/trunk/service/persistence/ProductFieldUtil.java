@@ -189,17 +189,17 @@ public class ProductFieldUtil {
 	 * @param start the lower bound of the range of product fields
 	 * @param end the upper bound of the range of product fields (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product fields
 	 */
 	public static List<ProductField> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<ProductField> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -435,15 +435,15 @@ public class ProductFieldUtil {
 	 * @param start the lower bound of the range of product fields
 	 * @param end the upper bound of the range of product fields (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of product fields
 	 */
 	public static List<ProductField> findAll(
 		int start, int end, OrderByComparator<ProductField> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

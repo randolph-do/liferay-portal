@@ -161,13 +161,13 @@ public class TeamPersistenceImpl
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	@Override
 	public List<Team> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -179,17 +179,20 @@ public class TeamPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<Team> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Team>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -266,10 +269,14 @@ public class TeamPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1118,13 +1125,13 @@ public class TeamPersistenceImpl
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	@Override
 	public List<Team> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1136,10 +1143,13 @@ public class TeamPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1148,7 +1158,7 @@ public class TeamPersistenceImpl
 
 		List<Team> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Team>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1231,10 +1241,14 @@ public class TeamPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2115,18 +2129,22 @@ public class TeamPersistenceImpl
 	 * Returns the team where teamKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param teamKey the team key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
 	@Override
-	public Team fetchByTeamKey(String teamKey, boolean retrieveFromCache) {
+	public Team fetchByTeamKey(String teamKey, boolean useFinderCache) {
 		teamKey = Objects.toString(teamKey, "");
 
-		Object[] finderArgs = new Object[] {teamKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {teamKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByTeamKey, finderArgs, this);
 		}
@@ -2173,8 +2191,10 @@ public class TeamPersistenceImpl
 				List<Team> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByTeamKey, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByTeamKey, finderArgs, list);
+					}
 				}
 				else {
 					Team team = list.get(0);
@@ -2185,7 +2205,10 @@ public class TeamPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByTeamKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByTeamKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2350,13 +2373,13 @@ public class TeamPersistenceImpl
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	@Override
 	public List<Team> findByAccountId(
 		long accountId, int start, int end,
-		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2366,10 +2389,13 @@ public class TeamPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByAccountId;
-			finderArgs = new Object[] {accountId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAccountId;
+				finderArgs = new Object[] {accountId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAccountId;
 			finderArgs = new Object[] {
 				accountId, start, end, orderByComparator
@@ -2378,7 +2404,7 @@ public class TeamPersistenceImpl
 
 		List<Team> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Team>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2444,10 +2470,14 @@ public class TeamPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3222,13 +3252,13 @@ public class TeamPersistenceImpl
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	@Override
 	public List<Team> findByName(
 		String name, int start, int end,
-		OrderByComparator<Team> orderByComparator, boolean retrieveFromCache) {
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -3240,17 +3270,20 @@ public class TeamPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByName;
-			finderArgs = new Object[] {name};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByName;
+				finderArgs = new Object[] {name};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByName;
 			finderArgs = new Object[] {name, start, end, orderByComparator};
 		}
 
 		List<Team> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Team>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3327,10 +3360,14 @@ public class TeamPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4628,13 +4665,13 @@ public class TeamPersistenceImpl
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of teams
 	 */
 	@Override
 	public List<Team> findAll(
 		int start, int end, OrderByComparator<Team> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4644,17 +4681,20 @@ public class TeamPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Team> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Team>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -4704,10 +4744,14 @@ public class TeamPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

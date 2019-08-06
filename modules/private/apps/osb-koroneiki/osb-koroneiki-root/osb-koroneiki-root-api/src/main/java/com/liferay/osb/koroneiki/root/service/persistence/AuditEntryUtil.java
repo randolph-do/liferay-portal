@@ -153,14 +153,14 @@ public class AuditEntryUtil {
 	 * Returns the audit entry where auditEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param auditEntryKey the audit entry key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching audit entry, or <code>null</code> if a matching audit entry could not be found
 	 */
 	public static AuditEntry fetchByAuditEntryKey(
-		String auditEntryKey, boolean retrieveFromCache) {
+		String auditEntryKey, boolean useFinderCache) {
 
 		return getPersistence().fetchByAuditEntryKey(
-			auditEntryKey, retrieveFromCache);
+			auditEntryKey, useFinderCache);
 	}
 
 	/**
@@ -250,17 +250,17 @@ public class AuditEntryUtil {
 	 * @param start the lower bound of the range of audit entries
 	 * @param end the upper bound of the range of audit entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching audit entries
 	 */
 	public static List<AuditEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<AuditEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
 			classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -496,15 +496,15 @@ public class AuditEntryUtil {
 	 * @param start the lower bound of the range of audit entries
 	 * @param end the upper bound of the range of audit entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of audit entries
 	 */
 	public static List<AuditEntry> findAll(
 		int start, int end, OrderByComparator<AuditEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

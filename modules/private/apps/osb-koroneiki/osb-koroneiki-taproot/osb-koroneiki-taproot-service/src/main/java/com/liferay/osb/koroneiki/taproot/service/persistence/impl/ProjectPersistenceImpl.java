@@ -161,14 +161,13 @@ public class ProjectPersistenceImpl
 	 * @param start the lower bound of the range of projects
 	 * @param end the upper bound of the range of projects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching projects
 	 */
 	@Override
 	public List<Project> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Project> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Project> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -180,17 +179,20 @@ public class ProjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<Project> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Project>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -267,10 +269,14 @@ public class ProjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1122,14 +1128,13 @@ public class ProjectPersistenceImpl
 	 * @param start the lower bound of the range of projects
 	 * @param end the upper bound of the range of projects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching projects
 	 */
 	@Override
 	public List<Project> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Project> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Project> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1141,10 +1146,13 @@ public class ProjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1153,7 +1161,7 @@ public class ProjectPersistenceImpl
 
 		List<Project> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Project>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1236,10 +1244,14 @@ public class ProjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2124,20 +2136,24 @@ public class ProjectPersistenceImpl
 	 * Returns the project where projectKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param projectKey the project key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching project, or <code>null</code> if a matching project could not be found
 	 */
 	@Override
 	public Project fetchByProjectKey(
-		String projectKey, boolean retrieveFromCache) {
+		String projectKey, boolean useFinderCache) {
 
 		projectKey = Objects.toString(projectKey, "");
 
-		Object[] finderArgs = new Object[] {projectKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {projectKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByProjectKey, finderArgs, this);
 		}
@@ -2184,8 +2200,10 @@ public class ProjectPersistenceImpl
 				List<Project> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByProjectKey, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByProjectKey, finderArgs, list);
+					}
 				}
 				else {
 					Project project = list.get(0);
@@ -2196,8 +2214,10 @@ public class ProjectPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByProjectKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByProjectKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2364,14 +2384,13 @@ public class ProjectPersistenceImpl
 	 * @param start the lower bound of the range of projects
 	 * @param end the upper bound of the range of projects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching projects
 	 */
 	@Override
 	public List<Project> findByAccountId(
 		long accountId, int start, int end,
-		OrderByComparator<Project> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Project> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2381,10 +2400,13 @@ public class ProjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByAccountId;
-			finderArgs = new Object[] {accountId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAccountId;
+				finderArgs = new Object[] {accountId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAccountId;
 			finderArgs = new Object[] {
 				accountId, start, end, orderByComparator
@@ -2393,7 +2415,7 @@ public class ProjectPersistenceImpl
 
 		List<Project> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Project>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2459,10 +2481,14 @@ public class ProjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3690,13 +3716,13 @@ public class ProjectPersistenceImpl
 	 * @param start the lower bound of the range of projects
 	 * @param end the upper bound of the range of projects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of projects
 	 */
 	@Override
 	public List<Project> findAll(
 		int start, int end, OrderByComparator<Project> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3706,17 +3732,20 @@ public class ProjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Project> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<Project>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3766,10 +3795,14 @@ public class ProjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

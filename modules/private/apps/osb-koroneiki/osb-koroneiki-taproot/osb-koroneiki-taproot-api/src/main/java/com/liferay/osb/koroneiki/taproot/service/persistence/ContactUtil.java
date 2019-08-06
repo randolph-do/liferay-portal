@@ -182,16 +182,15 @@ public class ContactUtil {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public static List<Contact> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Contact> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -432,16 +431,15 @@ public class ContactUtil {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contacts
 	 */
 	public static List<Contact> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
+		OrderByComparator<Contact> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -668,14 +666,13 @@ public class ContactUtil {
 	 * Returns the contact where contactKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param contactKey the contact key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	public static Contact fetchByContactKey(
-		String contactKey, boolean retrieveFromCache) {
+		String contactKey, boolean useFinderCache) {
 
-		return getPersistence().fetchByContactKey(
-			contactKey, retrieveFromCache);
+		return getPersistence().fetchByContactKey(contactKey, useFinderCache);
 	}
 
 	/**
@@ -729,14 +726,14 @@ public class ContactUtil {
 	 * Returns the contact where emailAddress = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param emailAddress the email address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	public static Contact fetchByEmailAddress(
-		String emailAddress, boolean retrieveFromCache) {
+		String emailAddress, boolean useFinderCache) {
 
 		return getPersistence().fetchByEmailAddress(
-			emailAddress, retrieveFromCache);
+			emailAddress, useFinderCache);
 	}
 
 	/**
@@ -884,15 +881,15 @@ public class ContactUtil {
 	 * @param start the lower bound of the range of contacts
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contacts
 	 */
 	public static List<Contact> findAll(
 		int start, int end, OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

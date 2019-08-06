@@ -164,14 +164,14 @@ public class ProductConsumptionPersistenceImpl
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	@Override
 	public List<ProductConsumption> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -183,17 +183,20 @@ public class ProductConsumptionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<ProductConsumption> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ProductConsumption>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -270,10 +273,14 @@ public class ProductConsumptionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1145,14 +1152,14 @@ public class ProductConsumptionPersistenceImpl
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	@Override
 	public List<ProductConsumption> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1164,10 +1171,13 @@ public class ProductConsumptionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1176,7 +1186,7 @@ public class ProductConsumptionPersistenceImpl
 
 		List<ProductConsumption> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ProductConsumption>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1259,10 +1269,14 @@ public class ProductConsumptionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2168,20 +2182,24 @@ public class ProductConsumptionPersistenceImpl
 	 * Returns the product consumption where productConsumptionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param productConsumptionKey the product consumption key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching product consumption, or <code>null</code> if a matching product consumption could not be found
 	 */
 	@Override
 	public ProductConsumption fetchByProductConsumptionKey(
-		String productConsumptionKey, boolean retrieveFromCache) {
+		String productConsumptionKey, boolean useFinderCache) {
 
 		productConsumptionKey = Objects.toString(productConsumptionKey, "");
 
-		Object[] finderArgs = new Object[] {productConsumptionKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {productConsumptionKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByProductConsumptionKey, finderArgs, this);
 		}
@@ -2233,9 +2251,11 @@ public class ProductConsumptionPersistenceImpl
 				List<ProductConsumption> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByProductConsumptionKey, finderArgs,
-						list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByProductConsumptionKey, finderArgs,
+							list);
+					}
 				}
 				else {
 					ProductConsumption productConsumption = list.get(0);
@@ -2246,8 +2266,10 @@ public class ProductConsumptionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByProductConsumptionKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByProductConsumptionKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2422,14 +2444,14 @@ public class ProductConsumptionPersistenceImpl
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	@Override
 	public List<ProductConsumption> findByAccountId(
 		long accountId, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2439,10 +2461,13 @@ public class ProductConsumptionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByAccountId;
-			finderArgs = new Object[] {accountId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAccountId;
+				finderArgs = new Object[] {accountId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByAccountId;
 			finderArgs = new Object[] {
 				accountId, start, end, orderByComparator
@@ -2451,7 +2476,7 @@ public class ProductConsumptionPersistenceImpl
 
 		List<ProductConsumption> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ProductConsumption>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2517,10 +2542,14 @@ public class ProductConsumptionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3320,14 +3349,14 @@ public class ProductConsumptionPersistenceImpl
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	@Override
 	public List<ProductConsumption> findByProjectId(
 		long projectId, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3337,10 +3366,13 @@ public class ProductConsumptionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByProjectId;
-			finderArgs = new Object[] {projectId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByProjectId;
+				finderArgs = new Object[] {projectId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByProjectId;
 			finderArgs = new Object[] {
 				projectId, start, end, orderByComparator
@@ -3349,7 +3381,7 @@ public class ProductConsumptionPersistenceImpl
 
 		List<ProductConsumption> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ProductConsumption>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3415,10 +3447,14 @@ public class ProductConsumptionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4238,7 +4274,7 @@ public class ProductConsumptionPersistenceImpl
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	@Override
@@ -4246,7 +4282,7 @@ public class ProductConsumptionPersistenceImpl
 		long userId, long accountId, long projectId, long productEntryId,
 		int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4256,12 +4292,15 @@ public class ProductConsumptionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_AI_PI_PEI;
-			finderArgs = new Object[] {
-				userId, accountId, projectId, productEntryId
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_AI_PI_PEI;
+				finderArgs = new Object[] {
+					userId, accountId, projectId, productEntryId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_AI_PI_PEI;
 			finderArgs = new Object[] {
 				userId, accountId, projectId, productEntryId, start, end,
@@ -4271,7 +4310,7 @@ public class ProductConsumptionPersistenceImpl
 
 		List<ProductConsumption> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ProductConsumption>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4354,10 +4393,14 @@ public class ProductConsumptionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5857,14 +5900,14 @@ public class ProductConsumptionPersistenceImpl
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of product consumptions
 	 */
 	@Override
 	public List<ProductConsumption> findAll(
 		int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5874,17 +5917,20 @@ public class ProductConsumptionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ProductConsumption> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ProductConsumption>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -5934,10 +5980,14 @@ public class ProductConsumptionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

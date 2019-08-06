@@ -93,14 +93,14 @@ public interface ProductConsumptionPersistence
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public java.util.List<ProductConsumption> findByUuid(
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ProductConsumption>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first product consumption in the ordered set where uuid = &#63;.
@@ -305,14 +305,14 @@ public interface ProductConsumptionPersistence
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public java.util.List<ProductConsumption> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ProductConsumption>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first product consumption in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -497,11 +497,11 @@ public interface ProductConsumptionPersistence
 	 * Returns the product consumption where productConsumptionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param productConsumptionKey the product consumption key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching product consumption, or <code>null</code> if a matching product consumption could not be found
 	 */
 	public ProductConsumption fetchByProductConsumptionKey(
-		String productConsumptionKey, boolean retrieveFromCache);
+		String productConsumptionKey, boolean useFinderCache);
 
 	/**
 	 * Removes the product consumption where productConsumptionKey = &#63; from the database.
@@ -573,14 +573,14 @@ public interface ProductConsumptionPersistence
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public java.util.List<ProductConsumption> findByAccountId(
 		long accountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ProductConsumption>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first product consumption in the ordered set where accountId = &#63;.
@@ -781,14 +781,14 @@ public interface ProductConsumptionPersistence
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public java.util.List<ProductConsumption> findByProjectId(
 		long projectId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ProductConsumption>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first product consumption in the ordered set where projectId = &#63;.
@@ -1004,7 +1004,7 @@ public interface ProductConsumptionPersistence
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public java.util.List<ProductConsumption> findByU_AI_PI_PEI(
@@ -1012,7 +1012,7 @@ public interface ProductConsumptionPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ProductConsumption>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first product consumption in the ordered set where userId = &#63; and accountId = &#63; and projectId = &#63; and productEntryId = &#63;.
@@ -1304,14 +1304,14 @@ public interface ProductConsumptionPersistence
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of product consumptions
 	 */
 	public java.util.List<ProductConsumption> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ProductConsumption>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the product consumptions from the database.

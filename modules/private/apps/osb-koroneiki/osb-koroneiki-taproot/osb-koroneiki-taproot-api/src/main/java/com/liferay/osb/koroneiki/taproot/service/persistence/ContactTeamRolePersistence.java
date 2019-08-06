@@ -95,14 +95,14 @@ public interface ContactTeamRolePersistence
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public java.util.List<ContactTeamRole> findByContactId(
 		long contactId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactTeamRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact team role in the ordered set where contactId = &#63;.
@@ -238,14 +238,14 @@ public interface ContactTeamRolePersistence
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public java.util.List<ContactTeamRole> findByTeamId(
 		long teamId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactTeamRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact team role in the ordered set where teamId = &#63;.
@@ -382,14 +382,14 @@ public interface ContactTeamRolePersistence
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public java.util.List<ContactTeamRole> findByContactRoleId(
 		long contactRoleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactTeamRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact team role in the ordered set where contactRoleId = &#63;.
@@ -530,14 +530,14 @@ public interface ContactTeamRolePersistence
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact team roles
 	 */
 	public java.util.List<ContactTeamRole> findByC_T(
 		long contactId, long teamId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactTeamRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact team role in the ordered set where contactId = &#63; and teamId = &#63;.
@@ -728,14 +728,14 @@ public interface ContactTeamRolePersistence
 	 * @param start the lower bound of the range of contact team roles
 	 * @param end the upper bound of the range of contact team roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contact team roles
 	 */
 	public java.util.List<ContactTeamRole> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactTeamRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the contact team roles from the database.

@@ -187,16 +187,16 @@ public class ContactProjectRoleUtil {
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public static List<ContactProjectRole> findByContactId(
 		long contactId, int start, int end,
 		OrderByComparator<ContactProjectRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByContactId(
-			contactId, start, end, orderByComparator, retrieveFromCache);
+			contactId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -363,16 +363,16 @@ public class ContactProjectRoleUtil {
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public static List<ContactProjectRole> findByProjectId(
 		long projectId, int start, int end,
 		OrderByComparator<ContactProjectRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByProjectId(
-			projectId, start, end, orderByComparator, retrieveFromCache);
+			projectId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -541,16 +541,16 @@ public class ContactProjectRoleUtil {
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public static List<ContactProjectRole> findByContactRoleId(
 		long contactRoleId, int start, int end,
 		OrderByComparator<ContactProjectRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByContactRoleId(
-			contactRoleId, start, end, orderByComparator, retrieveFromCache);
+			contactRoleId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -723,17 +723,17 @@ public class ContactProjectRoleUtil {
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public static List<ContactProjectRole> findByC_P(
 		long contactId, long projectId, int start, int end,
 		OrderByComparator<ContactProjectRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_P(
 			contactId, projectId, start, end, orderByComparator,
-			retrieveFromCache);
+			useFinderCache);
 	}
 
 	/**
@@ -981,16 +981,16 @@ public class ContactProjectRoleUtil {
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contact project roles
 	 */
 	public static List<ContactProjectRole> findAll(
 		int start, int end,
 		OrderByComparator<ContactProjectRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -95,14 +95,14 @@ public interface ContactProjectRolePersistence
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public java.util.List<ContactProjectRole> findByContactId(
 		long contactId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactProjectRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact project role in the ordered set where contactId = &#63;.
@@ -238,14 +238,14 @@ public interface ContactProjectRolePersistence
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public java.util.List<ContactProjectRole> findByProjectId(
 		long projectId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactProjectRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact project role in the ordered set where projectId = &#63;.
@@ -382,14 +382,14 @@ public interface ContactProjectRolePersistence
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public java.util.List<ContactProjectRole> findByContactRoleId(
 		long contactRoleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactProjectRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact project role in the ordered set where contactRoleId = &#63;.
@@ -530,14 +530,14 @@ public interface ContactProjectRolePersistence
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact project roles
 	 */
 	public java.util.List<ContactProjectRole> findByC_P(
 		long contactId, long projectId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactProjectRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first contact project role in the ordered set where contactId = &#63; and projectId = &#63;.
@@ -731,14 +731,14 @@ public interface ContactProjectRolePersistence
 	 * @param start the lower bound of the range of contact project roles
 	 * @param end the upper bound of the range of contact project roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contact project roles
 	 */
 	public java.util.List<ContactProjectRole> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactProjectRole>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the contact project roles from the database.

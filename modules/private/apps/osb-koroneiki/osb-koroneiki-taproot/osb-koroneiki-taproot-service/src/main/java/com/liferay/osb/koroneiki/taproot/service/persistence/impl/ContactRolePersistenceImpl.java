@@ -162,14 +162,14 @@ public class ContactRolePersistenceImpl
 	 * @param start the lower bound of the range of contact roles
 	 * @param end the upper bound of the range of contact roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact roles
 	 */
 	@Override
 	public List<ContactRole> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<ContactRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -181,17 +181,20 @@ public class ContactRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<ContactRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ContactRole>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -268,10 +271,14 @@ public class ContactRolePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1130,14 +1137,14 @@ public class ContactRolePersistenceImpl
 	 * @param start the lower bound of the range of contact roles
 	 * @param end the upper bound of the range of contact roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact roles
 	 */
 	@Override
 	public List<ContactRole> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<ContactRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1149,10 +1156,13 @@ public class ContactRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1161,7 +1171,7 @@ public class ContactRolePersistenceImpl
 
 		List<ContactRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ContactRole>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1244,10 +1254,14 @@ public class ContactRolePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2139,20 +2153,24 @@ public class ContactRolePersistenceImpl
 	 * Returns the contact role where contactRoleKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param contactRoleKey the contact role key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
 	 */
 	@Override
 	public ContactRole fetchByContactRoleKey(
-		String contactRoleKey, boolean retrieveFromCache) {
+		String contactRoleKey, boolean useFinderCache) {
 
 		contactRoleKey = Objects.toString(contactRoleKey, "");
 
-		Object[] finderArgs = new Object[] {contactRoleKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {contactRoleKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByContactRoleKey, finderArgs, this);
 		}
@@ -2201,8 +2219,10 @@ public class ContactRolePersistenceImpl
 				List<ContactRole> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByContactRoleKey, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByContactRoleKey, finderArgs, list);
+					}
 				}
 				else {
 					ContactRole contactRole = list.get(0);
@@ -2213,8 +2233,10 @@ public class ContactRolePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByContactRoleKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByContactRoleKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2380,14 +2402,14 @@ public class ContactRolePersistenceImpl
 	 * @param start the lower bound of the range of contact roles
 	 * @param end the upper bound of the range of contact roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching contact roles
 	 */
 	@Override
 	public List<ContactRole> findByType(
 		int type, int start, int end,
 		OrderByComparator<ContactRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2397,17 +2419,20 @@ public class ContactRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByType;
-			finderArgs = new Object[] {type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByType;
+				finderArgs = new Object[] {type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByType;
 			finderArgs = new Object[] {type, start, end, orderByComparator};
 		}
 
 		List<ContactRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ContactRole>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2473,10 +2498,14 @@ public class ContactRolePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3249,20 +3278,24 @@ public class ContactRolePersistenceImpl
 	 *
 	 * @param name the name
 	 * @param type the type
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching contact role, or <code>null</code> if a matching contact role could not be found
 	 */
 	@Override
 	public ContactRole fetchByN_T(
-		String name, int type, boolean retrieveFromCache) {
+		String name, int type, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {name, type};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {name, type};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByN_T, finderArgs, this);
 		}
@@ -3315,14 +3348,20 @@ public class ContactRolePersistenceImpl
 				List<ContactRole> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByN_T, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByN_T, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {name, type};
+							}
+
 							_log.warn(
 								"ContactRolePersistenceImpl.fetchByN_T(String, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -3338,7 +3377,9 @@ public class ContactRolePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByN_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByN_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4014,13 +4055,13 @@ public class ContactRolePersistenceImpl
 	 * @param start the lower bound of the range of contact roles
 	 * @param end the upper bound of the range of contact roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of contact roles
 	 */
 	@Override
 	public List<ContactRole> findAll(
 		int start, int end, OrderByComparator<ContactRole> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4030,17 +4071,20 @@ public class ContactRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ContactRole> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<ContactRole>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -4090,10 +4134,14 @@ public class ContactRolePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

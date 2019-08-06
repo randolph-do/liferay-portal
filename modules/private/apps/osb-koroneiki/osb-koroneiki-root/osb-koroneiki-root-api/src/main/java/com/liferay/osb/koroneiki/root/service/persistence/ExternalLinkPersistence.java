@@ -62,11 +62,11 @@ public interface ExternalLinkPersistence extends BasePersistence<ExternalLink> {
 	 * Returns the external link where externalLinkKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalLinkKey the external link key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
 	 */
 	public ExternalLink fetchByExternalLinkKey(
-		String externalLinkKey, boolean retrieveFromCache);
+		String externalLinkKey, boolean useFinderCache);
 
 	/**
 	 * Removes the external link where externalLinkKey = &#63; from the database.
@@ -142,14 +142,14 @@ public interface ExternalLinkPersistence extends BasePersistence<ExternalLink> {
 	 * @param start the lower bound of the range of external links
 	 * @param end the upper bound of the range of external links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching external links
 	 */
 	public java.util.List<ExternalLink> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExternalLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first external link in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -270,12 +270,12 @@ public interface ExternalLinkPersistence extends BasePersistence<ExternalLink> {
 	 * @param domain the domain
 	 * @param entityName the entity name
 	 * @param entityId the entity ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching external link, or <code>null</code> if a matching external link could not be found
 	 */
 	public ExternalLink fetchByD_EN_EI(
 		String domain, String entityName, String entityId,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes the external link where domain = &#63; and entityName = &#63; and entityId = &#63; from the database.
@@ -399,14 +399,14 @@ public interface ExternalLinkPersistence extends BasePersistence<ExternalLink> {
 	 * @param start the lower bound of the range of external links
 	 * @param end the upper bound of the range of external links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of external links
 	 */
 	public java.util.List<ExternalLink> findAll(
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ExternalLink>
 			orderByComparator,
-		boolean retrieveFromCache);
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the external links from the database.

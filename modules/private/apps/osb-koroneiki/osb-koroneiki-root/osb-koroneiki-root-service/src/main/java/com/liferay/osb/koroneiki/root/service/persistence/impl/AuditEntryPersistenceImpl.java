@@ -141,20 +141,24 @@ public class AuditEntryPersistenceImpl
 	 * Returns the audit entry where auditEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param auditEntryKey the audit entry key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching audit entry, or <code>null</code> if a matching audit entry could not be found
 	 */
 	@Override
 	public AuditEntry fetchByAuditEntryKey(
-		String auditEntryKey, boolean retrieveFromCache) {
+		String auditEntryKey, boolean useFinderCache) {
 
 		auditEntryKey = Objects.toString(auditEntryKey, "");
 
-		Object[] finderArgs = new Object[] {auditEntryKey};
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {auditEntryKey};
+		}
 
 		Object result = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByAuditEntryKey, finderArgs, this);
 		}
@@ -201,8 +205,10 @@ public class AuditEntryPersistenceImpl
 				List<AuditEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByAuditEntryKey, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByAuditEntryKey, finderArgs, list);
+					}
 				}
 				else {
 					AuditEntry auditEntry = list.get(0);
@@ -213,8 +219,10 @@ public class AuditEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByAuditEntryKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByAuditEntryKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -388,14 +396,14 @@ public class AuditEntryPersistenceImpl
 	 * @param start the lower bound of the range of audit entries
 	 * @param end the upper bound of the range of audit entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching audit entries
 	 */
 	@Override
 	public List<AuditEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<AuditEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -405,10 +413,13 @@ public class AuditEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
@@ -417,7 +428,7 @@ public class AuditEntryPersistenceImpl
 
 		List<AuditEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AuditEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -489,10 +500,14 @@ public class AuditEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1326,13 +1341,13 @@ public class AuditEntryPersistenceImpl
 	 * @param start the lower bound of the range of audit entries
 	 * @param end the upper bound of the range of audit entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of audit entries
 	 */
 	@Override
 	public List<AuditEntry> findAll(
 		int start, int end, OrderByComparator<AuditEntry> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1342,17 +1357,20 @@ public class AuditEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AuditEntry> list = null;
 
-		if (retrieveFromCache) {
+		if (useFinderCache) {
 			list = (List<AuditEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1402,10 +1420,14 @@ public class AuditEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

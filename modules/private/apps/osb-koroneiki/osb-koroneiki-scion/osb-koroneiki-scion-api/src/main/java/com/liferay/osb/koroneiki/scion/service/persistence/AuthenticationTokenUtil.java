@@ -191,17 +191,16 @@ public class AuthenticationTokenUtil {
 	 * @param start the lower bound of the range of authentication tokens
 	 * @param end the upper bound of the range of authentication tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching authentication tokens
 	 */
 	public static List<AuthenticationToken> findByServiceProducerId(
 		long serviceProducerId, int start, int end,
 		OrderByComparator<AuthenticationToken> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByServiceProducerId(
-			serviceProducerId, start, end, orderByComparator,
-			retrieveFromCache);
+			serviceProducerId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -423,13 +422,13 @@ public class AuthenticationTokenUtil {
 	 *
 	 * @param digest the digest
 	 * @param status the status
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching authentication token, or <code>null</code> if a matching authentication token could not be found
 	 */
 	public static AuthenticationToken fetchByD_S(
-		String digest, int status, boolean retrieveFromCache) {
+		String digest, int status, boolean useFinderCache) {
 
-		return getPersistence().fetchByD_S(digest, status, retrieveFromCache);
+		return getPersistence().fetchByD_S(digest, status, useFinderCache);
 	}
 
 	/**
@@ -587,16 +586,16 @@ public class AuthenticationTokenUtil {
 	 * @param start the lower bound of the range of authentication tokens
 	 * @param end the upper bound of the range of authentication tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of authentication tokens
 	 */
 	public static List<AuthenticationToken> findAll(
 		int start, int end,
 		OrderByComparator<AuthenticationToken> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

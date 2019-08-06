@@ -186,16 +186,16 @@ public class ProductConsumptionUtil {
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public static List<ProductConsumption> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -440,16 +440,16 @@ public class ProductConsumptionUtil {
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public static List<ProductConsumption> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -681,14 +681,14 @@ public class ProductConsumptionUtil {
 	 * Returns the product consumption where productConsumptionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param productConsumptionKey the product consumption key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching product consumption, or <code>null</code> if a matching product consumption could not be found
 	 */
 	public static ProductConsumption fetchByProductConsumptionKey(
-		String productConsumptionKey, boolean retrieveFromCache) {
+		String productConsumptionKey, boolean useFinderCache) {
 
 		return getPersistence().fetchByProductConsumptionKey(
-			productConsumptionKey, retrieveFromCache);
+			productConsumptionKey, useFinderCache);
 	}
 
 	/**
@@ -779,16 +779,16 @@ public class ProductConsumptionUtil {
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public static List<ProductConsumption> findByAccountId(
 		long accountId, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByAccountId(
-			accountId, start, end, orderByComparator, retrieveFromCache);
+			accountId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1035,16 +1035,16 @@ public class ProductConsumptionUtil {
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public static List<ProductConsumption> findByProjectId(
 		long projectId, int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByProjectId(
-			projectId, start, end, orderByComparator, retrieveFromCache);
+			projectId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1310,18 +1310,18 @@ public class ProductConsumptionUtil {
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching product consumptions
 	 */
 	public static List<ProductConsumption> findByU_AI_PI_PEI(
 		long userId, long accountId, long projectId, long productEntryId,
 		int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByU_AI_PI_PEI(
 			userId, accountId, projectId, productEntryId, start, end,
-			orderByComparator, retrieveFromCache);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1691,16 +1691,16 @@ public class ProductConsumptionUtil {
 	 * @param start the lower bound of the range of product consumptions
 	 * @param end the upper bound of the range of product consumptions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of product consumptions
 	 */
 	public static List<ProductConsumption> findAll(
 		int start, int end,
 		OrderByComparator<ProductConsumption> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

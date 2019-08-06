@@ -184,16 +184,16 @@ public class ServiceProducerUtil {
 	 * @param start the lower bound of the range of service producers
 	 * @param end the upper bound of the range of service producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching service producers
 	 */
 	public static List<ServiceProducer> findByUuid(
 		String uuid, int start, int end,
 		OrderByComparator<ServiceProducer> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -358,16 +358,16 @@ public class ServiceProducerUtil {
 	 * @param start the lower bound of the range of service producers
 	 * @param end the upper bound of the range of service producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching service producers
 	 */
 	public static List<ServiceProducer> findByUuid_C(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<ServiceProducer> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -512,14 +512,14 @@ public class ServiceProducerUtil {
 	 * Returns the service producer where authorizationUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param authorizationUserId the authorization user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching service producer, or <code>null</code> if a matching service producer could not be found
 	 */
 	public static ServiceProducer fetchByAuthorizationUserId(
-		long authorizationUserId, boolean retrieveFromCache) {
+		long authorizationUserId, boolean useFinderCache) {
 
 		return getPersistence().fetchByAuthorizationUserId(
-			authorizationUserId, retrieveFromCache);
+			authorizationUserId, useFinderCache);
 	}
 
 	/**
@@ -670,16 +670,16 @@ public class ServiceProducerUtil {
 	 * @param start the lower bound of the range of service producers
 	 * @param end the upper bound of the range of service producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of service producers
 	 */
 	public static List<ServiceProducer> findAll(
 		int start, int end,
 		OrderByComparator<ServiceProducer> orderByComparator,
-		boolean retrieveFromCache) {
+		boolean useFinderCache) {
 
 		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

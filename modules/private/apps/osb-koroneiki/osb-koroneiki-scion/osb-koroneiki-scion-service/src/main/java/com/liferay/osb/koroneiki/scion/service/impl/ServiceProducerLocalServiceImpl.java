@@ -100,12 +100,12 @@ public class ServiceProducerLocalServiceImpl
 			}
 		};
 
-		Role role = roleLocalService.addRole(
+		Role role = _roleLocalService.addRole(
 			userId, StringPool.BLANK, 0, getIdentifier(serviceProducerId),
 			titleMap, descriptionMap, RoleConstants.TYPE_REGULAR,
 			"service-producer", new ServiceContext());
 
-		roleLocalService.addUserRole(
+		_roleLocalService.addUserRole(
 			authorizationUser.getUserId(), role.getRoleId());
 
 		return serviceProducerPersistence.update(serviceProducer);
@@ -131,14 +131,14 @@ public class ServiceProducerLocalServiceImpl
 		// Role
 
 		try {
-			Role role = roleLocalService.getRole(
+			Role role = _roleLocalService.getRole(
 				serviceProducer.getCompanyId(),
 				getIdentifier(serviceProducer.getServiceProducerId()));
 
-			roleLocalService.deleteUserRole(
+			_roleLocalService.deleteUserRole(
 				serviceProducer.getAuthorizationUserId(), role.getRoleId());
 
-			roleLocalService.deleteRole(role);
+			_roleLocalService.deleteRole(role);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -196,7 +196,7 @@ public class ServiceProducerLocalServiceImpl
 
 		// Role
 
-		Role role = roleLocalService.getRole(
+		Role role = _roleLocalService.getRole(
 			serviceProducer.getCompanyId(), getIdentifier(serviceProducerId));
 
 		role.setTitleMap(
@@ -206,7 +206,7 @@ public class ServiceProducerLocalServiceImpl
 				}
 			});
 
-		roleLocalService.updateRole(role);
+		_roleLocalService.updateRole(role);
 
 		return serviceProducer;
 	}
@@ -221,10 +221,10 @@ public class ServiceProducerLocalServiceImpl
 		}
 	}
 
-	@Reference
-	protected RoleLocalService roleLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceProducerLocalServiceImpl.class);
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

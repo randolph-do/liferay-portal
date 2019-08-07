@@ -64,14 +64,14 @@ public class AccountModelDocumentContributor
 		document.addDateSortable("modifiedDate", account.getModifiedDate());
 		document.addTextSortable("name", account.getName());
 
-		contributeContacts(document, account.getAccountId());
-		contributeProductEntries(document, account.getAccountId());
+		_contributeContacts(document, account.getAccountId());
+		_contributeProductEntries(document, account.getAccountId());
 	}
 
-	protected void contributeContacts(Document document, long accountId) {
+	private void _contributeContacts(Document document, long accountId) {
 		List<String> contactKeys = new ArrayList<>();
 
-		List<Contact> contacts = contactLocalService.getAccountContacts(
+		List<Contact> contacts = _contactLocalService.getAccountContacts(
 			accountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Contact contact : contacts) {
@@ -82,11 +82,11 @@ public class AccountModelDocumentContributor
 			"contactKeys", ArrayUtil.toStringArray(contactKeys.toArray()));
 	}
 
-	protected void contributeProductEntries(Document document, long accountId) {
+	private void _contributeProductEntries(Document document, long accountId) {
 		List<String> productEntryKeys = new ArrayList<>();
 
 		List<ProductPurchase> productPurchases =
-			productPurchaseLocalService.getAccountProductPurchases(
+			_productPurchaseLocalService.getAccountProductPurchases(
 				accountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ProductPurchase productPurchase : productPurchases) {
@@ -103,13 +103,13 @@ public class AccountModelDocumentContributor
 			ArrayUtil.toStringArray(productEntryKeys.toArray()));
 	}
 
-	@Reference
-	protected ContactLocalService contactLocalService;
-
-	@Reference
-	protected ProductPurchaseLocalService productPurchaseLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountModelDocumentContributor.class);
+
+	@Reference
+	private ContactLocalService _contactLocalService;
+
+	@Reference
+	private ProductPurchaseLocalService _productPurchaseLocalService;
 
 }

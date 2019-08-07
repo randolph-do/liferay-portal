@@ -54,14 +54,14 @@ public class ProjectModelDocumentContributor
 	@Override
 	public void contribute(Document document, Project project) {
 		try {
-			doContribute(document, project);
+			_contribute(document, project);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 	}
 
-	public void doContribute(Document document, Project project)
+	private void _contribute(Document document, Project project)
 		throws PortalException {
 
 		document.addKeyword("accountKey", project.getAccountKey());
@@ -82,24 +82,24 @@ public class ProjectModelDocumentContributor
 		document.addDateSortable("modifiedDate", project.getModifiedDate());
 		document.addTextSortable("name", project.getName());
 
-		contributeContacts(document, project.getProjectId());
-		contributeProductEntries(document, project.getProjectId());
+		_contributeContacts(document, project.getProjectId());
+		_contributeProductEntries(document, project.getProjectId());
 	}
 
-	protected void contributeContacts(Document document, long projectId)
+	private void _contributeContacts(Document document, long projectId)
 		throws PortalException {
 
 		Set<String> contactKeys = new HashSet<>();
 		Set<String> contactProjectRoleKeys = new HashSet<>();
 
 		List<ContactProjectRole> contactProjectRoles =
-			contactProjectRoleLocalService.getContactProjectRolesByProjectId(
+			_contactProjectRoleLocalService.getContactProjectRolesByProjectId(
 				projectId);
 
 		for (ContactProjectRole contactProjectRole : contactProjectRoles) {
-			Contact contact = contactLocalService.getContact(
+			Contact contact = _contactLocalService.getContact(
 				contactProjectRole.getContactId());
-			ContactRole contactRole = contactRoleLocalService.getContactRole(
+			ContactRole contactRole = _contactRoleLocalService.getContactRole(
 				contactProjectRole.getContactRoleId());
 
 			contactKeys.add(contact.getContactKey());
@@ -115,13 +115,13 @@ public class ProjectModelDocumentContributor
 			ArrayUtil.toStringArray(contactProjectRoleKeys.toArray()));
 	}
 
-	protected void contributeProductEntries(Document document, long projectId)
+	private void _contributeProductEntries(Document document, long projectId)
 		throws PortalException {
 
 		List<String> productEntryKeys = new ArrayList<>();
 
 		List<ProductPurchase> productPurchases =
-			productPurchaseLocalService.getProjectProductPurchases(
+			_productPurchaseLocalService.getProjectProductPurchases(
 				projectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ProductPurchase productPurchase : productPurchases) {
@@ -133,19 +133,19 @@ public class ProjectModelDocumentContributor
 			ArrayUtil.toStringArray(productEntryKeys.toArray()));
 	}
 
-	@Reference
-	protected ContactLocalService contactLocalService;
-
-	@Reference
-	protected ContactProjectRoleLocalService contactProjectRoleLocalService;
-
-	@Reference
-	protected ContactRoleLocalService contactRoleLocalService;
-
-	@Reference
-	protected ProductPurchaseLocalService productPurchaseLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProjectModelDocumentContributor.class);
+
+	@Reference
+	private ContactLocalService _contactLocalService;
+
+	@Reference
+	private ContactProjectRoleLocalService _contactProjectRoleLocalService;
+
+	@Reference
+	private ContactRoleLocalService _contactRoleLocalService;
+
+	@Reference
+	private ProductPurchaseLocalService _productPurchaseLocalService;
 
 }

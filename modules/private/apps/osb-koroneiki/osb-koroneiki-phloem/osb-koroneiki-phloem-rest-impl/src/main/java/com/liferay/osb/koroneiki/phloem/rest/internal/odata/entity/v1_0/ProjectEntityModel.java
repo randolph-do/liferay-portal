@@ -41,6 +41,10 @@ public class ProjectEntityModel implements EntityModel {
 				locale -> "code", String::valueOf),
 			new CollectionEntityField(
 				new StringEntityField("contactKeys", locale -> "contactKeys")),
+			new CollectionEntityField(
+				new StringEntityField(
+					"contactProjectRoleKeys",
+					locale -> "contactProjectRoleKeys")),
 			new StringEntityField("name", locale -> "name"),
 			new CollectionEntityField(
 				new StringEntityField(

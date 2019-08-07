@@ -89,8 +89,10 @@ public class ContactProjectRoleLocalServiceImpl
 		_projectLocalService.reindex(projectId);
 	}
 
-	public List<ContactProjectRole> getContactProjectRoles(long contactId) {
-		return contactProjectRolePersistence.findByContactId(contactId);
+	public List<ContactProjectRole> getContactProjectRolesByProjectId(
+		long projectId) {
+
+		return contactProjectRolePersistence.findByProjectId(projectId);
 	}
 
 	protected void validate(long contactId, long projectId)

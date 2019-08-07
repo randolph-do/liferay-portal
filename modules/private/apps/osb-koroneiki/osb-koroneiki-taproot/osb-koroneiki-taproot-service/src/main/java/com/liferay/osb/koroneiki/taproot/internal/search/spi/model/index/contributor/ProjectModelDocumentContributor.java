@@ -15,19 +15,27 @@
 package com.liferay.osb.koroneiki.taproot.internal.search.spi.model.index.contributor;
 
 import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.osb.koroneiki.taproot.model.ContactProjectRole;
+import com.liferay.osb.koroneiki.taproot.model.ContactRole;
 import com.liferay.osb.koroneiki.taproot.model.Project;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ContactProjectRoleLocalService;
+import com.liferay.osb.koroneiki.taproot.service.ContactRoleLocalService;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
 import com.liferay.osb.koroneiki.trunk.service.ProductPurchaseLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,12 +54,17 @@ public class ProjectModelDocumentContributor
 	@Override
 	public void contribute(Document document, Project project) {
 		try {
-			document.addKeyword("accountKey", project.getAccountKey());
+			doContribute(document, project);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
 
+	public void doContribute(Document document, Project project)
+		throws PortalException {
+
+		document.addKeyword("accountKey", project.getAccountKey());
 		document.addText("code", project.getCode());
 		document.addDate("createDate", project.getCreateDate());
 		document.addKeyword("industry", project.getIndustry());
@@ -73,21 +86,38 @@ public class ProjectModelDocumentContributor
 		contributeProductEntries(document, project.getProjectId());
 	}
 
-	protected void contributeContacts(Document document, long projectId) {
-		List<String> contactKeys = new ArrayList<>();
+	protected void contributeContacts(Document document, long projectId)
+		throws PortalException {
 
-		List<Contact> contacts = contactLocalService.getProjectContacts(
-			projectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		Set<String> contactKeys = new HashSet<>();
+		Set<String> contactProjectRoleKeys = new HashSet<>();
 
-		for (Contact contact : contacts) {
+		List<ContactProjectRole> contactProjectRoles =
+			contactProjectRoleLocalService.getContactProjectRolesByProjectId(
+				projectId);
+
+		for (ContactProjectRole contactProjectRole : contactProjectRoles) {
+			Contact contact = contactLocalService.getContact(
+				contactProjectRole.getContactId());
+			ContactRole contactRole = contactRoleLocalService.getContactRole(
+				contactProjectRole.getContactRoleId());
+
 			contactKeys.add(contact.getContactKey());
+			contactProjectRoleKeys.add(
+				contact.getContactKey() + StringPool.UNDERLINE +
+					contactRole.getContactRoleKey());
 		}
 
 		document.addKeyword(
 			"contactKeys", ArrayUtil.toStringArray(contactKeys.toArray()));
+		document.addKeyword(
+			"contactProjectRoleKeys",
+			ArrayUtil.toStringArray(contactProjectRoleKeys.toArray()));
 	}
 
-	protected void contributeProductEntries(Document document, long projectId) {
+	protected void contributeProductEntries(Document document, long projectId)
+		throws PortalException {
+
 		List<String> productEntryKeys = new ArrayList<>();
 
 		List<ProductPurchase> productPurchases =
@@ -95,12 +125,7 @@ public class ProjectModelDocumentContributor
 				projectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ProductPurchase productPurchase : productPurchases) {
-			try {
-				productEntryKeys.add(productPurchase.getProductEntryKey());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			productEntryKeys.add(productPurchase.getProductEntryKey());
 		}
 
 		document.addKeyword(
@@ -110,6 +135,12 @@ public class ProjectModelDocumentContributor
 
 	@Reference
 	protected ContactLocalService contactLocalService;
+
+	@Reference
+	protected ContactProjectRoleLocalService contactProjectRoleLocalService;
+
+	@Reference
+	protected ContactRoleLocalService contactRoleLocalService;
 
 	@Reference
 	protected ProductPurchaseLocalService productPurchaseLocalService;

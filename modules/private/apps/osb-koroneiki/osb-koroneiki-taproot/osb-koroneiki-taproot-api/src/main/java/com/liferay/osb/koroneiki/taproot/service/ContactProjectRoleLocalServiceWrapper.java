@@ -291,10 +291,10 @@ public class ContactProjectRoleLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.osb.koroneiki.taproot.model.ContactProjectRole>
-			getContactProjectRoles(long contactId) {
+			getContactProjectRolesByProjectId(long projectId) {
 
-		return _contactProjectRoleLocalService.getContactProjectRoles(
-			contactId);
+		return _contactProjectRoleLocalService.
+			getContactProjectRolesByProjectId(projectId);
 	}
 
 	/**

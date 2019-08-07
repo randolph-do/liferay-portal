@@ -268,9 +268,9 @@ public class ContactProjectRoleLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.osb.koroneiki.taproot.model.ContactProjectRole>
-			getContactProjectRoles(long contactId) {
+			getContactProjectRolesByProjectId(long projectId) {
 
-		return getService().getContactProjectRoles(contactId);
+		return getService().getContactProjectRolesByProjectId(projectId);
 	}
 
 	/**

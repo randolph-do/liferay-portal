@@ -222,7 +222,8 @@ public interface ContactProjectRoleLocalService
 	public List<ContactProjectRole> getContactProjectRoles(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ContactProjectRole> getContactProjectRoles(long contactId);
+	public List<ContactProjectRole> getContactProjectRolesByProjectId(
+		long projectId);
 
 	/**
 	 * Returns the number of contact project roles.

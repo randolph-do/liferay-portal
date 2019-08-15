@@ -39,8 +39,6 @@ definition {
 				locator1 = "BlogsEditEntry#STATUS_READING_TIME",
 				value1 = "${readingTime}");
 		}
-
-		PortletEntry.publish();
 	}
 
 	macro addEntryWithCategory {

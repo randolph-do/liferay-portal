@@ -44,14 +44,6 @@ definition {
 				entryTitle = "Blogs Entry2 Title");
 		}
 
-		task ("Add a blogs entry called 'Blogs Entry3 Title' with content 'Blogs Entry3 Content'") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-			Blogs.addEntry(
-				entryContent = "Blogs Entry3 Content",
-				entryTitle = "Blogs Entry3 Title");
-		}
-
 		task ("Ensure blogs entry 'Blogs Entry1 Title' with content 'Blogs Entry1 Content' can be found") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
